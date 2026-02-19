@@ -5,8 +5,9 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DEFAULT_TARGET_BASE="${HOME}/.claude"
-VALIDATE_SCRIPT="${SCRIPT_DIR}/skill-creator/scripts/quick_validate.py"
+VALIDATE_SCRIPT="${SCRIPT_DIR}/community-skills/skills/skill-creator/scripts/quick_validate.py"
 EXCLUDE_DIRS=".git .claude"
+SUBMODULE_SKILLS_DIR="${SCRIPT_DIR}/community-skills/skills"
 
 # ─── Output helpers (color-aware) ─────────────────────────────────────────────
 
@@ -26,12 +27,14 @@ error()   { printf "${RED}error:${RESET} %s\n" "$*" >&2; }
 
 discover_skills() {
     local skills=()
+    # Local skills (in repo root)
     for dir in "${SCRIPT_DIR}"/*/; do
         [ -d "$dir" ] || continue
         local name
         name="$(basename "$dir")"
-        # Skip excluded directories and dotdirs
+        # Skip excluded directories, dotdirs, and the submodule directory
         [[ "$name" == .* ]] && continue
+        [ "$name" = "community-skills" ] && continue
         local excluded=false
         for ex in $EXCLUDE_DIRS; do
             if [ "$name" = "$ex" ]; then excluded=true; break; fi
@@ -41,6 +44,28 @@ discover_skills() {
         [ -f "${dir}SKILL.md" ] || continue
         skills+=("$name")
     done
+    # Collect local skill basenames for deduplication
+    local local_names=()
+    for s in "${skills[@]}"; do
+        local_names+=("$(basename "$s")")
+    done
+    # Submodule skills (community-skills/skills/*)
+    if [ -d "$SUBMODULE_SKILLS_DIR" ]; then
+        for dir in "${SUBMODULE_SKILLS_DIR}"/*/; do
+            [ -d "$dir" ] || continue
+            local name
+            name="$(basename "$dir")"
+            [[ "$name" == .* ]] && continue
+            [ -f "${dir}SKILL.md" ] || continue
+            # Skip if a local skill with the same name exists (local takes precedence)
+            local duplicate=false
+            for ln in "${local_names[@]}"; do
+                if [ "$ln" = "$name" ]; then duplicate=true; break; fi
+            done
+            $duplicate && continue
+            skills+=("community-skills/skills/${name}")
+        done
+    fi
     printf '%s\n' "${skills[@]}"
 }
 
@@ -131,7 +156,10 @@ validate_skill() {
 install_skill() {
     local skill_dir="$1" target_base="$2" dry_run="$3" force="$4"
     local source="${SCRIPT_DIR}/${skill_dir}"
-    local target="${target_base}/${skill_dir}"
+    # Install under the skill's basename (e.g. "pdf" not "community-skills/skills/pdf")
+    local install_name
+    install_name="$(basename "$skill_dir")"
+    local target="${target_base}/${install_name}"
 
     if [ -L "$target" ]; then
         local existing
@@ -191,7 +219,9 @@ install_skill() {
 
 uninstall_skill() {
     local skill_dir="$1" target_base="$2" dry_run="$3"
-    local target="${target_base}/${skill_dir}"
+    local install_name
+    install_name="$(basename "$skill_dir")"
+    local target="${target_base}/${install_name}"
 
     if [ ! -L "$target" ]; then
         if [ -e "$target" ]; then
@@ -245,7 +275,9 @@ list_skills() {
             desc="${desc:0:57}..."
         fi
 
-        local target="${target_base}/${skill_dir}"
+        local install_name
+        install_name="$(basename "$skill_dir")"
+        local target="${target_base}/${install_name}"
         if [ -L "$target" ]; then
             local link_target
             link_target=$(readlink -f "$target" 2>/dev/null || readlink "$target")
@@ -370,7 +402,9 @@ cmd_uninstall() {
     # Find installed skills
     local installed=()
     for skill_dir in "${all_skills[@]}"; do
-        local target="${target_base}/${skill_dir}"
+        local install_name
+        install_name="$(basename "$skill_dir")"
+        local target="${target_base}/${install_name}"
         if [ -L "$target" ]; then
             installed+=("$skill_dir")
         fi
@@ -450,6 +484,11 @@ Examples:
   $(basename "$0") list                                  # show skill status
   $(basename "$0") validate                              # validate all skills
   $(basename "$0") uninstall --all                       # remove all symlinks
+
+Community skills (git submodule):
+  git submodule update --init                            # fetch community skills
+  Skills from community-skills/skills/ are auto-discovered.
+  Local skills take precedence over community skills with the same name.
 EOF
 }
 
@@ -461,6 +500,11 @@ main() {
     local select_all=false
     local force=false
     local dry_run=false
+
+    # Warn if submodule is not initialized
+    if [ -f "${SCRIPT_DIR}/.gitmodules" ] && [ ! -d "$SUBMODULE_SKILLS_DIR" ]; then
+        warn "community-skills submodule not initialized; run: git submodule update --init"
+    fi
 
     # Parse arguments
     local positional_set=false

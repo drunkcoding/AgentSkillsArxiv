@@ -1,0 +1,3 @@
+[submodule "community-skills"]
+	path = community-skills
+	url = https://github.com/anthropics/skills.git
