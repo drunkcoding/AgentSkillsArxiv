@@ -5,26 +5,6 @@ description: "Write systems conference papers for OSDI, NSDI, SIGCOMM, and MOBIC
 
 # Systems Conference Paper Writing
 
-## Overview
-
-Systems conference papers communicate the design, implementation, and evaluation of computer systems. They follow a problem-solution-evaluation structure: identify a real problem, build a system to solve it, and demonstrate its effectiveness through empirical evaluation. This skill covers writing for top systems venues including OSDI, NSDI, SIGCOMM, MOBICOM, and SOSP.
-
-## When to Use This Skill
-
-This skill should be used when:
-- Writing or revising any section of a systems conference paper
-- Structuring a paper using the standard systems format (Introduction, Background/Motivation, Design, Implementation, Evaluation, Related Work, Conclusion)
-- Writing a problem-solution introduction with numbered contributions
-- Creating motivation sections with measurement-driven evidence
-- Describing system architecture and design trade-offs
-- Writing evaluation sections with microbenchmarks, macrobenchmarks, and ablation studies
-- Formatting citations in IEEE or ACM style
-- Creating architecture diagrams, performance plots, and CDF figures
-- Preparing artifacts for artifact evaluation
-- Adapting a paper for a specific venue (OSDI vs SIGCOMM vs MOBICOM)
-- Improving writing clarity, directness, and technical precision
-- Addressing reviewer comments and revising systems papers
-
 ## Core Capabilities
 
 ### 1. Paper Structure and Organization

@@ -61,25 +61,36 @@ rg -c -t js -e 'pattern'
 ```
 `-c` shows count per file.
 
-## 7. Invert Match (Find Files WITHOUT Pattern)
+## 7. Invert Line Match
 ```bash
-rg -l -t js -e 'import React' | rg -v -F -e 'import { useState }'
+rg -v -n -t js -e 'pattern'
 ```
-First find files with React, then filter out files with useState.
+`-v` shows lines that do NOT match the pattern. Useful for filtering output.
 
-Or simpler:
+## 8. Find Files WITHOUT a Pattern
 ```bash
-rg -L -t js -e 'pattern'
+rg --files-without-match -t js -e 'pattern'
 ```
-`-L` lists files that do NOT match.
+Lists files that contain zero matches. No short flag exists for this.
 
-## 8. Multiple Patterns (OR Logic)
+**Note:** `-L` is `--follow` (follow symlinks), NOT files-without-match.
+
+## 9. Find Files with X but not Y
+```bash
+# Method 1: set subtraction
+comm -23 <(rg -l -t js -e 'pattern-x' | sort) <(rg -l -t js -e 'pattern-y' | sort)
+
+# Method 2: pipe to --files-without-match
+rg -l -t js -e 'pattern-x' | xargs rg --files-without-match -e 'pattern-y'
+```
+
+## 10. Multiple Patterns (OR Logic)
 ```bash
 rg -n -C 2 -t js -e 'pattern1' -e 'pattern2'
 ```
 Matches either pattern.
 
-## 9. Specific Directory
+## 11. Specific Directory
 ```bash
 rg -n -C 2 -t js -e 'pattern' src/components
 ```
@@ -114,23 +125,93 @@ Find functions, then filter to only exported ones.
 
 ---
 
+# Advanced Features
+
+## Multiline Matching (-U)
+```bash
+rg -U -e 'function \w+\(.*\)\s*\{.*\n.*return' -t js
+```
+`-U` enables patterns that span multiple lines. Add `--multiline-dotall` to make `.` match newlines.
+
+## PCRE2 Regex (-P)
+```bash
+rg -P -e '(?<=function )\w+' -o -t js     # Lookbehind: extract function names
+rg -P -e '\w+(?=\(.*\))' -o -t js          # Lookahead: names before calls
+```
+`-P` enables PCRE2 for lookahead/lookbehind assertions. Not available in Grep tool.
+
+## Replace Preview (-r)
+```bash
+rg -e 'oldName' -r 'newName' -n src/       # Preview replacements (no files modified)
+rg -e '(\w+)\.exec\(' -r '$1.run(' -n      # Capture group replacement
+```
+`-r` shows what replacements would look like. **Does not modify files** — use `sd` or `sed` for actual changes.
+
+## Limit Matches Per File (-m)
+```bash
+rg -m 1 -n -e 'import' -t js               # First match per file only
+```
+
+## Limit Directory Depth (--max-depth)
+```bash
+rg --max-depth 2 -l -e 'pattern'           # Only search top 2 levels
+```
+
+## Search Hidden and Ignored Files
+```bash
+rg --hidden -e 'pattern'                    # Include dotfiles (.env, .config, etc.)
+rg --no-ignore -e 'pattern'                 # Include gitignored files
+rg --hidden --no-ignore -e 'pattern'        # Both
+```
+
+## Custom File Types (--type-add)
+```bash
+rg --type-add 'web:*.{js,ts,html,css}' -t web -e 'pattern'
+```
+
+## Sort Results (--sort)
+```bash
+rg --sort path -l -e 'pattern'             # Alphabetical by path
+rg --sort modified -l -e 'pattern'          # By modification time
+```
+
+## Asymmetric Context (-B / -A)
+```bash
+rg -B 2 -A 5 -n -e 'error' src/           # 2 lines before, 5 after
+```
+Use instead of `-C` when you need more context in one direction.
+
+## JSON Output (--json)
+```bash
+rg --json -e 'pattern' | jq '.data.submatches'
+```
+Machine-readable output for tooling/scripts.
+
+## Statistics (--stats)
+```bash
+rg --stats -e 'TODO' src/ 2>&1
+```
+Prints summary (files searched, matches found, time taken) to stderr.
+
+---
+
 # File Type Filters (-t)
 
-**Common types:**
+**Common types** (main extensions shown; run `rg --type-list` for full list):
 - `-t js` - JavaScript (.js, .jsx, .mjs, .cjs, .vue)
 - `-t ts` - TypeScript (.ts, .tsx, .cts, .mts)
 - `-t py` - Python (.py, .pyi)
 - `-t go` - Go (.go)
 - `-t rust` - Rust (.rs)
-- `-t java` - Java (.java, .jsp, .properties)
-- `-t ruby` - Ruby (.rb, .gemspec, Gemfile, Rakefile)
-- `-t c` - C (.c, .h)
-- `-t cpp` - C++ (.cpp, .hpp, .cc, .hh)
-- `-t sh` - Shell (.sh, .bash, .zsh, .bashrc)
+- `-t java` - Java (.java, .jsp, .jspx, .properties)
+- `-t ruby` - Ruby (.rb, .rbw, .gemspec, Gemfile, Rakefile, config.ru)
+- `-t c` - C (.c, .h, .H, .cats, + .in variants)
+- `-t cpp` - C++ (.cpp, .hpp, .cc, .hh, .cxx, .hxx, .inl, + .in variants)
+- `-t sh` - Shell (.sh, .bash, .zsh, .ksh, .csh, + rc/profile files)
 - `-t html` - HTML (.html, .htm, .ejs)
 - `-t css` - CSS (.css, .scss)
-- `-t md` - Markdown (.md, .markdown, .mdx)
-- `-t json` - JSON (.json)
+- `-t md` - Markdown (.md, .markdown, .mdx, .mkd, .mkdn, .mdown)
+- `-t json` - JSON (.json, .sarif, composer.lock)
 - `-t yaml` - YAML (.yaml, .yml)
 
 **Multiple types:**
@@ -196,7 +277,17 @@ Need to search code?
 │  → rg -w -n -C 2 -t TYPE -e 'word'
 │
 ├─ Need to find files WITHOUT something?
-│  → rg -L -t TYPE -e 'pattern'
+│  → rg --files-without-match -t TYPE -e 'pattern'
+│
+├─ Need multiline or lookahead/lookbehind?
+│  → rg -U -e 'multi\nline' (multiline)
+│  → rg -P -e '(?<=prefix)\w+' (PCRE2)
+│
+├─ Need to preview replacements?
+│  → rg -e 'old' -r 'new' -n
+│
+├─ Need to search hidden/ignored files?
+│  → rg --hidden --no-ignore -e 'pattern'
 │
 └─ Need to compose with other commands?
    → rg -n -t TYPE -e 'pattern' | head/wc/sort/etc
@@ -230,14 +321,24 @@ rg -n -e 'TODO:' src/
 
 ## "Find files that import X but not Y"
 ```bash
-rg -l -t js -e 'import.*from.*package-x' | rg -v -F -e 'package-y'
+# Subtract file lists (correct: searches file contents, not filenames)
+comm -23 <(rg -l -t js -e 'import.*from.*package-x' | sort) \
+         <(rg -l -t js -e 'import.*from.*package-y' | sort)
+
+# Or: pipe to --files-without-match
+rg -l -t js -e 'import.*from.*package-x' | xargs rg --files-without-match -e 'package-y'
 ```
 
-## "Count occurrences across codebase"
+## "Count files with matches"
 ```bash
-rg -c -t js -e 'pattern' | rg -e ':' | wc -l
+rg -l -t js -e 'pattern' | wc -l
 ```
-Count files with matches.
+
+## "Count total matches across codebase"
+```bash
+rg -c -t js -e 'pattern'
+```
+Shows count per file. Sum with: `rg -c -e 'pattern' | awk -F: '{s+=$NF} END {print s}'`
 
 ---
 
@@ -287,18 +388,18 @@ rg -w -e 'test'
 # When to Use Grep Tool Instead
 
 Use Grep tool when:
-- Simple pattern with no special flags needed
+- Simple pattern matching (supports regex, `-i`, context lines, type filters)
 - Want structured output modes (files/content/count)
 - Don't need to pipe results
-- Pattern doesn't need -F, -v, or -w
+- Handles most search needs
 
 Use Bash(rg) when:
-- Need one-shot results with context
-- Need -F (literal), -v (invert), -w (word boundary)
+- Need `-F` (literal), `-v` (invert), `-w` (word boundary)
+- Need `--files-without-match`, `-U` (multiline), `-P` (PCRE2)
+- Need `-r` (replace preview), `--hidden`, `--no-ignore`
+- Need `-m` (max count), `--max-depth`, `--sort`, `--stats`
 - Want to pipe/compose with other commands
-- Need maximum control and efficiency
-
-**Default to Bash(rg) for most searches** - it's more efficient for one-shot results.
+- Need `--type-add` for custom file type groups
 
 ---
 
@@ -312,9 +413,14 @@ rg -n -C 2 -t TYPE -e 'pattern'
 **Key flags to remember:**
 - `-F` - Literal search (avoid escaping)
 - `-w` - Word boundaries (precise)
-- `-v` - Invert match (find files WITHOUT)
-- `-l` - List files only
-- `-L` - List files that DON'T match
+- `-v` - Invert line match (show lines that DON'T match)
+- `-l` - List files with matches only
+- `--files-without-match` - List files that DON'T match (no short flag)
+- `-U` - Multiline matching
+- `-P` - PCRE2 regex (lookahead/lookbehind)
+- `-r` - Replace preview (output only, doesn't modify files)
+- `--hidden` - Include hidden/dotfiles
+- `--no-ignore` - Include gitignored files
 
 **Compose with pipes:**
 ```bash

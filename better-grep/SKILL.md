@@ -1,5 +1,5 @@
 ---
-name: searching-text
+name: better-grep
 description: Performs fast text search with one-shot patterns that minimize iterations by getting files, lines, and context in a single call. Use this skill when searching for text patterns, finding specific code locations, or getting context around matches
 ---
 
@@ -25,11 +25,15 @@ Common workflow: ripgrep skill → other skills (fzf, bat, sd, analyzing-code-st
 
 **Bash(rg)** - Use for one-shot searches needing special flags or composition:
 - Fixed string search (`-F`)
-- Invert match (`-v`)
+- Invert line match (`-v`)
 - Word boundaries (`-w`)
-- Context lines with patterns (`-n -C 2`)
+- Files without matches (`--files-without-match`)
+- Multiline patterns (`-U`)
+- PCRE2 lookahead/lookbehind (`-P`)
+- Replace preview (`-r`)
+- Search hidden/ignored files (`--hidden`, `--no-ignore`)
 - Pipe composition (`| head`, `| wc -l`, `| sort`)
-- Default choice for efficient one-shot results
+- Use when Grep tool lacks the needed flag
 
 **Glob tool** - Use for file name/path matching only (not content search)
 
@@ -38,41 +42,16 @@ Common workflow: ripgrep skill → other skills (fzf, bat, sd, analyzing-code-st
 Load [ripgrep guide](./reference/ripgrep-guide.md) when needing:
 - One-shot search pattern templates
 - Effective flag combinations for complex searches
+- Advanced features: multiline (`-U`), PCRE2 (`-P`), replace preview (`-r`)
+- File search modifiers: `--files-without-match`, `--hidden`, `--no-ignore`
 - Pipe composition patterns
 - File type filters reference (`-t` flags)
-- Performance optimization for large result sets
 - Pattern syntax examples
-- Translation between Grep tool and rg commands
+- Decision flow for choosing Grep tool vs Bash(rg)
 
 The guide focuses on practical patterns for getting targeted results in minimal calls.
 
 ### Pipeline Combinations
 - **rg | fzf**: Interactive selection from search results
-- **rg | sd**: Batch replacements on search results  
+- **rg | sd**: Batch replacements on search results
 - **rg | xargs**: Execute commands on matched files
-
-## Skill Combinations
-
-### For Discovery Phase
-- **fd → ripgrep**: Find files of specific type, then search within them
-- **extracting-code-structure → ripgrep**: Understand structure, then search for specific patterns
-- **jq/yq → ripgrep**: Extract field values, then search for their usage
-
-### For Analysis Phase
-- **ripgrep → fzf**: Interactive selection from search matches
-- **ripgrep → bat**: View matched files with syntax highlighting
-- **ripgrep → ast-grep**: After finding text patterns, apply structural changes
-
-### For Refactoring Phase
-- **ripgrep → sd**: Replace found patterns with new content
-- **ripgrep → xargs**: Execute commands on all matching files
-- **ripgrep → tokei**: Get statistics for files containing specific patterns
-- **ripgrep → analyzing-code-structure**: After finding text patterns, apply structural changes
-
-### Integration Examples
-```bash
-# Find and edit all references to a function
-rg "functionName" -l | fzf --multi --preview="bat --color=always --highlight-line $(rg -n "functionName" {} | head -1 | cut -d: -f2) {}" | xargs vim
-
-# Find TODOs and create summary
-rg "TODO|FIXME" -n | fzf --multi --preview="bat --color=always --highlight-line {2} {1}"
