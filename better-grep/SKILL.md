@@ -1,6 +1,6 @@
 ---
 name: better-grep
-description: Performs fast text search with one-shot patterns that minimize iterations by getting files, lines, and context in a single call. Use this skill when searching for text patterns, finding specific code locations, or getting context around matches
+description: Performs fast text search with one-shot patterns that minimize iterations by getting files, lines, and context in a single call. Use this skill to replace grep when searching for text patterns, finding specific code locations, or getting context around matches
 ---
 
 # ripgrep: Powerful, one-shot text search
