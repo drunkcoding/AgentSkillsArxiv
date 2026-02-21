@@ -147,7 +147,7 @@ This chain ensures maximum coverage across publishers and identifier types.
 
 ## Skill Combinations
 
-- **doi2bib3 + acamedic-writing**: Fetch citations while drafting systems conference papers. Use doi2bib3 to collect BibTeX for all cited systems, baselines, and related work.
+- **doi2bib3 + academic-writing**: Fetch citations while drafting systems conference papers. Use doi2bib3 to collect BibTeX for all cited systems, baselines, and related work.
 - **doi2bib3 + better-grep**: Search existing `.bib` files for duplicates before adding new entries. Use `rg "citation_key" references.bib` to check for existing entries.
 
 ## References

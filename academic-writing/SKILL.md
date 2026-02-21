@@ -1,5 +1,5 @@
 ---
-name: acamedic-writing
+name: academic-writing
 description: "Write systems conference papers for OSDI, NSDI, SIGCOMM, and MOBICOM. Covers paper structure (Introduction, Background/Motivation, Design, Implementation, Evaluation, Related Work), systems writing style, IEEE/ACM citations, architecture diagrams, performance evaluation, and artifact preparation."
 ---
 

@@ -272,7 +272,7 @@ bib = fetch_bibtex('10.1038/nphys1170', timeout=30)  # longer timeout
 4. Reference in LaTeX with `\cite{AuthorLastname_FirstTitleWord_Year}`
 5. Compile with `bibtex` or `biber`
 
-### With the acamedic-writing skill
+### With the academic-writing skill
 When writing systems conference papers:
 - Use doi2bib3 to fetch entries for all cited systems and baselines
 - The normalized citation keys follow a consistent `Author_Title_Year` pattern
