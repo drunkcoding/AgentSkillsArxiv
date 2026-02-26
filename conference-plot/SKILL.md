@@ -2,7 +2,7 @@
 name: conference-plot
 description: Create publication-quality matplotlib figures for two-column
   conference papers (ACM, IEEE, USENIX). Provides style presets, colorblind-safe
-  Wong palette, venue-aware dimensions, and dual-output (PDF+PNG) workflow.
+  Wong palette, and dual-output (PDF+PNG) workflow.
   Use when the user wants to create, style, or fix plots/figures/charts for
   academic paper submission, or asks for conference-quality matplotlib figures.
 ---
@@ -19,68 +19,73 @@ the `paper_style()` context manager to set up correct dimensions and rcParams.
 ```python
 import sys
 sys.path.insert(0, "/home/xly/.claude/skills/conference-plot/scripts")
-from plot_utils import paper_style, WONG_PALETTE, HATCHES, savefig_paper
+from plot_utils import paper_style, WONG_PALETTE, HATCHES, save_dual_output
 import matplotlib.pyplot as plt
 import numpy as np
+from pathlib import Path
 
 labels = ["A", "B", "C", "D"]
 values = [4.2, 3.8, 5.1, 2.9]
 
-with paper_style(venue="acm-single"):
+with paper_style(width=3.3, height=2.5):
     fig, ax = plt.subplots()
     bars = ax.bar(labels, values, color=WONG_PALETTE[1:5],
                   edgecolor="black", linewidth=0.4,
                   hatch=[HATCHES[i] for i in range(len(labels))])
     ax.set_ylabel("Throughput (Gbps)")
     ax.set_xlabel("Configuration")
-    savefig_paper(fig, "throughput.pdf")
+    save_dual_output(fig, Path("throughput.pdf"), None)
     plt.close(fig)
 ```
 
 ### Line plot (USENIX single-column)
 
 ```python
-from plot_utils import paper_style, WONG_PALETTE, MARKERS, savefig_paper
+from plot_utils import paper_style, WONG_PALETTE, save_dual_output
 import matplotlib.pyplot as plt
 import numpy as np
+from pathlib import Path
 
+markers = ["o", "s", "^", "D", "v", "P", "X", "*"]
 x = np.arange(1, 6)
-with paper_style(venue="usenix-single"):
+with paper_style(width=3.33, height=2.5):
     fig, ax = plt.subplots()
     for i, label in enumerate(["System A", "System B", "System C"]):
         ax.plot(x, np.random.rand(5) * 10, color=WONG_PALETTE[i + 1],
-                marker=MARKERS[i], markersize=4, label=label)
+                marker=markers[i], markersize=4, label=label)
     ax.set_xlabel("Thread Count")
     ax.set_ylabel("Latency (ms)")
     ax.legend()
-    savefig_paper(fig, "latency.pdf")
+    save_dual_output(fig, Path("latency.pdf"), None)
     plt.close(fig)
 ```
 
 ### Heatmap (IEEE double-column)
 
 ```python
-from plot_utils import paper_style, savefig_paper
+from plot_utils import paper_style, save_dual_output
 import matplotlib.pyplot as plt
 import numpy as np
+from pathlib import Path
 
 data = np.random.rand(5, 8)
-with paper_style(venue="ieee-double"):
+with paper_style(width=7.16, height=2.5):
     fig, ax = plt.subplots()
     im = ax.imshow(data, cmap="RdYlGn_r", aspect="auto")
     fig.colorbar(im, ax=ax, shrink=0.8)
     ax.set_xlabel("Benchmark")
     ax.set_ylabel("Configuration")
-    savefig_paper(fig, "heatmap.pdf")
+    save_dual_output(fig, Path("heatmap.pdf"), None)
     plt.close(fig)
 ```
 
 ## Usage
 
 1. **Import** from `scripts/plot_utils.py` (add the skill's `scripts/` dir to `sys.path`).
-2. **Wrap** all plotting code in `paper_style()` (for submission) or `analysis_style()` (for review).
-3. **Save** with `savefig_paper(fig, path)` for PDF submission or `savefig_analysis(fig, path)` for PNG review.
-4. For dual output, use `save_dual_output(fig_paper, fig_analysis, pdf_path, png_path)`.
+2. **Wrap** all plotting code in `paper_style()`.
+3. **Save** with `save_dual_output(fig, pdf_path, png_path)`. By default it
+   saves both PDF and PNG (auto-deriving the missing path). Pass
+   `save_both=False` to save only the explicitly provided path(s).
 
 ## Style Reference
 
@@ -89,22 +94,26 @@ with paper_style(venue="ieee-double"):
 | Index | Hex       | Color          | Typical Use              |
 |-------|-----------|----------------|--------------------------|
 | 0     | `#000000` | Black          | Baselines, reference     |
-| 1     | `#E69F00` | Orange         | Primary comparison       |
+| 1     | `#EEBA0C` | Orange         | Primary comparison       |
 | 2     | `#56B4E9` | Sky Blue       | Secondary comparison     |
 | 3     | `#009E73` | Bluish Green   | Third system             |
 | 4     | `#F0E442` | Yellow         | Fourth (use sparingly)   |
 | 5     | `#0072B2` | Blue           | Fifth system             |
 | 6     | `#D55E00` | Vermillion     | Sixth / alert            |
 | 7     | `#CC79A7` | Reddish Purple | Seventh system           |
+| 8     | `#0000FF` | Blue Saturated | Eighth system            |
+| 9     | `#FF0000` | Red Saturated  | Ninth system             |
 
-This is the Wong colorblind-safe palette (Nature Methods, 2011). Safe for
-deuteranopia, protanopia, and tritanopia. Start from index 1 for data series
-(index 0 is black, best for baselines or outlines).
+This is a 10-color palette based on the Wong colorblind-safe palette (Nature
+Methods, 2011), extended with two saturated colors. Safe for deuteranopia,
+protanopia, and tritanopia. Start from index 1 for data series (index 0 is
+black, best for baselines or outlines).
 
-### Markers (MARKERS)
+### Markers
 
-`['o', 's', '^', 'D', 'v', 'P', 'X', '*']` — circle, square, triangle-up,
-diamond, triangle-down, plus-filled, X-filled, star.
+Use inline marker strings directly: `"o"`, `"s"`, `"^"`, `"D"`, `"v"`, `"P"`,
+`"X"`, `"*"` — circle, square, triangle-up, diamond, triangle-down,
+plus-filled, X-filled, star.
 
 ### Hatches (HATCHES)
 
@@ -113,19 +122,14 @@ back-diagonal, cross-hatch, dots, plus, circles, stars.
 
 ### Venue Dimensions
 
-| Preset Key      | Width  | Height | Use Case                |
-|-----------------|--------|--------|-------------------------|
-| `acm-single`   | 3.3"   | 2.5"   | ACM single column       |
-| `acm-double`   | 7.0"   | 2.5"   | ACM full text width     |
-| `ieee-single`  | 3.5"   | 2.5"   | IEEE single column      |
-| `ieee-double`  | 7.16"  | 2.5"   | IEEE full text width    |
-| `usenix-single`| 3.33"  | 2.5"   | USENIX single column    |
-| `usenix-double`| 7.0"   | 2.5"   | USENIX full text width  |
+| Venue | Single-Column | Double-Column | Recommended Call |
+|-------|--------------|---------------|------------------|
+| ACM (SIGCOMM, MOBICOM, etc.) | 3.3" | 7.0" | `paper_style(width=3.3)` |
+| IEEE (INFOCOM, MICRO, etc.) | 3.5" | 7.16" | `paper_style(width=3.5)` |
+| USENIX (OSDI, NSDI, ATC, etc.) | 3.33" | 7.0" | `paper_style(width=3.33)` |
 
-Pass `venue="acm-single"` to `paper_style()` to auto-set width and height.
-Override height as needed: `paper_style(venue="acm-single", height=3.0)` is
-NOT supported — pass explicit `width` and `height` instead if you need custom
-dimensions.
+Pass explicit `width` and `height` to `paper_style()`. Default is `width=3.3,
+height=2.5`.
 
 ## Common Patterns
 
@@ -148,7 +152,7 @@ ax.set_xticklabels(groups)
 ax1 = fig.add_subplot(111)
 ax2 = ax1.twinx()
 ax1.bar(x, throughput, color=WONG_PALETTE[1], label="Throughput")
-ax2.plot(x, latency, color=WONG_PALETTE[5], marker=MARKERS[0], label="Latency")
+ax2.plot(x, latency, color=WONG_PALETTE[5], marker="o", label="Latency")
 ax1.set_ylabel("Throughput (Gbps)", color=WONG_PALETTE[1])
 ax2.set_ylabel("Latency (ms)", color=WONG_PALETTE[5])
 ax1.tick_params(axis="y", colors=WONG_PALETTE[1])
@@ -176,11 +180,10 @@ fig.colorbar(im, ax=ax, shrink=0.8)
 
 - **Always** use `paper_style()` — it sets `pdf.fonttype=42` and `ps.fonttype=42`
   to avoid Type 3 font rejection by venues.
-- **Keep fonts >= 6pt** for readability. The default 8pt base / 7pt ticks is safe.
-- **Use `WONG_PALETTE`** for colorblind safety. Start from index 1 for data
-  series; index 0 (black) is best for baselines or outlines.
-- **Export PDF for paper**, PNG for review. Use `savefig_paper()` and
-  `savefig_analysis()` respectively.
+- **Keep fonts >= 6pt** for readability. The default 8pt base is safe.
+- **Use `WONG_PALETTE`** (10 colors) for colorblind safety. Start from index 1
+  for data series; index 0 (black) is best for baselines or outlines.
+- **Export PDF for paper**, PNG for review. Use `save_dual_output(fig, pdf_path, png_path)`.
 - **Always `plt.close(fig)`** after saving to avoid memory leaks in batch scripts.
 - **Pair hatches with colors** for bar charts so the plot remains distinguishable
   in grayscale printouts.

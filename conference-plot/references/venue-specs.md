@@ -5,14 +5,14 @@ rules across major systems conference venues.
 
 ## Dimension Summary
 
-| Venue | Column Width | Text Width | Default Height | Preset Key |
-|-------|-------------|------------|----------------|------------|
-| ACM (SIGCOMM, MOBICOM, etc.) | 3.33" (84.6mm) | 7.0" (177.8mm) | 2.5" | `acm-single` / `acm-double` |
-| IEEE (INFOCOM, MICRO, etc.) | 3.5" (88.9mm) | 7.16" (181.9mm) | 2.5" | `ieee-single` / `ieee-double` |
-| USENIX (OSDI, NSDI, ATC, etc.) | 3.33" (84.6mm) | 7.0" (177.8mm) | 2.5" | `usenix-single` / `usenix-double` |
+| Venue | Column Width | Text Width | Default Height |
+|-------|-------------|------------|----------------|
+| ACM (SIGCOMM, MOBICOM, etc.) | 3.33" (84.6mm) | 7.0" (177.8mm) | 2.5" |
+| IEEE (INFOCOM, MICRO, etc.) | 3.5" (88.9mm) | 7.16" (181.9mm) | 2.5" |
+| USENIX (OSDI, NSDI, ATC, etc.) | 3.33" (84.6mm) | 7.0" (177.8mm) | 2.5" |
 
-Note: The `acm-single` preset uses 3.3" (slightly narrower) as a safe margin
-to avoid any overflow issues with `\columnwidth`.
+Note: For ACM venues, using `paper_style(width=3.3)` (slightly narrower than
+3.33") provides a safe margin to avoid overflow issues with `\columnwidth`.
 
 ## ACM Venues
 
@@ -118,7 +118,7 @@ matplotlib.rcParams["ps.fonttype"] = 42
 ### Minimum Font Size
 
 All major venues require figure text to be **at least 6pt** for readability.
-The default `paper_style()` uses 8pt base / 7pt tick labels, which is safe.
+The default `paper_style()` uses 7pt base (`font_size - 1`) / 8pt tick labels, which is safe.
 If you reduce `font_size`, ensure nothing drops below 6pt.
 
 ### Vector vs Raster
