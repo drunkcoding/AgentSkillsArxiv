@@ -13,7 +13,7 @@ Claude Code skills collection for academic research and development tooling.
 | `citation-convert` | Fetch BibTeX citations from DOI, arXiv ID, journal URL, or paper title |
 | `conference-plot` | Publication-quality matplotlib figures for two-column conference papers (ACM, IEEE, USENIX) with colorblind-safe palettes and dual PDF+PNG output |
 | `function-dep-search` | AST-accurate function dependency analysis using Tree-sitter — trace call chains, find callers/callees, detect unused functions across 8 languages |
-| `openclaw` | Bridge OpenClaw messaging channels (WhatsApp, Discord, Telegram, Slack) to Claude Code CLI |
+| `openclaw-remote-bridge` | Bridge OpenClaw messaging channels (WhatsApp, Discord, Telegram, Slack) to Claude Code CLI |
 | `openviking` | Context database reference for [OpenViking](https://github.com/openviking) — an open-source context database for AI agents |
 
 ## Community Skills
@@ -64,7 +64,7 @@ AgentSkillsArxiv/
 ├── citation-convert/      # BibTeX fetcher
 ├── conference-plot/       # Publication figures
 ├── function-dep-search/   # Function dependency analysis
-├── openclaw/              # Messaging channel bridge
+├── openclaw-remote-bridge/ # Messaging channel bridge
 ├── openviking/            # Context database reference
 ├── community-skills/      # Git submodule — Anthropic's official skills
 └── install.sh             # Installer script

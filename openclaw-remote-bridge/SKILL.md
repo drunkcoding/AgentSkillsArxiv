@@ -1,5 +1,5 @@
 ---
-name: openclaw
+name: openclaw-remote-bridge
 description: >
   Bridge OpenClaw messaging channels (WhatsApp, Discord, Telegram, Slack, etc.) to Claude Code CLI.
   Use when the user wants to set up remote access to Claude Code through messaging apps,
