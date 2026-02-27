@@ -1,0 +1,27 @@
+{
+  "id": "tools_list",
+  "description": "List available tools after initialization. Server must respond with result.tools as a non-empty array. Each tool entry must have at least a name (string) and description (string).",
+  "transport": "stdio",
+  "framing": "newline_delimited_json",
+  "scenario_type": "request_response",
+  "input": {
+    "wire_line": "{\"jsonrpc\":\"2.0\",\"id\":2,\"method\":\"tools/list\",\"params\":{}}",
+    "parsed": {
+      "jsonrpc": "2.0",
+      "id": 2,
+      "method": "tools/list",
+      "params": {}
+    }
+  },
+  "expected_output": {
+    "id_correlation": "must_match_input_id",
+    "assertions": [
+      { "path": "jsonrpc", "op": "eq", "value": "2.0" },
+      { "path": "id", "op": "eq_input_id" },
+      { "path": "result.tools", "op": "exists" },
+      { "path": "result.tools", "op": "typeof", "value": "array" },
+      { "path": "result.tools", "op": "length_gte", "value": 1 },
+      { "path": "error", "op": "not_exists" }
+    ]
+  }
+}

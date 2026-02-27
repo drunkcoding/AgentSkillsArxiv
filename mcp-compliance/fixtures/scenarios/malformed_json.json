@@ -1,0 +1,25 @@
+{
+  "id": "malformed_json",
+  "description": "Wire line that cannot be parsed as JSON at all. Server must respond with a JSON-RPC Parse Error (code -32700). The response id may be null since no id can be extracted from malformed input.",
+  "transport": "stdio",
+  "framing": "newline_delimited_json",
+  "scenario_type": "request_error",
+  "input": {
+    "wire_line": "this is not valid json at all",
+    "parsed": null,
+    "notes": "Wire line is intentionally unparseable. Append '\\n' via buildStdioLine() before writing to stdin."
+  },
+  "expected_output": {
+    "id_correlation": "may_be_null",
+    "assertions": [
+      { "path": "jsonrpc", "op": "eq", "value": "2.0" },
+      { "path": "error", "op": "exists" },
+      { "path": "error.code", "op": "eq", "value": -32700 },
+      { "path": "error.message", "op": "exists" },
+      { "path": "result", "op": "not_exists" }
+    ],
+    "error_code_reference": {
+      "-32700": "Parse error — server received text that is not valid JSON"
+    }
+  }
+}

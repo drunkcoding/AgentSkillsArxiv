@@ -70,19 +70,19 @@ describe('ast-grep MCP Server Smoke Tests', () => {
 
     expect(response.jsonrpc).toBe('2.0');
     expect(response.result).toBeDefined();
-    expect(Array.isArray(response.result)).toBe(true);
-    expect((response.result as any[]).length).toBeGreaterThan(0);
+    const result = response.result as any;
+    expect(result).toHaveProperty('tools');
+    expect(Array.isArray(result.tools)).toBe(true);
+    expect(result.tools.length).toBeGreaterThan(0);
 
     // Verify tool structure
-    const tools = response.result as any[];
-    tools.forEach((tool) => {
+    result.tools.forEach((tool: any) => {
       expect(tool).toHaveProperty('name');
       expect(tool).toHaveProperty('description');
       expect(typeof tool.name).toBe('string');
       expect(typeof tool.description).toBe('string');
     });
   });
-
   it('should handle unknown method with error', async () => {
     const response = await harness.send({
       jsonrpc: '2.0',
@@ -120,3 +120,4 @@ describe('ast-grep MCP Server Smoke Tests', () => {
     expect(!(response.result && response.error)).toBe(true); // Not both
   });
 });
+

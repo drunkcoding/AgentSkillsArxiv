@@ -1,0 +1,64 @@
+{
+  "version": "1.0.0",
+  "description": "Manifest of stdio JSON-RPC fixture scenarios for MCP compliance testing. All scenarios are language-agnostic JSON files consumable by both TypeScript (Vitest) and Python (pytest) test suites.",
+  "framing_rule": "Each wire_line in a scenario is newline-delimited JSON (append '\\n' before writing to stdin). No Content-Length headers are used.",
+  "scenarios": [
+    {
+      "id": "initialize_happy",
+      "file": "scenarios/initialize_happy.json",
+      "scenario_type": "request_response",
+      "method": "initialize",
+      "description": "Successful MCP initialization handshake"
+    },
+    {
+      "id": "initialized_notification",
+      "file": "scenarios/initialized_notification.json",
+      "scenario_type": "notification",
+      "method": "notifications/initialized",
+      "description": "Post-init lifecycle notification; no response expected"
+    },
+    {
+      "id": "tools_list",
+      "file": "scenarios/tools_list.json",
+      "scenario_type": "request_response",
+      "method": "tools/list",
+      "description": "List available tools; result.tools must be a non-empty array"
+    },
+    {
+      "id": "tools_call_valid",
+      "file": "scenarios/tools_call_valid.json",
+      "scenario_type": "request_response",
+      "method": "tools/call",
+      "description": "Valid tool invocation; result.content must be an array"
+    },
+    {
+      "id": "malformed_json",
+      "file": "scenarios/malformed_json.json",
+      "scenario_type": "request_error",
+      "method": null,
+      "description": "Unparseable wire line; server must return error code -32700"
+    },
+    {
+      "id": "invalid_envelope",
+      "file": "scenarios/invalid_envelope.json",
+      "scenario_type": "request_error",
+      "method": "foo",
+      "description": "Valid JSON but missing jsonrpc/id fields; server must return error code -32600"
+    },
+    {
+      "id": "unknown_method",
+      "file": "scenarios/unknown_method.json",
+      "scenario_type": "request_error",
+      "method": "nonexistent/method",
+      "description": "Unknown method on a valid envelope; server must return error code -32601"
+    }
+  ],
+  "assertion_ops": {
+    "eq": "Exact equality between actual value and assertion.value",
+    "eq_input_id": "Actual value must equal the id from the corresponding input request",
+    "exists": "Path must be present in the response object",
+    "not_exists": "Path must be absent from the response object",
+    "typeof": "Actual value must match assertion.value type string ('string', 'number', 'boolean', 'object', 'array')",
+    "length_gte": "Actual array must have length >= assertion.value"
+  }
+}

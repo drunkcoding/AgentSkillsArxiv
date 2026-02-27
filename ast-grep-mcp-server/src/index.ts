@@ -1,5 +1,5 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { StrictStdioServerTransport } from "./strictStdioTransport.js";
 import type { AstGrepMatch, AstGrepScanResult } from "./types.js";
 import {
   SearchInputSchema,
@@ -31,10 +31,13 @@ const server = new McpServer({
 // 1. ast_grep_search
 // ---------------------------------------------------------------------------
 
-server.tool(
+server.registerTool(
   "ast_grep_search",
-  "Search code using structural AST patterns with meta-variables ($VAR, $$$). Returns matching locations and code.",
-  SearchInputSchema.shape,
+  {
+    description:
+      "Search code using structural AST patterns with meta-variables ($VAR, $$$). Returns matching locations and code.",
+    inputSchema: SearchInputSchema,
+  },
   async ({ pattern, language, paths, globs }) => {
     const args = [
       "run",
@@ -62,10 +65,13 @@ server.tool(
 // 2. ast_grep_rewrite_preview
 // ---------------------------------------------------------------------------
 
-server.tool(
+server.registerTool(
   "ast_grep_rewrite_preview",
-  "Preview structural rewrites without applying them. Shows before/after for each match.",
-  RewritePreviewInputSchema.shape,
+  {
+    description:
+      "Preview structural rewrites without applying them. Shows before/after for each match.",
+    inputSchema: RewritePreviewInputSchema,
+  },
   async ({ pattern, rewrite, language, paths, globs }) => {
     const args = [
       "run",
@@ -95,10 +101,13 @@ server.tool(
 // 3. ast_grep_rewrite_apply
 // ---------------------------------------------------------------------------
 
-server.tool(
+server.registerTool(
   "ast_grep_rewrite_apply",
-  "Apply structural rewrites to files on disk. Modifies files in place. Preview first with ast_grep_rewrite_preview.",
-  RewriteApplyInputSchema.shape,
+  {
+    description:
+      "Apply structural rewrites to files on disk. Modifies files in place. Preview first with ast_grep_rewrite_preview.",
+    inputSchema: RewriteApplyInputSchema,
+  },
   async ({ pattern, rewrite, language, paths, globs }) => {
     // Phase 1: preview to count matches
     const previewArgs = [
@@ -166,10 +175,13 @@ server.tool(
 // 4. ast_grep_scan
 // ---------------------------------------------------------------------------
 
-server.tool(
+server.registerTool(
   "ast_grep_scan",
-  "Run custom YAML lint rules against code. Returns diagnostics with severity, message, and location.",
-  ScanInputSchema.shape,
+  {
+    description:
+      "Run custom YAML lint rules against code. Returns diagnostics with severity, message, and location.",
+    inputSchema: ScanInputSchema,
+  },
   async ({ rule, paths }) => {
     const args = [
       "scan",
@@ -194,10 +206,13 @@ server.tool(
 // 5. ast_grep_debug_pattern
 // ---------------------------------------------------------------------------
 
-server.tool(
+server.registerTool(
   "ast_grep_debug_pattern",
-  "Show the parsed AST of a pattern. Useful for debugging why a pattern does or does not match.",
-  DebugPatternInputSchema.shape,
+  {
+    description:
+      "Show the parsed AST of a pattern. Useful for debugging why a pattern does or does not match.",
+    inputSchema: DebugPatternInputSchema,
+  },
   async ({ pattern, language, paths }) => {
     const args = [
       "run",
@@ -224,7 +239,7 @@ server.tool(
 // ---------------------------------------------------------------------------
 
 async function main() {
-  const transport = new StdioServerTransport();
+  const transport = new StrictStdioServerTransport();
   await server.connect(transport);
 }
 

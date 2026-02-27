@@ -1,0 +1,35 @@
+{
+  "id": "initialize_happy",
+  "description": "Successful MCP initialization handshake. Client sends initialize with protocolVersion and clientInfo; server must respond with a matching id, result.protocolVersion, result.serverInfo, and result.capabilities.",
+  "transport": "stdio",
+  "framing": "newline_delimited_json",
+  "scenario_type": "request_response",
+  "input": {
+    "wire_line": "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"initialize\",\"params\":{\"protocolVersion\":\"2024-11-05\",\"capabilities\":{},\"clientInfo\":{\"name\":\"test-client\",\"version\":\"1.0.0\"}}}",
+    "parsed": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "method": "initialize",
+      "params": {
+        "protocolVersion": "2024-11-05",
+        "capabilities": {},
+        "clientInfo": {
+          "name": "test-client",
+          "version": "1.0.0"
+        }
+      }
+    }
+  },
+  "expected_output": {
+    "id_correlation": "must_match_input_id",
+    "assertions": [
+      { "path": "jsonrpc", "op": "eq", "value": "2.0" },
+      { "path": "id", "op": "eq_input_id" },
+      { "path": "result.protocolVersion", "op": "eq", "value": "2024-11-05" },
+      { "path": "result.serverInfo", "op": "exists" },
+      { "path": "result.serverInfo.name", "op": "exists" },
+      { "path": "result.capabilities", "op": "exists" },
+      { "path": "error", "op": "not_exists" }
+    ]
+  }
+}

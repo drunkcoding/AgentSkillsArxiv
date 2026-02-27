@@ -1,0 +1,17 @@
+{
+  "id": "initialized_notification",
+  "description": "Post-initialization lifecycle notification. Client sends notifications/initialized after the initialize round-trip. No JSON-RPC id is present; server MUST NOT emit any response on stdout.",
+  "transport": "stdio",
+  "framing": "newline_delimited_json",
+  "scenario_type": "notification",
+  "input": {
+    "wire_line": "{\"jsonrpc\":\"2.0\",\"method\":\"notifications/initialized\",\"params\":{}}",
+    "parsed": {
+      "jsonrpc": "2.0",
+      "method": "notifications/initialized",
+      "params": {}
+    }
+  },
+  "expected_output": null,
+  "notes": "No response expected. Per MCP stdio contract, valid notifications must not produce any stdout frame. Diagnostic output to stderr is permitted."
+}

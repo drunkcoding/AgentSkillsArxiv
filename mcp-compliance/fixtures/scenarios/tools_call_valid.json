@@ -1,0 +1,34 @@
+{
+  "id": "tools_call_valid",
+  "description": "Valid tools/call request referencing the ast_grep_search tool. The tool name and arguments are server-specific; downstream tests should substitute the appropriate name for their target server. The protocol assertions (id correlation, result.content array) are universal.",
+  "transport": "stdio",
+  "framing": "newline_delimited_json",
+  "scenario_type": "request_response",
+  "input": {
+    "wire_line": "{\"jsonrpc\":\"2.0\",\"id\":3,\"method\":\"tools/call\",\"params\":{\"name\":\"ast_grep_search\",\"arguments\":{\"pattern\":\"console.log($$$)\",\"language\":\"javascript\",\"paths\":[\"/dev/null\"]}}}",
+    "parsed": {
+      "jsonrpc": "2.0",
+      "id": 3,
+      "method": "tools/call",
+      "params": {
+        "name": "ast_grep_search",
+        "arguments": {
+          "pattern": "console.log($$$)",
+          "language": "javascript",
+          "paths": ["/dev/null"]
+        }
+      }
+    },
+    "notes": "Tool name 'ast_grep_search' is specific to ast-grep-mcp-server. Tests targeting fdep-mcp-server must override params.name and params.arguments."
+  },
+  "expected_output": {
+    "id_correlation": "must_match_input_id",
+    "assertions": [
+      { "path": "jsonrpc", "op": "eq", "value": "2.0" },
+      { "path": "id", "op": "eq_input_id" },
+      { "path": "result.content", "op": "exists" },
+      { "path": "result.content", "op": "typeof", "value": "array" },
+      { "path": "error", "op": "not_exists" }
+    ]
+  }
+}

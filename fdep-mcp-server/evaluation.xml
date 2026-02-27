@@ -1,0 +1,42 @@
+<evaluation>
+  <qa_pair>
+    <question>If you send a tools/call request for 'fdep_graph' with extra top-level field 'unexpected' outside of the 'params' object, what is the JSON-RPC error code returned? Respond with the number only.</question>
+    <answer>-32602</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>When sending an 'initialize' request, if 'protocolVersion' is provided as an integer 1 instead of a string, what is the 'message' field in the error response? Respond with the exact string.</question>
+    <answer>Invalid params: protocolVersion must be a string</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>If a 'tools/call' request for 'fdep_graph' is sent before the server receives 'notifications/initialized', what error code is returned? Respond with the number only.</question>
+    <answer>-32002</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Call the 'fdep_graph' tool with a path that does not exist on the filesystem, such as '/tmp/non_existent_path_999'. Does the response contain a JSON-RPC 'error' object or a 'result' object with 'isError' set to true? Respond 'error' or 'result'.</question>
+    <answer>result</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Analyze the 'inputSchema' for the 'fdep_callers' tool. Is 'additionalProperties' set to True or False?</question>
+    <answer>False</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>If you send a JSON-RPC request with a 'method' that is not a string, what error code is returned? Respond with the number only.</question>
+    <answer>-32600</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>When calling 'analyze_function_deps', if the 'file' argument is missing from the 'params.arguments' object, what is the exact error message returned in the JSON-RPC error object? Respond with the string.</question>
+    <answer>Invalid params: missing required field 'name'</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>What is the 'protocolVersion' returned in the 'initialize' result? Respond with the version string.</question>
+    <answer>2024-11-05</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>If you send a request for 'tools/list' with an empty 'params' object before initialization, what error code is returned? Respond with the number only.</question>
+    <answer>-32002</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>If you send a 'tools/call' request for a tool named 'non_existent_tool', what error message is returned in the JSON-RPC error object? Respond with the exact string.</question>
+    <answer>Invalid params: unsupported tool 'non_existent_tool'</answer>
+  </qa_pair>
+</evaluation>

@@ -56,7 +56,7 @@ export const SearchInputSchema = z.object({
     .describe(
       "Glob patterns to include/exclude files, e.g. ['*.ts', '!node_modules/**']"
     ),
-});
+}).strict();
 
 export const RewritePreviewInputSchema = z.object({
   pattern: z.string().describe("Structural pattern to match"),
@@ -74,7 +74,7 @@ export const RewritePreviewInputSchema = z.object({
     .array(z.string())
     .optional()
     .describe("Glob patterns to include/exclude files"),
-});
+}).strict();
 
 export const RewriteApplyInputSchema = z.object({
   pattern: z.string().describe("Structural pattern to match"),
@@ -90,7 +90,7 @@ export const RewriteApplyInputSchema = z.object({
     .array(z.string())
     .optional()
     .describe("Glob patterns to include/exclude files"),
-});
+}).strict();
 
 export const ScanInputSchema = z.object({
   rule: z
@@ -102,7 +102,7 @@ export const ScanInputSchema = z.object({
     .array(z.string())
     .optional()
     .describe("Paths to scan. Defaults to current directory if omitted"),
-});
+}).strict();
 
 export const DebugPatternInputSchema = z.object({
   pattern: z
@@ -113,4 +113,4 @@ export const DebugPatternInputSchema = z.object({
     .array(z.string())
     .optional()
     .describe("Paths to run against. Defaults to current directory if omitted"),
-});
+}).strict();

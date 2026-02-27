@@ -1,0 +1,28 @@
+{
+  "id": "invalid_envelope",
+  "description": "Valid JSON but invalid JSON-RPC 2.0 envelope: the jsonrpc version field is absent and no id is present. Server must respond with an Invalid Request error (code -32600). Response id should be null.",
+  "transport": "stdio",
+  "framing": "newline_delimited_json",
+  "scenario_type": "request_error",
+  "input": {
+    "wire_line": "{\"method\":\"foo\",\"params\":{}}",
+    "parsed": {
+      "method": "foo",
+      "params": {}
+    },
+    "notes": "Missing 'jsonrpc' and 'id' fields make this a malformed JSON-RPC envelope even though the JSON itself is syntactically valid."
+  },
+  "expected_output": {
+    "id_correlation": "may_be_null",
+    "assertions": [
+      { "path": "jsonrpc", "op": "eq", "value": "2.0" },
+      { "path": "error", "op": "exists" },
+      { "path": "error.code", "op": "eq", "value": -32600 },
+      { "path": "error.message", "op": "exists" },
+      { "path": "result", "op": "not_exists" }
+    ],
+    "error_code_reference": {
+      "-32600": "Invalid Request — JSON was received but it is not a valid JSON-RPC 2.0 Request object"
+    }
+  }
+}

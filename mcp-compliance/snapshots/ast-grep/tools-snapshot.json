@@ -1,0 +1,92 @@
+{
+  "server": "ast-grep-mcp-server",
+  "snapshot_date": "2026-02-27",
+  "tools": [
+    {
+      "name": "ast_grep_search",
+      "description": "Search code using structural AST patterns with meta-variables ($VAR, $$$). Returns matching locations and code."
+    },
+    {
+      "name": "ast_grep_rewrite_preview",
+      "description": "Preview structural rewrites without applying them. Shows before/after for each match."
+    },
+    {
+      "name": "ast_grep_rewrite_apply",
+      "description": "Apply structural rewrites to files on disk. Modifies files in place. Preview first with ast_grep_rewrite_preview."
+    },
+    {
+      "name": "ast_grep_scan",
+      "description": "Run custom YAML lint rules against code. Returns diagnostics with severity, message, and location."
+    },
+    {
+      "name": "ast_grep_debug_pattern",
+      "description": "Show the parsed AST of a pattern. Useful for debugging why a pattern does or does not match."
+    }
+  ],
+  "protocol_responses": {
+    "initialize_response": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "result": {
+        "protocolVersion": "2024-11-05",
+        "capabilities": {},
+        "serverInfo": {
+          "name": "ast-grep",
+          "version": "1.0.0"
+        }
+      }
+    },
+    "tools_list_response": {
+      "jsonrpc": "2.0",
+      "id": 2,
+      "result": {
+        "tools": "[5 tools listed above]"
+      }
+    },
+    "parse_error_response": {
+      "jsonrpc": "2.0",
+      "id": null,
+      "error": {
+        "code": -32700,
+        "message": "Parse error"
+      }
+    },
+    "invalid_request_response": {
+      "jsonrpc": "2.0",
+      "id": null,
+      "error": {
+        "code": -32600,
+        "message": "Invalid Request"
+      }
+    },
+    "method_not_found_response": {
+      "jsonrpc": "2.0",
+      "id": 3,
+      "error": {
+        "code": -32601,
+        "message": "Method not found"
+      }
+    },
+    "invalid_params_response": {
+      "jsonrpc": "2.0",
+      "id": 4,
+      "error": {
+        "code": -32602,
+        "message": "Invalid params"
+      }
+    },
+    "tool_error_response": {
+      "jsonrpc": "2.0",
+      "id": 5,
+      "result": {
+        "isError": true,
+        "content": [
+          {
+            "type": "text",
+            "text": "Tool execution failed"
+          }
+        ]
+      }
+    }
+  }
+}

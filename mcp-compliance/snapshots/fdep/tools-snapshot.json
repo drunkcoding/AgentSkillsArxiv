@@ -1,0 +1,84 @@
+{
+  "server": "fdep-mcp-server",
+  "snapshot_date": "2026-02-27",
+  "tools": [
+    {
+      "name": "fdep_graph",
+      "description": "Build call graph for source paths"
+    },
+    {
+      "name": "fdep_callers",
+      "description": "Find callers for a given function"
+    },
+    {
+      "name": "analyze_function_deps",
+      "description": "Analyze dependency information for a file"
+    }
+  ],
+  "protocol_responses": {
+    "initialize_response": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "result": {
+        "protocolVersion": "2024-11-05",
+        "capabilities": {},
+        "serverInfo": {
+          "name": "fdep",
+          "version": "1.0.0"
+        }
+      }
+    },
+    "tools_list_response": {
+      "jsonrpc": "2.0",
+      "id": 2,
+      "result": {
+        "tools": "[3 tools listed above]"
+      }
+    },
+    "parse_error_response": {
+      "jsonrpc": "2.0",
+      "id": null,
+      "error": {
+        "code": -32700,
+        "message": "Parse error"
+      }
+    },
+    "invalid_request_response": {
+      "jsonrpc": "2.0",
+      "id": null,
+      "error": {
+        "code": -32600,
+        "message": "Invalid Request"
+      }
+    },
+    "method_not_found_response": {
+      "jsonrpc": "2.0",
+      "id": 3,
+      "error": {
+        "code": -32601,
+        "message": "Method not found"
+      }
+    },
+    "invalid_params_response": {
+      "jsonrpc": "2.0",
+      "id": 4,
+      "error": {
+        "code": -32602,
+        "message": "Invalid params"
+      }
+    },
+    "tool_error_response": {
+      "jsonrpc": "2.0",
+      "id": 5,
+      "result": {
+        "isError": true,
+        "content": [
+          {
+            "type": "text",
+            "text": "Tool execution failed"
+          }
+        ]
+      }
+    }
+  }
+}

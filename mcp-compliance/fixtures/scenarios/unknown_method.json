@@ -1,0 +1,30 @@
+{
+  "id": "unknown_method",
+  "description": "Valid JSON-RPC 2.0 request whose method name is not registered on the server. Server must respond with a Method Not Found error (code -32601) and preserve the request id in the response.",
+  "transport": "stdio",
+  "framing": "newline_delimited_json",
+  "scenario_type": "request_error",
+  "input": {
+    "wire_line": "{\"jsonrpc\":\"2.0\",\"id\":5,\"method\":\"nonexistent/method\",\"params\":{}}",
+    "parsed": {
+      "jsonrpc": "2.0",
+      "id": 5,
+      "method": "nonexistent/method",
+      "params": {}
+    }
+  },
+  "expected_output": {
+    "id_correlation": "must_match_input_id",
+    "assertions": [
+      { "path": "jsonrpc", "op": "eq", "value": "2.0" },
+      { "path": "id", "op": "eq_input_id" },
+      { "path": "error", "op": "exists" },
+      { "path": "error.code", "op": "eq", "value": -32601 },
+      { "path": "error.message", "op": "exists" },
+      { "path": "result", "op": "not_exists" }
+    ],
+    "error_code_reference": {
+      "-32601": "Method not found — method does not exist or is not available on this server"
+    }
+  }
+}
