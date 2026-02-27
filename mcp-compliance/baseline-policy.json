@@ -1,0 +1,95 @@
+{
+  "policy_id": "mcp-stdio-compliance-baseline",
+  "version": "1.0.0",
+  "applies_to": [
+    "ast-grep-mcp-server",
+    "fdep-mcp-server"
+  ],
+  "protocol_target": {
+    "json_rpc": "2.0",
+    "mcp_spec_channel": "stable",
+    "mcp_spec_reference": "https://modelcontextprotocol.io/specification/draft",
+    "mcp_spec_policy": "Track latest stable MCP draft semantics; do not rely on undocumented or experimental protocol fields.",
+    "transport_scope": "stdio only"
+  },
+  "sdk_branch_policy": {
+    "policy": "stable-release-only",
+    "requirements": [
+      "Pin each server to released SDK versions in dependency manifests.",
+      "Disallow prerelease/nightly SDK branches in CI and compliance tests.",
+      "Upgrade only after compliance suite remains green against this baseline."
+    ]
+  },
+  "stdio_contract": {
+    "stdout": "Protocol messages only (newline-delimited JSON-RPC).",
+    "stderr": "Diagnostics/logging only (non-protocol output).",
+    "rule": "Never emit logs, debug lines, progress text, or stack traces to stdout."
+  },
+  "error_boundary": {
+    "protocol_errors": {
+      "description": "Malformed JSON, invalid JSON-RPC envelopes, unknown methods, invalid params at protocol boundary.",
+      "shape": "JSON-RPC error object (code/message, optional data)",
+      "response_required_for_requests": true,
+      "response_required_for_notifications": false
+    },
+    "tool_errors": {
+      "description": "Tool handler/runtime failures after a valid tools/call request.",
+      "shape": "MCP tool error result (isError=true with actionable text; optionally structured data)",
+      "must_not_be_reported_as_protocol_error": true
+    }
+  },
+  "strictness_matrix": {
+    "invalid_params": {
+      "policy": "strict-reject",
+      "request_expected": {
+        "success": false,
+        "outcome": "protocol_error",
+        "notes": "Reject missing required fields, wrong types, and invalid enums."
+      },
+      "notification_expected": {
+        "success": false,
+        "outcome": "no_response",
+        "notes": "Server may log to stderr only."
+      }
+    },
+    "unknown_fields": {
+      "policy": "strict-reject",
+      "request_expected": {
+        "success": false,
+        "outcome": "protocol_error",
+        "notes": "Reject extra top-level request fields or unsupported params fields unless explicitly documented."
+      },
+      "notification_expected": {
+        "success": false,
+        "outcome": "no_response",
+        "notes": "Drop invalid notification payload and log on stderr only."
+      }
+    },
+    "notifications": {
+      "policy": "no-reply",
+      "request_expected": {
+        "success": true,
+        "outcome": "response",
+        "notes": "Normal request/response semantics with matching id."
+      },
+      "notification_expected": {
+        "success": true,
+        "outcome": "no_response",
+        "notes": "Valid notifications are processed without any stdout response frame."
+      }
+    },
+    "tool_errors": {
+      "policy": "structured-tool-failure",
+      "request_expected": {
+        "success": false,
+        "outcome": "tool_error",
+        "notes": "Return tool-level failure (isError=true) with actionable detail; keep protocol framing valid."
+      },
+      "notification_expected": {
+        "success": false,
+        "outcome": "no_response",
+        "notes": "No protocol response for notifications; diagnostic details may go to stderr."
+      }
+    }
+  }
+}
