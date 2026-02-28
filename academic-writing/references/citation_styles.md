@@ -2,13 +2,13 @@
 
 ## Overview
 
-Systems conference papers use numbered citation styles. The two primary formats are IEEE (used by USENIX venues like OSDI and NSDI) and ACM (used by ACM venues like SIGCOMM, MOBICOM, and SOSP). Both use numbered references in square brackets.
+Systems conference papers use numbered citation styles. The two primary formats are IEEE (used by USENIX venues like OSDI, NSDI, and FAST) and ACM (used by ACM venues like SIGCOMM, MOBICOM, and SOSP). Both use numbered references in square brackets.
 
 ## Choosing the Right Style
 
 | Venue | Citation Style | Template |
 |-------|---------------|----------|
-| OSDI, NSDI, ATC | USENIX (IEEE-like) | USENIX LaTeX template |
+| OSDI, NSDI, FAST, ATC | USENIX (IEEE-like) | USENIX LaTeX template |
 | SIGCOMM, MOBICOM, SOSP | ACM | ACM sigconf template |
 | EuroSys | ACM | ACM sigconf template |
 
@@ -266,7 +266,7 @@ When citing a framework, prefer citing the associated paper if one exists.
 **Best sources for systems papers:**
 1. **DBLP** (dblp.org): Most reliable for CS conferences. Search by author or title.
 2. **ACM Digital Library**: Official source for ACM conferences (SIGCOMM, MOBICOM, SOSP)
-3. **USENIX Proceedings**: Official source for USENIX venues (OSDI, NSDI, ATC)
+3. **USENIX Proceedings**: Official source for USENIX venues (OSDI, NSDI, FAST, ATC)
 4. **Google Scholar**: Click "Cite" then "BibTeX" (verify accuracy)
 5. **arXiv**: Click "Export BibTeX Citation" on abstract page
 

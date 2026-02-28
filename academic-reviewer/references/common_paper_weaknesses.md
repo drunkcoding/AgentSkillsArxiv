@@ -469,25 +469,26 @@ These are the most common weaknesses in systems paper submissions.
 
 The same weakness may carry different weight at different venues. Use these modifiers to adjust severity based on the target venue's values and review culture.
 
-| Weakness | OSDI | NSDI | SIGCOMM | MOBICOM | SOSP |
-|----------|------|------|---------|---------|------|
-| W-M1 (Problem doesn't matter) | Fatal | Fatal | Fatal | Fatal | Fatal |
-| W-M2 (No empirical evidence) | Major | **Fatal** (NSDI demands evidence) | Major | Major | Major |
-| W-D4 (Hypothetical system) | Fatal | Fatal | Major (theory papers exist) | Fatal | Fatal |
-| W-E1 (Unfair baselines) | Major | **Fatal** (deployment credibility) | Major-Fatal | Major-Fatal | Major |
-| W-E2 (Cherry-picked workloads) | Major | **Fatal** (realistic workloads required) | Major | **Fatal** (multi-environment required) | Major |
-| W-E4 (Missing error bars) | Minor-Major | Minor-Major | Minor-Major | **Major** (wireless variance is high) | Minor-Major |
-| W-E6 (Insufficient scale) | Major | **Fatal** (must show deployment scale) | Major | Minor-Major (mobile scale differs) | Major |
-| W-E7 (No ablation) | Major | Major | Major | Major | **Fatal** (must isolate principles) |
-| W-S1 (Incremental) | Fatal | Major-Fatal | Fatal | Fatal | Fatal |
-| W-P1 (Poor writing) | Minor-Major | Minor-Major | **Major** (high polish expected) | Minor-Major | **Major** (high polish expected) |
-| W-P5 (Wrong organization) | Minor | Minor | Minor-Major | Minor | Minor-Major |
+| Weakness | OSDI | NSDI | SIGCOMM | MOBICOM | SOSP | FAST |
+|----------|------|------|---------|---------|------|------|
+| W-M1 (Problem doesn't matter) | Fatal | Fatal | Fatal | Fatal | Fatal | Fatal |
+| W-M2 (No empirical evidence) | Major | **Fatal** (NSDI demands evidence) | Major | Major | Major | **Fatal** (storage problems must be demonstrated) |
+| W-D4 (Hypothetical system) | Fatal | Fatal | Major (theory papers exist) | Fatal | Fatal | Fatal |
+| W-E1 (Unfair baselines) | Major | **Fatal** (deployment credibility) | Major-Fatal | Major-Fatal | Major | **Major-Fatal** (fair storage benchmarking expected) |
+| W-E2 (Cherry-picked workloads) | Major | **Fatal** (realistic workloads required) | Major | **Fatal** (multi-environment required) | Major | **Fatal** (real storage workloads required) |
+| W-E4 (Missing error bars) | Minor-Major | Minor-Major | Minor-Major | **Major** (wireless variance is high) | Minor-Major | Major (storage I/O variance matters) |
+| W-E6 (Insufficient scale) | Major | **Fatal** (must show deployment scale) | Major | Minor-Major (mobile scale differs) | Major | Major (scalability matters for storage) |
+| W-E7 (No ablation) | Major | Major | Major | Major | **Fatal** (must isolate principles) | Major |
+| W-S1 (Incremental) | Fatal | Major-Fatal | Fatal | Fatal | Fatal | Major-Fatal |
+| W-P1 (Poor writing) | Minor-Major | Minor-Major | **Major** (high polish expected) | Minor-Major | **Major** (high polish expected) | Minor-Major |
+| W-P5 (Wrong organization) | Minor | Minor | Minor-Major | Minor | Minor-Major | Minor |
 
 **Key venue-specific notes:**
 - **NSDI**: Evaluation weaknesses are weighted more heavily than at other venues because NSDI's identity centers on deployed/deployable systems. An NSDI paper with a weak evaluation is like a SIGCOMM paper with no networking contribution.
 - **MOBICOM**: Missing error bars and single-environment testing are more severe than at other venues because wireless experiments inherently have high variance. What is "minor" at OSDI may be "major" at MOBICOM.
 - **SOSP**: Ablation studies are especially important because SOSP values understanding *why* a system works (principles), not just *that* it works. Without ablation, the paper fails to deliver on SOSP's core value proposition.
 - **SIGCOMM/SOSP**: Presentation weaknesses carry more weight because both venues expect polished papers. Poor writing at SIGCOMM is more likely to lead to rejection than at NSDI.
+- **FAST**: Cherry-picked workloads and missing empirical motivation are especially severe because FAST values practical storage impact and real workload evaluation. Deployed-systems papers get leniency on novelty (W-S1) but higher bar on evaluation rigor.
 
 ---
 
