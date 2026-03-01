@@ -8,17 +8,34 @@ from datetime import datetime
 from typing import Any
 
 from config import (
+    DEFAULT_AGENT,
     DEFAULT_CHANNEL,
     DISPATCH_CHECKLIST,
     MAX_CONCURRENT,
+    PLAN_GATE_ENABLED,
+    PLAN_GATE_TIMEOUT,
     POLL_INTERVAL,
+    SESSION_FORK_THRESHOLD,
+    SESSION_NEW_THRESHOLD,
+    SESSION_REGISTRY_PATH,
+    STUCK_JITTER_SIMILARITY,
+    STUCK_REPEAT_THRESHOLD,
+    STUCK_WINDOW_SIZE,
     TICKTICK_PROJECT,
 )
+from event_normalizer import TextEvent, ToolEvent, normalize
+import intent_router
+import llm_client
 from notifier import Notifier
 from opencode_client import OpenCodeClient, OpenCodeError
+from plan_gate import PlanGate
+from session_graph import SessionGraph
+from session_matcher import MatchResult, SessionMatcher
+from session_registry import SessionNode, SessionRegistry
 from ssh_hosts import validate_host
 from ssh_tunnel import FolderNotFoundError, LocalOpenCode, RemoteOpenCode, SSHTunnelError
 from state import Job, StateStore
+from stuck_detector import StuckDetector
 from task_parser import DispatchTask, ParseError, append_status, is_local, parse_task
 from ticktick_client import AuthError, TickTickClient, TickTickError
 
@@ -118,6 +135,16 @@ class Dispatcher:
         self._runtime_lock = threading.Lock()
         self._monitor_threads: dict[str, threading.Thread] = {}
         self._active_remotes: dict[str, RemoteOpenCode | LocalOpenCode] = {}
+
+        self._plan_gate = PlanGate(PLAN_GATE_TIMEOUT) if PLAN_GATE_ENABLED else None
+        self._session_registry = SessionRegistry(SESSION_REGISTRY_PATH)
+        self._session_matcher = SessionMatcher(
+            self._session_registry,
+            llm_classify=llm_client.classify,
+            fork_threshold=SESSION_FORK_THRESHOLD,
+            new_threshold=SESSION_NEW_THRESHOLD,
+        )
+        self._session_graph = SessionGraph(self._session_registry)
 
     def run_once(self) -> int:
         """Execute one poll cycle and start new dispatches up to available capacity."""
@@ -233,6 +260,7 @@ class Dispatcher:
                 except Exception as exc:  # noqa: BLE001
                     log.exception("Unexpected poll failure: %s", exc)
 
+                self._check_plan_timeouts()
                 self._shutdown.wait(self.poll_interval)
         except KeyboardInterrupt:
             log.info("Keyboard interrupt received, stopping dispatcher")
@@ -243,6 +271,26 @@ class Dispatcher:
 
     def dispatch_task(self, dt: DispatchTask) -> None:
         """Dispatch one parsed TickTick task onto a remote OpenCode serve session."""
+        resolved_agent = intent_router.route_agent(dt.title, dt.agent)
+        explicit_agent = (dt.agent or "").strip().lower()
+        if explicit_agent and explicit_agent in {"build", "plan", "deep"} and resolved_agent == explicit_agent:
+            agent_source = "explicit"
+        elif resolved_agent == DEFAULT_AGENT:
+            agent_source = "default"
+        else:
+            agent_source = "keyword"
+
+        try:
+            match_result = self._session_matcher.match(dt.host, dt.folder, dt.title)
+        except Exception as exc:  # noqa: BLE001
+            log.warning("Session matching failed for task %s: %s", dt.task_id, exc)
+            match_result = MatchResult(
+                decision="new_root",
+                matched_session_id="",
+                score=0.0,
+                reason=f"matcher error: {exc}",
+            )
+
         now = time.time()
         job = Job(
             task_id=dt.task_id,
@@ -255,6 +303,11 @@ class Dispatcher:
             last_event_at=now,
             notify_to=self.notify_to,
             channel=self.channel,
+            agent=resolved_agent,
+            agent_source=agent_source,
+            session_decision=match_result.decision,
+            origin_session_id=match_result.matched_session_id,
+            relevance_score=match_result.score,
             error="",
         )
         self.state.add_job(job)
@@ -305,8 +358,16 @@ class Dispatcher:
         self._tick_checklist(dt, 1)
 
         try:
-            session_id = client.create_session(dt.title[:50])
-            client.prompt_async(session_id, dt.title, agent=dt.agent)
+            if match_result.decision == "fork" and match_result.matched_session_id:
+                session_id = client.fork_session(match_result.matched_session_id)
+                if not session_id:
+                    session_id = client.create_session(dt.title[:50])
+            elif match_result.decision == "continue" and match_result.matched_session_id:
+                session_id = match_result.matched_session_id
+            else:
+                session_id = client.create_session(dt.title[:50])
+
+            client.prompt_async(session_id, dt.title, agent=resolved_agent)
         except OpenCodeError as exc:
             self._fail_job(job, remote, f"OpenCode dispatch failed: {exc}")
             return
@@ -361,6 +422,44 @@ class Dispatcher:
             )
             return
 
+        reply_lower = reply.lower()
+        if reply_lower.startswith("approve") and self._plan_gate:
+            self._plan_gate.register_approval(task_id, approved=True)
+            self.state.update_job(
+                task_id,
+                approval_state="approved",
+                pause_kind="",
+                pause_reason="",
+                pending_plan_text="",
+                pending_plan_message_id="",
+                approval_requested_at=0.0,
+                last_event_at=time.time(),
+                error="",
+            )
+            self._resume_paused_job(task_id)
+            return
+
+        if reply_lower.startswith("reject") and self._plan_gate:
+            self._plan_gate.register_approval(task_id, approved=False)
+            self.state.update_job(task_id, approval_state="rejected")
+            self._fail_job(job, self._get_active_remote(task_id), "Plan rejected by user")
+            return
+
+        if reply_lower.startswith("continue"):
+            self.state.update_job(
+                task_id,
+                pause_kind="",
+                pause_reason="",
+                last_event_at=time.time(),
+                error="",
+            )
+            self._resume_paused_job(task_id)
+            return
+
+        if reply_lower.startswith("abort"):
+            self._fail_job(job, self._get_active_remote(task_id), "Aborted by user after stuck detection")
+            return
+
         if job.local_port <= 0 or not job.password or not job.opencode_session_id:
             log.error(
                 "Task %s missing session connection metadata; reply not forwarded",
@@ -380,6 +479,92 @@ class Dispatcher:
             log.error("%s", reason)
             self._notify_failed(job.host, job.folder, job.title, reason)
 
+    def _get_active_remote(self, task_id: str) -> RemoteOpenCode | LocalOpenCode | None:
+        with self._runtime_lock:
+            return self._active_remotes.get(task_id)
+
+    def _resume_paused_job(self, task_id: str) -> None:
+        job = self._load_job(task_id)
+        if job is None:
+            log.error("Cannot resume; no job found for task_id=%s", task_id)
+            return
+
+        if job.local_port <= 0 or not job.password or not job.opencode_session_id:
+            self._fail_job(job, self._get_active_remote(task_id), "Resume failed: missing session metadata")
+            return
+
+        remote = self._get_active_remote(task_id)
+        if remote is None:
+            self._fail_job(job, None, "Resume failed: active runtime not found")
+            return
+
+        client = remote.client
+        if client is None:
+            self._fail_job(job, remote, "Resume failed: OpenCode client unavailable")
+            return
+
+        agent = job.agent or self._resolve_agent(job.project_id, job.task_id)
+        try:
+            client.prompt_async(job.opencode_session_id, job.title, agent=agent)
+        except OpenCodeError as exc:
+            self._fail_job(job, remote, f"Resume failed: {exc}")
+            return
+
+        self.state.update_job(
+            task_id,
+            status="running",
+            pause_kind="",
+            pause_reason="",
+            error="",
+            last_event_at=time.time(),
+        )
+
+        with self._runtime_lock:
+            existing_thread = self._monitor_threads.get(task_id)
+            if existing_thread and existing_thread.is_alive():
+                return
+
+        monitor_job = self._load_job(task_id) or job
+        monitor_thread = threading.Thread(
+            target=self._monitor_events,
+            args=(monitor_job, remote, job.opencode_session_id),
+            name=f"dispatch-monitor-{task_id[:8]}",
+            daemon=True,
+        )
+        with self._runtime_lock:
+            self._active_remotes[task_id] = remote
+            self._monitor_threads[task_id] = monitor_thread
+
+        try:
+            monitor_thread.start()
+        except RuntimeError as exc:
+            self._fail_job(monitor_job, remote, f"Failed to restart monitor thread: {exc}")
+
+    def _check_plan_timeouts(self) -> None:
+        """Check for plan-gated jobs whose approval timeout has expired and auto-resume them."""
+        if not self._plan_gate:
+            return
+
+        state_data = self.state.load()
+        for task_id, job in state_data.jobs.items():
+            if job.pause_kind != "plan_review" or job.approval_state != "pending":
+                continue
+
+            status = self._plan_gate.check_approval(task_id)
+            if status in ("timeout", "approved"):
+                log.info("Plan auto-approved (timeout) for task %s", task_id)
+                self.state.update_job(
+                    task_id,
+                    approval_state="auto_approved" if status == "timeout" else "approved",
+                    pause_kind="",
+                    pause_reason="",
+                    pending_plan_text="",
+                    pending_plan_message_id="",
+                    approval_requested_at=0.0,
+                    last_event_at=time.time(),
+                    error="",
+                )
+                self._resume_paused_job(task_id)
     def _tick_checklist(self, task: DispatchTask, index: int) -> None:
         if index < 0:
             return
@@ -434,13 +619,18 @@ class Dispatcher:
     def _monitor_events(
         self,
         job: Job,
-        remote: RemoteOpenCode,
+        remote: RemoteOpenCode | LocalOpenCode,
         session_id: str,
     ) -> None:
         current_session_id = session_id
         last_event_time = max(job.last_event_at, time.time())
         last_progress_notice = 0.0
         last_question_text = ""
+        stuck = StuckDetector(
+            STUCK_WINDOW_SIZE,
+            STUCK_REPEAT_THRESHOLD,
+            STUCK_JITTER_SIMILARITY,
+        )
 
         while not self._shutdown.is_set():
             client = remote.client
@@ -468,6 +658,71 @@ class Dispatcher:
                         last_event_at=now,
                         opencode_session_id=current_session_id,
                     )
+
+                    norm = normalize(event)
+
+                    if isinstance(norm, (ToolEvent, TextEvent)):
+                        signal = stuck.feed(norm)
+                        if signal:
+                            try:
+                                client.abort(current_session_id)
+                            except OpenCodeError as exc:
+                                log.warning(
+                                    "Failed aborting stuck session %s for task %s: %s",
+                                    current_session_id,
+                                    job.task_id,
+                                    exc,
+                                )
+
+                            current_job = self._load_job(job.task_id)
+                            loop_count = (
+                                (current_job.loop_count if current_job else job.loop_count) + 1
+                            )
+                            self.state.update_job(
+                                job.task_id,
+                                pause_kind="stuck",
+                                pause_reason=signal.description,
+                                loop_count=loop_count,
+                                last_event_at=time.time(),
+                            )
+
+                            if self.notifier:
+                                try:
+                                    self.notifier.stuck_alert(
+                                        job.host,
+                                        job.folder,
+                                        job.title,
+                                        signal.description,
+                                        job.task_id,
+                                    )
+                                except Exception:  # noqa: BLE001
+                                    log.exception("Stuck notification failed")
+                            return
+
+                    if self._plan_gate and isinstance(norm, TextEvent):
+                        candidate = self._plan_gate.detect_plan(norm.text)
+                        if candidate:
+                            try:
+                                client.abort(current_session_id)
+                            except OpenCodeError as exc:
+                                log.warning(
+                                    "Failed aborting plan-gated session %s for task %s: %s",
+                                    current_session_id,
+                                    job.task_id,
+                                    exc,
+                                )
+
+                            self.state.update_job(
+                                job.task_id,
+                                pause_kind="plan_review",
+                                pending_plan_text=candidate.text[:2000],
+                                pending_plan_message_id=candidate.message_id,
+                                approval_state="pending",
+                                approval_requested_at=time.time(),
+                                last_event_at=time.time(),
+                            )
+                            self._plan_gate.request_approval(candidate, self.notifier, job)
+                            return
 
                     if event_type == "assistant.message.completed":
                         self._finalize_done(job, remote, current_session_id)
@@ -539,7 +794,7 @@ class Dispatcher:
                 self._fail_job(job, remote, f"Monitor crashed: {exc}")
                 return
 
-    def _restart_and_resume(self, job: Job, remote: RemoteOpenCode) -> str | None:
+    def _restart_and_resume(self, job: Job, remote: RemoteOpenCode | LocalOpenCode) -> str | None:
         self._notify_progress(
             job.host,
             job.folder,
@@ -588,8 +843,9 @@ class Dispatcher:
         )
         return resumed_session
 
-    def _finalize_done(self, job: Job, remote: RemoteOpenCode, session_id: str) -> None:
+    def _finalize_done(self, job: Job, remote: RemoteOpenCode | LocalOpenCode, session_id: str) -> None:
         diff_summary = "0 files changed"
+        summary_bullets: list[str] = []
         client = remote.client
         if client is not None:
             try:
@@ -599,6 +855,18 @@ class Dispatcher:
             except OpenCodeError as exc:
                 log.warning("Diff retrieval failed for task %s: %s", job.task_id, exc)
 
+            try:
+                todos = client.get_todo(session_id)
+                if isinstance(todos, list):
+                    summary_bullets = [
+                        str(todo.get("content", todo.get("title", ""))).strip()
+                        for todo in todos[:10]
+                        if isinstance(todo, dict)
+                        and str(todo.get("content", todo.get("title", ""))).strip()
+                    ]
+            except OpenCodeError:
+                pass
+
         task = DispatchTask(
             task_id=job.task_id,
             project_id=job.project_id,
@@ -606,12 +874,27 @@ class Dispatcher:
             host=job.host,
             folder=job.folder,
             clone=None,
-            agent="build",
+            agent=job.agent or DEFAULT_AGENT,
         )
         self._tick_checklist(task, 3)
         self._tick_checklist(task, 4)
 
-        self._notify_done(job.host, job.folder, job.title, diff_summary)
+        if self.notifier and summary_bullets:
+            try:
+                self.notifier.done_with_summary(
+                    job.host,
+                    job.folder,
+                    job.title,
+                    diff_summary,
+                    summary_bullets,
+                    session_id,
+                )
+            except Exception:  # noqa: BLE001
+                log.exception("Enhanced done notification failed")
+                self._notify_done(job.host, job.folder, job.title, diff_summary)
+        else:
+            self._notify_done(job.host, job.folder, job.title, diff_summary)
+
         self._append_task_status(
             project_id=job.project_id,
             task_id=job.task_id,
@@ -627,13 +910,41 @@ class Dispatcher:
                 f"Could not complete TickTick task '{job.title}': {exc}"
             )
 
+        completed_at = time.time()
+        summary_text = (job.summary_text or "\n".join(summary_bullets[:5])).strip()
+        diff_count = 0
+        first_token = diff_summary.split(" ", 1)[0].strip()
+        if first_token.isdigit():
+            diff_count = int(first_token)
         self.state.update_job(
             job.task_id,
             status="done",
             error="",
             opencode_session_id=session_id,
-            last_event_at=time.time(),
+            summary_text=summary_text,
+            last_event_at=completed_at,
         )
+
+        try:
+            node = SessionNode(
+                session_id=session_id,
+                task_id=job.task_id,
+                host=job.host,
+                folder=job.folder,
+                title=job.title,
+                agent=job.agent or DEFAULT_AGENT,
+                summary_text=summary_text,
+                todo_items=summary_bullets[:10],
+                diff_stats={"files_changed": diff_count},
+                completed_at=completed_at,
+                parent_session_id=job.origin_session_id,
+            )
+            self._session_registry.add(node)
+
+            if job.origin_session_id and job.origin_session_id != session_id:
+                self._session_graph.add_edge(job.origin_session_id, session_id)
+        except Exception as exc:  # noqa: BLE001
+            log.warning("Session registry update failed for task %s: %s", job.task_id, exc)
 
         try:
             remote.kill()
@@ -695,18 +1006,22 @@ class Dispatcher:
         return state.jobs.get(task_id)
 
     def _resolve_agent(self, project_id: str, task_id: str) -> str:
+        current = self._load_job(task_id)
+        if current and current.agent:
+            return current.agent
+
         try:
             task = self._fetch_task(project_id, task_id)
         except (TickTickError, AuthError):
-            return "build"
+            return DEFAULT_AGENT
 
         if task is None:
-            return "build"
+            return DEFAULT_AGENT
 
         parsed = parse_task(task)
         if isinstance(parsed, DispatchTask):
             return parsed.agent
-        return "build"
+        return DEFAULT_AGENT
 
     def _fail_job(
         self,

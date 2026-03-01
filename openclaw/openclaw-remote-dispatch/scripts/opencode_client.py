@@ -155,6 +155,69 @@ class OpenCodeClient:
         self._request("POST", f"/session/{session_id}/abort")
 
     # ------------------------------------------------------------------
+    # Enhanced API (E1-E6 enhancements)
+    # ------------------------------------------------------------------
+
+    def list_agents(self) -> list[dict[str, Any]]:
+        """GET /agent — list available agents."""
+        return self._request("GET", "/agent")
+
+    def get_message(self, session_id: str, message_id: str) -> dict[str, Any]:
+        """GET /session/{id}/message/{msgID} — single message with all parts."""
+        return self._request("GET", f"/session/{session_id}/message/{message_id}")
+
+    def get_todo(self, session_id: str) -> list[dict[str, Any]]:
+        """GET /session/{id}/todo — todo list for session."""
+        return self._request("GET", f"/session/{session_id}/todo")
+
+    def summarize(
+        self,
+        session_id: str,
+        provider_id: str = "",
+        model_id: str = "",
+    ) -> bool:
+        """POST /session/{id}/summarize — generate session summary."""
+        body: dict[str, Any] = {}
+        if provider_id:
+            body["providerID"] = provider_id
+        if model_id:
+            body["modelID"] = model_id
+        result = self._request("POST", f"/session/{session_id}/summarize", body)
+        return bool(result) if isinstance(result, bool) else True
+
+    def fork_session(
+        self, session_id: str, message_id: str = ""
+    ) -> str:
+        """POST /session/{id}/fork — fork session, optionally at a message."""
+        body: dict[str, Any] = {}
+        if message_id:
+            body["messageID"] = message_id
+        result = self._request("POST", f"/session/{session_id}/fork", body)
+        return result.get("id", result.get("sessionID", ""))
+
+    def get_children(self, session_id: str) -> list[dict[str, Any]]:
+        """GET /session/{id}/children — child sessions."""
+        return self._request("GET", f"/session/{session_id}/children")
+
+    def create_child_session(
+        self, parent_id: str, title: str = ""
+    ) -> str:
+        """POST /session — create child session with parent."""
+        body: dict[str, Any] = {"parentID": parent_id}
+        if title:
+            body["title"] = title
+        result = self._request("POST", "/session", body)
+        return result.get("id", result.get("sessionID", ""))
+
+    def reply_to_question(self, request_id: str, reply_text: str) -> None:
+        """POST /question/{requestID}/reply — answer agent question."""
+        self._request(
+            "POST",
+            f"/question/{request_id}/reply",
+            {"reply": reply_text},
+        )
+
+    # ------------------------------------------------------------------
     # SSE event stream
     # ------------------------------------------------------------------
 

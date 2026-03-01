@@ -142,3 +142,60 @@ class Notifier:
     def blocked(self, host: str, folder: str, title: str, reason: str) -> None:
         tag = self._tag("⚠️", host, folder)
         self._send(f"{tag} *{title}*\n{reason}")
+
+    def plan_approval(
+        self,
+        host: str,
+        folder: str,
+        title: str,
+        plan_text: str,
+        task_id: str,
+    ) -> None:
+        """Notify user that a plan needs approval."""
+        tag = self._tag("📋", host, folder)
+        truncated = plan_text[:2000] + ("…" if len(plan_text) > 2000 else "")
+        self._send(
+            f"{tag} *{title}*\n"
+            f"Agent proposed a plan:\n\n{truncated}\n\n"
+            f"Reply *approve {task_id[:8]}* to proceed or *reject {task_id[:8]}* to abort.\n"
+            f"Auto-approves in 30 min."
+        )
+
+    def stuck_alert(
+        self,
+        host: str,
+        folder: str,
+        title: str,
+        description: str,
+        task_id: str,
+    ) -> None:
+        """Notify user that the agent appears stuck."""
+        tag = self._tag("🔁", host, folder)
+        self._send(
+            f"{tag} *{title}*\n"
+            f"Agent appears stuck: {description}\n\n"
+            f"Reply *continue {task_id[:8]}* to let it keep going, "
+            f"or *abort {task_id[:8]}* to stop."
+        )
+
+    def done_with_summary(
+        self,
+        host: str,
+        folder: str,
+        title: str,
+        diff_summary: str,
+        summary_bullets: list[str],
+        session_id: str,
+    ) -> None:
+        """Enhanced done notification with summary bullets and fork info."""
+        tag = self._tag("✅", host, folder)
+        bullets = "\n".join(f"  • {b}" for b in summary_bullets[:10])
+        msg = (
+            f"{tag} *{title}*\n"
+            f"Done. {diff_summary}\n"
+        )
+        if bullets:
+            msg += f"\n{bullets}\n"
+        if session_id:
+            msg += f"\nSession: `{session_id}`  (reply *fork {session_id[:12]}* to continue)"
+        self._send(msg)

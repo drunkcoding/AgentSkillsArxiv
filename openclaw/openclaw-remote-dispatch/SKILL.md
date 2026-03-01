@@ -1,11 +1,20 @@
 ---
 name: openclaw-remote-dispatch
-description: Poll TickTick for coding tasks and dispatch them to remote machines via SSH + OpenCode Serve. Includes full TickTick CLI (tasks, projects, create, complete, abandon, batch operations) with OAuth2 auth, rate limit handling, and WhatsApp progress notifications.
+description: Poll TickTick for coding tasks and dispatch them to remote machines via SSH + OpenCode Serve. Includes full TickTick CLI, intelligent agent routing (build/plan/deep), stuck/loop detection, plan verification gate, session knowledge management (DAG/forest), and LLM-powered session relevance matching with Haiku/GPT-5.1/GPT-4o fallback chain.
 ---
 
 # Remote Code Dispatch Plugin
 
 Poll a dedicated TickTick project (`🤖 CodeDispatch`) for coding tasks, SSH into remote machines, launch OpenCode Serve, dispatch prompts, monitor progress, and notify via WhatsApp. Also includes a full general-purpose TickTick CLI.
+
+### Enhancement Features (E1-E6)
+
+- **E1 Stuck Detection**: Monitors agent event stream for repeating tool calls (exact repeat, arg-jitter via rapidfuzz, error streaks, stall text). Pauses and notifies user when agent appears stuck.
+- **E2 Plan Gate**: Detects when agent proposes an implementation plan and pauses for user approval before execution. Auto-approves after configurable timeout (default 30 min).
+- **E3 Intent Routing**: Classifies task titles using keyword heuristics to select the best agent (`deep` for exploration, `plan` for analysis, `build` for implementation). Explicit `Agent:` field overrides.
+- **E4 Session Registry**: Persists session summaries (title, agent, diff stats, todo items, resume points) for job completion reports with bullet-point summaries.
+- **E5 Session Matching**: 3-stage funnel decides whether to fork an existing session or create new: hard filter (host+folder) → fuzzy scoring (rapidfuzz) → LLM tie-breaker (claude-haiku-4-5 → gpt-5.1 → gpt-4o, API key priority + subscription fallback, circuit breaker).
+- **E6 Session Graph**: DAG/forest of session relationships with cycle detection, tree visualization, and session merge support for knowledge management.
 
 ## Setup
 
@@ -183,14 +192,14 @@ Remote (via SSH):
 ```
 Remote: fuji3 → ~/projects/my-app
 Clone: git@github.com:user/repo.git    (optional)
-Agent: build                             (optional, default: build)
+Agent: build|plan|deep                   (optional, default: auto-detected from title)
 ```
 
 Local (same machine, no SSH):
 ```
 Local: ~/projects/my-app
 Clone: git@github.com:user/repo.git    (optional)
-Agent: build                             (optional, default: build)
+Agent: build|plan|deep                   (optional, default: auto-detected from title)
 ```
 
 The dispatcher automatically appends a status log below `---`:
@@ -249,6 +258,26 @@ When using this skill as an AI agent:
 | `DISPATCH_CHANNEL` | `whatsapp` | Notification channel |
 | `TICKTICK_REGION` | `intl` | `intl` or `cn` (dida365.com) |
 | `TICKTICK_CRED_PATH` | `~/.clawdbot/credentials/ticktick-cli/config.json` | OAuth2 credential file |
+| **Stuck Detection (E1)** | | |
+| `DISPATCH_STUCK_WINDOW` | `20` | Sliding window size for loop detection |
+| `DISPATCH_STUCK_THRESHOLD` | `3` | Repeat count to trigger stuck alert |
+| `DISPATCH_STUCK_JITTER_SIM` | `0.85` | Similarity threshold for arg-jitter detection |
+| **Plan Gate (E2)** | | |
+| `DISPATCH_PLAN_GATE_ENABLED` | `1` | Enable plan approval gate (`0` to disable) |
+| `DISPATCH_PLAN_GATE_TIMEOUT` | `1800` | Auto-approve timeout in seconds (30 min) |
+| **Agent Routing (E3)** | | |
+| `DISPATCH_DEFAULT_AGENT` | `build` | Default agent when no keyword match |
+| **LLM Fallback Chain (E5)** | | |
+| `DISPATCH_LLM_PROVIDERS` | `anthropic:claude-haiku-4-5,openai:gpt-5.1,openai:gpt-4o` | LLM provider fallback chain |
+| `DISPATCH_LLM_TIMEOUT` | `5` | LLM call timeout per provider (seconds) |
+| `DISPATCH_LLM_CIRCUIT_FAILS` | `3` | Failures before circuit breaker opens |
+| `DISPATCH_LLM_CIRCUIT_COOLDOWN` | `600` | Circuit breaker cooldown (10 min) |
+| **Session Matching (E5)** | | |
+| `DISPATCH_SESSION_FORK_THRESHOLD` | `0.78` | Fuzzy score to fork existing session |
+| `DISPATCH_SESSION_NEW_THRESHOLD` | `0.35` | Fuzzy score below which to create new session |
+| **Session Registry & Graph (E4/E6)** | | |
+| `DISPATCH_SESSION_REGISTRY_PATH` | `~/.openclaw/session-registry.json` | Session summary store |
+| `DISPATCH_SESSION_GRAPH_PATH` | `~/.openclaw/session-graph.json` | Session DAG store |
 
 ### Credential File
 

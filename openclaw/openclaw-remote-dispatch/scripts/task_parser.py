@@ -89,7 +89,7 @@ def parse_task(task: dict) -> DispatchTask | ParseError:
     agent_match = re.search(r"Agent:\s*(\S+)", header, re.IGNORECASE)
     agent = agent_match.group(1).strip().lower() if agent_match else "build"
 
-    if agent not in ("build", "plan"):
+    if agent not in ("build", "plan", "deep"):
         agent = "build"
 
     if not title:

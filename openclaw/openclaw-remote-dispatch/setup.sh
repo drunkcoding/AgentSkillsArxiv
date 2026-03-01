@@ -58,6 +58,11 @@ else
     echo "  ✗ WARNING: python3 not found in PATH"
 fi
 
+# Install Python dependencies
+echo ""
+echo "Installing Python dependencies..."
+pip install --user rapidfuzz 2>/dev/null && echo "  ✓ rapidfuzz installed" || echo "  ⚠ rapidfuzz install failed (optional: stuck detection arg-jitter)"
+
 # Check TickTick credentials
 CRED_FILE="${TICKTICK_CRED_PATH:-$HOME/.clawdbot/credentials/ticktick-cli/config.json}"
 if [ -f "$CRED_FILE" ]; then

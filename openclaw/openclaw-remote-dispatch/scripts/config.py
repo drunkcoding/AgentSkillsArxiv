@@ -1,7 +1,8 @@
 """Plugin configuration — defaults overridable via env vars or CLI flags."""
 
-import os
+from __future__ import annotations
 
+import os
 # TickTick
 TICKTICK_PROJECT = os.environ.get("DISPATCH_PROJECT", "🤖 CodeDispatch")
 TICKTICK_REGION = os.environ.get("TICKTICK_REGION", "cn")  # "cn" (dida365.com) or "intl" (ticktick.com)
@@ -52,3 +53,52 @@ DISPATCH_CHECKLIST = [
     "Monitor progress",
     "Collect results & diff",
 ]
+
+# ---------------------------------------------------------------------------
+# Enhancement E1: Stuck / loop detection
+# ---------------------------------------------------------------------------
+STUCK_WINDOW_SIZE = int(os.environ.get("DISPATCH_STUCK_WINDOW", "20"))
+STUCK_REPEAT_THRESHOLD = int(os.environ.get("DISPATCH_STUCK_THRESHOLD", "3"))
+STUCK_JITTER_SIMILARITY = float(os.environ.get("DISPATCH_STUCK_JITTER_SIM", "0.85"))
+
+# ---------------------------------------------------------------------------
+# Enhancement E2: Plan gate
+# ---------------------------------------------------------------------------
+PLAN_GATE_TIMEOUT = int(os.environ.get("DISPATCH_PLAN_GATE_TIMEOUT", "1800"))  # 30 min auto-approve
+PLAN_GATE_ENABLED = os.environ.get("DISPATCH_PLAN_GATE_ENABLED", "1") == "1"
+
+# ---------------------------------------------------------------------------
+# Enhancement E3: Intent / agent routing (keyword-based)
+# ---------------------------------------------------------------------------
+DEFAULT_AGENT = os.environ.get("DISPATCH_DEFAULT_AGENT", "build")
+
+# ---------------------------------------------------------------------------
+# Enhancement E5: LLM fallback chain for session matching
+# ---------------------------------------------------------------------------
+LLM_PROVIDERS = os.environ.get(
+    "DISPATCH_LLM_PROVIDERS",
+    "anthropic:claude-haiku-4-5,openai:gpt-5.1,openai:gpt-4o",
+)
+LLM_TIMEOUT = int(os.environ.get("DISPATCH_LLM_TIMEOUT", "5"))
+LLM_CIRCUIT_FAIL_THRESHOLD = int(os.environ.get("DISPATCH_LLM_CIRCUIT_FAILS", "3"))
+LLM_CIRCUIT_COOLDOWN = int(os.environ.get("DISPATCH_LLM_CIRCUIT_COOLDOWN", "600"))  # 10 min
+
+# Session matching thresholds
+SESSION_FORK_THRESHOLD = float(os.environ.get("DISPATCH_SESSION_FORK_THRESHOLD", "0.78"))
+SESSION_NEW_THRESHOLD = float(os.environ.get("DISPATCH_SESSION_NEW_THRESHOLD", "0.35"))
+
+# ---------------------------------------------------------------------------
+# Enhancement E4 / E6: Session registry & graph
+# ---------------------------------------------------------------------------
+SESSION_REGISTRY_PATH = os.path.expanduser(
+    os.environ.get(
+        "DISPATCH_SESSION_REGISTRY_PATH",
+        "~/.openclaw/session-registry.json",
+    )
+)
+SESSION_GRAPH_PATH = os.path.expanduser(
+    os.environ.get(
+        "DISPATCH_SESSION_GRAPH_PATH",
+        "~/.openclaw/session-graph.json",
+    )
+)

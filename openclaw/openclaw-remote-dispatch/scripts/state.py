@@ -36,6 +36,20 @@ class Job:
     notify_to: str = ""
     channel: str = "whatsapp"
     error: str = ""
+    # Enhancement fields
+    agent: str = "build"
+    agent_source: str = ""  # "explicit", "keyword", "default"
+    pause_kind: str = ""  # "stuck", "plan_review"
+    pause_reason: str = ""
+    loop_count: int = 0
+    approval_state: str = ""  # "pending", "approved", "rejected", "timeout"
+    pending_plan_text: str = ""
+    pending_plan_message_id: str = ""
+    approval_requested_at: float = 0.0
+    session_decision: str = ""  # "new_root", "fork", "continue"
+    origin_session_id: str = ""
+    relevance_score: float = 0.0
+    summary_text: str = ""
 
 
 @dataclass
