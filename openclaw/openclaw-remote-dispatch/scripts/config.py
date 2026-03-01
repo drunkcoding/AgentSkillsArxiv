@@ -44,14 +44,17 @@ STATE_PATH = os.path.expanduser(
 
 # Notification defaults
 DEFAULT_CHANNEL = os.environ.get("DISPATCH_CHANNEL", "whatsapp")
+NOTIFY_TARGET = os.environ.get("DISPATCH_NOTIFY_TARGET", "")
 
-# Dispatch checklist items (ticked off as stages complete)
-DISPATCH_CHECKLIST = [
-    "Validate remote host & folder",
-    "Launch opencode serve via SSH",
+DISPATCH_PHASES = [
+    "Validate host & folder",
+    "Launch opencode serve",
+    "Create session",
     "Send prompt to agent",
-    "Monitor progress",
-    "Collect results & diff",
+    "Monitor events",
+    "Validate completion",
+    "Collect results",
+    "Mark complete",
 ]
 
 # ---------------------------------------------------------------------------

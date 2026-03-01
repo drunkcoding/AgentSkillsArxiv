@@ -261,9 +261,18 @@ class TickTickClient:
             payload["items"] = items
         return self._request("POST", "/task", payload)
 
-    def update_task(self, task_id: str, fields: dict[str, Any]) -> dict[str, Any]:
-        """POST /task/{id} — partial update."""
-        return self._request("POST", f"/task/{task_id}", fields)
+    def update_task(self, task_id: str, fields: dict[str, Any], project_id: str = "") -> dict[str, Any]:
+        """POST /task/{id} — partial update.
+
+        The TickTick Open API v1 requires ``projectId`` in the request body
+        for updates to take effect.  This method ensures both ``id`` and
+        ``projectId`` are always present when available.
+        """
+        body = dict(fields)
+        body.setdefault("id", task_id)
+        if project_id:
+            body.setdefault("projectId", project_id)
+        return self._request("POST", f"/task/{task_id}", body)
 
     def complete_task(self, project_id: str, task_id: str) -> None:
         """POST /project/{pid}/task/{tid}/complete."""

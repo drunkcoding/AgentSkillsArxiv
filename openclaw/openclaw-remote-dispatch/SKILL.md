@@ -15,6 +15,10 @@ Poll a dedicated TickTick project (`🤖 CodeDispatch`) for coding tasks, SSH in
 - **E4 Session Registry**: Persists session summaries (title, agent, diff stats, todo items, resume points) for job completion reports with bullet-point summaries.
 - **E5 Session Matching**: 3-stage funnel decides whether to fork an existing session or create new: hard filter (host+folder) → fuzzy scoring (rapidfuzz) → LLM tie-breaker (claude-haiku-4-5 → gpt-5.1 → gpt-4o, API key priority + subscription fallback, circuit breaker).
 - **E6 Session Graph**: DAG/forest of session relationships with cycle detection, tree visualization, and session merge support for knowledge management.
+- **E7 Plan Append**: When a plan is approved (manually or auto-approved after timeout), the approved plan text is appended to the TickTick task content under a `--- Approved Plan ---` section.
+- **E8 Completion Validation**: Before marking a task complete on TickTick, validates that the agent actually made changes. If a plan was confirmed but no file changes or todo items exist, flags for manual review instead of auto-completing.
+- **E9 Phase Tracking**: Tracks 8 micro-phases of dispatch lifecycle as a markdown checklist in the TickTick task content field (not the API items field, which only works for CHECKLIST-kind tasks). Each phase shows ✅/⏳/⬜ status with metadata (port, session ID, agent name).
+- **E10 Stale Resume**: On daemon restart, checks each stale job against TickTick status before reattaching. If the task was deleted or completed externally, cleans up the runtime. If still open, reattaches to the running opencode serve process.
 
 ## Setup
 
@@ -256,7 +260,8 @@ When using this skill as an AI agent:
 | `DISPATCH_HEALTH_TIMEOUT` | `30` | OpenCode health check timeout (seconds) |
 | `DISPATCH_STATE_PATH` | `~/.openclaw/remote-dispatch-state.json` | State file location |
 | `DISPATCH_CHANNEL` | `whatsapp` | Notification channel |
-| `TICKTICK_REGION` | `intl` | `intl` or `cn` (dida365.com) |
+| `DISPATCH_NOTIFY_TARGET` | `` | Default notification target (E.164 phone for WhatsApp) |
+| `TICKTICK_REGION` | `cn` | `intl` or `cn` (dida365.com) |
 | `TICKTICK_CRED_PATH` | `~/.clawdbot/credentials/ticktick-cli/config.json` | OAuth2 credential file |
 | **Stuck Detection (E1)** | | |
 | `DISPATCH_STUCK_WINDOW` | `20` | Sliding window size for loop detection |
@@ -317,6 +322,32 @@ POST /batch/task
 - No webhook support (polling only)
 - Tags not readable via V1 API (write-only)
 - Some advanced features (focus time, habits) not supported
+
+## Known Issues & Gotchas
+
+### TickTick API
+
+1. **`update_task` requires `projectId` in body**: The TickTick Open API v1 `POST /task/{id}` endpoint silently ignores update payloads that don't include `projectId` in the request body. The API returns empty `{}` with no error. The `ticktick_client.py` now accepts an optional `project_id` parameter and auto-injects both `id` and `projectId`.
+
+2. **Checklist items only work on CHECKLIST-kind tasks**: The `items` field in task updates is silently ignored for tasks with `kind: "TASK"` (the default). Only tasks created with `kind: "CHECKLIST"` support items. Since dispatch tasks are created by users as regular tasks, the plugin uses markdown in the `content` field for phase tracking instead.
+
+3. **Task `kind` cannot be changed after creation**: Once a task is created with `kind: "TASK"`, you cannot convert it to `kind: "CHECKLIST"` via the update API. The `kind` field is immutable after creation.
+
+### Notifications
+
+4. **WhatsApp requires E.164 phone numbers**: The `--notify` flag must be an E.164 phone number (e.g., `+447123456789`), NOT a contact name. Using names like "Harry" causes: `Error: Unknown target "Harry" for WhatsApp. Hint: <E.164|group JID>`. Set via `DISPATCH_NOTIFY_TARGET` env var.
+
+### OpenCode Serve
+
+5. **Basic Auth format**: OpenCode Serve uses HTTP Basic Auth with username `opencode` and the generated password. The client correctly uses `Authorization: Basic base64(opencode:password)`, NOT Bearer tokens.
+
+6. **Shutdown endpoint returns non-JSON**: The `/global/shutdown` POST endpoint may return empty or non-JSON response. The client must catch `ValueError`/`json.JSONDecodeError` in addition to `OpenCodeError`.
+
+7. **SSE stream blocking**: The `stream_events()` call blocks on HTTP read. The 60-second idle detection timeout works when the stream produces events, but may not trigger for reattached sessions where no events are flowing. Consider adding a keepalive mechanism.
+
+### General
+
+8. **Stale job capacity**: Reattached stale jobs consume dispatch capacity. If `max_concurrent=3` and 2 stale jobs are reattached, only 1 slot remains for new tasks. The stale resume logic now checks TickTick task status first to avoid reattaching completed tasks.
 
 ## Troubleshooting
 

@@ -10,8 +10,9 @@ from typing import Any
 from config import (
     DEFAULT_AGENT,
     DEFAULT_CHANNEL,
-    DISPATCH_CHECKLIST,
+    DISPATCH_PHASES,
     MAX_CONCURRENT,
+    NOTIFY_TARGET,
     PLAN_GATE_ENABLED,
     PLAN_GATE_TIMEOUT,
     POLL_INTERVAL,
@@ -164,7 +165,14 @@ class Dispatcher:
         )
 
         state_data = self.state.load()
-        tracked_ids = set(state_data.jobs.keys())
+        tracked_ids = {
+            task_id
+            for task_id, job in state_data.jobs.items()
+            if not (
+                job.status == "failed"
+                and str(job.error).startswith("Daemon restart: could not reconnect")
+            )
+        }
         active_count = sum(
             1
             for job in state_data.jobs.values()
@@ -247,6 +255,8 @@ class Dispatcher:
             self.poll_interval,
             self.max_concurrent,
         )
+
+        self._resume_stale_jobs()
 
         try:
             while not self._shutdown.is_set():
@@ -355,7 +365,7 @@ class Dispatcher:
             last_event_at=time.time(),
             error="",
         )
-        self._tick_checklist(dt, 1)
+        self._tick_checklist(dt, 1, f"port:{remote.local_port}")
 
         try:
             if match_result.decision == "fork" and match_result.matched_session_id:
@@ -367,7 +377,9 @@ class Dispatcher:
             else:
                 session_id = client.create_session(dt.title[:50])
 
+            self._tick_checklist(dt, 2, f"sid:{session_id[:12]}")
             client.prompt_async(session_id, dt.title, agent=resolved_agent)
+            self._tick_checklist(dt, 3, f"agent:{resolved_agent}")
         except OpenCodeError as exc:
             self._fail_job(job, remote, f"OpenCode dispatch failed: {exc}")
             return
@@ -377,8 +389,6 @@ class Dispatcher:
             opencode_session_id=session_id,
             last_event_at=time.time(),
         )
-
-        self._tick_checklist(dt, 2)
         self._notify_progress(
             dt.host,
             dt.folder,
@@ -399,6 +409,7 @@ class Dispatcher:
 
         try:
             monitor_thread.start()
+            self._tick_checklist(dt, 4)
         except RuntimeError as exc:
             self._fail_job(job, remote, f"Failed to start monitor thread: {exc}")
 
@@ -425,11 +436,23 @@ class Dispatcher:
         reply_lower = reply.lower()
         if reply_lower.startswith("approve") and self._plan_gate:
             self._plan_gate.register_approval(task_id, approved=True)
+            if job.pending_plan_text:
+                plan_section = (
+                    f"\n\n--- Approved Plan ({_format_timestamp()}) ---\n"
+                    f"{job.pending_plan_text}"
+                )
+                self._append_task_status(
+                    project_id=job.project_id,
+                    task_id=job.task_id,
+                    status_line=plan_section,
+                    dedupe_token="--- Approved Plan",
+                )
             self.state.update_job(
                 task_id,
                 approval_state="approved",
                 pause_kind="",
                 pause_reason="",
+                confirmed_plan=job.pending_plan_text or job.confirmed_plan,
                 pending_plan_text="",
                 pending_plan_message_id="",
                 approval_requested_at=0.0,
@@ -540,24 +563,215 @@ class Dispatcher:
         except RuntimeError as exc:
             self._fail_job(monitor_job, remote, f"Failed to restart monitor thread: {exc}")
 
+    def _resume_stale_jobs(self) -> None:
+        state_data = self.state.load()
+        stale_jobs = {
+            task_id: job
+            for task_id, job in state_data.jobs.items()
+            if job.status in ("running", "pending") and job.local_port > 0
+        }
+        if not stale_jobs:
+            return
+
+        def _stop_stale_runtime(stale_job: Job) -> None:
+            if stale_job.local_port <= 0:
+                return
+
+            client: OpenCodeClient | None = None
+            client_is_healthy = False
+            try:
+                client = OpenCodeClient(
+                    f"http://127.0.0.1:{stale_job.local_port}",
+                    stale_job.password,
+                )
+                client_is_healthy = client.health()
+            except (OpenCodeError, OSError):
+                client = None
+
+            if client and client_is_healthy:
+                try:
+                    client._request("POST", "/global/shutdown")
+                except (OpenCodeError, OSError, ValueError):
+                    pass
+
+            try:
+                runtime: RemoteOpenCode | LocalOpenCode
+                if is_local(stale_job.host):
+                    runtime = LocalOpenCode(stale_job.folder)
+                    runtime._port = stale_job.local_port
+                else:
+                    runtime = RemoteOpenCode(stale_job.host, stale_job.folder)
+                    runtime._remote_port = stale_job.ssh_port
+                    runtime._local_port = stale_job.local_port
+                runtime._password = stale_job.password
+                if client and client_is_healthy:
+                    runtime._client = client
+                runtime.kill()
+            except Exception as exc:  # noqa: BLE001
+                log.warning(
+                    "Best-effort stale runtime cleanup failed for task %s (port %d): %s",
+                    stale_job.task_id,
+                    stale_job.local_port,
+                    exc,
+                )
+
+        for task_id, job in stale_jobs.items():
+            log.info(
+                "Attempting to resume stale job %s (host=%s, phase=%d)",
+                task_id,
+                job.host,
+                job.phase_index,
+            )
+
+            try:
+                ticktick_task = self._fetch_task(job.project_id, job.task_id)
+                if ticktick_task is None:
+                    log.info(
+                        "Stale job %s task deleted in TickTick; marking failed and skipping reattach",
+                        task_id,
+                    )
+                    _stop_stale_runtime(job)
+                    self._release_runtime(task_id)
+                    self.state.update_job(
+                        task_id,
+                        status="failed",
+                        error="TickTick task deleted before stale resume",
+                        last_event_at=time.time(),
+                    )
+                    continue
+
+                if not self._is_open_task(ticktick_task):
+                    log.info(
+                        "Stale job %s already closed in TickTick (status=%s); marking done",
+                        task_id,
+                        ticktick_task.get("status"),
+                    )
+                    _stop_stale_runtime(job)
+                    self._release_runtime(task_id)
+                    self.state.update_job(
+                        task_id,
+                        status="done",
+                        error="",
+                        last_event_at=time.time(),
+                    )
+                    continue
+            except (TickTickError, AuthError) as exc:
+                log.warning(
+                    "Could not verify TickTick status for stale job %s: %s; proceeding with reattach",
+                    task_id,
+                    exc,
+                )
+
+            try:
+                client = OpenCodeClient(f"http://127.0.0.1:{job.local_port}", job.password)
+                if client.health():
+                    log.info(
+                        "Reattached to running opencode on port %d for task %s",
+                        job.local_port,
+                        task_id,
+                    )
+
+                    remote: RemoteOpenCode | LocalOpenCode
+                    if is_local(job.host):
+                        remote = LocalOpenCode(job.folder)
+                        remote._client = client
+                        remote._port = job.local_port
+                    else:
+                        remote = RemoteOpenCode(job.host, job.folder)
+                        remote._client = client
+                        remote._remote_port = job.ssh_port
+                        remote._local_port = job.local_port
+                    remote._password = job.password
+
+                    session_id = job.opencode_session_id
+                    if not session_id:
+                        sessions = client.list_sessions()
+                        if sessions:
+                            session_id = str(sessions[-1].get("id", "")).strip()
+
+                    if session_id:
+                        self.state.update_job(
+                            task_id,
+                            status="running",
+                            opencode_session_id=session_id,
+                            last_event_at=time.time(),
+                            error="",
+                        )
+                        monitor_job = self._load_job(task_id) or job
+                        monitor_thread = threading.Thread(
+                            target=self._monitor_events,
+                            args=(monitor_job, remote, session_id),
+                            name=f"dispatch-monitor-{task_id[:8]}",
+                            daemon=True,
+                        )
+                        with self._runtime_lock:
+                            self._active_remotes[task_id] = remote
+                            self._monitor_threads[task_id] = monitor_thread
+
+                        try:
+                            monitor_thread.start()
+                            self._tick_checklist(monitor_job, 4)
+                            continue
+                        except RuntimeError:
+                            with self._runtime_lock:
+                                self._active_remotes.pop(task_id, None)
+                                self._monitor_threads.pop(task_id, None)
+                            raise
+            except (OpenCodeError, OSError, RuntimeError):
+                pass
+
+            log.warning(
+                "Could not reattach to task %s, marking as failed for re-dispatch",
+                task_id,
+            )
+            self.state.update_job(
+                task_id,
+                status="failed",
+                error=f"Daemon restart: could not reconnect (port {job.local_port})",
+                last_event_at=time.time(),
+            )
+            self._append_task_status(
+                project_id=job.project_id,
+                task_id=job.task_id,
+                status_line=f"⚠️ {_format_timestamp()} — Daemon restarted, could not resume",
+                dedupe_token="Daemon restarted",
+            )
+
     def _check_plan_timeouts(self) -> None:
         """Check for plan-gated jobs whose approval timeout has expired and auto-resume them."""
         if not self._plan_gate:
             return
 
         state_data = self.state.load()
-        for task_id, job in state_data.jobs.items():
-            if job.pause_kind != "plan_review" or job.approval_state != "pending":
+        for task_id in state_data.jobs:
+            current_job = self._load_job(task_id)
+            if current_job is None:
+                continue
+
+            if current_job.pause_kind != "plan_review" or current_job.approval_state != "pending":
                 continue
 
             status = self._plan_gate.check_approval(task_id)
             if status in ("timeout", "approved"):
-                log.info("Plan auto-approved (timeout) for task %s", task_id)
+                log.info("Plan auto-approved (%s) for task %s", status, task_id)
+                if current_job.pending_plan_text:
+                    section_title = "--- Auto-Approved Plan" if status == "timeout" else "--- Approved Plan"
+                    plan_section = (
+                        f"\n\n{section_title} ({_format_timestamp()}) ---\n"
+                        f"{current_job.pending_plan_text}"
+                    )
+                    self._append_task_status(
+                        project_id=current_job.project_id,
+                        task_id=current_job.task_id,
+                        status_line=plan_section,
+                        dedupe_token=section_title,
+                    )
                 self.state.update_job(
                     task_id,
                     approval_state="auto_approved" if status == "timeout" else "approved",
                     pause_kind="",
                     pause_reason="",
+                    confirmed_plan=current_job.pending_plan_text or current_job.confirmed_plan,
                     pending_plan_text="",
                     pending_plan_message_id="",
                     approval_requested_at=0.0,
@@ -565,9 +779,12 @@ class Dispatcher:
                     error="",
                 )
                 self._resume_paused_job(task_id)
-    def _tick_checklist(self, task: DispatchTask, index: int) -> None:
+
+    def _tick_checklist(self, task: DispatchTask | Job, index: int, metadata: str = "") -> None:
         if index < 0:
             return
+
+        self.state.update_job(task.task_id, phase_index=index)
 
         try:
             task_data = self._fetch_task(task.project_id, task.task_id)
@@ -583,34 +800,68 @@ class Dispatcher:
             log.warning("Checklist update skipped; task %s not found", task.task_id)
             return
 
-        existing_items = task_data.get("items", [])
-        items: list[dict[str, Any]] = []
-        if isinstance(existing_items, list):
-            for idx, item in enumerate(existing_items):
-                if not isinstance(item, dict):
-                    continue
-                merged = dict(item)
-                if "title" not in merged and idx < len(DISPATCH_CHECKLIST):
-                    merged["title"] = DISPATCH_CHECKLIST[idx]
-                raw_status = merged.get("status", 0)
-                try:
-                    merged["status"] = 1 if int(raw_status) == 1 else 0
-                except (TypeError, ValueError):
-                    merged["status"] = 0
-                items.append(merged)
+        content = str(task_data.get("content", "") or "")
+        section_header = "--- Phase Progress ---"
 
-        while len(items) < len(DISPATCH_CHECKLIST):
-            items.append({"title": DISPATCH_CHECKLIST[len(items)], "status": 0})
+        lines = content.splitlines()
+        section_start = -1
+        section_end = -1
+        existing_titles: list[str] = []
 
-        while len(items) <= index:
-            items.append({"title": f"Step {len(items) + 1}", "status": 0})
+        for idx, line in enumerate(lines):
+            if line.strip() == section_header:
+                section_start = idx
+                section_end = idx + 1
+                while section_end < len(lines):
+                    stripped = lines[section_end].strip()
+                    if not stripped:
+                        section_end += 1
+                        continue
+                    if stripped.startswith(("✅", "⏳", "⬜")):
+                        existing_titles.append(stripped[1:].strip())
+                        section_end += 1
+                        continue
+                    break
+                break
 
-        items[index]["status"] = 1
+        total_phases = max(len(DISPATCH_PHASES), index + 1, len(existing_titles))
+        phase_titles: list[str] = []
+        for idx in range(total_phases):
+            if idx < len(DISPATCH_PHASES):
+                phase_titles.append(DISPATCH_PHASES[idx])
+            else:
+                phase_titles.append(f"Step {idx + 1}")
+
+        for idx, existing_title in enumerate(existing_titles):
+            if existing_title.strip() and idx < len(phase_titles):
+                phase_titles[idx] = existing_title.strip()
+
+        if metadata.strip():
+            base_title = DISPATCH_PHASES[index] if index < len(DISPATCH_PHASES) else f"Step {index + 1}"
+            phase_titles[index] = f"{base_title} ({metadata.strip()})"
+
+        progress_lines = [section_header]
+        final_index = len(phase_titles) - 1
+        for idx, phase_title in enumerate(phase_titles):
+            marker = "⬜"
+            if idx < index:
+                marker = "✅"
+            elif idx == index:
+                marker = "✅" if idx == final_index else "⏳"
+            progress_lines.append(f"{marker} {phase_title}")
+
+        if section_start >= 0 and section_end >= section_start:
+            updated_lines = lines[:section_start] + progress_lines + lines[section_end:]
+            updated_content = "\n".join(updated_lines)
+        else:
+            progress_section = "\n".join(progress_lines)
+            updated_content = f"{content.rstrip()}\n\n{progress_section}" if content.strip() else progress_section
+
         try:
-            self.ticktick.update_task(task.task_id, {"items": items})
+            self.ticktick.update_task(task.task_id, {"content": updated_content}, project_id=task.project_id)
         except (TickTickError, AuthError) as exc:
             log.warning(
-                "Checklist update failed for task %s item %d: %s",
+                "Checklist update failed for task %s phase %d: %s",
                 task.task_id,
                 index,
                 exc,
@@ -867,48 +1118,61 @@ class Dispatcher:
             except OpenCodeError:
                 pass
 
-        task = DispatchTask(
-            task_id=job.task_id,
-            project_id=job.project_id,
-            title=job.title,
-            host=job.host,
-            folder=job.folder,
-            clone=None,
-            agent=job.agent or DEFAULT_AGENT,
-        )
-        self._tick_checklist(task, 3)
-        self._tick_checklist(task, 4)
+        self._tick_checklist(job, 5)
+        validation_ok = self._validate_completion(job, diff_summary, summary_bullets)
+        self._tick_checklist(job, 6)
 
-        if self.notifier and summary_bullets:
-            try:
-                self.notifier.done_with_summary(
-                    job.host,
-                    job.folder,
-                    job.title,
-                    diff_summary,
-                    summary_bullets,
-                    session_id,
-                )
-            except Exception:  # noqa: BLE001
-                log.exception("Enhanced done notification failed")
+        if validation_ok:
+            if self.notifier and summary_bullets:
+                try:
+                    self.notifier.done_with_summary(
+                        job.host,
+                        job.folder,
+                        job.title,
+                        diff_summary,
+                        summary_bullets,
+                        session_id,
+                    )
+                except Exception:  # noqa: BLE001
+                    log.exception("Enhanced done notification failed")
+                    self._notify_done(job.host, job.folder, job.title, diff_summary)
+            else:
                 self._notify_done(job.host, job.folder, job.title, diff_summary)
-        else:
-            self._notify_done(job.host, job.folder, job.title, diff_summary)
 
-        self._append_task_status(
-            project_id=job.project_id,
-            task_id=job.task_id,
-            status_line=f"✅ {_format_timestamp()} — Done. {diff_summary}",
-            dedupe_token="— Done.",
-        )
-
-        try:
-            self.ticktick.complete_task(job.project_id, job.task_id)
-        except (TickTickError, AuthError) as exc:
-            log.warning("Failed to complete TickTick task %s: %s", job.task_id, exc)
-            self._notify_dispatcher_error(
-                f"Could not complete TickTick task '{job.title}': {exc}"
+            self._append_task_status(
+                project_id=job.project_id,
+                task_id=job.task_id,
+                status_line=f"✅ {_format_timestamp()} — Done. {diff_summary}",
+                dedupe_token="— Done.",
             )
+
+            try:
+                self.ticktick.complete_task(job.project_id, job.task_id)
+                self._tick_checklist(job, 7)
+            except (TickTickError, AuthError) as exc:
+                log.warning("Failed to complete TickTick task %s: %s", job.task_id, exc)
+                self._notify_dispatcher_error(
+                    f"Could not complete TickTick task '{job.title}': {exc}"
+                )
+        else:
+            self._append_task_status(
+                project_id=job.project_id,
+                task_id=job.task_id,
+                status_line=(
+                    f"⚠️ {_format_timestamp()} — Completed but no changes detected. Needs review."
+                ),
+                dedupe_token="Needs review.",
+            )
+            if self.notifier:
+                try:
+                    self.notifier.question(
+                        job.host,
+                        job.folder,
+                        job.title,
+                        "Completed but no changes detected. Please verify before marking done.",
+                    )
+                except Exception:  # noqa: BLE001
+                    log.exception("Validation review notification failed")
 
         completed_at = time.time()
         summary_text = (job.summary_text or "\n".join(summary_bullets[:5])).strip()
@@ -919,7 +1183,7 @@ class Dispatcher:
         self.state.update_job(
             job.task_id,
             status="done",
-            error="",
+            error="" if validation_ok else "validation_pending",
             opencode_session_id=session_id,
             summary_text=summary_text,
             last_event_at=completed_at,
@@ -950,6 +1214,22 @@ class Dispatcher:
             remote.kill()
         finally:
             self._release_runtime(job.task_id)
+
+    def _validate_completion(self, job: Job, diff_summary: str, summary_bullets: list[str]) -> bool:
+        has_changes = not diff_summary.startswith("0 files")
+        has_todos = bool(summary_bullets)
+        has_plan = bool(job.confirmed_plan or job.pending_plan_text)
+
+        if not has_plan:
+            return True
+        if has_changes or has_todos:
+            return True
+
+        log.warning(
+            "Task %s has plan but no changes/todos — validation failed",
+            job.task_id,
+        )
+        return False
 
     def _is_open_task(self, task: dict[str, Any]) -> bool:
         status = task.get("status", 0)
@@ -995,7 +1275,7 @@ class Dispatcher:
 
         updated_content = append_status(content, status_line)
         try:
-            self.ticktick.update_task(task_id, {"content": updated_content})
+            self.ticktick.update_task(task_id, {"content": updated_content}, project_id=project_id)
             return True
         except (TickTickError, AuthError) as exc:
             log.warning("Failed updating task %s content: %s", task_id, exc)
@@ -1208,7 +1488,8 @@ def _build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--notify",
         metavar="TO",
-        help="Notification destination/contact (required for --daemon)",
+        default=NOTIFY_TARGET,
+        help="Notification target (E.164 phone for WhatsApp, e.g. +447123456789)",
     )
     parser.add_argument(
         "--channel",

@@ -46,6 +46,8 @@ class Job:
     pending_plan_text: str = ""
     pending_plan_message_id: str = ""
     approval_requested_at: float = 0.0
+    phase_index: int = 0
+    confirmed_plan: str = ""
     session_decision: str = ""  # "new_root", "fork", "continue"
     origin_session_id: str = ""
     relevance_score: float = 0.0

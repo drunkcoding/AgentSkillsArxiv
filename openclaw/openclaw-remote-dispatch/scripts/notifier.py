@@ -85,6 +85,21 @@ class Notifier:
         self.channel = channel
         self._limit = CHANNEL_LIMITS.get(channel.lower(), DEFAULT_LIMIT)
         self._openclaw = shutil.which("openclaw")
+        self._validate_target()
+
+    def _validate_target(self) -> bool:
+        if self.channel.lower() != "whatsapp":
+            return True
+
+        target = self.to.strip()
+        if target.startswith("+") and target[1:].isdigit():
+            return True
+
+        log.warning(
+            "Invalid WhatsApp notification target '%s'. Expected E.164 format like +447123456789",
+            self.to,
+        )
+        return False
 
     def _send(self, message: str) -> None:
         """Send a single message (auto-chunked if needed)."""
@@ -100,7 +115,7 @@ class Notifier:
                         self._openclaw,
                         "message",
                         "send",
-                        "--to",
+                        "--target",
                         self.to,
                         "--channel",
                         self.channel,
