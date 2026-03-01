@@ -24,7 +24,12 @@ def parse_ssh_hosts(config_path: str | None = None) -> list[str]:
 
 
 def validate_host(host: str, config_path: str | None = None) -> str | None:
-    """Return None if host is valid, or an error message with suggestions."""
+    """Return None if host is valid, or an error message with suggestions.
+
+    'local' and 'localhost' are always valid (local dispatch, no SSH needed).
+    """
+    if host.lower() in ("local", "localhost"):
+        return None
     known = parse_ssh_hosts(config_path)
     if host in known:
         return None
@@ -34,5 +39,5 @@ def validate_host(host: str, config_path: str | None = None) -> str | None:
         )
     return (
         f"Unknown host '{host}'. "
-        f"Available: {', '.join(sorted(known))}"
+        f"Available: local, {', '.join(sorted(known))}"
     )

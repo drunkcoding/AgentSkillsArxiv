@@ -3,8 +3,9 @@
 Task content format (first lines before '---' separator):
 
     Remote: <ssh_host> → <folder_path>
-    Clone: <git_url>           (optional)
-    Agent: build|plan          (optional, default: build)
+    Local: <folder_path>              (alternative — run on this machine)
+    Clone: <git_url>                  (optional)
+    Agent: build|plan                 (optional, default: build)
 
 Everything after '---' is status/progress log appended by the dispatcher.
 """
@@ -22,8 +23,8 @@ class DispatchTask:
     task_id: str
     project_id: str
     title: str  # the coding prompt
-    host: str  # SSH config host name
-    folder: str  # remote project path
+    host: str  # SSH config host name, or "local" for local dispatch
+    folder: str  # project path (remote or local)
     clone: str | None  # git clone URL (optional)
     agent: str  # "build" or "plan"
 
@@ -51,23 +52,34 @@ def parse_task(task: dict) -> DispatchTask | ParseError:
     # Extract header (everything before first '---' line)
     header = content.split("---")[0] if "---" in content else content
 
-    # Parse Remote: host → folder
+    # Parse Local: folder  OR  Remote: host → folder
+    local_match = re.search(
+        r"Local:\s*(.+)", header, re.IGNORECASE
+    )
     remote_match = re.search(
         r"Remote:\s*(\S+)\s*[→>]\s*(.+)", header, re.IGNORECASE
     )
-    if not remote_match:
+
+    if local_match:
+        host = "local"
+        folder = local_match.group(1).strip()
+    elif remote_match:
+        host = remote_match.group(1).strip()
+        folder = remote_match.group(2).strip()
+        # Allow 'Remote: local → /path' as shorthand for local dispatch
+        if host.lower() in ("local", "localhost"):
+            host = "local"
+    else:
         return ParseError(
             task_id=task_id,
             project_id=project_id,
             title=title,
             reason=(
-                "Missing 'Remote:' line in task content. "
-                "Expected format: Remote: <ssh_host> → <folder_path>"
+                "Missing 'Remote:' or 'Local:' line in task content. "
+                "Expected: Remote: <host> → <path>  or  Local: <path>"
             ),
         )
 
-    host = remote_match.group(1).strip()
-    folder = remote_match.group(2).strip()
 
     # Parse optional Clone: url
     clone_match = re.search(r"Clone:\s*(\S+)", header, re.IGNORECASE)
@@ -106,7 +118,10 @@ def build_task_content(
     agent: str = "build",
 ) -> str:
     """Build the content string for a new dispatch task."""
-    lines = [f"Remote: {host} → {folder}"]
+    if is_local(host):
+        lines = [f"Local: {folder}"]
+    else:
+        lines = [f"Remote: {host} → {folder}"]
     if clone:
         lines.append(f"Clone: {clone}")
     if agent != "build":
@@ -119,3 +134,9 @@ def append_status(existing_content: str, status_line: str) -> str:
     if "---" not in existing_content:
         existing_content = existing_content.rstrip() + "\n---"
     return existing_content.rstrip() + "\n" + status_line
+
+
+
+def is_local(host: str) -> bool:
+    """Return True if host indicates local dispatch (no SSH)."""
+    return host.lower() in ("local", "localhost", "")

@@ -179,8 +179,16 @@ Create tasks in the `🤖 CodeDispatch` project with this format:
 
 **Content** = dispatch metadata:
 
+Remote (via SSH):
 ```
 Remote: fuji3 → ~/projects/my-app
+Clone: git@github.com:user/repo.git    (optional)
+Agent: build                             (optional, default: build)
+```
+
+Local (same machine, no SSH):
+```
+Local: ~/projects/my-app
 Clone: git@github.com:user/repo.git    (optional)
 Agent: build                             (optional, default: build)
 ```
@@ -188,7 +196,7 @@ Agent: build                             (optional, default: build)
 The dispatcher automatically appends a status log below `---`:
 
 ```
-Remote: fuji3 → ~/projects/my-app
+Local: ~/projects/my-app
 ---
 🔄 2026-03-01 00:12 — Dispatched
 ✅ 2026-03-01 00:18 — Done. 3 files changed

@@ -17,9 +17,9 @@ from config import (
 from notifier import Notifier
 from opencode_client import OpenCodeClient, OpenCodeError
 from ssh_hosts import validate_host
-from ssh_tunnel import FolderNotFoundError, RemoteOpenCode, SSHTunnelError
+from ssh_tunnel import FolderNotFoundError, LocalOpenCode, RemoteOpenCode, SSHTunnelError
 from state import Job, StateStore
-from task_parser import DispatchTask, ParseError, append_status, parse_task
+from task_parser import DispatchTask, ParseError, append_status, is_local, parse_task
 from ticktick_client import AuthError, TickTickClient, TickTickError
 
 log = logging.getLogger(__name__)
@@ -117,7 +117,7 @@ class Dispatcher:
         self._shutdown = threading.Event()
         self._runtime_lock = threading.Lock()
         self._monitor_threads: dict[str, threading.Thread] = {}
-        self._active_remotes: dict[str, RemoteOpenCode] = {}
+        self._active_remotes: dict[str, RemoteOpenCode | LocalOpenCode] = {}
 
     def run_once(self) -> int:
         """Execute one poll cycle and start new dispatches up to available capacity."""
@@ -267,7 +267,10 @@ class Dispatcher:
         )
         self._tick_checklist(dt, 0)
 
-        remote = RemoteOpenCode(dt.host, dt.folder, dt.clone)
+        if is_local(dt.host):
+            remote: RemoteOpenCode | LocalOpenCode = LocalOpenCode(dt.folder, dt.clone)
+        else:
+            remote = RemoteOpenCode(dt.host, dt.folder, dt.clone)
         try:
             client = remote.start()
         except FolderNotFoundError as exc:
@@ -708,7 +711,7 @@ class Dispatcher:
     def _fail_job(
         self,
         job: Job,
-        remote: RemoteOpenCode | None,
+        remote: RemoteOpenCode | LocalOpenCode | None,
         reason: str,
     ) -> None:
         log.error("Task %s failed: %s", job.task_id, reason)

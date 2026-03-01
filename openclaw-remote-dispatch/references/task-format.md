@@ -8,8 +8,16 @@ Create tasks in the **🤖 CodeDispatch** TickTick project. The dispatcher picks
 
 **Content** = Dispatch metadata (first lines before `---`):
 
+For remote machines (via SSH):
 ```
 Remote: <ssh_host> → <folder_path>
+Clone: <git_url>                        (optional)
+Agent: build|plan                       (optional, default: build)
+```
+
+For local projects (same machine, no SSH):
+```
+Local: <folder_path>
 Clone: <git_url>                        (optional)
 Agent: build|plan                       (optional, default: build)
 ```
@@ -18,13 +26,16 @@ Agent: build|plan                       (optional, default: build)
 
 | Field | Required | Description |
 |---|---|---|
-| `Remote:` | Yes | SSH config host name → project folder on that machine |
-| `Clone:` | No | Git clone URL — used if the folder doesn't exist on the remote |
+| `Remote:` | Yes* | SSH config host name → project folder on that machine |
+| `Local:` | Yes* | Local folder path (alternative to Remote:) |
+| `Clone:` | No | Git clone URL — used if the folder doesn't exist |
 | `Agent:` | No | OpenCode agent to use: `build` (default) or `plan` |
+
+\* One of `Remote:` or `Local:` is required. You can also use `Remote: local → <path>` as a shorthand for local dispatch.
 
 ### Available SSH Hosts
 
-Check your `~/.ssh/config` for available host aliases. The dispatcher validates the host before dispatching.
+Check your `~/.ssh/config` for available host aliases. The dispatcher validates the host before dispatching. Use `Local:` for projects on the current machine.
 
 ## Examples
 
@@ -57,12 +68,31 @@ Remote: fuji3 → ~/projects/my-api
 Agent: plan
 ```
 
+### Local project
+
+**Title:** Add unit tests for the utils module
+
+**Content:**
+```
+Local: ~/projects/my-lib
+```
+
+### Local project with clone
+
+**Title:** Bootstrap the new microservice skeleton
+
+**Content:**
+```
+Local: ~/projects/new-svc
+Clone: git@github.com:user/new-svc.git
+```
+
 ## Checklist Items
 
 The dispatcher creates and ticks off checklist items as stages complete:
 
-1. ☐ Validate remote host & folder
-2. ☐ Launch opencode serve via SSH
+1. ☐ Validate host & folder (SSH or local)
+2. ☐ Launch opencode serve
 3. ☐ Send prompt to agent
 4. ☐ Monitor progress
 5. ☐ Collect results & diff
@@ -99,6 +129,7 @@ When `--notify` is set, the dispatcher sends tagged messages:
 
 1. **Keep titles concise but specific** — they're the actual prompt sent to the coding agent
 2. **One task per coding action** — don't batch multiple unrelated changes
-3. **Use the plan agent** for analysis/review tasks that shouldn't modify files
-4. **Add Clone: URL** for new repos — the dispatcher will git clone automatically
-5. **Check `--status`** to see active dispatch jobs: `python dispatcher.py --status`
+3. **Use `Local:` for same-machine projects** — no SSH overhead, faster startup
+4. **Use the plan agent** for analysis/review tasks that shouldn't modify files
+5. **Add Clone: URL** for new repos — the dispatcher will git clone automatically
+6. **Check `--status`** to see active dispatch jobs: `python dispatcher.py --status`
