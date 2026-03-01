@@ -23,8 +23,9 @@ set -euo pipefail
 # ─────────────────────────────────────────────────────────────────────────────
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-AST_GREP_DIR="${SCRIPT_DIR}/ast-grep-mcp-server"
-FDEP_DIR="${SCRIPT_DIR}/fdep-mcp-server"
+REPO_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
+AST_GREP_DIR="${REPO_ROOT}/mcp/ast-grep-mcp-server"
+FDEP_DIR="${REPO_ROOT}/mcp/fdep-mcp-server"
 
 # ─── Output helpers ──────────────────────────────────────────────────────────
 
@@ -268,7 +269,7 @@ install_claude_code() {
 
     local config_file
     if [ "$scope" = "project" ]; then
-        config_file="${SCRIPT_DIR}/.mcp.json"
+        config_file="${REPO_ROOT}/.mcp.json"
     else
         config_file="${HOME}/.claude.json"
     fi
@@ -294,7 +295,7 @@ install_codex() {
     # Codex uses TOML config
     local config_file
     if [ "$scope" = "project" ]; then
-        config_file="${SCRIPT_DIR}/.codex/config.toml"
+        config_file="${REPO_ROOT}/.codex/config.toml"
     else
         config_file="${HOME}/.codex/config.toml"
     fi
@@ -315,7 +316,7 @@ install_opencode() {
     # OpenCode uses opencode.json with "mcp" key; command is a single array
     local config_file
     if [ "$scope" = "project" ]; then
-        config_file="${SCRIPT_DIR}/opencode.json"
+        config_file="${REPO_ROOT}/opencode.json"
     else
         config_file="${HOME}/.config/opencode/opencode.json"
     fi
@@ -386,7 +387,7 @@ install_cline() {
     # Cline stores MCP settings in VS Code globalStorage
     local config_file
     if [ "$scope" = "project" ]; then
-        config_file="${SCRIPT_DIR}/.vscode/cline_mcp_settings.json"
+        config_file="${REPO_ROOT}/.vscode/cline_mcp_settings.json"
     else
         # Platform-specific globalStorage path
         case "$(uname -s)" in
@@ -416,7 +417,7 @@ install_copilot() {
     # Copilot reads MCP config from .vscode/mcp.json (project) or VS Code settings
     local config_file
     if [ "$scope" = "project" ]; then
-        config_file="${SCRIPT_DIR}/.vscode/mcp.json"
+        config_file="${REPO_ROOT}/.vscode/mcp.json"
     else
         case "$(uname -s)" in
             Darwin) config_file="${HOME}/Library/Application Support/Code/User/settings.json" ;;

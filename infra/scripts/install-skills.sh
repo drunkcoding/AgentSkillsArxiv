@@ -4,10 +4,11 @@ set -euo pipefail
 # ─── Constants ────────────────────────────────────────────────────────────────
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 DEFAULT_TARGET_BASE="${HOME}/.claude"
-VALIDATE_SCRIPT="${SCRIPT_DIR}/community-skills/skills/skill-creator/scripts/quick_validate.py"
-EXCLUDE_DIRS=".git .claude"
-SUBMODULE_SKILLS_DIR="${SCRIPT_DIR}/community-skills/skills"
+VALIDATE_SCRIPT="${REPO_ROOT}/skills/community-skills/skills/skill-creator/scripts/quick_validate.py"
+SUBMODULE_SKILLS_DIR="${REPO_ROOT}/skills/community-skills/skills"
+LOCAL_SKILL_ROOTS=("skills" "openclaw")
 
 # ─── Output helpers (color-aware) ─────────────────────────────────────────────
 
@@ -27,29 +28,25 @@ error()   { printf "${RED}error:${RESET} %s\n" "$*" >&2; }
 
 discover_skills() {
     local skills=()
-    # Local skills (in repo root)
-    for dir in "${SCRIPT_DIR}"/*/; do
-        [ -d "$dir" ] || continue
-        local name
-        name="$(basename "$dir")"
-        # Skip excluded directories, dotdirs, and the submodule directory
-        [[ "$name" == .* ]] && continue
-        [ "$name" = "community-skills" ] && continue
-        local excluded=false
-        for ex in $EXCLUDE_DIRS; do
-            if [ "$name" = "$ex" ]; then excluded=true; break; fi
+    local skill_root
+    for skill_root in "${LOCAL_SKILL_ROOTS[@]}"; do
+        [ -d "${REPO_ROOT}/${skill_root}" ] || continue
+        for dir in "${REPO_ROOT}/${skill_root}"/*/; do
+            [ -d "$dir" ] || continue
+            local name rel
+            name="$(basename "$dir")"
+            [[ "$name" == .* ]] && continue
+            [ -f "${dir}SKILL.md" ] || continue
+            rel="${skill_root}/${name}"
+            skills+=("$rel")
         done
-        $excluded && continue
-        # Must contain SKILL.md
-        [ -f "${dir}SKILL.md" ] || continue
-        skills+=("$name")
     done
     # Collect local skill basenames for deduplication
     local local_names=()
     for s in "${skills[@]}"; do
         local_names+=("$(basename "$s")")
     done
-    # Submodule skills (community-skills/skills/*)
+    # Submodule skills (skills/community-skills/skills/*)
     if [ -d "$SUBMODULE_SKILLS_DIR" ]; then
         for dir in "${SUBMODULE_SKILLS_DIR}"/*/; do
             [ -d "$dir" ] || continue
@@ -63,7 +60,7 @@ discover_skills() {
                 if [ "$ln" = "$name" ]; then duplicate=true; break; fi
             done
             $duplicate && continue
-            skills+=("community-skills/skills/${name}")
+            skills+=("skills/community-skills/skills/${name}")
         done
     fi
     printf '%s\n' "${skills[@]}"
@@ -73,7 +70,7 @@ discover_skills() {
 
 get_frontmatter_field() {
     local skill_dir="$1" field="$2"
-    local skill_md="${SCRIPT_DIR}/${skill_dir}/SKILL.md"
+    local skill_md="${REPO_ROOT}/${skill_dir}/SKILL.md"
     [ -f "$skill_md" ] || return 1
     local in_frontmatter=false
     while IFS= read -r line; do
@@ -104,7 +101,7 @@ get_skill_description() { get_frontmatter_field "$1" "description"; }
 
 validate_skill() {
     local skill_dir="$1"
-    local skill_path="${SCRIPT_DIR}/${skill_dir}"
+    local skill_path="${REPO_ROOT}/${skill_dir}"
 
     # Try Python validator first
     if command -v python3 &>/dev/null && python3 -c "import yaml" &>/dev/null; then
@@ -155,8 +152,8 @@ validate_skill() {
 
 install_skill() {
     local skill_dir="$1" target_base="$2" dry_run="$3" force="$4"
-    local source="${SCRIPT_DIR}/${skill_dir}"
-    # Install under the skill's basename (e.g. "pdf" not "community-skills/skills/pdf")
+    local source="${REPO_ROOT}/${skill_dir}"
+    # Install under the skill's basename (e.g. "pdf" not "skills/community-skills/skills/pdf")
     local install_name
     install_name="$(basename "$skill_dir")"
     local target="${target_base}/${install_name}"
@@ -236,7 +233,7 @@ uninstall_skill() {
     local link_target
     link_target=$(readlink -f "$target" 2>/dev/null || readlink "$target")
     local repo_resolved
-    repo_resolved=$(readlink -f "$SCRIPT_DIR" 2>/dev/null || echo "$SCRIPT_DIR")
+    repo_resolved=$(readlink -f "$REPO_ROOT" 2>/dev/null || echo "$REPO_ROOT")
     if [[ "$link_target" != "${repo_resolved}"* ]]; then
         warn "${skill_dir}: symlink points outside this repo (${link_target}), skipping for safety"
         return 0
@@ -259,12 +256,12 @@ list_skills() {
     mapfile -t skills < <(discover_skills)
 
     if [ ${#skills[@]} -eq 0 ]; then
-        warn "no skills found in ${SCRIPT_DIR}"
+        warn "no skills found in ${REPO_ROOT}"
         return 0
     fi
 
-    printf "\n${BOLD}%-22s %-24s %-16s %s${RESET}\n" "DIRECTORY" "NAME" "STATUS" "DESCRIPTION"
-    printf "%-22s %-24s %-16s %s\n" "─────────" "────" "──────" "───────────"
+    printf "\n${BOLD}%-58s %-24s %-16s %s${RESET}\n" "DIRECTORY" "NAME" "STATUS" "DESCRIPTION"
+    printf "%-58s %-24s %-16s %s\n" "─────────" "────" "──────" "───────────"
 
     for skill_dir in "${skills[@]}"; do
         local name desc status
@@ -282,7 +279,7 @@ list_skills() {
             local link_target
             link_target=$(readlink -f "$target" 2>/dev/null || readlink "$target")
             local source_resolved
-            source_resolved=$(readlink -f "${SCRIPT_DIR}/${skill_dir}" 2>/dev/null || echo "${SCRIPT_DIR}/${skill_dir}")
+            source_resolved=$(readlink -f "${REPO_ROOT}/${skill_dir}" 2>/dev/null || echo "${REPO_ROOT}/${skill_dir}")
             if [ "$link_target" = "$source_resolved" ]; then
                 status="${GREEN}installed${RESET}"
             else
@@ -294,7 +291,7 @@ list_skills() {
             status="not installed"
         fi
 
-        printf "%-22s %-24s %-16b %s\n" "$skill_dir" "$name" "$status" "$desc"
+        printf "%-58s %-24s %-16b %s\n" "$skill_dir" "$name" "$status" "$desc"
     done
     echo
 }
@@ -350,7 +347,7 @@ cmd_install() {
     local all_skills
     mapfile -t all_skills < <(discover_skills)
     if [ ${#all_skills[@]} -eq 0 ]; then
-        error "no skills found in ${SCRIPT_DIR}"
+        error "no skills found in ${REPO_ROOT}"
         return 1
     fi
 
@@ -395,7 +392,7 @@ cmd_uninstall() {
     local all_skills
     mapfile -t all_skills < <(discover_skills)
     if [ ${#all_skills[@]} -eq 0 ]; then
-        error "no skills found in ${SCRIPT_DIR}"
+        error "no skills found in ${REPO_ROOT}"
         return 1
     fi
 
@@ -437,7 +434,7 @@ cmd_validate() {
     local all_skills
     mapfile -t all_skills < <(discover_skills)
     if [ ${#all_skills[@]} -eq 0 ]; then
-        error "no skills found in ${SCRIPT_DIR}"
+        error "no skills found in ${REPO_ROOT}"
         return 1
     fi
 
@@ -487,7 +484,7 @@ Examples:
 
 Community skills (git submodule):
   git submodule update --init                            # fetch community skills
-  Skills from community-skills/skills/ are auto-discovered.
+  Skills from skills/community-skills/skills/ are auto-discovered.
   Local skills take precedence over community skills with the same name.
 EOF
 }
@@ -502,7 +499,7 @@ main() {
     local dry_run=false
 
     # Warn if submodule is not initialized
-    if [ -f "${SCRIPT_DIR}/.gitmodules" ] && [ ! -d "$SUBMODULE_SKILLS_DIR" ]; then
+    if [ -f "${REPO_ROOT}/.gitmodules" ] && [ ! -d "$SUBMODULE_SKILLS_DIR" ]; then
         warn "community-skills submodule not initialized; run: git submodule update --init"
     fi
 

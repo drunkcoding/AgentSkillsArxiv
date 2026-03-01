@@ -7,8 +7,9 @@ on:
       - master
       - develop
     paths:
-      - 'ast-grep-mcp-server/**'
-      - 'fdep-mcp-server/**'
+      - 'mcp/ast-grep-mcp-server/**'
+      - 'mcp/fdep-mcp-server/**'
+      - 'mcp/mcp-compliance/**'
       - '.github/workflows/mcp-compliance-tests.yml'
   pull_request:
     branches:
@@ -16,8 +17,9 @@ on:
       - master
       - develop
     paths:
-      - 'ast-grep-mcp-server/**'
-      - 'fdep-mcp-server/**'
+      - 'mcp/ast-grep-mcp-server/**'
+      - 'mcp/fdep-mcp-server/**'
+      - 'mcp/mcp-compliance/**'
       - '.github/workflows/mcp-compliance-tests.yml'
 
 jobs:
@@ -35,18 +37,18 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-          cache-dependency-path: 'ast-grep-mcp-server/package-lock.json'
+          cache-dependency-path: 'mcp/ast-grep-mcp-server/package-lock.json'
       
       - name: Install dependencies
-        working-directory: ast-grep-mcp-server
+        working-directory: mcp/ast-grep-mcp-server
         run: npm ci
       
       - name: Build
-        working-directory: ast-grep-mcp-server
+        working-directory: mcp/ast-grep-mcp-server
         run: npm run build
       
       - name: Run tests
-        working-directory: ast-grep-mcp-server
+        working-directory: mcp/ast-grep-mcp-server
         run: npm run test
         continue-on-error: false
 
@@ -66,13 +68,13 @@ jobs:
           cache: 'pip'
       
       - name: Install dependencies
-        working-directory: fdep-mcp-server
+        working-directory: mcp/fdep-mcp-server
         run: |
           python -m pip install --upgrade pip
           pip install pytest
       
       - name: Run tests
-        working-directory: fdep-mcp-server
+        working-directory: mcp/fdep-mcp-server
         run: pytest -q
         continue-on-error: false
 

@@ -3,8 +3,9 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-SKILL_NAME="remote-dispatch"
-TARGET_DIR="${OPENCLAW_SKILLS_DIR:-$HOME/.openclaw/workspace/skills}/$SKILL_NAME"
+SKILL_NAME="openclaw-remote-dispatch"
+TARGET_BASE="${OPENCLAW_SKILLS_DIR:-$HOME/.openclaw/workspace/skills}"
+TARGET_DIR="${TARGET_BASE}/${SKILL_NAME}"
 
 echo "Installing $SKILL_NAME skill..."
 echo "  Source: $SCRIPT_DIR"

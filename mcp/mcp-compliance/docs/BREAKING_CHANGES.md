@@ -1,7 +1,7 @@
 # MCP Servers: Intentional Breaking Changes
 
 **Date**: 2026-02-27  
-**Scope**: ast-grep-mcp-server (Task 11), fdep-mcp-server (Task 12)  
+**Scope**: mcp/ast-grep-mcp-server (Task 11), mcp/fdep-mcp-server (Task 12)  
 **Reason**: Protocol compliance hardening to enforce strict JSON-RPC and MCP contract semantics
 
 ---
@@ -36,7 +36,7 @@ Tasks 11 and 12 introduced intentional breaking changes to both MCP servers to e
 - Clients should handle JSON-RPC error responses with codes `-32700` and `-32600`
 
 **Snapshot Reference**:
-- See `mcp-compliance/snapshots/ast-grep/tools-snapshot.json` for protocol response shapes
+- See `mcp/mcp-compliance/snapshots/ast-grep/tools-snapshot.json` for protocol response shapes
 
 ---
 
@@ -60,7 +60,7 @@ Tasks 11 and 12 introduced intentional breaking changes to both MCP servers to e
 **Migration Path**:
 - Update error handling to check both `error` (protocol) and `result.isError` (tool) fields
 - Implement separate recovery strategies for protocol vs. tool errors
-- See baseline policy in `mcp-compliance/baseline-policy.json` for detailed error semantics
+- See baseline policy in `mcp/mcp-compliance/baseline-policy.json` for detailed error semantics
 
 ---
 
@@ -90,7 +90,7 @@ Tasks 11 and 12 introduced intentional breaking changes to both MCP servers to e
 - Clients should handle all JSON-RPC error codes: `-32700`, `-32600`, `-32601`, `-32602`
 
 **Snapshot Reference**:
-- See `mcp-compliance/snapshots/fdep/tools-snapshot.json` for protocol response shapes
+- See `mcp/mcp-compliance/snapshots/fdep/tools-snapshot.json` for protocol response shapes
 
 ---
 
@@ -112,7 +112,7 @@ Tasks 11 and 12 introduced intentional breaking changes to both MCP servers to e
 **Migration Path**:
 - Remove any extra fields from requests
 - Validate request structure against the baseline policy
-- See `mcp-compliance/baseline-policy.json` for allowed fields per method
+- See `mcp/mcp-compliance/baseline-policy.json` for allowed fields per method
 
 ---
 
@@ -135,7 +135,7 @@ Tasks 11 and 12 introduced intentional breaking changes to both MCP servers to e
 **Migration Path**:
 - Update error message parsing if relying on specific formatting
 - Use snapshot testing to detect unintended changes
-- See `mcp-compliance/snapshots/fdep/tools-snapshot.json` for error response shapes
+- See `mcp/mcp-compliance/snapshots/fdep/tools-snapshot.json` for error response shapes
 
 ---
 
@@ -161,7 +161,7 @@ Tasks 11 and 12 introduced intentional breaking changes to both MCP servers to e
 **Migration Path**:
 - Clients should validate that stdout contains only JSON-RPC messages
 - Clients should ignore stderr output (or log it separately)
-- See `mcp-compliance/baseline-policy.json` for stdio contract details
+- See `mcp/mcp-compliance/baseline-policy.json` for stdio contract details
 
 ---
 
@@ -192,7 +192,7 @@ Tasks 11 and 12 introduced intentional breaking changes to both MCP servers to e
 
 All breaking changes are documented in the compliance baseline:
 
-- **File**: `mcp-compliance/baseline-policy.json`
+- **File**: `mcp/mcp-compliance/baseline-policy.json`
 - **Sections**:
   - `error_boundary`: Protocol vs. tool error semantics
   - `stdio_contract`: Stdout/stderr framing rules
@@ -204,8 +204,8 @@ All breaking changes are documented in the compliance baseline:
 
 Tool descriptor and protocol response snapshots are available:
 
-- **ast-grep**: `mcp-compliance/snapshots/ast-grep/tools-snapshot.json`
-- **fdep**: `mcp-compliance/snapshots/fdep/tools-snapshot.json`
+- **ast-grep**: `mcp/mcp-compliance/snapshots/ast-grep/tools-snapshot.json`
+- **fdep**: `mcp/mcp-compliance/snapshots/fdep/tools-snapshot.json`
 
 These snapshots capture:
 - Tool names and descriptions
@@ -220,13 +220,13 @@ To verify compliance with these breaking changes:
 
 1. **ast-grep-mcp-server**:
    ```bash
-   cd ast-grep-mcp-server
+   cd mcp/ast-grep-mcp-server
    npm run test
    ```
 
 2. **fdep-mcp-server**:
    ```bash
-   cd fdep-mcp-server
+   cd mcp/fdep-mcp-server
    pytest -q
    ```
 
@@ -241,7 +241,7 @@ Both test suites include:
 
 For questions about these breaking changes:
 
-1. Review the baseline policy: `mcp-compliance/baseline-policy.json`
+1. Review the baseline policy: `mcp/mcp-compliance/baseline-policy.json`
 2. Check the test suites for expected behavior
 3. Review the snapshot artifacts for protocol response shapes
 4. Consult the MCP specification: https://modelcontextprotocol.io/specification/draft

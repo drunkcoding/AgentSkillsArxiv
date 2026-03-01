@@ -6,10 +6,10 @@ This guide provides operational details for the MCP servers in this repository, 
 
 All servers in this repository are audited against the **MCP Compliance Baseline**.
 
-- **Policy**: `mcp-compliance/baseline-policy.json`
+- **Policy**: `mcp/mcp-compliance/baseline-policy.json`
 - **Snapshots**:
-  - `mcp-compliance/snapshots/ast-grep/tools-snapshot.json`
-  - `mcp-compliance/snapshots/fdep/tools-snapshot.json`
+  - `mcp/mcp-compliance/snapshots/ast-grep/tools-snapshot.json`
+  - `mcp/mcp-compliance/snapshots/fdep/tools-snapshot.json`
 
 ### Key Compliance Breakthroughs
 
@@ -29,12 +29,12 @@ You can manually inspect the servers using the MCP Inspector.
 
 **Build**:
 ```bash
-cd ast-grep-mcp-server && npm run build
+cd mcp/ast-grep-mcp-server && npm run build
 ```
 
 **Inspect `tools/list`**:
 ```bash
-npx @modelcontextprotocol/inspector --cli --method tools/list node ast-grep-mcp-server/dist/index.js
+npx @modelcontextprotocol/inspector --cli --method tools/list node mcp/ast-grep-mcp-server/dist/index.js
 ```
 
 **Troubleshooting Node.js**:
@@ -45,7 +45,7 @@ npx @modelcontextprotocol/inspector --cli --method tools/list node ast-grep-mcp-
 
 **Inspect `tools/list`**:
 ```bash
-PYTHONPATH=fdep-mcp-server npx @modelcontextprotocol/inspector --cli --method tools/list /usr/bin/python3 -m fdep_mcp
+PYTHONPATH=mcp/fdep-mcp-server npx @modelcontextprotocol/inspector --cli --method tools/list /usr/bin/python3 -m fdep_mcp
 ```
 
 **Troubleshooting Python**:

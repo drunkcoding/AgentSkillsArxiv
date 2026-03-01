@@ -1,5 +1,5 @@
 ---
-name: remote-dispatch
+name: openclaw-remote-dispatch
 description: Poll TickTick for coding tasks and dispatch them to remote machines via SSH + OpenCode Serve. Includes full TickTick CLI (tasks, projects, create, complete, abandon, batch operations) with OAuth2 auth, rate limit handling, and WhatsApp progress notifications.
 ---
 
@@ -38,7 +38,7 @@ python scripts/ticktick_cli.py auth --status
 bash setup.sh
 ```
 
-This symlinks the skill into `~/.openclaw/workspace/skills/remote-dispatch`.
+This symlinks the skill into `~/.openclaw/workspace/skills/openclaw-remote-dispatch`.
 
 ## Dispatcher Commands
 
