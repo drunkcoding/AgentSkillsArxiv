@@ -7,6 +7,11 @@ description: AST-accurate function dependency analysis using Tree-sitter. Use wh
 
 AST-based function dependency analysis via Tree-sitter. More precise and faster than grep for understanding function relationships in code.
 
+## Requirements
+
+- Python >= 3.10
+- tree-sitter >= 0.23
+
 ## Quick Start
 
 ```bash
@@ -40,8 +45,10 @@ pip install tree-sitter tree-sitter-python tree-sitter-javascript
 ### Options
 
 - `--depth N` — Max transitive depth (default: 10)
+- `--match-limit N` — Max matches per query; warns if exceeded
 - `--lang LANG` — Force language instead of auto-detect from extension
 - `--install` — Auto-install missing tree-sitter packages
+- `--version` — Print fdep, tree-sitter, and Python version info
 
 ## When to Use Which Command
 

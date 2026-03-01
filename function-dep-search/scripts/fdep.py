@@ -31,6 +31,10 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
+__version__ = "0.2.0"
+_MIN_PYTHON = (3, 10)
+_MIN_TS_VERSION = (0, 23)
+
 # ---------------------------------------------------------------------------
 # Language configuration: extension -> (language_name, pip_package, module)
 # ---------------------------------------------------------------------------
@@ -222,6 +226,14 @@ for lang_name, cfg in LANG_CONFIG.items():
 # ---------------------------------------------------------------------------
 def check_and_install(lang_name, auto_install=False):
     """Check if tree-sitter and language package are available. Install if requested."""
+    if sys.version_info < _MIN_PYTHON:
+        print(
+            f"Error: Python >= {_MIN_PYTHON[0]}.{_MIN_PYTHON[1]} required "
+            f"(found {sys.version_info.major}.{sys.version_info.minor}).",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
     try:
         import tree_sitter  # noqa: F401
     except ImportError:
@@ -229,9 +241,27 @@ def check_and_install(lang_name, auto_install=False):
             subprocess.check_call(
                 [sys.executable, "-m", "pip", "install", "-q", "tree-sitter"]
             )
+            import tree_sitter
         else:
             print(
                 "Error: 'tree-sitter' not installed. Run with --install or: pip install tree-sitter",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+
+    from importlib.metadata import version as _meta_version
+    ts_ver_str = _meta_version("tree-sitter")
+    ts_ver = tuple(int(x) for x in ts_ver_str.split(".")[:2])
+    if ts_ver < _MIN_TS_VERSION:
+        if auto_install:
+            subprocess.check_call(
+                [sys.executable, "-m", "pip", "install", "-q", "--upgrade", "tree-sitter"]
+            )
+        else:
+            print(
+                f"Error: tree-sitter >= {_MIN_TS_VERSION[0]}.{_MIN_TS_VERSION[1]} required "
+                f"(found {ts_ver_str}). "
+                f"Run with --install or: pip install --upgrade tree-sitter",
                 file=sys.stderr,
             )
             sys.exit(1)
@@ -299,25 +329,43 @@ class FunctionInfo:
         }
 
 
-def _query_matches(language, query_str, node):
+def _query_matches(language, query_str, node, *, start_byte=None, end_byte=None,
+                   match_limit=None):
     """Run a tree-sitter query and return list of (pattern_idx, captures_dict) matches."""
     from tree_sitter import Query, QueryCursor
 
     q = Query(language, query_str)
-    cursor = QueryCursor(q)
-    return cursor.matches(node)
+    kwargs = {}
+    if match_limit is not None:
+        kwargs["match_limit"] = match_limit
+    cursor = QueryCursor(q, **kwargs)
+    if start_byte is not None and end_byte is not None:
+        cursor.set_byte_range(start_byte, end_byte)
+    result = cursor.matches(node)
+    if match_limit is not None and cursor.did_exceed_match_limit:
+        print("Warning: match limit exceeded; results may be incomplete.", file=sys.stderr)
+    return result
 
 
-def _query_captures(language, query_str, node):
+def _query_captures(language, query_str, node, *, start_byte=None, end_byte=None,
+                    match_limit=None):
     """Run a tree-sitter query and return captures dict {name: [nodes]}."""
     from tree_sitter import Query, QueryCursor
 
     q = Query(language, query_str)
-    cursor = QueryCursor(q)
-    return cursor.captures(node)
+    kwargs = {}
+    if match_limit is not None:
+        kwargs["match_limit"] = match_limit
+    cursor = QueryCursor(q, **kwargs)
+    if start_byte is not None and end_byte is not None:
+        cursor.set_byte_range(start_byte, end_byte)
+    result = cursor.captures(node)
+    if match_limit is not None and cursor.did_exceed_match_limit:
+        print("Warning: match limit exceeded; results may be incomplete.", file=sys.stderr)
+    return result
 
 
-def parse_file(filepath, parser, language, lang_name):
+def parse_file(filepath, parser, language, lang_name, *, match_limit=None):
     """Parse a single file and extract function definitions and calls."""
     cfg = LANG_CONFIG[lang_name]
     source = Path(filepath).read_bytes()
@@ -325,7 +373,8 @@ def parse_file(filepath, parser, language, lang_name):
 
     # Extract definitions using matches() to keep name/def paired
     def_matches = _query_matches(
-        language, cfg["queries"]["definitions"], tree.root_node
+        language, cfg["queries"]["definitions"], tree.root_node,
+        match_limit=match_limit,
     )
 
     definitions = []
@@ -352,7 +401,8 @@ def parse_file(filepath, parser, language, lang_name):
 
     # Extract all call name nodes
     call_captures = _query_captures(
-        language, cfg["queries"]["calls"], tree.root_node
+        language, cfg["queries"]["calls"], tree.root_node,
+        match_limit=match_limit,
     )
     calls_per_func = defaultdict(list)  # func_name -> [called_names]
     global_calls = []  # calls not inside any function
@@ -381,7 +431,7 @@ def parse_file(filepath, parser, language, lang_name):
     return definitions, calls_per_func, global_calls
 
 
-def analyze_paths(paths, lang_override=None, auto_install=False):
+def analyze_paths(paths, lang_override=None, auto_install=False, match_limit=None):
     """Analyze all files in the given paths."""
     files = collect_files(paths, lang_override)
     if not files:
@@ -399,7 +449,9 @@ def analyze_paths(paths, lang_override=None, auto_install=False):
             parsers[lang_name] = get_parser(lang_name)
 
         parser, language = parsers[lang_name]
-        defs, calls, global_calls = parse_file(filepath, parser, language, lang_name)
+        defs, calls, global_calls = parse_file(
+            filepath, parser, language, lang_name, match_limit=match_limit,
+        )
         all_defs.extend(defs)
         for fname, called in calls.items():
             all_calls[fname].extend(called)
@@ -431,7 +483,7 @@ def collect_files(paths, lang_override=None):
 # ---------------------------------------------------------------------------
 def cmd_defs(args):
     """List all function definitions."""
-    defs, _, _ = analyze_paths(args.paths, args.lang, args.install)
+    defs, _, _ = analyze_paths(args.paths, args.lang, args.install, args.match_limit)
     if args.json:
         print(json.dumps([d.to_dict() for d in defs], indent=2))
     else:
@@ -441,7 +493,7 @@ def cmd_defs(args):
 
 def cmd_calls(args):
     """List all function calls grouped by caller."""
-    _, calls, global_calls = analyze_paths(args.paths, args.lang, args.install)
+    _, calls, global_calls = analyze_paths(args.paths, args.lang, args.install, args.match_limit)
     if args.json:
         result = dict(calls)
         if global_calls:
@@ -457,7 +509,7 @@ def cmd_calls(args):
 
 def cmd_callees(args):
     """What does a function call?"""
-    _, calls, _ = analyze_paths(args.paths, args.lang, args.install)
+    _, calls, _ = analyze_paths(args.paths, args.lang, args.install, args.match_limit)
     target = args.function
     if target not in calls:
         print(f"Function '{target}' not found or makes no calls.", file=sys.stderr)
@@ -472,7 +524,7 @@ def cmd_callees(args):
 
 def cmd_callers(args):
     """What calls a function?"""
-    _, calls, global_calls = analyze_paths(args.paths, args.lang, args.install)
+    _, calls, global_calls = analyze_paths(args.paths, args.lang, args.install, args.match_limit)
     target = args.function
     callers = []
     for func, called in calls.items():
@@ -521,7 +573,7 @@ def _transitive(calls, start, max_depth, reverse=False):
 
 def cmd_deps(args):
     """Transitive dependencies (downstream)."""
-    defs, calls, _ = analyze_paths(args.paths, args.lang, args.install)
+    defs, calls, _ = analyze_paths(args.paths, args.lang, args.install, args.match_limit)
     target = args.function
     result = _transitive(calls, target, args.depth)
 
@@ -552,7 +604,7 @@ def cmd_deps(args):
 
 def cmd_rdeps(args):
     """Reverse transitive dependencies (upstream/impact)."""
-    defs, calls, _ = analyze_paths(args.paths, args.lang, args.install)
+    defs, calls, _ = analyze_paths(args.paths, args.lang, args.install, args.match_limit)
     target = args.function
     result = _transitive(calls, target, args.depth, reverse=True)
 
@@ -607,7 +659,7 @@ def _print_dot_subgraph(calls, root, result):
 
 def cmd_graph(args):
     """Full call graph."""
-    defs, calls, global_calls = analyze_paths(args.paths, args.lang, args.install)
+    defs, calls, global_calls = analyze_paths(args.paths, args.lang, args.install, args.match_limit)
 
     if args.json:
         result = {}
@@ -633,7 +685,7 @@ def cmd_graph(args):
 
 def cmd_unused(args):
     """Find functions that are never called."""
-    defs, calls, global_calls = analyze_paths(args.paths, args.lang, args.install)
+    defs, calls, global_calls = analyze_paths(args.paths, args.lang, args.install, args.match_limit)
 
     # Collect all called names
     all_called = set()
@@ -663,7 +715,7 @@ def cmd_unused(args):
 
 def cmd_circular(args):
     """Detect circular dependencies."""
-    _, calls, _ = analyze_paths(args.paths, args.lang, args.install)
+    _, calls, _ = analyze_paths(args.paths, args.lang, args.install, args.match_limit)
 
     # Build adjacency
     graph = defaultdict(set)
@@ -710,18 +762,63 @@ def cmd_circular(args):
 # ---------------------------------------------------------------------------
 # CLI
 # ---------------------------------------------------------------------------
+def _get_ts_version():
+    """Get the installed tree-sitter version string."""
+    from importlib.metadata import version
+    return version("tree-sitter")
+
+
+def _print_version(lang_name=None):
+    """Print version diagnostics and exit."""
+    import platform
+    print(f"fdep {__version__}")
+    try:
+        ts_ver = _get_ts_version()
+        print(f"tree-sitter {ts_ver}")
+    except Exception:
+        print("tree-sitter not installed")
+    print(f"Python {platform.python_version()}")
+    if lang_name:
+        from tree_sitter import Language
+        cfg = LANG_CONFIG.get(lang_name)
+        if cfg:
+            try:
+                mod = __import__(cfg["module"])
+                lang_func = getattr(mod, cfg.get("lang_attr", "language"), None)
+                if lang_func:
+                    language = Language(lang_func())
+                    print(f"Language ABI version: {language.abi_version}")
+                    print(f"Language semantic version: {language.semantic_version}")
+            except Exception as e:
+                print(f"Could not load language '{lang_name}': {e}")
+
+
 def main():
     parser = argparse.ArgumentParser(
         prog="fdep",
         description="Function Dependency Search using Tree-sitter",
     )
+    parser.add_argument("--version", action="store_true",
+                        help="Print version info and exit")
     parser.add_argument("--json", action="store_true", help="JSON output")
     parser.add_argument("--dot", action="store_true", help="Graphviz DOT output")
     parser.add_argument("--depth", type=int, default=10, help="Max transitive depth")
+    parser.add_argument("--match-limit", type=int, default=None, dest="match_limit",
+                        help="Max matches per query (warns if exceeded)")
     parser.add_argument("--lang", type=str, choices=list(LANG_CONFIG.keys()),
                         help="Force language detection")
     parser.add_argument("--install", action="store_true",
                         help="Auto-install missing tree-sitter packages")
+
+    # Handle --version before requiring subcommand
+    if "--version" in sys.argv:
+        lang_name = None
+        if "--lang" in sys.argv:
+            idx = sys.argv.index("--lang")
+            if idx + 1 < len(sys.argv):
+                lang_name = sys.argv[idx + 1]
+        _print_version(lang_name)
+        sys.exit(0)
 
     subparsers = parser.add_subparsers(dest="command", required=True)
 
@@ -730,6 +827,8 @@ def main():
         ("--json", dict(action="store_true", default=False, help="JSON output")),
         ("--dot", dict(action="store_true", default=False, help="Graphviz DOT output")),
         ("--depth", dict(type=int, default=10, help="Max transitive depth")),
+        ("--match-limit", dict(type=int, default=None, dest="match_limit",
+                               help="Max matches per query (warns if exceeded)")),
         ("--lang", dict(type=str, choices=list(LANG_CONFIG.keys()),
                         default=None, help="Force language detection")),
         ("--install", dict(action="store_true", default=False,

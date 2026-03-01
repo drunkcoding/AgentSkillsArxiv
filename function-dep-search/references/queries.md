@@ -27,6 +27,40 @@ Extend or customize these patterns by editing the `LANG_CONFIG` dict in `fdep.py
 ((identifier) @x (#eq? @x "main"))  ; Predicate filter
 ```
 
+### Predicates
+
+```scheme
+((identifier) @name (#eq? @name "main"))       ; Exact string match
+((identifier) @name (#not-eq? @name "test"))   ; Negated string match
+((identifier) @name (#match? @name "^test_"))  ; Regex match
+((identifier) @name (#not-match? @name "^_"))  ; Negated regex match
+((identifier) @name (#any-eq? @name "foo"))    ; Any capture equals string
+((node) @n (#is? @n "keyword"))                ; Node property test
+((node) @n (#is-not? @n "keyword"))            ; Negated node property
+((node) @n (#set! "key" "value"))              ; Set metadata on match
+```
+
+### Quantifiers
+
+```scheme
+(block (statement)*)           ; Zero or more statements
+(block (statement)+)           ; One or more statements
+(function_call (argument)?)    ; Optional argument
+```
+
+### Anchors
+
+```scheme
+(block . (statement) @first)   ; First child only (. anchor)
+(block (statement) @last .)    ; Last child only
+```
+
+### Negated Fields
+
+```scheme
+(function_definition !return_type)  ; Match only when field is absent
+```
+
 ## Python
 
 **Extensions:** `.py`, `.pyi`
@@ -221,7 +255,64 @@ Same query patterns as JavaScript. Uses `language_typescript` attribute from the
   type: (type_identifier) @name)
 ```
 
+## Python API Reference (tree-sitter >= 0.23)
+
+### Query + QueryCursor Pattern
+
+```python
+from tree_sitter import Language, Parser, Query, QueryCursor
+
+parser = Parser(language)
+tree = parser.parse(source_bytes)
+
+q = Query(language, "(function_definition name: (identifier) @name) @def")
+cursor = QueryCursor(q)
+
+# matches() returns list[tuple[int, dict[str, list[Node]]]]
+# Each tuple is (pattern_index, {capture_name: [nodes]})
+for pattern_idx, captures in cursor.matches(tree.root_node):
+    names = captures.get("name", [])
+
+# captures() returns dict[str, list[Node]]
+# Flat dict of all captures across all matches
+caps = cursor.captures(tree.root_node)
+for node in caps.get("name", []):
+    print(node.text.decode("utf8"))
+```
+
+### QueryCursor Scoping
+
+```python
+cursor = QueryCursor(q)
+
+# Restrict to byte range
+cursor.set_byte_range(start_byte, end_byte)
+
+# Match nodes whose range *contains* the given range
+cursor.set_containing_byte_range(start_byte, end_byte)
+
+# Restrict to row/column point range
+cursor.set_point_range(start_point, end_point)
+
+# Limit match depth from root (0 = root only)
+cursor.set_max_start_depth(depth)
+```
+
+### Match Limits
+
+```python
+# Set limit in constructor
+cursor = QueryCursor(q, match_limit=100)
+
+# Check after execution
+cursor.matches(node)
+if cursor.did_exceed_match_limit:
+    print("Results may be incomplete")
+```
+
 ## Adding a New Language
+
+**Requirements:** Python >= 3.10, tree-sitter >= 0.23
 
 1. Install the grammar: `pip install tree-sitter-<lang>`
 2. Add entry to `LANG_CONFIG` in `fdep.py`:
@@ -231,6 +322,8 @@ Same query patterns as JavaScript. Uses `language_typescript` attribute from the
     "extensions": {".ml"},
     "pip_package": "tree-sitter-mylang",
     "module": "tree_sitter_mylang",
+    # Optional: if the language function is not called "language()"
+    # "lang_attr": "language_mylang",
     "queries": {
         "definitions": """
             (<definition_node_type>
@@ -244,4 +337,13 @@ Same query patterns as JavaScript. Uses `language_typescript` attribute from the
 }
 ```
 
+   The `lang_attr` key is needed when the grammar module exposes the language
+   under a non-default name (e.g., TypeScript uses `language_typescript`).
+
 3. Use the [tree-sitter playground](https://tree-sitter.github.io/tree-sitter/playground) to explore the AST for your language and find the correct node types.
+4. Verify the new language works:
+
+```bash
+python3 scripts/fdep.py defs <test-file>
+python3 scripts/fdep.py calls <test-file>
+```
