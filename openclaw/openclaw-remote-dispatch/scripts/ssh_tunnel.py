@@ -242,6 +242,7 @@ class RemoteOpenCode:
             self.host,
             (
                 f"cd {self.folder} && "
+                f"export PATH=\"$HOME/.opencode/bin:$HOME/.local/bin:$PATH\" && "
                 f"OPENCODE_SERVER_PASSWORD={self._password} "
                 f"opencode serve "
                 f"--port {self._remote_port} "

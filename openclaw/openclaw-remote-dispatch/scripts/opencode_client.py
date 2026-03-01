@@ -111,7 +111,7 @@ class OpenCodeClient:
         timeout: int = 600,
     ) -> dict[str, Any]:
         """POST /session/{id}/message — synchronous prompt (blocks until done)."""
-        body: dict[str, Any] = {"content": text}
+        body: dict[str, Any] = {"parts": [{"type": "text", "text": text}]}
         if agent:
             body["agent"] = agent
         return self._request(
@@ -124,11 +124,11 @@ class OpenCodeClient:
         text: str,
         agent: str = "build",
     ) -> dict[str, Any]:
-        """POST /session/{id}/message?async=true — non-blocking prompt."""
-        body: dict[str, Any] = {"content": text}
+        """POST /session/{id}/prompt_async — non-blocking prompt, returns 204."""
+        body: dict[str, Any] = {"parts": [{"type": "text", "text": text}]}
         if agent:
             body["agent"] = agent
-        return self._request("POST", f"/session/{session_id}/message?async=true", body)
+        return self._request("POST", f"/session/{session_id}/prompt_async", body)
 
     # ------------------------------------------------------------------
     # Monitoring

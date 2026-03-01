@@ -133,3 +133,27 @@ When `--notify` is set, the dispatcher sends tagged messages:
 4. **Use the plan agent** for analysis/review tasks that shouldn't modify files
 5. **Add Clone: URL** for new repos — the dispatcher will git clone automatically
 6. **Check `--status`** to see active dispatch jobs: `python dispatcher.py --status`
+
+## Real-World Examples (Verified 2026-03-01)
+
+### Local dispatch — hello world
+
+**Title:** Add a hello world function to hello.py that prints current date and time
+
+**Content:**
+```
+Local: ~/dispatch-test-local
+```
+
+**Result:** Agent added a `hello()` function with `datetime.now()` formatting. 1 file changed (10 additions, 1 deletion).
+
+### Remote dispatch — hello world on gala1
+
+**Title:** Add a hello world function to hello.py that prints hostname and current time
+
+**Content:**
+```
+Remote: gala1 → ~/dispatch-test-remote
+```
+
+**Result:** Agent added a `hello_world()` function using `socket.gethostname()` and `datetime.now().isoformat()`. 1 file changed.

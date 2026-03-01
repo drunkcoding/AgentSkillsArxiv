@@ -309,3 +309,60 @@ Use `python scripts/ticktick_cli.py lists` to see available projects and IDs.
 
 ### Token expired errors
 The CLI auto-refreshes tokens. If issues persist, re-authenticate via the bun/ts skill.
+
+## Verified Test Results (2026-03-01)
+
+Both local and remote dispatch tested end-to-end against live TickTick API and OpenCode Serve.
+
+### Local Dispatch
+
+**Task:** "Add a hello world function to hello.py that prints current date and time"
+**Content:** `Local: ~/dispatch-test-local`
+
+```
+$ python3 scripts/dispatcher.py --dry-run
+[dry-run] validated task=69a41c6e... host=local folder=~/dispatch-test-local agent=build
+
+$ python3 scripts/dispatcher.py
+Local opencode ready on port 25151 in ~/dispatch-test-local
+Started 2 new dispatch job(s)
+
+$ cat ~/dispatch-test-local/hello.py
+from datetime import datetime
+
+def hello():
+    now = datetime.now()
+    print(f"Hello, world! Current date and time: {now}")
+
+if __name__ == "__main__":
+    hello()
+
+$ python3 ~/dispatch-test-local/hello.py
+Hello, world! Current date and time: 2026-03-01 11:07:35.593636
+```
+
+### Remote Dispatch (gala1)
+
+**Task:** "Add a hello world function to hello.py that prints hostname and current time"
+**Content:** `Remote: gala1 → ~/dispatch-test-remote`
+
+```
+$ python3 scripts/dispatcher.py
+Remote opencode ready: gala1:59896 → localhost:28059
+Started 2 new dispatch job(s)
+
+$ ssh gala1 'cat ~/dispatch-test-remote/hello.py'
+from datetime import datetime
+import socket
+
+def hello_world() -> None:
+    hostname = socket.gethostname()
+    current_time = datetime.now().isoformat(timespec="seconds")
+    print(f"Hello world from {hostname} at {current_time}")
+
+if __name__ == "__main__":
+    hello_world()
+
+$ ssh gala1 'python3 ~/dispatch-test-remote/hello.py'
+Hello world from gala1-G482-Z54-00 at 2026-03-01T11:07:36
+```
