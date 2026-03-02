@@ -1,5 +1,7 @@
 __pycache__/
 .sisyphus
+node_modules/
+dist/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
