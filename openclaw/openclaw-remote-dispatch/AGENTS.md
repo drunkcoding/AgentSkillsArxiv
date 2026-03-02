@@ -22,6 +22,20 @@ On daemon restart, stale jobs (running/pending with a local_port) are validated 
 - Task completed -> mark done, cleanup runtime
 - Task still open -> attempt reattach to running opencode serve
 
+### TypeScript Gateway Plugin Structure
+External OpenClaw plugins require:
+1. `package.json` with `"openclaw": { "extensions": ["./index.ts"] }` — this is what `openclaw plugins install` validates
+2. `openclaw.plugin.json` with plugin `id`, `name`, `description`, and optional `configSchema`
+3. **CRITICAL**: The `name` in `package.json` (unscoped) must match the `id` in `openclaw.plugin.json`. The installer derives the plugin ID from `package.json` name, but the registry uses the `id` from `openclaw.plugin.json`. Mismatch causes `plugin not found` during config validation.
+4. Plugins are installed to `~/.openclaw/extensions/<pluginId>/` and auto-enabled in `openclaw.json`
+5. The gateway's TypeScript loader handles `.ts` files directly — no build step needed
+
+### Plugin Script Resolution
+When a plugin is installed to `~/.openclaw/extensions/`, its `__dirname` is that directory. If the plugin references companion scripts (like Python files), the path must be resolved carefully:
+- Self-contained: include scripts in the plugin dir or use `path.resolve(__dirname, "scripts/")`
+- Skill bridge: resolve from `~/.openclaw/workspace/skills/<skill-name>/scripts/`
+- Use a search path array and `accessSync()` to find the first valid location at import time
+
 ## Operational Knowledge
 
 ### Testing Dispatch
@@ -46,6 +60,8 @@ On daemon restart, stale jobs (running/pending with a local_port) are validated 
 2. **Notification failure**: Using contact name instead of E.164 phone number
 3. **Port exhaustion**: Multiple stale jobs consuming dispatch slots
 4. **JSON decode on shutdown**: OpenCode `/global/shutdown` returns non-JSON
+5. **Plugin ID mismatch**: `package.json` name vs `openclaw.plugin.json` id must match (unscoped) or install fails with `plugin not found`
+6. **Script path ENOENT**: Plugin installed to `~/.openclaw/extensions/` cannot find companion scripts at `../scripts/` — use multi-path resolution
 
 ### Daemon Management
 ```bash
@@ -77,8 +93,10 @@ Before deploying changes:
 6. [ ] Verify status lines appear (`🔄 Dispatched`, `✅ Done`)
 7. [ ] Verify stale job resume handles deleted/completed tasks
 8. [ ] Check notification delivery (E.164 format)
-9. [ ] `bash setup.sh` to reinstall
-10. [ ] `openclaw gateway restart` to reload
+9. [ ] `bash setup.sh` to reinstall skill
+10. [ ] Copy plugin files: `cp plugin/* ~/.openclaw/extensions/remote-dispatch/`
+11. [ ] `openclaw gateway restart` to reload
+12. [ ] Verify plugin in `openclaw plugins list` (status: loaded)
 
 ## File Map
 

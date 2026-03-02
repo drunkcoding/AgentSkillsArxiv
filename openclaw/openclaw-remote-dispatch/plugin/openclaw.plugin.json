@@ -1,0 +1,35 @@
+{
+  "id": "remote-dispatch",
+  "name": "Remote Dispatch",
+  "description": "TickTick-driven remote code dispatch daemon with WhatsApp reply routing.",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "notifyTarget": {
+        "type": "string",
+        "description": "E.164 phone number for WhatsApp notifications (e.g., +447123456789)"
+      },
+      "pollInterval": {
+        "type": "number",
+        "description": "Polling interval in seconds (default: 60)"
+      },
+      "maxConcurrent": {
+        "type": "number",
+        "description": "Max simultaneous dispatch jobs (default: 3)"
+      },
+      "channel": {
+        "type": "string",
+        "description": "Notification channel (default: whatsapp)"
+      },
+      "project": {
+        "type": "string",
+        "description": "TickTick project name (default: 🤖 CodeDispatch)"
+      },
+      "autoStart": {
+        "type": "boolean",
+        "description": "Auto-start daemon when gateway starts (default: true)"
+      }
+    }
+  }
+}
