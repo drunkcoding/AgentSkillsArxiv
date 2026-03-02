@@ -84,20 +84,22 @@ build_ast_grep() {
     fi
     info "Compiling TypeScript..."
     npm --prefix "$AST_GREP_DIR" run build
-    success "ast-grep-mcp-server built → ${AST_GREP_DIR}/dist/index.js"
+    info "Installing globally via npm..."
+    npm install -g "$AST_GREP_DIR" --no-fund --no-audit
+    success "ast-grep-mcp-server installed globally"
 }
 
 build_fdep() {
     header "Building fdep-mcp-server"
-    info "Installing Python package in editable mode..."
-    pip install -e "$FDEP_DIR" --quiet 2>/dev/null || python3 -m pip install -e "$FDEP_DIR" --quiet
+    info "Installing Python package..."
+    pip install "$FDEP_DIR" --quiet 2>/dev/null || python3 -m pip install "$FDEP_DIR" --quiet
     success "fdep-mcp-server installed → python3 -m fdep_mcp"
 }
 
 build_mem0() {
     header "Building mem0-mcp-server"
-    info "Installing Python package in editable mode..."
-    pip install -e "$MEM0_DIR" --quiet 2>/dev/null || python3 -m pip install -e "$MEM0_DIR" --quiet
+    info "Installing Python package..."
+    pip install "$MEM0_DIR" --quiet 2>/dev/null || python3 -m pip install "$MEM0_DIR" --quiet
     success "mem0-mcp-server installed → python3 -m mem0_mcp"
 }
 
@@ -175,9 +177,6 @@ toml_merge_servers() {
 import os, sys, re
 
 file_path = sys.argv[1]
-ast_grep_dir = sys.argv[2]
-fdep_dir = sys.argv[3]
-mem0_dir = sys.argv[4]
 
 # Read existing content
 existing = ''
@@ -204,23 +203,16 @@ existing = existing.rstrip()
 new_sections = '''
 
 [mcp_servers.ast-grep]
-command = \"node\"
-args = [\"{ast_grep_dir}/dist/index.js\"]
+command = "ast-grep-mcp-server"
 
 [mcp_servers.fdep]
-command = \"python3\"
-args = [\"-m\", \"fdep_mcp\"]
-
-[mcp_servers.fdep.env]
-PYTHONPATH = \"{fdep_dir}\"
+command = "python3"
+args = ["-m", "fdep_mcp"]
 
 [mcp_servers.mem0]
-command = \"python3\"
-args = [\"-m\", \"mem0_mcp\"]
-
-[mcp_servers.mem0.env]
-PYTHONPATH = \"{mem0_dir}\"
-'''.format(ast_grep_dir=ast_grep_dir, fdep_dir=fdep_dir, mem0_dir=mem0_dir)
+command = "python3"
+args = ["-m", "mem0_mcp"]
+'''
 
 os.makedirs(os.path.dirname(file_path) or '.', exist_ok=True)
 with open(file_path, 'w') as f:
@@ -228,7 +220,7 @@ with open(file_path, 'w') as f:
         f.write(existing)
     f.write(new_sections)
     f.write('\n')
-" "$file" "$AST_GREP_DIR" "$FDEP_DIR" "$MEM0_DIR"
+" "$file"
 }
 
 # ─── Server entry builders ───────────────────────────────────────────────────
@@ -239,8 +231,7 @@ ast_grep_entry_standard() {
     cat <<EOF
 {
   "type": "stdio",
-  "command": "node",
-  "args": ["${AST_GREP_DIR}/dist/index.js"]
+  "command": "ast-grep-mcp-server"
 }
 EOF
 }
@@ -250,10 +241,7 @@ fdep_entry_standard() {
 {
   "type": "stdio",
   "command": "python3",
-  "args": ["-m", "fdep_mcp"],
-  "env": {
-    "PYTHONPATH": "${FDEP_DIR}"
-  }
+  "args": ["-m", "fdep_mcp"]
 }
 EOF
 }
@@ -263,10 +251,7 @@ mem0_entry_standard() {
 {
   "type": "stdio",
   "command": "python3",
-  "args": ["-m", "mem0_mcp"],
-  "env": {
-    "PYTHONPATH": "${MEM0_DIR}"
-  }
+  "args": ["-m", "mem0_mcp"]
 }
 EOF
 }
@@ -275,8 +260,7 @@ ast_grep_entry_no_type() {
     # Format without "type" field (Claude Code, Cline, Codex JSON fallback)
     cat <<EOF
 {
-  "command": "node",
-  "args": ["${AST_GREP_DIR}/dist/index.js"]
+  "command": "ast-grep-mcp-server"
 }
 EOF
 }
@@ -285,10 +269,7 @@ fdep_entry_no_type() {
     cat <<EOF
 {
   "command": "python3",
-  "args": ["-m", "fdep_mcp"],
-  "env": {
-    "PYTHONPATH": "${FDEP_DIR}"
-  }
+  "args": ["-m", "fdep_mcp"]
 }
 EOF
 }
@@ -297,10 +278,7 @@ mem0_entry_no_type() {
     cat <<EOF
 {
   "command": "python3",
-  "args": ["-m", "mem0_mcp"],
-  "env": {
-    "PYTHONPATH": "${MEM0_DIR}"
-  }
+  "args": ["-m", "mem0_mcp"]
 }
 EOF
 }
@@ -374,7 +352,7 @@ install_opencode() {
     ast_entry=$(cat <<EOF
 {
   "type": "local",
-  "command": ["node", "${AST_GREP_DIR}/dist/index.js"],
+  "command": ["ast-grep-mcp-server"],
   "enabled": true
 }
 EOF
@@ -383,10 +361,7 @@ EOF
 {
   "type": "local",
   "command": ["python3", "-m", "fdep_mcp"],
-  "enabled": true,
-  "environment": {
-    "PYTHONPATH": "${FDEP_DIR}"
-  }
+  "enabled": true
 }
 EOF
 )
@@ -394,10 +369,7 @@ EOF
 {
   "type": "local",
   "command": ["python3", "-m", "mem0_mcp"],
-  "enabled": true,
-  "environment": {
-    "PYTHONPATH": "${MEM0_DIR}"
-  }
+  "enabled": true
 }
 EOF
 )
@@ -520,16 +492,16 @@ print_summary() {
     header "Installation complete"
     echo ""
     printf "${DIM}Servers installed:${RESET}\n"
-    printf "  • ast-grep-mcp-server  → node %s/dist/index.js\n" "$AST_GREP_DIR"
+    printf "  • ast-grep-mcp-server  → ast-grep-mcp-server\n"
     printf "  • fdep-mcp-server      → python3 -m fdep_mcp\n"
     printf "  • mem0-mcp-server      → python3 -m mem0_mcp\n"
     echo ""
     printf "${DIM}Configured for:${RESET} %s (scope: %s)\n" "$targets" "$scope"
     echo ""
     printf "${DIM}Verify with:${RESET}\n"
-    printf "  npx @modelcontextprotocol/inspector --cli --method tools/list node %s/dist/index.js\n" "$AST_GREP_DIR"
-    printf "  PYTHONPATH=%s npx @modelcontextprotocol/inspector --cli --method tools/list python3 -m fdep_mcp\n" "$FDEP_DIR"
-    printf "  PYTHONPATH=%s npx @modelcontextprotocol/inspector --cli --method tools/list python3 -m mem0_mcp\n" "$MEM0_DIR"
+    printf "  npx @modelcontextprotocol/inspector --cli --method tools/list ast-grep-mcp-server\n"
+    printf "  npx @modelcontextprotocol/inspector --cli --method tools/list python3 -m fdep_mcp\n"
+    printf "  npx @modelcontextprotocol/inspector --cli --method tools/list python3 -m mem0_mcp\n"
     echo ""
 }
 
@@ -619,8 +591,8 @@ main() {
             info "Skipping build (--skip-build)"
         fi
         # Verify dist exists even if skipping build
-        if [ ! -f "${AST_GREP_DIR}/dist/index.js" ]; then
-            error "ast-grep-mcp-server not built. Run: npm --prefix ${AST_GREP_DIR} install && npm --prefix ${AST_GREP_DIR} run build"
+        if ! command -v ast-grep-mcp-server &>/dev/null && [ ! -f "${AST_GREP_DIR}/dist/index.js" ]; then
+            error "ast-grep-mcp-server not installed. Run the installer without --skip-build first."
             exit 1
         fi
     fi

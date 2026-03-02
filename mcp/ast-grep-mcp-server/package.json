@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "MCP server wrapping ast-grep for AST-aware structural code search, rewriting, and linting",
   "main": "dist/index.js",
+  "bin": {
+    "ast-grep-mcp-server": "dist/index.js"
+  },
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
