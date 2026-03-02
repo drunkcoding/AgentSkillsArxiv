@@ -3,7 +3,7 @@ set -euo pipefail
 
 # ─── MCP Server Installation Script ──────────────────────────────────────────
 #
-# Installs ast-grep-mcp-server and fdep-mcp-server for use with:
+# Installs ast-grep-mcp-server, fdep-mcp-server, and mem0-mcp-server for use with:
 #   • Claude Code          (.mcp.json / ~/.claude.json)
 #   • OpenAI Codex         (.codex/config.toml / ~/.codex/config.toml)
 #   • OpenCode             (opencode.json / ~/.config/opencode/opencode.json)
@@ -26,6 +26,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 AST_GREP_DIR="${REPO_ROOT}/mcp/ast-grep-mcp-server"
 FDEP_DIR="${REPO_ROOT}/mcp/fdep-mcp-server"
+MEM0_DIR="${REPO_ROOT}/mcp/mem0-mcp-server"
 
 # ─── Output helpers ──────────────────────────────────────────────────────────
 
@@ -93,6 +94,13 @@ build_fdep() {
     success "fdep-mcp-server installed → python3 -m fdep_mcp"
 }
 
+build_mem0() {
+    header "Building mem0-mcp-server"
+    info "Installing Python package in editable mode..."
+    pip install -e "$MEM0_DIR" --quiet 2>/dev/null || python3 -m pip install -e "$MEM0_DIR" --quiet
+    success "mem0-mcp-server installed → python3 -m mem0_mcp"
+}
+
 # ─── JSON merge helper ───────────────────────────────────────────────────────
 # Merges MCP server entries into an existing JSON config file.
 # Uses python3 for reliable JSON manipulation (no jq dependency).
@@ -102,7 +110,8 @@ json_merge_servers() {
     local servers_key="$2"  # e.g. "mcpServers" or "servers"
     local ast_entry="$3"
     local fdep_entry="$4"
-    local dry_run="$5"
+    local mem0_entry="$5"
+    local dry_run="$6"
 
     if [ "$dry_run" = true ]; then
         info "[dry-run] Would merge into: ${file}"
@@ -117,6 +126,7 @@ file_path = sys.argv[1]
 servers_key = sys.argv[2]
 ast_json = sys.argv[3]
 fdep_json = sys.argv[4]
+mem0_json = sys.argv[5]
 
 # Load existing or start fresh
 if os.path.exists(file_path):
@@ -139,12 +149,13 @@ servers = obj.setdefault(parts[-1], {})
 # Merge entries
 servers['ast-grep'] = json.loads(ast_json)
 servers['fdep'] = json.loads(fdep_json)
+servers['mem0'] = json.loads(mem0_json)
 
 # Write back
 with open(file_path, 'w') as f:
     json.dump(config, f, indent=2)
     f.write('\n')
-" "$file" "$servers_key" "$ast_entry" "$fdep_entry"
+" "$file" "$servers_key" "$ast_entry" "$fdep_entry" "$mem0_entry"
 }
 
 # ─── TOML merge helper ──────────────────────────────────────────────────────
@@ -166,6 +177,7 @@ import os, sys, re
 file_path = sys.argv[1]
 ast_grep_dir = sys.argv[2]
 fdep_dir = sys.argv[3]
+mem0_dir = sys.argv[4]
 
 # Read existing content
 existing = ''
@@ -174,14 +186,14 @@ if os.path.exists(file_path):
         existing = f.read()
 
 # Check if our sections already exist and remove them for re-merge
-sections_to_add = ['mcp_servers.ast-grep', 'mcp_servers.fdep']
+sections_to_add = ['mcp_servers.ast-grep', 'mcp_servers.fdep', 'mcp_servers.mem0']
 for section in sections_to_add:
     # Remove existing section block (from header to next section or EOF)
     pattern = r'\n?\[' + re.escape(section) + r'\][^\[]*'
     existing = re.sub(pattern, '', existing)
 
 # Also remove env sub-sections
-for sub in ['mcp_servers.ast-grep.env', 'mcp_servers.fdep.env']:
+for sub in ['mcp_servers.ast-grep.env', 'mcp_servers.fdep.env', 'mcp_servers.mem0.env']:
     pattern = r'\n?\[' + re.escape(sub) + r'\][^\[]*'
     existing = re.sub(pattern, '', existing)
 
@@ -201,7 +213,14 @@ args = [\"-m\", \"fdep_mcp\"]
 
 [mcp_servers.fdep.env]
 PYTHONPATH = \"{fdep_dir}\"
-'''.format(ast_grep_dir=ast_grep_dir, fdep_dir=fdep_dir)
+
+[mcp_servers.mem0]
+command = \"python3\"
+args = [\"-m\", \"mem0_mcp\"]
+
+[mcp_servers.mem0.env]
+PYTHONPATH = \"{mem0_dir}\"
+'''.format(ast_grep_dir=ast_grep_dir, fdep_dir=fdep_dir, mem0_dir=mem0_dir)
 
 os.makedirs(os.path.dirname(file_path) or '.', exist_ok=True)
 with open(file_path, 'w') as f:
@@ -209,7 +228,7 @@ with open(file_path, 'w') as f:
         f.write(existing)
     f.write(new_sections)
     f.write('\n')
-" "$file" "$AST_GREP_DIR" "$FDEP_DIR"
+" "$file" "$AST_GREP_DIR" "$FDEP_DIR" "$MEM0_DIR"
 }
 
 # ─── Server entry builders ───────────────────────────────────────────────────
@@ -239,6 +258,19 @@ fdep_entry_standard() {
 EOF
 }
 
+mem0_entry_standard() {
+    cat <<EOF
+{
+  "type": "stdio",
+  "command": "python3",
+  "args": ["-m", "mem0_mcp"],
+  "env": {
+    "PYTHONPATH": "${MEM0_DIR}"
+  }
+}
+EOF
+}
+
 ast_grep_entry_no_type() {
     # Format without "type" field (Claude Code, Cline, Codex JSON fallback)
     cat <<EOF
@@ -256,6 +288,18 @@ fdep_entry_no_type() {
   "args": ["-m", "fdep_mcp"],
   "env": {
     "PYTHONPATH": "${FDEP_DIR}"
+  }
+}
+EOF
+}
+
+mem0_entry_no_type() {
+    cat <<EOF
+{
+  "command": "python3",
+  "args": ["-m", "mem0_mcp"],
+  "env": {
+    "PYTHONPATH": "${MEM0_DIR}"
   }
 }
 EOF
@@ -281,6 +325,7 @@ install_claude_code() {
         "mcpServers" \
         "$(ast_grep_entry_no_type)" \
         "$(fdep_entry_no_type)" \
+        "$(mem0_entry_no_type)" \
         "$dry_run"
 
     if [ "$dry_run" = false ]; then
@@ -325,7 +370,7 @@ install_opencode() {
 
     # OpenCode format: "command" is a single array (no separate "args"),
     # "type": "local" for stdio, env key is "environment"
-    local ast_entry fdep_entry
+    local ast_entry fdep_entry mem0_entry
     ast_entry=$(cat <<EOF
 {
   "type": "local",
@@ -345,6 +390,17 @@ EOF
 }
 EOF
 )
+    mem0_entry=$(cat <<EOF
+{
+  "type": "local",
+  "command": ["python3", "-m", "mem0_mcp"],
+  "enabled": true,
+  "environment": {
+    "PYTHONPATH": "${MEM0_DIR}"
+  }
+}
+EOF
+)
 
     if [ "$dry_run" = true ]; then
         info "[dry-run] Would merge into: ${config_file}"
@@ -357,6 +413,7 @@ import json, os, sys
 file_path = sys.argv[1]
 ast_json = sys.argv[2]
 fdep_json = sys.argv[3]
+mem0_json = sys.argv[4]
 
 if os.path.exists(file_path):
     with open(file_path) as f:
@@ -371,11 +428,12 @@ else:
 mcp = config.setdefault('mcp', {})
 mcp['ast-grep'] = json.loads(ast_json)
 mcp['fdep'] = json.loads(fdep_json)
+mcp['mem0'] = json.loads(mem0_json)
 
 with open(file_path, 'w') as f:
     json.dump(config, f, indent=2)
     f.write('\n')
-" "$config_file" "$ast_entry" "$fdep_entry"
+" "$config_file" "$ast_entry" "$fdep_entry" "$mem0_entry"
 
     success "OpenCode configured → ${config_file}"
 }
@@ -403,6 +461,7 @@ install_cline() {
         "mcpServers" \
         "$(ast_grep_entry_no_type)" \
         "$(fdep_entry_no_type)" \
+        "$(mem0_entry_no_type)" \
         "$dry_run"
 
     if [ "$dry_run" = false ]; then
@@ -435,6 +494,7 @@ install_copilot() {
             "servers" \
             "$(ast_grep_entry_standard)" \
             "$(fdep_entry_standard)" \
+            "$(mem0_entry_standard)" \
             "$dry_run"
     else
         # VS Code settings.json nests under "mcp.servers"
@@ -443,6 +503,7 @@ install_copilot() {
             "mcp.servers" \
             "$(ast_grep_entry_standard)" \
             "$(fdep_entry_standard)" \
+            "$(mem0_entry_standard)" \
             "$dry_run"
     fi
 
@@ -461,12 +522,14 @@ print_summary() {
     printf "${DIM}Servers installed:${RESET}\n"
     printf "  • ast-grep-mcp-server  → node %s/dist/index.js\n" "$AST_GREP_DIR"
     printf "  • fdep-mcp-server      → python3 -m fdep_mcp\n"
+    printf "  • mem0-mcp-server      → python3 -m mem0_mcp\n"
     echo ""
     printf "${DIM}Configured for:${RESET} %s (scope: %s)\n" "$targets" "$scope"
     echo ""
     printf "${DIM}Verify with:${RESET}\n"
     printf "  npx @modelcontextprotocol/inspector --cli --method tools/list node %s/dist/index.js\n" "$AST_GREP_DIR"
     printf "  PYTHONPATH=%s npx @modelcontextprotocol/inspector --cli --method tools/list python3 -m fdep_mcp\n" "$FDEP_DIR"
+    printf "  PYTHONPATH=%s npx @modelcontextprotocol/inspector --cli --method tools/list python3 -m mem0_mcp\n" "$MEM0_DIR"
     echo ""
 }
 
@@ -474,7 +537,7 @@ print_summary() {
 
 usage() {
     cat <<EOF
-${BOLD}MCP Server Installer${RESET} — ast-grep + fdep for AI coding tools
+${BOLD}MCP Server Installer${RESET} — ast-grep + fdep + mem0 for AI coding tools
 
 ${BOLD}Usage:${RESET}
   $(basename "$0") [options]
@@ -550,6 +613,7 @@ main() {
     if [ "$skip_build" = false ] && [ "$dry_run" = false ]; then
         build_ast_grep
         build_fdep
+        build_mem0
     else
         if [ "$skip_build" = true ]; then
             info "Skipping build (--skip-build)"
