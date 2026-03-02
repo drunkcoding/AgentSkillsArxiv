@@ -6,7 +6,7 @@ This reference provides the HotCRP review form field guide, complete example rev
 
 ## 1. HotCRP Review Form Field Guide
 
-HotCRP is the standard review platform for OSDI, NSDI, SIGCOMM, MOBICOM, and SOSP. Reviews follow a structured form with these fields.
+HotCRP is the standard review platform for OSDI, NSDI, SIGCOMM, MOBICOM, SOSP, and FAST. Reviews follow a structured form with these fields.
 
 ### 1.1 Overall Merit (Required)
 
@@ -332,7 +332,7 @@ Q3: Could you add brief definitions of "network function chaining" and "NF state
 
 ### 3.1 When OSR Applies
 
-Some venues (NSDI, SIGCOMM, MOBICOM) offer a one-shot revision (OSR) process for borderline papers. OSR means the paper is not accepted outright but is given a specific set of required changes. If the authors successfully address these changes within a short revision period (typically 4-6 weeks), the paper is accepted.
+Some venues (NSDI, SIGCOMM, MOBICOM, FAST) offer a one-shot revision (OSR) process for borderline papers. OSR means the paper is not accepted outright but is given a specific set of required changes. If the authors successfully address these changes within a short revision period (typically 4-6 weeks), the paper is accepted.
 
 **OSR is appropriate when:**
 - The core contribution is sound and significant
@@ -416,6 +416,7 @@ The revision should NOT require [state what would be out of scope — e.g.,
 | NSDI | Yes (shepherd-based) | 6 weeks | 3-5 concrete items |
 | SIGCOMM | Yes (revision process) | 4-6 weeks | 3-4 concrete items |
 | MOBICOM | Yes (major/minor revision) | 4-8 weeks | Varies by major/minor |
+| FAST | Yes (one-shot revision) | 4-6 weeks | 3-5 concrete items |
 | OSDI | No formal OSR | N/A (shepherd for accepted papers) | N/A |
 | SOSP | No formal OSR | N/A (shepherd for accepted papers) | N/A |
 

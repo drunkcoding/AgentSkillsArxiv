@@ -435,7 +435,7 @@ Always specify:
 
 ### Dimensions
 
-**USENIX template (OSDI, NSDI):**
+**USENIX template (OSDI, NSDI, FAST):**
 - Single column: ~3.33 inches (8.5 cm) wide
 - Double column: ~7 inches (17.8 cm) wide
 
@@ -536,10 +536,10 @@ tail (>p95), where locality-aware scheduling eliminates cold starts.
 
 ## Venue-Specific Figure Requirements
 
-### USENIX (OSDI, NSDI, ATC)
+### USENIX (OSDI, NSDI, FAST, ATC)
 
 - USENIX LaTeX template
-- Figures count toward 12-page limit
+- Figures count toward page limit (12 pages for long papers; 6 pages for FAST short papers)
 - Vector graphics (PDF) preferred
 - No specific resolution requirement for vector figures
 - Figures embedded in text (not at end)

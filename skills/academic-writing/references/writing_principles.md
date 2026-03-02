@@ -795,6 +795,7 @@ We make the following contributions:
 | **NSDI** | Networking impact? Deployment experience? Scalability shown? |
 | **SIGCOMM** | Networking contribution? Formal analysis if applicable? Real traffic evaluation? |
 | **MOBICOM** | Mobile/wireless contribution? Hardware prototype? Real-world testing? |
+| **FAST** | Storage/file systems contribution? Real storage workloads? Production traces? Deployment lessons? |
 
 ### Common Rejection Reasons
 

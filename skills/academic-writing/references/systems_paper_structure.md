@@ -13,7 +13,7 @@ Systems conference papers follow a structure fundamentally different from journa
 6. Related Work
 7. Conclusion
 
-**Target venues:** OSDI, NSDI, SIGCOMM, MOBICOM, SOSP, ATC, EuroSys
+**Target venues:** OSDI, NSDI, SIGCOMM, MOBICOM, SOSP, FAST, ATC, EuroSys
 
 **Typical length:** 12-14 pages (excluding references and appendices)
 
@@ -512,7 +512,7 @@ at [URL].
 ## Artifact Evaluation
 
 ### Overview
-Systems conferences (OSDI, SOSP, SIGCOMM, NSDI) increasingly require or strongly encourage artifact evaluation. Preparing a good artifact significantly strengthens the paper.
+Systems conferences (OSDI, SOSP, SIGCOMM, NSDI, FAST) increasingly require or strongly encourage artifact evaluation. Preparing a good artifact significantly strengthens the paper.
 
 ### What to Prepare
 - **Source code**: Complete, buildable, with README
@@ -580,9 +580,43 @@ Design and Evaluation together should occupy approximately 50% of the paper.
 - **Review**: Double-blind
 - **Style**: Systems focus, emphasis on novel abstractions and long-term impact
 
+### FAST (USENIX)
+- **Format**: USENIX LaTeX template
+- **Pages**: 12 pages for long papers / 6 pages for short papers (excluding references)
+- **Review**: Double-blind
+- **Artifact evaluation**: Encouraged (code, traces, tools)
+- **Style**: Storage/file systems focus, emphasis on practical impact and deployment experience
+- **Note**: FAST uses the USENIX template but requires double-blind review (unlike OSDI/NSDI)
+
+**Short Papers (6 pages):**
+- Must present completed research with a complete problem statement and evaluation
+- Prefix title with "Short Paper: " during submission (not published in proceedings)
+- Same rigor expected as long papers, scoped to a focused contribution
+- Typical page allocation: Introduction (0.5-1), Background (0.5), Design (1-1.5), Evaluation (1.5-2), Related Work (0.5), Conclusion (0.25)
+- Do not sacrifice evaluation depth for space — a short paper with weak evaluation will be rejected
+
+**Deployed-Systems Papers:**
+- Must describe operational systems with practical deployment lessons
+- Prefix title with "Deployed System: " during submission (not published in proceedings)
+- Must validate techniques with production data and address practical deployment challenges
+- Emphasize: operational experience, failure modes encountered in production, lessons learned at scale
+- Production metrics and real-world scale are essential components
+
+**Supplemental Material:**
+- Optional single PDF without page limits
+- Reviewers are not required to review supplemental material
+- Use for extended proofs, additional experiments, or detailed hardware/software configurations
+
+**FAST Topics of Interest:**
+- Core storage: file systems, caching, erasure coding, deduplication, security, data governance, AI-driven management
+- Purpose-built systems: archival, database/NoSQL, analytics, AI/scientific workloads, edge computing
+- Scalable systems: HPC, distributed storage, cloud environments, software-defined storage
+- Emerging technologies: memory hierarchy, novel storage media (DNA, glass)
+- Deployment experience: workload characterization, production validation
+
 ## Double-Blind Review Considerations
 
-For venues requiring double-blind review (SIGCOMM, MOBICOM, SOSP):
+For venues requiring double-blind review (SIGCOMM, MOBICOM, SOSP, FAST):
 
 - Replace system name with a placeholder in submission (e.g., "OurSystem")
 - Remove repository URLs (add "available upon acceptance")

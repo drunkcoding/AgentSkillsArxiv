@@ -1,6 +1,6 @@
 # Review Criteria for Systems Conference Papers
 
-This reference defines the seven evaluation dimensions, venue-specific review priorities, and scoring calibration used when reviewing papers for OSDI, NSDI, SIGCOMM, MOBICOM, and SOSP.
+This reference defines the seven evaluation dimensions, venue-specific review priorities, and scoring calibration used when reviewing papers for OSDI, NSDI, SIGCOMM, MOBICOM, SOSP, and FAST.
 
 ---
 
@@ -168,6 +168,7 @@ This is the **most common area of weakness** in systems paper submissions. Evalu
 | SIGCOMM | Network architecture, protocols, algorithms, measurement, applications | Networked systems, programmable networks | Pure systems without networking contribution |
 | MOBICOM | Mobile computing, wireless networking, sensing, IoT | Edge computing, mobile ML | Pure cloud systems, wired networking |
 | SOSP | Operating systems, distributed systems, storage, networking | Systems security, systems for ML | Pure algorithms, pure applications |
+| FAST | File systems, storage systems, caching, deduplication, erasure coding | AI-driven storage management, emerging storage media (DNA, glass), HPC storage | Pure networking, pure OS without storage focus, pure algorithms |
 
 **Note**: A paper can be excellent but still a poor fit for a specific venue. Flag this clearly but do not penalize the technical quality — instead suggest a better venue.
 
@@ -397,6 +398,35 @@ Different venues weight the evaluation dimensions differently, shaped by their c
 | Presentation ≤ 2 | Cap Overall Merit at 3. SOSP papers should be well-crafted. |
 | Novelty = 5, all others ≥ 3 | Overall Merit can reach 5. A breakthrough abstraction defines the best SOSP papers. |
 | All dimensions = 3 | Cap Overall Merit at 2. SOSP's bar requires excellence, not adequacy. |
+
+### 2.6 FAST (USENIX Conference on File and Storage Technologies)
+
+**Review philosophy**: "Storage depth and practical impact." FAST values deep storage expertise, practical deployment lessons, and thorough evaluation on real storage workloads. Unlike OSDI which favors excitement across broad systems, FAST emphasizes storage-specific depth, production relevance, and sound experimental methodology.
+
+**Priority weights:**
+1. **Significance** (very high) — Must address a real storage problem that matters to practitioners
+2. **Evaluation Quality** (very high) — Real storage workloads, production traces preferred; thorough benchmarking
+3. **Technical Soundness** (high) — Storage mechanisms must be correct and well-reasoned
+4. **Novelty** (high) — New storage techniques valued, but deployment insights can substitute for novelty
+5. **Relevance** (high) — Must be clearly about storage or file systems
+6. **Presentation** (medium-high) — Clear writing expected
+7. **Reproducibility** (medium) — Artifacts (code, traces, tools) encouraged and enhance evaluation
+
+**Key signals for FAST reviewers:**
+- Does the paper address a real storage problem faced by practitioners or emerging workloads?
+- Does the evaluation use realistic storage workloads (not just synthetic microbenchmarks)?
+- For deployed-systems papers: does the paper provide genuine operational lessons from production?
+- For short papers: is the contribution complete and well-scoped within 6 pages?
+- Is the storage/file systems contribution clear and substantial?
+
+**FAST-specific considerations:**
+- **Double-blind review**: Authors must not be identified in submissions, either explicitly or by implication
+- **Short papers** (6 pages): Evaluate for completeness within scope; must have full problem statement and evaluation; do not penalize for limited breadth
+- **Deployed-systems papers**: Must validate techniques with production data; operational lessons and practical deployment challenges are valued
+- **Two submission cycles** (Spring and Fall): Papers rejected in Spring cannot resubmit to Fall of the same year
+- **One-shot revision (OSR)**: Available for borderline papers needing specific improvements
+- **Supplemental material**: Allowed (single PDF, no page limit) but reviewers need not review it
+- **Topics span**: File systems, caching, erasure coding, deduplication, security, data governance, AI-driven storage management, archival systems, database/NoSQL storage, analytics/AI/scientific workloads, edge computing, HPC/distributed/cloud storage, emerging technologies (DNA, glass storage), workload characterization
 
 ---
 

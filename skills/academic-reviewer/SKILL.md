@@ -1,6 +1,6 @@
 ---
 name: academic-reviewer
-description: "Review systems conference papers for OSDI, NSDI, SIGCOMM, MOBICOM, and SOSP. Produces structured HotCRP-style reviews with paper summary, strengths, weaknesses, detailed comments, questions for authors, and overall merit/confidence scoring. Covers evaluation criteria (novelty, soundness, significance, evaluation quality, clarity, relevance, reproducibility), venue-specific expectations, common paper weaknesses, constructive feedback tone, one-shot revision reviews, and reviewer ethics. Use when asked to review, critique, or provide feedback on a systems conference paper submission."
+description: "Review systems conference papers for OSDI, NSDI, SIGCOMM, MOBICOM, SOSP, and FAST. Produces structured HotCRP-style reviews with paper summary, strengths, weaknesses, detailed comments, questions for authors, and overall merit/confidence scoring. Covers evaluation criteria (novelty, soundness, significance, evaluation quality, clarity, relevance, reproducibility), venue-specific expectations, common paper weaknesses, constructive feedback tone, one-shot revision reviews, and reviewer ethics. Use when asked to review, critique, or provide feedback on a systems conference paper submission."
 ---
 
 # Systems Conference Paper Reviewing
@@ -9,7 +9,7 @@ description: "Review systems conference papers for OSDI, NSDI, SIGCOMM, MOBICOM,
 
 ### 1. Review Structure and Format
 
-All reviews follow the HotCRP form structure used by OSDI, NSDI, SIGCOMM, MOBICOM, and SOSP:
+All reviews follow the HotCRP form structure used by OSDI, NSDI, SIGCOMM, MOBICOM, SOSP, and FAST:
 
 | Field | Required | Content |
 |-------|----------|---------|
@@ -53,6 +53,7 @@ Each venue has a distinct review culture. Adjust your emphasis accordingly.
 | **SIGCOMM** | "Lasting impact on the field" | Novelty, significance, rigorous networking analysis | ~15% |
 | **MOBICOM** | Works in the real physical world | Soundness, real-world evaluation, wireless rigor | ~18-20% |
 | **SOSP** | "Novel abstractions AND real systems" | Novelty, soundness, significance, artifact required | ~15% |
+| **FAST** | "Storage depth and practical impact" | Significance, evaluation quality, storage relevance | ~20% |
 
 **Key venue-specific notes:**
 - **OSDI**: Would you enthusiastically champion this paper? "Exciting and imperfect" can beat "boring and thorough."
@@ -60,6 +61,7 @@ Each venue has a distinct review culture. Adjust your emphasis accordingly.
 - **SIGCOMM**: Scores of 3+ generally indicate acceptability. Papers need a strong advocate. The networking contribution must be clear and substantial.
 - **MOBICOM**: Real-world wireless experiments strongly preferred over simulation. Multiple environments and conditions required. Signal-level analysis expected.
 - **SOSP**: Must present new abstractions or principles, not just "faster X." Artifact evaluation is mandatory. The system must be real and substantial.
+- **FAST**: Deep storage/file systems expertise valued. Evaluation must use real storage workloads or production traces. Deployed-systems papers get credit for operational lessons. Short papers (6 pages) evaluated for completeness within their scope. Double-blind review. One-shot revision (OSR) available for borderline papers.
 
 For full venue-specific rubrics, load `references/review_criteria.md`.
 
@@ -127,7 +129,7 @@ For full scoring rubrics and example reviews at each score level, load `referenc
 
 ### 7. One-Shot Revision (OSR) Reviews
 
-Available at NSDI, SIGCOMM, and MOBICOM. OSR means a conditional accept with specific required changes.
+Available at NSDI, SIGCOMM, MOBICOM, and FAST. OSR means a conditional accept with specific required changes.
 
 **When to recommend OSR:**
 - Core contribution is sound and significant

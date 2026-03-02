@@ -1,6 +1,6 @@
 ---
 name: academic-writing
-description: "Write systems conference papers for OSDI, NSDI, SIGCOMM, and MOBICOM. Covers paper structure (Introduction, Background/Motivation, Design, Implementation, Evaluation, Related Work), systems writing style, IEEE/ACM citations, architecture diagrams, performance evaluation, and artifact preparation."
+description: "Write systems conference papers for OSDI, NSDI, SIGCOMM, MOBICOM, and FAST. Covers paper structure (Introduction, Background/Motivation, Design, Implementation, Evaluation, Related Work), systems writing style, IEEE/ACM citations, architecture diagrams, performance evaluation, and artifact preparation. Includes FAST-specific guidance for short papers (6 pages) and deployed-systems papers."
 ---
 
 # Systems Conference Paper Writing
@@ -83,7 +83,7 @@ Apply fundamental writing principles adapted for systems conference papers. For 
 Systems papers use numbered citation styles. For comprehensive style guides, refer to `references/citation_styles.md`.
 
 **Primary Citation Styles:**
-- **IEEE**: Numbered citations in square brackets [1], common in USENIX venues (OSDI, NSDI)
+- **IEEE**: Numbered citations in square brackets [1], common in USENIX venues (OSDI, NSDI, FAST)
 - **ACM**: Numbered citations, used by SIGCOMM, MOBICOM, SOSP
 
 **Systems-Specific Citation Practices:**
@@ -160,17 +160,40 @@ Use precise terminology appropriate to the systems subfield:
 | SIGCOMM | ACM sigconf | 12 | Double-blind | Encouraged |
 | MOBICOM | ACM sigconf | 15 | Double-blind | Encouraged |
 | SOSP | ACM sigconf | 15 | Double-blind | Required |
+| FAST | USENIX | 12 (long) / 6 (short) | Double-blind | Encouraged |
 
-**Double-blind venues (SIGCOMM, MOBICOM, SOSP):**
+**Double-blind venues (SIGCOMM, MOBICOM, SOSP, FAST):**
 - Anonymize system name in submission
 - Remove repository URLs
 - Cite own work in third person
 - Remove acknowledgments
+- FAST: deployed-systems papers may identify products/companies but not authors
 
 **USENIX venues (OSDI, NSDI):**
 - Single-blind: authors are identified
 - System name and URLs can be included
 - Use USENIX LaTeX template
+
+**FAST-specific paper categories:**
+
+*Short Papers (6 pages, excluding references):*
+- Must present completed research with a complete problem statement and evaluation
+- Prefix title with "Short Paper: " during submission (prefix not published in proceedings)
+- Same rigor as long papers but scoped to a focused contribution
+- Include full experimental setup, baselines, and results — do not sacrifice evaluation for space
+- Typical structure: Introduction (0.5-1 page), Background (0.5 page), Design (1-1.5 pages), Evaluation (1.5-2 pages), Related Work (0.5 page), Conclusion (0.25 page)
+
+*Deployed-Systems Papers:*
+- Must describe operational systems offering practical deployment lessons
+- Prefix title with "Deployed System: " during submission (prefix not published in proceedings)
+- Must validate techniques with production data and address practical deployment challenges
+- Emphasize operational experience, failure modes encountered, and lessons learned
+- Production metrics and real-world scale are essential
+
+*Supplemental Material:*
+- Optional single PDF without page limits
+- Reviewers are not required to review supplemental material
+- Use for extended proofs, additional experiments, or detailed configurations
 
 ### 8. Common Pitfalls to Avoid
 
