@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StrictStdioServerTransport } from "./strictStdioTransport.js";
 import type { AstGrepMatch, AstGrepScanResult } from "./types.js";
