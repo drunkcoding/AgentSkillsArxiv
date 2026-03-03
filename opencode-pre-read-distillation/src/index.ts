@@ -1,7 +1,22 @@
+import { existsSync } from "node:fs";
+import { readdir, stat } from "node:fs/promises";
+import { join } from "node:path";
+
 import type { Plugin } from "@opencode-ai/plugin";
 
 import { DistillationCache } from "./cache.js";
 import { loadPrdConfig } from "./config.js";
+import {
+  formatCacheClearedMessage,
+  formatCommandHelp,
+  formatContextView,
+  formatDistillAnnotation,
+  formatFallbackAnnotation,
+  formatMetadataOnlyAnnotation,
+  formatSessionBanner,
+  formatStatsTable,
+  prependPrdLine,
+} from "./display.js";
 import { distillFileContent } from "./distiller.js";
 import { decideReadStrategy, estimateTokens } from "./policy.js";
 import {
@@ -45,11 +60,74 @@ function extractTextFromParts(parts: unknown[]): string {
   return textSegments.join("\n").trim();
 }
 
+function parseCommandArguments(input: string): string[] {
+  return input
+    .trim()
+    .split(/\s+/)
+    .filter((entry) => entry.length > 0);
+}
+
+function createSyntheticTextPart(sessionID: string, text: string): {
+  id: string;
+  sessionID: string;
+  messageID: string;
+  type: "text";
+  text: string;
+  synthetic: boolean;
+  ignored: boolean;
+} {
+  const stamp = `prd-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+  return {
+    id: stamp,
+    sessionID,
+    messageID: stamp,
+    type: "text",
+    text,
+    synthetic: true,
+    ignored: true,
+  };
+}
+
+function replaceCommandOutput(
+  parts: unknown[],
+  sessionID: string,
+  text: string,
+): void {
+  parts.length = 0;
+  parts.push(createSyntheticTextPart(sessionID, text));
+}
+
+async function readCacheDirectoryStats(directory: string | undefined): Promise<{ entries: number; bytes: number }> {
+  if (!directory || !existsSync(directory)) {
+    return { entries: 0, bytes: 0 };
+  }
+
+  const files = await readdir(directory);
+  let entries = 0;
+  let bytes = 0;
+
+  for (const file of files) {
+    if (!file.endsWith(".json")) {
+      continue;
+    }
+
+    const absolute = join(directory, file);
+    const fileStat = await stat(absolute);
+    entries += 1;
+    bytes += fileStat.size;
+  }
+
+  return { entries, bytes };
+}
+
 const PreReadDistillationPlugin: Plugin = async (ctx) => {
   const config = await loadPrdConfig(ctx.directory);
   const cache = new DistillationCache(config.cache);
   const telemetry = new TelemetryStore(config.telemetry);
   const taskContextBySession = new Map<string, TaskContext>();
+  const seenReadCallIDsBySession = new Map<string, Set<string>>();
+  const bannerInjectedCallIDsBySession = new Map<string, Set<string>>();
+  const readOperationCountBySession = new Map<string, number>();
 
   await cache.init();
   await telemetry.init();
@@ -65,6 +143,18 @@ const PreReadDistillationPlugin: Plugin = async (ctx) => {
 
   return {
     tool: customTools,
+
+    config: async (opencodeConfig) => {
+      if (!config.enabled || !config.display.slashCommands) {
+        return;
+      }
+
+      opencodeConfig.command ??= {};
+      opencodeConfig.command.prd = {
+        template: "",
+        description: "Show PRD plugin commands",
+      };
+    },
 
     "chat.message": async (input, output) => {
       if (!config.enabled || !config.hooks.chatMessageTracking) {
@@ -97,6 +187,9 @@ const PreReadDistillationPlugin: Plugin = async (ctx) => {
       }
 
       taskContextBySession.delete(sessionID);
+      seenReadCallIDsBySession.delete(sessionID);
+      bannerInjectedCallIDsBySession.delete(sessionID);
+      readOperationCountBySession.delete(sessionID);
     },
 
     "tool.execute.after": async (input, output) => {
@@ -135,17 +228,32 @@ const PreReadDistillationPlugin: Plugin = async (ctx) => {
       }
 
       const priorMetadata = asRecord(output.metadata);
+      const displayPath = parsed.filePath;
 
       if (decision.mode === "metadata_only") {
         await telemetry.recordMetadataOnly(input.sessionID, estimatedTokens);
 
-        output.output = formatMetadataOnlyOutput({
+        const metadataOnlyOutput = formatMetadataOnlyOutput({
           filePath: parsed.filePath,
           fileBytes,
           estimatedTokens,
           fileClassification: decision.fileClassification,
           reason: decision.reason,
         });
+
+        const metadataAnnotation = config.display.operationAnnotations
+          ? formatMetadataOnlyAnnotation({
+              filePath: displayPath,
+              worktree: ctx.worktree,
+              rawTokens: estimatedTokens,
+              classification: decision.fileClassification,
+            })
+          : null;
+
+        output.output = metadataAnnotation
+          ? prependPrdLine(metadataOnlyOutput, metadataAnnotation)
+          : metadataOnlyOutput;
+        output.title = "Read (metadata only)";
 
         output.metadata = {
           ...priorMetadata,
@@ -177,7 +285,22 @@ const PreReadDistillationPlugin: Plugin = async (ctx) => {
             escalated: cached.result.raw_read_recommended,
           });
 
-          output.output = formatDistilledReadOutput(cached.result, "hit");
+          const distilledOutput = formatDistilledReadOutput(cached.result, "hit");
+          const distilledTokens = estimateTokens(distilledOutput);
+          const distillAnnotation = config.display.operationAnnotations
+            ? formatDistillAnnotation({
+                filePath: displayPath,
+                worktree: ctx.worktree,
+                rawTokens: estimatedTokens,
+                distilledTokens,
+                cache: "hit",
+              })
+            : null;
+
+          output.output = distillAnnotation
+            ? prependPrdLine(distilledOutput, distillAnnotation)
+            : distilledOutput;
+          output.title = "Read (distilled)";
           output.metadata = {
             ...priorMetadata,
             prd: {
@@ -193,12 +316,14 @@ const PreReadDistillationPlugin: Plugin = async (ctx) => {
 
         await telemetry.recordCacheMiss(input.sessionID);
 
+        const distillStart = Date.now();
         const distilled = await distillFileContent(
           parsed.filePath,
           parsed.content,
           config,
           sessionTaskContext,
         );
+        const distillLatencyMs = Date.now() - distillStart;
 
         await cache.set({
           key,
@@ -215,7 +340,23 @@ const PreReadDistillationPlugin: Plugin = async (ctx) => {
           escalated: distilled.raw_read_recommended,
         });
 
-        output.output = formatDistilledReadOutput(distilled, "miss");
+        const distilledOutput = formatDistilledReadOutput(distilled, "miss");
+        const distilledTokens = estimateTokens(distilledOutput);
+        const distillAnnotation = config.display.operationAnnotations
+          ? formatDistillAnnotation({
+              filePath: displayPath,
+              worktree: ctx.worktree,
+              rawTokens: estimatedTokens,
+              distilledTokens,
+              cache: "miss",
+              latencyMs: distillLatencyMs,
+            })
+          : null;
+
+        output.output = distillAnnotation
+          ? prependPrdLine(distilledOutput, distillAnnotation)
+          : distilledOutput;
+        output.title = "Read (distilled)";
         output.metadata = {
           ...priorMetadata,
           prd: {
@@ -225,10 +366,29 @@ const PreReadDistillationPlugin: Plugin = async (ctx) => {
             estimatedTokens,
             fileClassification: decision.fileClassification,
             distillTokens: distilled.usage?.totalTokens ?? null,
+            latencyMs: distillLatencyMs,
           },
         };
       } catch (error) {
         await telemetry.recordFallback(input.sessionID);
+
+        if (config.display.operationAnnotations) {
+          output.output = prependPrdLine(
+            output.output,
+            formatFallbackAnnotation(displayPath, ctx.worktree),
+          );
+        }
+
+        output.metadata = {
+          ...priorMetadata,
+          prd: {
+            mode: "fallback",
+            reason: "distillation_failed",
+            filePath: parsed.filePath,
+            estimatedTokens,
+            fileClassification: decision.fileClassification,
+          },
+        };
 
         if (config.debug) {
           const message = error instanceof Error ? error.message : String(error);
@@ -245,6 +405,128 @@ const PreReadDistillationPlugin: Plugin = async (ctx) => {
               },
             },
           });
+        }
+      }
+    },
+
+    "command.execute.before": async (input, output) => {
+      if (!config.enabled || !config.display.slashCommands) {
+        return;
+      }
+
+      if (input.command !== "prd") {
+        return;
+      }
+
+      const args = parseCommandArguments(input.arguments ?? "");
+      const subcommand = args[0]?.toLowerCase() ?? "";
+      const nested = args[1]?.toLowerCase() ?? "";
+
+      if (subcommand === "stats") {
+        const stats = await telemetry.getSessionStats(input.sessionID);
+        replaceCommandOutput(output.parts, input.sessionID, formatStatsTable(input.sessionID, stats));
+        throw new Error("__PRD_STATS_HANDLED__");
+      }
+
+      if (subcommand === "context") {
+        const stats = await telemetry.getSessionStats(input.sessionID);
+        const cacheStats = await readCacheDirectoryStats(config.cache.directory);
+        replaceCommandOutput(
+          output.parts,
+          input.sessionID,
+          formatContextView({
+            sessionID: input.sessionID,
+            config,
+            stats,
+            cacheEntries: cacheStats.entries,
+            cacheBytes: cacheStats.bytes,
+          }),
+        );
+        throw new Error("__PRD_CONTEXT_HANDLED__");
+      }
+
+      if (subcommand === "cache" && nested === "clear") {
+        await cache.clear();
+        replaceCommandOutput(output.parts, input.sessionID, formatCacheClearedMessage(input.sessionID));
+        throw new Error("__PRD_CACHE_CLEAR_HANDLED__");
+      }
+
+      replaceCommandOutput(output.parts, input.sessionID, formatCommandHelp());
+      throw new Error("__PRD_HELP_HANDLED__");
+    },
+
+    "experimental.chat.messages.transform": async (_input, output) => {
+      if (!config.enabled || !config.display.sessionSummaryBanner) {
+        return;
+      }
+
+      const frequency = config.display.bannerEveryToolResults;
+
+      for (const message of output.messages) {
+        for (const part of message.parts) {
+          const partRecord = asRecord(part);
+          if (partRecord.type !== "tool" || partRecord.tool !== "read") {
+            continue;
+          }
+
+          const sessionID = typeof partRecord.sessionID === "string" ? partRecord.sessionID : undefined;
+          const callID = typeof partRecord.callID === "string" ? partRecord.callID : undefined;
+          if (!sessionID || !callID) {
+            continue;
+          }
+
+          const state = asRecord(partRecord.state);
+          if (state.status !== "completed" || typeof state.output !== "string") {
+            continue;
+          }
+
+          const stateMetadata = asRecord(state.metadata);
+          const partMetadata = asRecord(partRecord.metadata);
+          const statePrd = asRecord(stateMetadata.prd);
+          const partPrd = asRecord(partMetadata.prd);
+          const mode =
+            typeof statePrd.mode === "string"
+              ? statePrd.mode
+              : typeof partPrd.mode === "string"
+                ? partPrd.mode
+                : undefined;
+
+          if (mode !== "distill" && mode !== "metadata_only") {
+            continue;
+          }
+
+          const seenCallIDs = seenReadCallIDsBySession.get(sessionID) ?? new Set<string>();
+          if (!seenReadCallIDsBySession.has(sessionID)) {
+            seenReadCallIDsBySession.set(sessionID, seenCallIDs);
+          }
+
+          if (!seenCallIDs.has(callID)) {
+            seenCallIDs.add(callID);
+            readOperationCountBySession.set(sessionID, (readOperationCountBySession.get(sessionID) ?? 0) + 1);
+          }
+
+          const operationCount = readOperationCountBySession.get(sessionID) ?? 0;
+          if (operationCount < 1 || operationCount % frequency !== 0) {
+            continue;
+          }
+
+          const bannerInjectedCallIDs = bannerInjectedCallIDsBySession.get(sessionID) ?? new Set<string>();
+          if (!bannerInjectedCallIDsBySession.has(sessionID)) {
+            bannerInjectedCallIDsBySession.set(sessionID, bannerInjectedCallIDs);
+          }
+
+          if (bannerInjectedCallIDs.has(callID)) {
+            continue;
+          }
+
+          const stats = await telemetry.getSessionStats(sessionID);
+          const banner = formatSessionBanner(stats, sessionID);
+          if (!banner) {
+            continue;
+          }
+
+          state.output = prependPrdLine(state.output, banner);
+          bannerInjectedCallIDs.add(callID);
         }
       }
     },

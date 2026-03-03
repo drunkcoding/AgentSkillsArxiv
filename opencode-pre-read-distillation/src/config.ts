@@ -119,6 +119,13 @@ const PromptConfigSchema = z.object({
   appendReadToolDefinition: z.boolean().default(true),
 });
 
+const DisplayConfigSchema = z.object({
+  operationAnnotations: z.boolean().default(true),
+  sessionSummaryBanner: z.boolean().default(true),
+  bannerEveryToolResults: z.number().int().min(1).max(200).default(5),
+  slashCommands: z.boolean().default(true),
+});
+
 export const PrdConfigSchema = z.object({
   $schema: z.string().default(PRD_SCHEMA_URL),
   enabled: z.boolean().default(true),
@@ -130,6 +137,7 @@ export const PrdConfigSchema = z.object({
   hooks: HooksConfigSchema,
   customTools: CustomToolsConfigSchema,
   prompt: PromptConfigSchema,
+  display: DisplayConfigSchema,
 });
 
 type ConfigObject = Record<string, unknown>;
@@ -145,6 +153,7 @@ export const DEFAULT_PRD_CONFIG: PrdConfig = {
   hooks: HooksConfigSchema.parse({}),
   customTools: CustomToolsConfigSchema.parse({}),
   prompt: PromptConfigSchema.parse({}),
+  display: DisplayConfigSchema.parse({}),
 };
 
 function getGlobalConfigDir(): string {
@@ -256,7 +265,13 @@ async function ensureDefaultGlobalConfigExists(): Promise<void> {
 
   await mkdir(getGlobalConfigDir(), { recursive: true });
   const content = `{
-  "$schema": "${PRD_SCHEMA_URL}"
+  "$schema": "${PRD_SCHEMA_URL}",
+  "display": {
+    "operationAnnotations": true,
+    "sessionSummaryBanner": true,
+    "bannerEveryToolResults": 5,
+    "slashCommands": true
+  }
 }\n`;
   await writeFile(globalJsonc, content, "utf8");
 }

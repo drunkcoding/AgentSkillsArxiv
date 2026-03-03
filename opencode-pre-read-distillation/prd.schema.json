@@ -288,6 +288,36 @@
         }
       },
       "required": ["injectSystemPrompt", "appendReadToolDefinition"]
+    },
+    "display": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "operationAnnotations": {
+          "type": "boolean",
+          "default": true
+        },
+        "sessionSummaryBanner": {
+          "type": "boolean",
+          "default": true
+        },
+        "bannerEveryToolResults": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 200,
+          "default": 5
+        },
+        "slashCommands": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "required": [
+        "operationAnnotations",
+        "sessionSummaryBanner",
+        "bannerEveryToolResults",
+        "slashCommands"
+      ]
     }
   },
   "required": [
@@ -299,6 +329,7 @@
     "telemetry",
     "hooks",
     "customTools",
-    "prompt"
+    "prompt",
+    "display"
   ]
 }

@@ -82,6 +82,13 @@ export interface PromptConfig {
   appendReadToolDefinition: boolean;
 }
 
+export interface DisplayConfig {
+  operationAnnotations: boolean;
+  sessionSummaryBanner: boolean;
+  bannerEveryToolResults: number;
+  slashCommands: boolean;
+}
+
 export interface PrdConfig {
   $schema?: string | undefined;
   enabled: boolean;
@@ -93,6 +100,7 @@ export interface PrdConfig {
   hooks: HooksConfig;
   customTools: CustomToolsConfig;
   prompt: PromptConfig;
+  display: DisplayConfig;
 }
 
 export interface DecisionResult {

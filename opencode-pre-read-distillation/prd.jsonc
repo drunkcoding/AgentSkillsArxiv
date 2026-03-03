@@ -1,0 +1,9 @@
+{
+  "$schema": "https://raw.githubusercontent.com/your-org/opencode-pre-read-distillation/main/prd.schema.json",
+  "display": {
+    "operationAnnotations": true,
+    "sessionSummaryBanner": true,
+    "bannerEveryToolResults": 5,
+    "slashCommands": true
+  }
+}

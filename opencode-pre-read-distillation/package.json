@@ -16,7 +16,8 @@
   "files": [
     "dist",
     "README.md",
-    "prd.schema.json"
+    "prd.schema.json",
+    "prd.jsonc"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
