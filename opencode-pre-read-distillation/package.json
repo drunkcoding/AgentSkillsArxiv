@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "opencode-pre-read-distillation",
+  "version": "0.1.0",
+  "description": "OpenCode plugin for pre-read distillation of large file reads",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./prd.schema.json": "./prd.schema.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "prd.schema.json"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test"
+  },
+  "keywords": [
+    "opencode",
+    "opencode-plugin",
+    "distillation",
+    "context",
+    "token-optimization"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@opencode-ai/plugin": ">=1.2.15"
+  },
+  "dependencies": {
+    "jsonc-parser": "^3.3.1",
+    "picomatch": "^4.0.2",
+    "zod": "^4.1.8"
+  },
+  "devDependencies": {
+    "@opencode-ai/plugin": "^1.2.15",
+    "@types/node": "^22.13.9",
+    "@types/picomatch": "^4.0.2",
+    "typescript": "^5.8.2"
+  }
+}

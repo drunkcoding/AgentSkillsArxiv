@@ -1,0 +1,304 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/your-org/opencode-pre-read-distillation/main/prd.schema.json",
+  "title": "Pre-Read Distillation Plugin Configuration",
+  "description": "Configuration schema for opencode-pre-read-distillation",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Schema URL for IDE autocomplete"
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "debug": {
+      "type": "boolean",
+      "default": false
+    },
+    "llm": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "provider": {
+          "type": "string",
+          "enum": ["anthropic", "openai-compatible"],
+          "default": "anthropic"
+        },
+        "model": {
+          "type": "string",
+          "default": "claude-3-5-haiku-latest"
+        },
+        "apiKeyEnv": {
+          "type": "string",
+          "default": "ANTHROPIC_API_KEY"
+        },
+        "baseURL": {
+          "type": "string",
+          "format": "uri"
+        },
+        "timeoutMs": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 120000,
+          "default": 20000
+        },
+        "temperature": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 0
+        },
+        "maxOutputTokens": {
+          "type": "integer",
+          "minimum": 128,
+          "maximum": 8192,
+          "default": 1200
+        }
+      },
+      "required": [
+        "provider",
+        "model",
+        "apiKeyEnv",
+        "timeoutMs",
+        "temperature",
+        "maxOutputTokens"
+      ]
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "policyVersion": {
+          "type": "string",
+          "default": "v1"
+        },
+        "passThroughMaxTokens": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1500
+        },
+        "passThroughMaxBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 60000
+        },
+        "editIntentPassThroughMaxTokens": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 3000
+        },
+        "distillMinTokens": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1500
+        },
+        "distillMinBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 50000
+        },
+        "metadataOnlyMinTokens": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 12000
+        },
+        "metadataOnlyMinBytes": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 450000
+        },
+        "maxDistillInputChars": {
+          "type": "integer",
+          "minimum": 4000,
+          "default": 120000
+        },
+        "generatedPathGlobs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "generatedContentMarkers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "minifiedLineLength": {
+          "type": "integer",
+          "minimum": 80,
+          "default": 400
+        },
+        "minifiedLongLineCount": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 20
+        },
+        "minifiedNonWhitespaceRatio": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 0.93
+        },
+        "binaryExtensions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "documentationExtensions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "alwaysPassThroughGlobs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "alwaysMetadataOnlyGlobs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "policyVersion",
+        "passThroughMaxTokens",
+        "passThroughMaxBytes",
+        "editIntentPassThroughMaxTokens",
+        "distillMinTokens",
+        "distillMinBytes",
+        "metadataOnlyMinTokens",
+        "metadataOnlyMinBytes",
+        "maxDistillInputChars",
+        "generatedPathGlobs",
+        "generatedContentMarkers",
+        "minifiedLineLength",
+        "minifiedLongLineCount",
+        "minifiedNonWhitespaceRatio",
+        "binaryExtensions",
+        "documentationExtensions",
+        "alwaysPassThroughGlobs",
+        "alwaysMetadataOnlyGlobs"
+      ]
+    },
+    "cache": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "ttlSec": {
+          "type": "integer",
+          "minimum": 60,
+          "default": 86400
+        },
+        "maxEntries": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 2000
+        },
+        "maxBytes": {
+          "type": "integer",
+          "minimum": 1024,
+          "default": 300000000
+        },
+        "directory": {
+          "type": "string"
+        }
+      },
+      "required": ["enabled", "ttlSec", "maxEntries", "maxBytes"]
+    },
+    "telemetry": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "directory": {
+          "type": "string"
+        }
+      },
+      "required": ["enabled"]
+    },
+    "hooks": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "interceptReadTool": {
+          "type": "boolean",
+          "default": true
+        },
+        "systemPrompt": {
+          "type": "boolean",
+          "default": true
+        },
+        "toolDefinition": {
+          "type": "boolean",
+          "default": true
+        },
+        "chatMessageTracking": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "required": ["interceptReadTool", "systemPrompt", "toolDefinition", "chatMessageTracking"]
+    },
+    "customTools": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "distilledRead": {
+          "type": "boolean",
+          "default": true
+        },
+        "rawRead": {
+          "type": "boolean",
+          "default": true
+        },
+        "fileOutline": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "required": ["distilledRead", "rawRead", "fileOutline"]
+    },
+    "prompt": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "injectSystemPrompt": {
+          "type": "boolean",
+          "default": true
+        },
+        "appendReadToolDefinition": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "required": ["injectSystemPrompt", "appendReadToolDefinition"]
+    }
+  },
+  "required": [
+    "enabled",
+    "debug",
+    "llm",
+    "policy",
+    "cache",
+    "telemetry",
+    "hooks",
+    "customTools",
+    "prompt"
+  ]
+}
