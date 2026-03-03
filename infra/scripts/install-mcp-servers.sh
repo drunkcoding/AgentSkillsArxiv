@@ -27,6 +27,10 @@ REPO_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 AST_GREP_DIR="${REPO_ROOT}/mcp/ast-grep-mcp-server"
 FDEP_DIR="${REPO_ROOT}/mcp/fdep-mcp-server"
 MEM0_DIR="${REPO_ROOT}/mcp/mem0-mcp-server"
+MCP_VENV="${HOME}/.local/share/mcp/venv"
+MCP_PYTHON="${MCP_VENV}/bin/python3"
+MCP_NODE_PREFIX="${HOME}/.local/share/mcp/node"
+MCP_AST_GREP="${MCP_NODE_PREFIX}/bin/ast-grep-mcp-server"
 
 # ─── Output helpers ──────────────────────────────────────────────────────────
 
@@ -84,22 +88,35 @@ build_ast_grep() {
     fi
     info "Compiling TypeScript..."
     npm --prefix "$AST_GREP_DIR" run build
-    info "Installing globally via npm..."
-    npm install -g "$AST_GREP_DIR" --no-fund --no-audit
-    success "ast-grep-mcp-server installed globally"
+    info "Installing to MCP node prefix..."
+    mkdir -p "$MCP_NODE_PREFIX"
+    npm install -g --prefix "$MCP_NODE_PREFIX" "$AST_GREP_DIR" --no-fund --no-audit
+    success "ast-grep-mcp-server installed → ${MCP_AST_GREP}"
+}
+
+ensure_mcp_venv() {
+    if [ ! -d "$MCP_VENV" ]; then
+        header "Creating MCP Python venv"
+        mkdir -p "$(dirname "$MCP_VENV")"
+        python3 -m venv "$MCP_VENV"
+        "$MCP_PYTHON" -m pip install --upgrade pip --quiet
+        success "Created venv at ${MCP_VENV}"
+    else
+        info "MCP venv exists at ${MCP_VENV}"
+    fi
 }
 
 build_fdep() {
     header "Building fdep-mcp-server"
-    info "Installing Python package..."
-    pip install "$FDEP_DIR" --quiet 2>/dev/null || python3 -m pip install "$FDEP_DIR" --quiet
+    info "Installing Python package into MCP venv..."
+    "$MCP_PYTHON" -m pip install "$FDEP_DIR" --quiet
     success "fdep-mcp-server installed → python3 -m fdep_mcp"
 }
 
 build_mem0() {
     header "Building mem0-mcp-server"
-    info "Installing Python package..."
-    pip install "$MEM0_DIR" --quiet 2>/dev/null || python3 -m pip install "$MEM0_DIR" --quiet
+    info "Installing Python package into MCP venv..."
+    "$MCP_PYTHON" -m pip install "$MEM0_DIR" --quiet
     success "mem0-mcp-server installed → python3 -m mem0_mcp"
 }
 
@@ -203,14 +220,14 @@ existing = existing.rstrip()
 new_sections = '''
 
 [mcp_servers.ast-grep]
-command = "ast-grep-mcp-server"
+command = "${MCP_AST_GREP}"
 
 [mcp_servers.fdep]
-command = "python3"
+command = "${MCP_VENV}/bin/python3"
 args = ["-m", "fdep_mcp"]
 
 [mcp_servers.mem0]
-command = "python3"
+command = "${MCP_VENV}/bin/python3"
 args = ["-m", "mem0_mcp"]
 '''
 
@@ -231,7 +248,7 @@ ast_grep_entry_standard() {
     cat <<EOF
 {
   "type": "stdio",
-  "command": "ast-grep-mcp-server"
+  "command": "${MCP_AST_GREP}"
 }
 EOF
 }
@@ -240,7 +257,7 @@ fdep_entry_standard() {
     cat <<EOF
 {
   "type": "stdio",
-  "command": "python3",
+  "command": "${MCP_PYTHON}",
   "args": ["-m", "fdep_mcp"]
 }
 EOF
@@ -250,7 +267,7 @@ mem0_entry_standard() {
     cat <<EOF
 {
   "type": "stdio",
-  "command": "python3",
+  "command": "${MCP_PYTHON}",
   "args": ["-m", "mem0_mcp"]
 }
 EOF
@@ -260,7 +277,7 @@ ast_grep_entry_no_type() {
     # Format without "type" field (Claude Code, Cline, Codex JSON fallback)
     cat <<EOF
 {
-  "command": "ast-grep-mcp-server"
+  "command": "${MCP_AST_GREP}"
 }
 EOF
 }
@@ -268,7 +285,7 @@ EOF
 fdep_entry_no_type() {
     cat <<EOF
 {
-  "command": "python3",
+  "command": "${MCP_PYTHON}",
   "args": ["-m", "fdep_mcp"]
 }
 EOF
@@ -277,7 +294,7 @@ EOF
 mem0_entry_no_type() {
     cat <<EOF
 {
-  "command": "python3",
+  "command": "${MCP_PYTHON}",
   "args": ["-m", "mem0_mcp"]
 }
 EOF
@@ -352,7 +369,7 @@ install_opencode() {
     ast_entry=$(cat <<EOF
 {
   "type": "local",
-  "command": ["ast-grep-mcp-server"],
+  "command": ["${MCP_AST_GREP}"],
   "enabled": true
 }
 EOF
@@ -360,7 +377,7 @@ EOF
     fdep_entry=$(cat <<EOF
 {
   "type": "local",
-  "command": ["python3", "-m", "fdep_mcp"],
+  "command": ["${MCP_PYTHON}", "-m", "fdep_mcp"],
   "enabled": true
 }
 EOF
@@ -368,7 +385,7 @@ EOF
     mem0_entry=$(cat <<EOF
 {
   "type": "local",
-  "command": ["python3", "-m", "mem0_mcp"],
+  "command": ["${MCP_PYTHON}", "-m", "mem0_mcp"],
   "enabled": true
 }
 EOF
@@ -492,16 +509,16 @@ print_summary() {
     header "Installation complete"
     echo ""
     printf "${DIM}Servers installed:${RESET}\n"
-    printf "  • ast-grep-mcp-server  → ast-grep-mcp-server\n"
-    printf "  • fdep-mcp-server      → python3 -m fdep_mcp\n"
-    printf "  • mem0-mcp-server      → python3 -m mem0_mcp\n"
+    printf "  • ast-grep-mcp-server  → ${MCP_AST_GREP}\n"
+    printf "  • fdep-mcp-server      → ${MCP_PYTHON} -m fdep_mcp\n"
+    printf "  • mem0-mcp-server      → ${MCP_PYTHON} -m mem0_mcp\n"
     echo ""
     printf "${DIM}Configured for:${RESET} %s (scope: %s)\n" "$targets" "$scope"
     echo ""
     printf "${DIM}Verify with:${RESET}\n"
-    printf "  npx @modelcontextprotocol/inspector --cli --method tools/list ast-grep-mcp-server\n"
-    printf "  npx @modelcontextprotocol/inspector --cli --method tools/list python3 -m fdep_mcp\n"
-    printf "  npx @modelcontextprotocol/inspector --cli --method tools/list python3 -m mem0_mcp\n"
+    printf "  npx @modelcontextprotocol/inspector --cli --method tools/list ${MCP_AST_GREP}\n"
+    printf "  npx @modelcontextprotocol/inspector --cli --method tools/list ${MCP_PYTHON} -m fdep_mcp\n"
+    printf "  npx @modelcontextprotocol/inspector --cli --method tools/list ${MCP_PYTHON} -m mem0_mcp\n"
     echo ""
 }
 
@@ -584,6 +601,7 @@ main() {
     # Build
     if [ "$skip_build" = false ] && [ "$dry_run" = false ]; then
         build_ast_grep
+        ensure_mcp_venv
         build_fdep
         build_mem0
     else
@@ -591,8 +609,12 @@ main() {
             info "Skipping build (--skip-build)"
         fi
         # Verify dist exists even if skipping build
-        if ! command -v ast-grep-mcp-server &>/dev/null && [ ! -f "${AST_GREP_DIR}/dist/index.js" ]; then
-            error "ast-grep-mcp-server not installed. Run the installer without --skip-build first."
+        if [ ! -x "${MCP_AST_GREP}" ] && [ ! -f "${AST_GREP_DIR}/dist/index.js" ]; then
+            error "ast-grep-mcp-server not found at ${MCP_AST_GREP}. Run the installer without --skip-build first."
+            exit 1
+        fi
+        if [ ! -d "$MCP_VENV" ]; then
+            error "MCP Python venv not found at ${MCP_VENV}. Run the installer without --skip-build first."
             exit 1
         fi
     fi

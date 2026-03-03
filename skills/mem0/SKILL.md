@@ -1,225 +1,184 @@
 ---
 name: mem0
 description: >
-  Persistent memory layer for AI agents using mem0 (mem0ai/mem0). Use this skill when
-  users want to: (1) add persistent memory to AI applications or chatbots, (2) store,
-  search, update, or delete memories from conversations, (3) set up mem0 with various
-  LLM/embedding/vector store backends, (4) build memory-augmented agents that remember
-  user preferences and context across sessions. Triggers on mentions of "mem0", "memory
-  layer", "persistent memory for AI", "remember user preferences", or building chatbots
-  that need long-term memory.
+  Per-agent persistent memory for oh-my-open-code. Stores and retrieves knowledge
+  across sessions using agent_id scoping — each agent (oracle, librarian, explore,
+  sisyphus, deep, etc.) maintains its own memory namespace while allowing cross-agent
+  search. Primary use case: persisting deep research findings, architecture decisions,
+  library patterns, and codebase knowledge. Triggers on: "remember", "store this",
+  "what do we know about", "recall", "search memory", "persist findings", or any
+  need to retain knowledge across sessions.
 ---
 
-# mem0 - Memory Layer for AI
+# mem0 — Per-Agent Persistent Memory for oh-my-open-code
 
-mem0 extracts facts from conversations via LLM, stores them as vector embeddings, and retrieves semantically relevant memories on subsequent queries.
+Local-first, session-persistent memory layer. Each agent stores knowledge under its own `agent_id`. All agents can search across namespaces.
 
-## Installation
+**Storage**: `~/.local/share/opencode/mem0/` (configurable via `MEM0_LOCAL_STORE_PATH`).
 
-```bash
-pip install mem0ai
-```
+## Agent Memory Namespaces
 
-Default setup requires `OPENAI_API_KEY` (uses OpenAI for LLM + embeddings, Qdrant local for vector store).
+| `agent_id` | What to Store | Examples |
+|------------|--------------|---------|
+| `oracle` | Architecture decisions, debugging breakthroughs, complex tradeoff analyses | "JWT refresh tokens stored in httpOnly cookies, not localStorage — XSS risk" |
+| `librarian` | Library API patterns, version-specific gotchas, documentation findings | "fastapi 0.115+ requires `lifespan` instead of `on_event` for startup/shutdown" |
+| `explore` | Codebase structural patterns, module relationships, convention discoveries | "All API routes in src/api/ use dependency injection via `Depends(get_db)`" |
+| `deep` | Deep research conclusions, multi-source synthesis, investigation outcomes | "Qdrant outperforms Chroma at >1M vectors; switch threshold identified at 500K" |
+| `sisyphus` | Project-level decisions, user preferences, recurring task patterns | "User prefers minimal PRs — one concern per PR, no drive-by refactors" |
+| `metis` | Requirement ambiguities found, scope clarifications, pre-planning insights | "Auth module: user said 'simple login' but codebase has RBAC — clarify scope" |
+| `momus` | Review findings, quality gaps identified, recurring plan weaknesses | "Plans often miss error handling — always check for catch blocks in delegation" |
 
-For alternative provider setups, see [references/configuration.md](references/configuration.md).
+## When to Store
 
-## Quick Start
+**STORE when:**
+- Research yields a non-obvious finding that took effort to discover
+- A debugging session reveals root cause that wasn't apparent
+- An architecture decision is made with specific reasoning
+- A library has version-specific behavior or gotchas
+- A codebase convention is discovered that isn't documented
+- User states a preference or working style
 
-```python
-from mem0 import Memory
-
-memory = Memory()
-
-# Store memories from conversation
-memory.add(
-    [{"role": "user", "content": "I'm a backend engineer who prefers Python and uses vim"}],
-    user_id="alice"
-)
-
-# Search memories
-results = memory.search("what editor does she use", user_id="alice")
-for r in results["results"]:
-    print(f"{r['memory']} (score: {r['score']:.2f})")
-
-# Store raw text (no LLM extraction)
-memory.add("Prefers dark mode in all editors", user_id="alice", infer=False)
-```
+**DO NOT store:**
+- Trivial facts easily found via grep (file paths, function names)
+- Temporary debugging state (use `run_id` scoping for that)
+- Anything already in the codebase's own documentation
+- Raw tool output — distill first, then store the insight
 
 ## Core Operations
 
-All operations require at least one of: `user_id`, `agent_id`, or `run_id`.
+### Store a Finding
 
-### Add Memories
-
-```python
-# From conversation messages
-memory.add(messages, user_id="u1")
-
-# From plain string
-memory.add("Fact to remember", user_id="u1")
-
-# Skip LLM fact extraction, store verbatim
-memory.add("Raw data", user_id="u1", infer=False)
-
-# With custom metadata
-memory.add(messages, user_id="u1", metadata={"source": "onboarding"})
-
-# Procedural memory (requires agent_id)
-memory.add(messages, agent_id="deploy-bot", memory_type="procedural_memory")
+```
+mem0_add(
+    data="<concise insight — what was learned and why it matters>",
+    agent_id="<your-agent-name>",
+    metadata={"source": "<where-found>", "topic": "<domain>", "project": "<project-name>"}
+)
 ```
 
-`add()` returns `{"results": [{"id": "...", "memory": "...", "event": "ADD|UPDATE|NONE"}]}`.
-
-### Search Memories
-
-```python
-results = memory.search("query", user_id="u1", limit=5)
-# Optional: threshold=0.7 to filter low-relevance results
-
-for r in results["results"]:
-    print(r["id"], r["memory"], r["score"])
+**Good memory content** (distilled, actionable):
+```
+"The payments module uses eventual consistency — OrderCreated events are processed
+async by PaymentService. Direct DB queries after order creation will miss payment
+status for ~200ms. Use the event bus callback instead."
 ```
 
-### Get, Update, Delete
-
-```python
-# Get all memories for a user
-all_mems = memory.get_all(user_id="u1")
-
-# Get specific memory
-mem = memory.get("memory-uuid")
-
-# Update
-memory.update("memory-uuid", "Updated fact text")
-
-# Delete one
-memory.delete("memory-uuid")
-
-# Delete all for user
-memory.delete_all(user_id="u1")
-
-# View change history
-memory.history("memory-uuid")
-
-# Full reset
-memory.reset()
+**Bad memory content** (raw, undistilled):
+```
+"Found some stuff in payments/service.py about async processing"
 ```
 
-## Integration Pattern: Chat with Memory
+### Search for Knowledge
 
-```python
-from openai import OpenAI
-from mem0 import Memory
+```
+# Search own agent's memories
+mem0_search(query="authentication patterns", agent_id="oracle")
 
-client = OpenAI()
-memory = Memory()
+# Cross-agent search — find what librarian discovered about a library
+mem0_search(query="fastapi lifespan migration", agent_id="librarian")
 
-def chat(message: str, user_id: str) -> str:
-    # Retrieve relevant memories
-    mems = memory.search(message, user_id=user_id, limit=3)
-    context = "\n".join(f"- {m['memory']}" for m in mems["results"])
+# Broad search — omit agent_id to search across all agents
+mem0_search(query="database connection pooling")
 
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {"role": "system", "content": f"You are helpful. User context:\n{context}"},
-            {"role": "user", "content": message},
-        ],
-    )
-    reply = response.choices[0].message.content
-
-    # Store the conversation as new memories
-    memory.add(
-        [{"role": "user", "content": message}, {"role": "assistant", "content": reply}],
-        user_id=user_id,
-    )
-    return reply
+# Narrow with limit
+mem0_search(query="JWT security best practices", agent_id="oracle", limit=3)
 ```
 
-## Custom Configuration
+### Retrieve All Agent Memories
 
-Pass a config dict or `MemoryConfig` object:
+```
+# All memories for a specific agent
+mem0_list(agent_id="explore")
 
-```python
-from mem0 import Memory
-
-config = {
-    "llm": {
-        "provider": "openai",
-        "config": {"model": "gpt-4o-mini", "temperature": 0.1},
-    },
-    "embedder": {
-        "provider": "openai",
-        "config": {"model": "text-embedding-3-small"},
-    },
-    "vector_store": {
-        "provider": "qdrant",
-        "config": {"collection_name": "my_memories", "path": "/tmp/qdrant"},
-    },
-}
-memory = Memory.from_config(config)
+# Combined scope — agent memories for a specific user context
+mem0_list(agent_id="librarian", user_id="project-acme")
 ```
 
-For all provider options (17 LLMs, 11 embedders, 24 vector stores, graph stores, rerankers), see [references/configuration.md](references/configuration.md).
+### Update / Delete
 
-## Custom Prompts
+```
+# Correct outdated information
+mem0_update(memory_id="<uuid>", data="Updated: fastapi 0.116 reverted lifespan change")
 
-Override fact extraction or memory update logic:
+# Remove stale memories
+mem0_delete(memory_id="<uuid>")
 
-```python
-config = {
-    "custom_fact_extraction_prompt": "Extract technical decisions from: {messages}",
-    "custom_update_memory_prompt": "Your custom update rules...",
-}
-memory = Memory.from_config(config)
+# Nuclear option — clear all memories for an agent
+mem0_delete_all(agent_id="deep", confirm=true)
 ```
 
-## Async Usage
+### Check Health
 
-```python
-from mem0 import AsyncMemory
-
-memory = AsyncMemory()
-result = await memory.add(messages, user_id="u1")
-results = await memory.search("query", user_id="u1")
+```
+mem0_health()
 ```
 
-## Hosted Platform (MemoryClient)
+## Deep Research Memory Pattern
 
-For the managed API at `api.mem0.ai` (requires API key from `app.mem0.ai`):
+When a research-intensive task completes, the agent should persist key findings:
 
-```python
-from mem0 import MemoryClient
-
-client = MemoryClient(api_key="your-key")  # or set MEM0_API_KEY env var
-client.add(messages, user_id="u1")
-results = client.search("query", user_id="u1")
+```
+# After deep investigation, store the synthesis (not raw findings)
+mem0_add(
+    data="React Server Components: Cannot use useState/useEffect. For interactive
+    elements, mark with 'use client'. Server components can async/await directly.
+    fetch() in server components auto-dedupes. Mixing: server components can import
+    client components but NOT vice versa.",
+    agent_id="deep",
+    metadata={
+        "topic": "react-server-components",
+        "source": "next.js docs + vercel blog + react RFC",
+        "confidence": "high",
+        "project": "frontend-migration"
+    }
+)
 ```
 
-Same methods as `Memory`, but runs on mem0's hosted infrastructure.
+### Before Starting Research — Check Memory First
 
-## Memory Scoping Guide
-
-| Scope | Use Case |
-|-------|----------|
-| `user_id` | Per-user preferences and facts |
-| `agent_id` | Agent-specific knowledge and procedures |
-| `run_id` | Session-scoped temporary context |
-| Combined | Multi-dimensional (e.g., user + agent) |
-
-## Response Format
-
-All operations return `{"results": [...]}`. Each memory item:
-
-```python
-{
-    "id": "uuid",
-    "memory": "The extracted fact",
-    "score": 0.85,          # search only
-    "metadata": {},
-    "created_at": "ISO-ts",
-    "updated_at": "ISO-ts",
-    "user_id": "...",
-}
 ```
+# Before launching explore/librarian agents, check if we already know this
+mem0_search(query="react server components patterns", agent_id="deep")
+mem0_search(query="react server components", agent_id="librarian")
+```
+
+If relevant memories exist with high confidence, skip redundant research.
+
+## Metadata Conventions
+
+Use consistent metadata keys for queryable context:
+
+| Key | Purpose | Examples |
+|-----|---------|---------|
+| `topic` | Knowledge domain | `"auth"`, `"database"`, `"react-hooks"` |
+| `source` | Where the knowledge came from | `"codebase-analysis"`, `"official-docs"`, `"debugging-session"` |
+| `project` | Which project this applies to | `"acme-api"`, `"frontend-app"` |
+| `confidence` | How reliable the finding is | `"high"`, `"medium"`, `"speculative"` |
+
+## Session-Scoped Memory (`run_id`)
+
+For temporary context within a single work session (discardable after):
+
+```
+mem0_add(
+    data="Current debugging: the 500 error traces to middleware ordering — cors must come before auth",
+    agent_id="oracle",
+    run_id="debug-session-2024-01-15"
+)
+```
+
+Use `run_id` for ephemeral notes. Use `agent_id` alone for permanent knowledge.
+
+## Configuration
+
+All configuration via environment variables in `opencode.json`:
+
+| Variable | Default | Purpose |
+|----------|---------|---------|
+| `MEM0_PROFILE` | `local` | Storage profile (`local`, `hosted`, `custom`) |
+| `MEM0_LOCAL_STORE_PATH` | `~/.local/share/opencode/mem0/` | Where qdrant stores vector data |
+| `MEM0_DEFAULT_USER_ID` | *(none)* | Fallback user_id when none specified |
+| `MEM0_API_KEY` | *(none)* | Only for `hosted` profile |
+| `MEM0_CONFIG_PATH` | *(none)* | JSON config file for `custom` profile |
+
+**Local storage is persistent across sessions and reboots.** Data lives at the configured path until explicitly deleted.
