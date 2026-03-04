@@ -295,6 +295,7 @@ def export_message_to_mem0(
     text: str,
     agent_id: str,
     project_name: str,
+    app_id: str,
     session_title: str,
     role: str,
     original_agent: str,
@@ -306,6 +307,7 @@ def export_message_to_mem0(
         metadata = {
             "source": "session-export",
             "project": project_name,
+            "app_id": app_id,
             "session": session_title,
             "role": role,
             "original_agent": original_agent,
@@ -322,11 +324,13 @@ def _prepare_export_items(
     db_path: Path,
     project: dict[str, Any],
     *,
+    app_id_override: str | None = None,
     since_ts: int | None = None,
     max_messages: int | None = None,
 ) -> tuple[str, list[dict[str, Any]]]:
     """Collect all exportable messages across sessions for a project."""
     project_name = project.get("name") or Path(project["worktree"]).name
+    app_id = app_id_override or Path(project["worktree"]).name
     project_id = project["id"]
 
     sessions = get_sessions(db_path, project_id, since_ts=since_ts)
@@ -346,6 +350,7 @@ def _prepare_export_items(
                 "text": cleaned,
                 "agent_id": resolve_agent_id(msg["agent"]),
                 "project_name": project_name,
+                "app_id": app_id,
                 "session_title": session_title,
                 "role": msg["role"],
                 "original_agent": msg["agent"],
@@ -359,6 +364,7 @@ def export_project(
     project: dict[str, Any],
     memory: Any | None,
     *,
+    app_id_override: str | None = None,
     dry_run: bool = False,
     since_ts: int | None = None,
     max_messages: int | None = None,
@@ -366,7 +372,11 @@ def export_project(
 ) -> dict[str, int]:
     """Export all sessions for a project. Returns stats."""
     project_name, items = _prepare_export_items(
-        db_path, project, since_ts=since_ts, max_messages=max_messages,
+        db_path,
+        project,
+        app_id_override=app_id_override,
+        since_ts=since_ts,
+        max_messages=max_messages,
     )
 
     sessions_count = len(
@@ -399,6 +409,7 @@ def export_project(
             item["text"],
             agent_id=item["agent_id"],
             project_name=item["project_name"],
+            app_id=item["app_id"],
             session_title=item["session_title"],
             role=item["role"],
             original_agent=item["original_agent"],
@@ -458,6 +469,15 @@ def main() -> None:
             os.environ.get("MEM0_LOCAL_STORE_PATH", str(MEM0_STORE_DEFAULT))
         ),
         help=f"mem0 local store path (default: {MEM0_STORE_DEFAULT})",
+    )
+    parser.add_argument(
+        "--app-id",
+        type=str,
+        default=None,
+        help=(
+            "Override app_id metadata for all exported chunks. "
+            "By default app_id is derived from project name/worktree basename."
+        ),
     )
     parser.add_argument(
         "--since",
@@ -564,6 +584,7 @@ def main() -> None:
             db_path,
             project,
             memory,
+            app_id_override=args.app_id,
             dry_run=args.dry_run,
             since_ts=since_ts,
             max_messages=args.max_messages,

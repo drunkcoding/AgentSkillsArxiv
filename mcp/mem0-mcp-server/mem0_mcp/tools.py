@@ -53,10 +53,21 @@ class _Mem0AddInput(_ScopedInput):
 class _Mem0SearchInput(_ScopedInput):
     query: str = Field(..., min_length=1, description="Semantic search query.")
     limit: int = Field(default=10, ge=1, le=100, description="Maximum results to return.")
+    filters: dict[str, object] | None = Field(
+        default=None,
+        description="Optional filter dictionary passed through to mem0 search.",
+    )
 
 
 class _Mem0ListInput(_ScopedInput):
-    pass
+    filters: dict[str, object] | None = Field(
+        default=None,
+        description="Optional filter dictionary passed through to mem0 get_all.",
+    )
+    limit: int | None = Field(
+        default=None,
+        description="Optional maximum number of memories to return.",
+    )
 
 
 class _MemoryIdInput(BaseModel):
@@ -251,6 +262,7 @@ async def mem0_search(
     agent_id: str | None = None,
     run_id: str | None = None,
     limit: int = 10,
+    filters: dict[str, object] | None = None,
 ) -> str:
     """Search mem0 memories for a scoped identity using semantic similarity.
 
@@ -261,6 +273,7 @@ async def mem0_search(
         agent_id (str | None): Optional agent scope identifier.
         run_id (str | None): Optional run scope identifier.
         limit (int): Maximum number of matches to return (1-100).
+        filters (dict[str, object] | None): Optional filter dictionary passed through to mem0.
 
     Returns:
         str: JSON payload with matching memories, scope, and result count.
@@ -273,11 +286,16 @@ async def mem0_search(
             agent_id=agent_id,
             run_id=run_id,
             limit=limit,
+            filters=filters,
         )
         client, config = _get_runtime_dependencies(ctx)
         scope = _resolve_scope(params.user_id, params.agent_id, params.run_id, config)
 
-        result = client.search(params.query, **scope, limit=params.limit)
+        search_kwargs: dict[str, object] = {"limit": params.limit}
+        if params.filters is not None:
+            search_kwargs["filters"] = params.filters
+
+        result = client.search(params.query, **scope, **search_kwargs)
         matches = _extract_results(result)
 
         return _json_response(
@@ -311,6 +329,8 @@ async def mem0_list(
     user_id: str | None = None,
     agent_id: str | None = None,
     run_id: str | None = None,
+    filters: dict[str, object] | None = None,
+    limit: int | None = None,
 ) -> str:
     """List all memories for a scoped identity.
 
@@ -319,17 +339,31 @@ async def mem0_list(
         user_id (str | None): Optional user scope identifier.
         agent_id (str | None): Optional agent scope identifier.
         run_id (str | None): Optional run scope identifier.
+        filters (dict[str, object] | None): Optional filter dictionary passed through to mem0.
+        limit (int | None): Optional maximum number of memories to return.
 
     Returns:
         str: JSON payload containing all memories for the resolved scope.
     """
 
     try:
-        params = _Mem0ListInput(user_id=user_id, agent_id=agent_id, run_id=run_id)
+        params = _Mem0ListInput(
+            user_id=user_id,
+            agent_id=agent_id,
+            run_id=run_id,
+            filters=filters,
+            limit=limit,
+        )
         client, config = _get_runtime_dependencies(ctx)
         scope = _resolve_scope(params.user_id, params.agent_id, params.run_id, config)
 
-        result = client.get_all(**scope)
+        list_kwargs: dict[str, object] = dict(scope)
+        if params.filters is not None:
+            list_kwargs["filters"] = params.filters
+        if params.limit is not None:
+            list_kwargs["limit"] = params.limit
+
+        result = client.get_all(**list_kwargs)
         memories = _extract_results(result)
 
         return _json_response(

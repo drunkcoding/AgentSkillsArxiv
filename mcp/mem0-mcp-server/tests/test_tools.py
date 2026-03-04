@@ -1,8 +1,17 @@
+# pyright: reportMissingImports=false
+
+import asyncio
+import copy
+import json
+from types import SimpleNamespace
+from unittest.mock import MagicMock
+
 import pytest
 from pydantic import ValidationError
 
 from mem0_mcp.config import Mem0Config, Mem0Profile
 from mem0_mcp.tools import resolve_scope
+from mem0_mcp.tools import mem0_list, mem0_search
 
 
 def _clear_mem0_env(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -71,3 +80,103 @@ def test_config_from_env_requires_config_path_for_custom(monkeypatch: pytest.Mon
 def test_config_profile_validation_rejects_unknown_profile() -> None:
     with pytest.raises(ValidationError):
         _ = Mem0Config.model_validate({"profile": "invalid-profile"})
+
+
+def _build_test_ctx(client: MagicMock, *, default_user_id: str | None = None) -> SimpleNamespace:
+    config = Mem0Config(profile=Mem0Profile.LOCAL, default_user_id=default_user_id)
+    return SimpleNamespace(
+        request_context=SimpleNamespace(
+            lifespan_context={"mem0_client": client, "config": config}
+        )
+    )
+
+
+def test_mem0_search_passes_filters_to_client() -> None:
+    client = MagicMock()
+    client.search.return_value = []
+    ctx = _build_test_ctx(client)
+    filters: dict[str, object] = {"project": "alpha"}
+
+    _ = asyncio.run(
+        mem0_search(query="find alpha", ctx=ctx, user_id="alice", limit=7, filters=filters)
+    )
+
+    client.search.assert_called_once_with(
+        "find alpha",
+        user_id="alice",
+        limit=7,
+        filters=filters,
+    )
+
+
+def test_mem0_search_without_filters_keeps_backward_compatible_call_shape() -> None:
+    client = MagicMock()
+    client.search.return_value = []
+    ctx = _build_test_ctx(client)
+
+    _ = asyncio.run(mem0_search(query="find all", ctx=ctx, user_id="alice"))
+
+    client.search.assert_called_once_with(
+        "find all",
+        user_id="alice",
+        limit=10,
+    )
+
+
+def test_mem0_list_passes_filters_to_client() -> None:
+    client = MagicMock()
+    client.get_all.return_value = []
+    ctx = _build_test_ctx(client)
+    filters: dict[str, object] = {"app_id": "beta"}
+
+    _ = asyncio.run(mem0_list(ctx=ctx, user_id="alice", filters=filters))
+
+    client.get_all.assert_called_once_with(user_id="alice", filters=filters)
+
+
+def test_mem0_list_passes_limit_to_client() -> None:
+    client = MagicMock()
+    client.get_all.return_value = []
+    ctx = _build_test_ctx(client)
+
+    _ = asyncio.run(mem0_list(ctx=ctx, user_id="alice", limit=3))
+
+    client.get_all.assert_called_once_with(user_id="alice", limit=3)
+
+
+def test_mem0_list_without_filters_or_limit_keeps_backward_compatible_call_shape() -> None:
+    client = MagicMock()
+    client.get_all.return_value = []
+    ctx = _build_test_ctx(client)
+
+    _ = asyncio.run(mem0_list(ctx=ctx, user_id="alice"))
+
+    client.get_all.assert_called_once_with(user_id="alice")
+
+
+def test_mem0_search_passes_complex_filter_dict_unchanged() -> None:
+    client = MagicMock()
+    client.search.return_value = []
+    ctx = _build_test_ctx(client)
+    filters: dict[str, object] = {
+        "AND": [
+            {"project": {"in": ["alpha", "beta"]}},
+            {"created_at": {"gte": "2026-01-01"}},
+        ],
+        "topic": "memory",
+    }
+    original_filters = copy.deepcopy(filters)
+
+    response = asyncio.run(
+        mem0_search(query="complex", ctx=ctx, user_id="alice", limit=4, filters=filters)
+    )
+
+    client.search.assert_called_once_with(
+        "complex",
+        user_id="alice",
+        limit=4,
+        filters=original_filters,
+    )
+    assert filters == original_filters
+    parsed = json.loads(response)
+    assert parsed["tool"] == "mem0_search"

@@ -155,6 +155,157 @@ Use consistent metadata keys for queryable context:
 | `project` | Which project this applies to | `"acme-api"`, `"frontend-app"` |
 | `confidence` | How reliable the finding is | `"high"`, `"medium"`, `"speculative"` |
 
+## Cross-Project Memory (Knowledge Merge)
+
+Cross-project memory lets you reuse what you learned in one coding session inside later pseudocode, planning, or workflow sessions. Instead of re-discovering conventions for every repository, you store reusable patterns once and then pull them into any project that shares the same problems.
+
+### Metadata shape for cross-project patterns
+
+Use metadata to say where a pattern came from and how broad it is.
+
+Recommended conventions:
+
+- `app_id`: stable identifier for the project or app that produced the pattern, for example `"mem0-mcp-server"` or `"research-notebooks"`.
+- `scope`: either `"global"` for patterns that should apply across many projects, or `"project"` for patterns that are specific to a single codebase.
+- `abstraction_type`: what kind of pattern this is, for example `"testing_pattern"`, `"client_setup"`, `"workflow"`, `"prompting"`.
+- Optional extras, reused from earlier sections: `topic`, `source`, `confidence`.
+
+Store cross-project patterns under a dedicated agent namespace:
+
+- `agent_id="patterns"` for reusable abstractions that you want to merge across projects.
+
+### Writing patterns
+
+Global pattern written from a coding session:
+
+```python
+mem0_add(
+    data=(
+        "mem0 MCP tools should forward filters and limit directly to the "
+        "underlying client without reshaping the dictionary."
+    ),
+    agent_id="patterns",
+    metadata={
+        "app_id": "mem0-cross-project-memory",
+        "scope": "global",
+        "abstraction_type": "api_contract",
+        "topic": "mem0",
+        "source": "coding_session",
+    },
+)
+```
+
+Project-scoped variant linked to a specific app:
+
+```python
+mem0_add(
+    data=(
+        "mem0 MCP server tests use MagicMock for MemoryClient and assert "
+        "filters and limit passthrough on search and get_all."
+    ),
+    agent_id="patterns",
+    metadata={
+        "app_id": "mem0-mcp-server",
+        "scope": "project",
+        "abstraction_type": "testing_pattern",
+        "topic": "mem0",
+        "source": "tests",
+    },
+)
+```
+
+Both examples share the same `agent_id="patterns"` namespace so you can search across apps while still filtering by `app_id` and `scope`.
+
+### Reading patterns
+
+Load global patterns for a new project:
+
+```python
+global_patterns = mem0_search(
+    query="mem0 integration pattern",
+    agent_id="patterns",
+    filters={"scope": "global"},
+)
+```
+
+Load patterns that belong to a single app:
+
+```python
+project_patterns = mem0_search(
+    query="testing pattern",
+    agent_id="patterns",
+    filters={"app_id": "mem0-mcp-server"},
+)
+```
+
+You can also pull every pattern for a scope with `mem0_list`:
+
+```python
+all_global = mem0_list(
+    agent_id="patterns",
+    filters={"scope": "global"},
+)
+
+mem0_mcp_patterns = mem0_list(
+    agent_id="patterns",
+    filters={"app_id": "mem0-mcp-server"},
+)
+```
+
+### Filter syntax by profile
+
+Filters are passed straight through to the mem0 backend, so you need to match what your profile supports.
+
+Local profile (for example Qdrant, SQLite, simple vector stores):
+
+- Use flat key value dictionaries such as `filters={"app_id": "mem0-mcp-server", "scope": "global"}`.
+- Keys are combined with implicit AND semantics.
+- Complex logical trees or range operators might not work, even if you see them in hosted mem0 examples.
+
+Hosted or platform profile (mem0 cloud, platform vector stores):
+
+- Might support advanced filters such as:
+
+```python
+filters={
+    "AND": [
+        {"scope": "global"},
+        {"abstraction_type": {"in": ["workflow", "api_contract"]}},
+    ]
+}
+```
+
+- Treat this shape as hosted only. Do not rely on it for local first tools unless the backend explicitly documents support.
+
+### Recommended workflow
+
+At the end of a coding session:
+
+1. Scan the work you just finished.
+2. Distill reusable ideas into short, technology neutral sentences.
+3. Store them with `mem0_add`, `agent_id="patterns"`, and metadata such as:
+
+   - `app_id` for the current project
+   - `scope="global"` for broadly useful ideas, or `scope="project"` for codebase specific patterns
+   - `abstraction_type` to describe what kind of pattern you are saving
+
+At the start of a new session:
+
+1. Load global patterns with `mem0_search(..., agent_id="patterns", filters={"scope": "global"})`.
+2. Optionally load project specific history with `filters={"app_id": "<current-app-id>"}`.
+3. Use the retrieved patterns to guide new designs, pseudocode, and workflow planning before you touch the code.
+
+This keeps cross-project knowledge in a form that survives repo changes and lets planning sessions benefit from past coding work.
+
+### Anti-patterns
+
+Avoid these failure modes:
+
+- Do not dump raw code into the `patterns` namespace. Store the idea, not the entire function body.
+- Do not use project specific variable names in global patterns. Prefer neutral descriptions that make sense in any repo.
+- Do not save patterns without metadata. Always include at least `app_id`, `scope`, and `abstraction_type` so you can filter later.
+- Do not rely on hosted only filter syntax when you are running against a local Qdrant profile.
+
 ## Session-Scoped Memory (`run_id`)
 
 For temporary context within a single work session (discardable after):
