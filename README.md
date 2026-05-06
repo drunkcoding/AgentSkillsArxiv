@@ -6,6 +6,7 @@ Claude Code skills and MCP tooling for academic research and development workflo
 
 | Skill | Canonical Source Path | Description |
 |-------|------------------------|-------------|
+| `academic-grant-proposal` | `skills/academic-grant-proposal/` | Grant proposal writing for NSF, NIH, ERC, Horizon Europe, DARPA/DoD/DOE, UKRI — sections, budget, biosketch/DMP, review critique |
 | `academic-rebuttal` | `skills/academic-rebuttal/` | Conference paper rebuttal writing — false impression taxonomy, venue constraints (HotCRP + OpenReview) |
 | `academic-reviewer` | `skills/academic-reviewer/` | Structured systems-paper review workflow |
 | `academic-writing` | `skills/academic-writing/` | Systems paper writing workflow |
