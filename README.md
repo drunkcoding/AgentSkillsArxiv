@@ -14,6 +14,8 @@ Claude Code skills and MCP tooling for academic research and development workflo
 | `better-grep` | `skills/better-grep/` | One-shot high-signal text search patterns |
 | `citation-convert` | `skills/citation-convert/` | DOI/arXiv/title to BibTeX conversion |
 | `conference-plot` | `skills/conference-plot/` | Publication-quality conference figures |
+| `cuda-tutor` | `skills/cuda-tutor/` | Interactive concept-level quiz tutor over a CUDA StudyVault built by `cuda-tutor-setup` |
+| `cuda-tutor-setup` | `skills/cuda-tutor-setup/` | Generates an Obsidian CUDA StudyVault (curriculum / codebase / document modes) over the 6-topic NVIDIA learning path: CUDA kernels, CUTLASS, cuTile, open-gpu-kernel-modules, NCCL, NVSHMEM |
 | `function-dep-search` | `skills/function-dep-search/` | AST-accurate function dependency tracing |
 | `mem0` | `skills/mem0/` | Persistent memory integration patterns |
 | `openviking` | `skills/openviking/` | OpenViking context database reference |
