@@ -71,3 +71,20 @@
 8. `#dot_op<{opIdx = 0, parent = #mma}>` — what does `opIdx` mean? Why does each operand of `tl.dot` need a different layout?
 9. AMD MI300 backend: what replaces `wgmma` lowering? How does the `#mfma` layout differ from `#mma`?
 10. `TRITON_INTERPRET=1` runs the kernel in pure Python. What does it skip? When does it diverge from device behavior (e.g., race conditions, FP precision)?
+
+## Cross-Stack Equivalent: PTX / SASS + CuTe Layouts
+
+For users who already know the CUDA compilation pipeline, Triton's compiler internals are conceptually parallel. Full table: `../../tutor-core/references/cross-stack-rosetta.md` §6 (Compiler & Profiling), §2 (Memory & Tile), §3 (Compute).
+
+| RID   | This topic's concept                                              | CUDA / CUTLASS equivalent                                                |
+|-------|-------------------------------------------------------------------|--------------------------------------------------------------------------|
+| R6-01 | TTIR → TTGIR → LLIR → PTX/AMDGCN pipeline                         | `.cu` → PTX → SASS pipeline (via `nvcc` + `ptxas`)                       |
+| R6-02 | TTIR (explicit frontend dialect)                                  | C++ templates as the CUTLASS "frontend" (no separate dialect)            |
+| R6-03 | TTGIR (carries layout encodings `#blocked`/`#mma`/`#shared`/`#dot_op`) | PTX (carries thread/warp/cta abstractions, different abstraction level) |
+| R6-04 | `TRITON_KERNEL_DUMP=1`, `triton-opt`, `triton-translate`          | `cuobjdump`, `nvdisasm`, `ptxas -v`                                      |
+| R2-03 | `#shared` layout encoding (swizzle attribute)                     | CuTe `cute::Swizzle<B, M, S>` template                                   |
+| R2-04 | `#blocked` layout encoding (per-thread fragment)                  | CuTe register-resident `Layout`                                          |
+| R2-05 | `#dot_op` layout encoding (MMA-ready operand)                     | CUTLASS warp-MMA fragment layout (operand A/B/C)                         |
+| R2-12 | Triton swizzling pass (between TTIR and TTGIR)                    | CUTLASS `cute::Swizzle` parameter triple (compile-time choice)           |
+
+Every RID resolves to a row in the canonical `cross-stack-rosetta.md`. When `triton-tutor` includes Compiler Internals in a session, Phase 3 will pull ≥1 cross-stack question from `cross-stack-rosetta.md`.

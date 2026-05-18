@@ -72,3 +72,19 @@
 8. cuTile lacks a built-in block-level allreduce. Implement one with tile-level operations (tree reduction sketch).
 9. TileGym ships FlashAttention-style tiled matmul kernels. Pick one and trace: array → load → tile ops → store. What tile shapes are used and why?
 10. `ct.store` has an `order` parameter. Row-major vs column-major in the cuTile tile model — when do you override the default?
+
+## Cross-Stack Equivalent: Triton (Python Tile DSL Sibling)
+
+cuTile and Triton occupy the same mental slot — both are Python-first tile DSLs that compile to GPU kernels via decorators. cuTile is NVIDIA-only; Triton is multi-backend (NVIDIA + AMD + Intel). Full table: `../../tutor-core/references/cross-stack-rosetta.md` §5 (Python Tile DSLs) + §2 (Memory & Tile).
+
+| RID   | This topic's concept (cuTile / CuTe-DSL)                            | Triton equivalent                                                                |
+|-------|---------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| R5-01 | Python-first tile DSL, NVIDIA-only                                  | Python-first tile DSL, multi-backend (NVIDIA + AMD + Intel)                      |
+| R5-02 | `@cute.jit` decorator                                               | `@triton.jit` decorator                                                          |
+| R5-03 | `cute.make_layout(shape, stride)` (Python form)                     | `tl.make_block_ptr(base, shape, strides, offsets, block_shape, order)`           |
+| R5-04 | `cute.mma_atom(...)` (Python tile-level MMA)                        | `tl.dot(a, b, acc)`                                                              |
+| R5-05 | DLPack interop for PyTorch tensors                                  | Direct `torch.Tensor` argument (auto-extracts data_ptr/strides)                  |
+| R5-06 | Backend: NVIDIA only (MLIR → ptxas)                                 | Backend: NVIDIA + AMD + Intel (MLIR → PTX / AMDGCN / SPIR-V)                    |
+| R2-01 | CuTe `Layout` + `Stride` (more general; supports nested shapes)     | `tl.make_block_ptr` (rectangular blocks only)                                    |
+
+Every RID resolves to a row in the canonical `cross-stack-rosetta.md`. When `cuda-tutor` includes cuTile in a session, Phase 3 will pull ≥1 cross-stack question from `cross-stack-rosetta.md`. cuTile and Triton are explicitly compared in §5 of the Rosetta.

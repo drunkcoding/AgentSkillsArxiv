@@ -69,3 +69,26 @@
 8. CuTe DSL `@cute.jit` translates Python to Tile IR via MLIR. What are the current GPU-support limits of the `tileiras` compiler? Compare to the PTX path via `nvcc`.
 9. CUTLASS implicit GEMM for convolution (`cutlass::conv::device::ImplicitGemm`) vs direct convolution in CUDA: what tiling strategy aligns it with the GEMM hierarchy?
 10. A CUTLASS kernel uses `cutlass::arch::wmma`. On Ampere, max warpgroup size that participates in one `mma.sync`? How does this change on Hopper with WGMMA?
+
+## Cross-Stack Equivalent: Triton (Matmul Patterns + Compiler Internals)
+
+For users who already know Triton matmul kernels, these CUTLASS/CuTe concepts map directly. Full table: `../../tutor-core/references/cross-stack-rosetta.md` §2 (Memory & Tile), §3 (Compute), §4 (Scheduling).
+
+| RID   | This topic's concept                                            | Triton equivalent                                                              |
+|-------|-----------------------------------------------------------------|--------------------------------------------------------------------------------|
+| R2-01 | `cute::Layout` + `Stride`                                       | `tl.make_block_ptr(base, shape, strides, offsets, block_shape, order)`         |
+| R2-02 | `cute::Tensor<Engine, Layout>`                                  | block pointer + `tl.load(mask=…, other=…)`                                     |
+| R2-03 | `cute::Swizzle<B, M, S>` (smem swizzle)                         | `#shared` layout encoding (TTGIR) with swizzle attribute                       |
+| R2-05 | CUTLASS warp-MMA fragment layout (operand A/B/C)                | `#dot_op` layout encoding (TTGIR)                                              |
+| R3-01 | CUTLASS `cutlass::arch::Mma_Atom<...>` (abstract MMA atom)      | `tl.dot(a, b, acc)`                                                            |
+| R3-05 | CUTLASS FP8 GEMM (`cutlass::float_e4m3_t`, per-tensor scale)    | `tl.dot(a_fp8, b_fp8, acc_fp32, input_precision="ieee")` with scale tensors    |
+| R3-06 | CUTLASS epilogue α·MMA + β·C (single fused MAC)                 | `tl.dot(a, b, acc)` 3-arg form (fused MMA)                                     |
+| R3-07 | CUTLASS `tfloat32_t` accumulator                                | `tl.dot(... input_precision="tf32")`                                           |
+| R4-01 | CUTLASS persistent kernel scheduler                             | Triton `while pid < num_tiles` persistent pattern                              |
+| R4-02 | CUTLASS `ThreadblockSwizzle` (e.g., `GemmIdentityThreadblockSwizzle<8>`) | Triton pid swizzling with `GROUP_SIZE_M`                            |
+| R4-03 | CUTLASS `GemmSplitKParallel` (split-K)                          | Triton split-K kernel + `tl.atomic_add` + `reset_to_zero=["c_ptr"]`           |
+| R4-05 | CUTLASS `Stages` template parameter                             | Triton `num_stages` autotune knob                                              |
+| R4-06 | CUTLASS `ThreadblockShape::kWarpCount`                          | Triton `num_warps` autotune knob                                               |
+| R4-07 | CUTLASS Hopper warp-specialized mainloop (producer/consumer)    | Triton `num_warps=8` producer/consumer split on Hopper                         |
+
+Every RID resolves to a row in the canonical `cross-stack-rosetta.md`. When `cuda-tutor` includes CUTLASS in a session, Phase 3 will pull ≥1 cross-stack question from `cross-stack-rosetta.md`.

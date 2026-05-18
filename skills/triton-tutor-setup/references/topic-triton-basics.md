@@ -69,3 +69,17 @@
 8. `tl.atomic_add(ptr, value, mask)` for a reduction across blocks. What ordering guarantee do you get? What happens if two blocks race on the same address?
 9. `if pid == 0: tl.store(...)` — what does the compiler do with the Python `if`? Contrast with `tl.where(pid == 0, x, y)`.
 10. `tl.reshape(x, (BLOCK_M, BLOCK_K))` from a flat `(BLOCK_M * BLOCK_K,)` tile. Restrictions? Does the data layout change?
+
+## Cross-Stack Equivalent: CUDA Kernels
+
+For users who already know CUDA, these Triton-Basics concepts map to CUDA primitives. Full table: `../../tutor-core/references/cross-stack-rosetta.md` §2 (Memory & Tile), §4 (Scheduling).
+
+| RID   | This topic's concept                                      | CUDA / CUTLASS equivalent                                              |
+|-------|-----------------------------------------------------------|------------------------------------------------------------------------|
+| R2-01 | `tl.make_block_ptr(base, shape, strides, offsets, block_shape, order)` | CuTe `Layout` + `Stride` (CuTe is more general; supports nested shapes) |
+| R2-02 | block pointer + `tl.load(mask=…, other=…)`                | `cute::Tensor<Engine, Layout>`                                         |
+| R2-09 | `(stride_m, stride_n)` runtime args to `tl.make_block_ptr` | `cutlass::layout::RowMajor` / `ColumnMajor` (compile-time template tag) |
+| R2-10 | `tl.load(..., mask=offs < N, other=0.0)`                  | CUTLASS `PredicatedTileIterator` epilogue boundary predicate           |
+| R4-08 | Triton `kernel[grid]` (callable receives meta-params)     | CUTLASS `dim3 grid` for `kernel_launch<<<grid, block>>>` (Triton fixes block dim via `num_warps`) |
+
+Every RID resolves to a row in the canonical `cross-stack-rosetta.md`. When `triton-tutor` includes Triton Basics in a session, Phase 3 will pull ≥1 cross-stack question from `cross-stack-rosetta.md`.

@@ -2,17 +2,15 @@
 name: triton-tutor
 description: >
   Interactive quiz tutor for a Triton StudyVault built by `triton-tutor-setup`. Delivers 4-question
-  rounds with concept-level proficiency tracking (🟥/🟨/🟩/🟦/⬜) across the 6 Triton learning topics:
-  Triton basics (`@triton.jit`, program_id, masks, pointers, `tl.load`/`tl.store`, vectorization),
-  tiling & autotuning (`triton.autotune`, configs, `num_warps`/`num_stages`, `tl.constexpr`, heuristics),
-  matmul patterns (tiled GEMM, pid swizzling, persistent kernels, split-K, FP8/BF16 `tl.dot`),
-  attention & reductions (softmax, FlashAttention, online algorithms, `tl.associative_scan`),
-  compiler internals (TTIR → TTGIR → LLIR → PTX/AMDGCN, layout encodings, NVIDIA/AMD/Intel backends,
-  WGMMA & TMA lowering), and ecosystem/production (`torch.compile`/Inductor, AOT, profiling with
-  `proton`, kernel libraries). Use when the user wants to (1) take a diagnostic Triton assessment,
-  (2) drill weak Triton concepts, (3) study a specific Triton topic, (4) review the learning
-  dashboard, or says things like "quiz me on Triton", "test my Triton kernel knowledge", "drill
-  FlashAttention", "/triton-tutor", "퀴즈".
+  rounds with concept-level proficiency tracking (🟥/🟨/🟩/🟦/⬜) across 6 Triton topics: Triton basics
+  (`@triton.jit`, masks, `tl.load`/`tl.store`), tiling & autotuning (`triton.autotune`,
+  `num_warps`/`num_stages`), matmul patterns (tiled GEMM, pid swizzling, persistent, split-K, FP8
+  `tl.dot`), attention & reductions (FlashAttention, online softmax, `tl.associative_scan`),
+  compiler internals (TTIR/TTGIR/LLIR, NVIDIA/AMD backends, WGMMA + TMA lowering), and
+  ecosystem/production (`torch.compile`/Inductor, AOT, `proton`). Use when the user wants to take a
+  diagnostic Triton assessment, drill weak Triton concepts, study a specific Triton topic, review
+  the learning dashboard, or says things like "quiz me on Triton", "drill FlashAttention",
+  "/triton-tutor", "퀴즈".
 ---
 
 # Triton Tutor
@@ -102,7 +100,7 @@ Header: `"Session"`. Concise option descriptions that list which topics each opt
 1. Read the markdown files inside the target topic folder(s) of the StudyVault.
 2. If drilling a weak area: also read `concepts/{topic}.md` to find 🔴 unresolved concepts — **rephrase these in a new context** (different API call, different GPU backend, different failure scenario). Never repeat the literal question.
 3. For cross-topic drill sessions (e.g., Matmul + Compiler): include at least one question that probes the **interaction** (e.g., "How does `tl.dot` lower differently on Hopper vs Ampere?").
-4. Craft exactly 4 questions following `references/quiz-rules.md`.
+4. Craft exactly 4 questions following `references/quiz-rules.md`. **Cross-stack requirement**: if the session covers Triton Basics, Tiling/Autotuning, Matmul Patterns, Attention/Reductions, or Compiler Internals, at least 1 of the 4 questions MUST be a cross-stack question from `references/cross-stack-rosetta.md` (CUDA/CUTLASS/cuTile equivalent of a Triton mechanism). The cross-stack question is attributed to its Triton-side primary topic for proficiency tracking. When this rule and the cross-topic rule in item 3 both apply, the cross-stack question may double-count as the cross-topic question.
 
 **CRITICAL**: read `references/quiz-rules.md` before crafting ANY question. Zero hints allowed.
 

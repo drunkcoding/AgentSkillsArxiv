@@ -70,3 +70,17 @@
 8. Dropout inside attention via `tl.rand(seed, offsets) > p`. Determinism guarantees? Why use `philox` and not `randn`?
 9. Split the sequence across multiple programs for long-context decoding. Reduction pattern (each program writes partial `(m, l, o)`, then a second kernel reduces). Why two kernels?
 10. Two-pass layer norm vs Welford's online algorithm in a Triton kernel. Numerical precision and register pressure tradeoffs.
+
+## Cross-Stack Equivalent: CUTLASS Fused MHA
+
+For users who already know CUTLASS Fused MHA / FlashAttention C++ implementations, Triton's FlashAttention kernel uses the same fundamental tile abstractions. Full table: `../../tutor-core/references/cross-stack-rosetta.md` §3 (Compute), §4 (Scheduling), §2 (Memory & Tile).
+
+| RID   | This topic's concept                                          | CUTLASS / CUDA equivalent                                                  |
+|-------|---------------------------------------------------------------|----------------------------------------------------------------------------|
+| R3-01 | `tl.dot(a, b, acc)` for Q·K^T inside the attention kernel     | CUTLASS Fused MHA inner GEMM atom (`cutlass::arch::Mma_Atom<...>`)         |
+| R3-02 | `tl.dot` lowered to WGMMA on Hopper (FA-3 style)              | CUTLASS Hopper Fused MHA using `wgmma.mma_async`                           |
+| R3-08 | FP32 `acc = tl.zeros((BM, BN), dtype=tl.float32)` accumulator for the softmax running sum | CUTLASS Fused MHA `ElementAccumulator=float`         |
+| R4-05 | `num_stages` for the FA mainloop pipelining                   | CUTLASS Fused MHA `Stages` template parameter                              |
+| R2-06 | `tl.load(make_block_ptr(...))` for K/V tiles on Hopper → TMA  | CUTLASS Fused MHA TMA load via `cp.async.bulk.tensor`                      |
+
+Every RID resolves to a row in the canonical `cross-stack-rosetta.md`. When `triton-tutor` includes Attention & Reductions in a session, Phase 3 will pull ≥1 cross-stack question from `cross-stack-rosetta.md`. Note: FlashAttention specifics (online softmax, KV iteration order) are Triton-implementation-level; the cross-stack mapping covers the underlying GEMM atoms and pipelining primitives, not the algorithm itself.

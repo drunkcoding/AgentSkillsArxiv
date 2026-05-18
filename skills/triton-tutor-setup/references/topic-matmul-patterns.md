@@ -69,3 +69,23 @@
 8. Transposed-A matmul: how do you change the pointer-stride computation? Does `tl.dot` care about layout, or does the compiler swizzle for you?
 9. Fused epilogue (`acc = acc * scale + bias`) inside the matmul kernel — does it stay in registers? When does it spill?
 10. Grouped GEMM (one kernel processes B small matmuls) — pattern for variable shapes? Pointer arrays vs offsets array?
+
+## Cross-Stack Equivalent: CUTLASS + cuTile
+
+For users who already know CUTLASS/CuTe or cuTile, Triton matmul patterns map directly. Full table: `../../tutor-core/references/cross-stack-rosetta.md` §3 (Compute), §4 (Scheduling), §5 (Python Tile DSLs), §2 (Memory & Tile).
+
+| RID   | This topic's concept                                              | CUTLASS / CuTe / cuTile equivalent                                                |
+|-------|-------------------------------------------------------------------|------------------------------------------------------------------------------------|
+| R3-01 | `tl.dot(a, b, acc)`                                               | CUTLASS `cutlass::arch::Mma_Atom<...>` ; cuTile `cute.mma_atom(...)` (R5-04)       |
+| R3-02 | `tl.dot` lowered to `#mma` on Hopper                              | `wgmma.mma_async.sync.aligned.*`                                                   |
+| R3-03 | `tl.dot` lowered to `mma.sync` on Ampere                          | `mma.sync.aligned.m16n8k16.row.col.*`                                              |
+| R3-05 | FP8 `tl.dot(a_fp8, b_fp8, acc_fp32, input_precision="ieee")`      | CUTLASS FP8 GEMM (`cutlass::float_e4m3_t`, per-tensor scale)                       |
+| R3-06 | `tl.dot(a, b, acc)` 3-arg form (fused MMA)                        | CUTLASS epilogue α·MMA + β·C (single fused MAC step)                               |
+| R3-07 | `input_precision="tf32"` arg to `tl.dot`                          | CUTLASS `tfloat32_t` accumulator                                                   |
+| R3-08 | Accumulator-init dtype in `acc = tl.zeros((BM, BN), dtype=tl.float32)` | CUTLASS `ElementAccumulator` template parameter                              |
+| R4-01 | Persistent kernel (`while pid < num_tiles`)                       | CUTLASS persistent kernel scheduler                                                |
+| R4-02 | pid swizzling with `GROUP_SIZE_M`                                 | CUTLASS `ThreadblockSwizzle` (e.g., `GemmIdentityThreadblockSwizzle<8>`)           |
+| R4-03 | Split-K + `tl.atomic_add` + `reset_to_zero=["c_ptr"]`             | CUTLASS `GemmSplitKParallel`                                                       |
+| R4-04 | Stream-K (block claims K-chunks from a global counter)            | CUTLASS stream-K scheduler (Osama et al., 2023)                                    |
+
+Every RID resolves to a row in the canonical `cross-stack-rosetta.md`. When `triton-tutor` includes Matmul Patterns in a session, Phase 3 will pull ≥1 cross-stack question from `cross-stack-rosetta.md`. Matmul is the densest cross-stack topic (~10 mappings); the Rosetta question seeds are heavily concentrated here.

@@ -72,3 +72,19 @@
 8. Contrast `__threadfence()` vs `__syncthreads()`. Name a scenario where you need `__threadfence()` but NOT `__syncthreads()`.
 9. Using cooperative groups, design a kernel where all threads in a 128×128 2D grid synchronize without deadlock.
 10. On Hopper, `wgmma.mma_async` takes operands with specific layouts. Why does CUTLASS 3.x use `cute::Layout` to describe MMA operands, and how does that map to the hardware's expected stride pattern?
+
+## Cross-Stack Equivalent: Triton
+
+For users who already know Triton, these CUDA-kernel concepts map directly. Full table: `../../tutor-core/references/cross-stack-rosetta.md` §2 (Memory & Tile), §3 (Compute), §6 (Compiler & Profiling). The path is relative from this file in `skills/cuda-tutor-setup/references/` to the canonical Rosetta in `skills/tutor-core/references/`.
+
+| RID   | This topic's concept                                   | Triton equivalent                                                          |
+|-------|--------------------------------------------------------|----------------------------------------------------------------------------|
+| R2-06 | `cp.async.bulk.tensor.*` (TMA, descriptor-based)       | `tl.load(make_block_ptr(...))` lowered to TMA on SM90+                     |
+| R2-07 | `cp.async` (Ampere per-thread async copy)              | `tl.load` inside an autotune config with `num_stages > 1`                  |
+| R2-08 | `mbarrier::arrive` / `mbarrier::wait` after TMA load   | implicit pipeline barrier emitted by Triton's pipeliner                    |
+| R3-02 | Hopper `wgmma.mma_async.sync.aligned.*`                | `tl.dot` lowered to `#mma` encoding on Hopper backend                      |
+| R3-03 | Ampere `mma.sync.aligned.m16n8k16.row.col.*`           | `tl.dot` lowered to `mma.sync` on Ampere backend                           |
+| R6-01 | IR pipeline `.cu` → PTX → SASS                         | IR pipeline Python → TTIR → TTGIR → LLIR → PTX                             |
+| R6-06 | Debug: `cuda-gdb`, `compute-sanitizer`                 | Debug: `TRITON_INTERPRET=1`, `tl.device_print`                             |
+
+Every RID resolves to a row in the canonical `cross-stack-rosetta.md`; the linter (`infra/scripts/check_rosetta_consistency.sh`) enforces this. When `cuda-tutor` includes CUDA Kernels (matmul subset) in a session, Phase 3 will pull ≥1 cross-stack question from `cross-stack-rosetta.md`.

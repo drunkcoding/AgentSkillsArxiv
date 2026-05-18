@@ -66,3 +66,18 @@
 8. Autotuner pre_hook example use case (e.g., zeroing an output buffer); failure mode if you forget.
 9. Each unique `M, N, K` combination retriggers autotuning. Strategies to reduce the cost in production?
 10. Hopper `num_warps=8` + warp specialization. How does this change the compiler's emitted code vs `num_warps=4`?
+
+## Cross-Stack Equivalent: CUTLASS (Stages, ThreadblockShape, profiler)
+
+For users who already know CUTLASS, Triton's autotune knobs map directly to CUTLASS template parameters and the CUTLASS profiler. Full table: `../../tutor-core/references/cross-stack-rosetta.md` §4 (Scheduling), §6 (Compiler & Profiling), §2 (Memory & Tile pipelining).
+
+| RID   | This topic's concept                                      | CUTLASS / CUDA equivalent                                              |
+|-------|-----------------------------------------------------------|------------------------------------------------------------------------|
+| R2-07 | `num_stages > 1` in autotune config (pipelined loads)     | Ampere `cp.async` + `cp.async.commit_group` / `cp.async.wait_group`   |
+| R4-05 | `num_stages` autotune knob                                | CUTLASS `Stages` template parameter (mainloop pipeline depth)          |
+| R4-06 | `num_warps` autotune knob                                 | CUTLASS `ThreadblockShape::kWarpCount` (derived from Threadblock/Warp shapes) |
+| R4-07 | `num_warps=8` (producer/consumer split on Hopper)         | CUTLASS Hopper warp-specialized mainloop (producer warps issue TMA, consumers run WGMMA) |
+| R6-07 | `@triton.autotune` + `triton.Config` (online JIT autotune) | CUTLASS profiler + instance-library generator (offline)                |
+| R6-08 | Triton JIT cache (`TRITON_CACHE_DIR`)                     | `nvcc` object cache + ptxas SASS cache                                 |
+
+Every RID resolves to a row in the canonical `cross-stack-rosetta.md`. When `triton-tutor` includes Tiling/Autotuning in a session, Phase 3 will pull ≥1 cross-stack question from `cross-stack-rosetta.md`.

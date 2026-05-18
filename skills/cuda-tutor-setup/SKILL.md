@@ -89,7 +89,7 @@ Prerequisite chain (encode in the Dashboard's prereq DAG):
 | CU3 | Tag Standard | Define tag registry: `#topic-cuda-kernels`, `#topic-cutlass`, `#topic-cutile`, `#topic-driver`, `#topic-nccl`, `#topic-nvshmem`, plus `#concept-*`, `#milestone-*`, `#pitfall-*`. English kebab-case. |
 | CU4 | Vault Structure | Create `StudyVault/` with `00-Dashboard/` + the 6 numbered topic folders + `99-Exercises/`. |
 | CU5 | Dashboard | MOC + Prereq DAG + Glossary + Quick Reference + Pitfall Index. |
-| CU6 | Per-Topic Notes | For each of the 6 topics: load `references/topic-{slug}.md` (lazy, one at a time to manage context), then generate concept notes per [templates.md](references/templates.md). |
+| CU6 | Per-Topic Notes | For each of the 6 topics: load `references/topic-{slug}.md` (lazy, one at a time to manage context), then generate concept notes per [templates.md](references/templates.md). For topics with a Triton peer (CUDA Kernels, CUTLASS, cuTile), the topic reference file ends with a "Cross-Stack Equivalent: Triton" appendix table — surface this in the generated vault notes so vault readers see the Rosetta mapping while studying the CUDA-side concept. The full Rosetta is at `../tutor-core/references/cross-stack-rosetta.md` (consumed by `cuda-tutor` at quiz time via symlink). |
 | CU7 | Hands-On Milestones | Per topic, materialize 3-7 "build/run/measure X" milestones as standalone notes with success criteria. |
 | CU8 | Pitfall Notes | Per topic, materialize the pitfalls section as `Pitfalls.md` with fold callouts. |
 | CU9 | Interlinking + Self-Review | Cross-link all notes per the prereq DAG, then verify against [quality-checklist.md](references/quality-checklist.md) **Curriculum Mode** section. |
@@ -155,8 +155,13 @@ See [document-workflow.md](references/document-workflow.md) for detail.
 - **Tags, keywords, and CUDA identifiers** stay verbatim in English regardless: `cp.async.bulk`, `cute::Layout`, `ncclAllReduce`, `nvshmem_put`, `nvidia.ko`, `GSP`, `WGMMA`, `WPR2`, etc.
 - Fold-callout labels can be localized (e.g., Korean: `정답 보기`, English: `View Answer`).
 
-## Pairing with `cuda-tutor`
+## Pairing with `cuda-tutor` and `tutor-handouts`
 
-The generated StudyVault is the input to the `cuda-tutor` skill. Once Phase CU9 / C9 / D9 self-review passes, tell the user:
+The generated StudyVault is the input to two paired skills:
 
-> "Vault built at `./StudyVault/`. Run the `cuda-tutor` skill in the same directory to start quiz sessions."
+- **`cuda-tutor`** — interactive quiz tutor over the vault (4-question rounds, concept-level proficiency tracking).
+- **`tutor-handouts`** — produces a `Coursepack/` of CMU 15-418 / Stanford CS149-style PDF lecture handouts, programming assignment writeups, cheatsheets, problem sets, capstone project, syllabus, plus matching LeetGPU-style graded exercise scaffolds (CUDA / Triton / PyTorch starters + autograder harness).
+
+Once Phase CU9 / C9 / D9 self-review passes, tell the user:
+
+> "Vault built at `./StudyVault/`. Run the `cuda-tutor` skill in the same directory to start quiz sessions, or `tutor-handouts` to generate a printable course pack with programming exercises."

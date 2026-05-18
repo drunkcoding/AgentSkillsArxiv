@@ -95,7 +95,7 @@ Header: `"Session"`. Concise option descriptions that list which topics each opt
 1. Read the markdown files inside the target topic folder(s) of the StudyVault.
 2. If drilling a weak area: also read `concepts/{topic}.md` to find 🔴 unresolved concepts — **rephrase these in a new context** (different API call, different hardware generation, different failure scenario). Never repeat the literal question.
 3. For cross-topic drill sessions (e.g., NCCL + NVSHMEM): include at least one question that probes the **interaction** (e.g., "When does it make sense to layer NVSHMEM under NCCL?").
-4. Craft exactly 4 questions following `references/quiz-rules.md`.
+4. Craft exactly 4 questions following `references/quiz-rules.md`. **Cross-stack requirement**: if the session covers CUDA Kernels (matmul subset), CUTLASS, or cuTile, at least 1 of the 4 questions MUST be a cross-stack question from `references/cross-stack-rosetta.md` (Triton equivalent of a CUDA/CUTLASS/cuTile mechanism). The cross-stack question is attributed to its CUDA-side primary topic for proficiency tracking. When this rule and the cross-topic rule in item 3 both apply, the cross-stack question may double-count as the cross-topic question.
 
 **CRITICAL**: read `references/quiz-rules.md` before crafting ANY question. Zero hints allowed.
 

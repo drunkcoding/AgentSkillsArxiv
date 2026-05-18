@@ -3,19 +3,14 @@ name: triton-tutor-setup
 description: >
   Generate an Obsidian-format Triton StudyVault for learning OpenAI Triton's GPU programming stack.
   Three modes: (1) Curriculum mode (default, no source files needed) builds a prereq-ordered vault
-  around the 6-topic learning path: Triton basics (`@triton.jit`, program_id, masks, pointers,
-  `tl.load`/`tl.store`), tiling & autotuning (`triton.autotune`, configs, `num_warps`/`num_stages`,
-  `tl.constexpr`), matmul patterns (tiled GEMM, pid swizzling, persistent kernels, split-K, FP8
-  `tl.dot`), attention & reductions (online softmax, FlashAttention, `tl.associative_scan`),
-  compiler internals (TTIR → TTGIR → LLIR → PTX/AMDGCN, `#blocked`/`#mma`/`#shared`/`#dot_op`
-  layouts, NVIDIA/AMD backends, WGMMA + TMA lowering), and ecosystem/production
-  (`torch.compile`/Inductor codegen, AOT, `proton` profiler, kernel libraries like flash-attn /
-  xformers / FBGEMM); (2) Codebase mode generates an onboarding vault from a real Triton/Inductor
-  source tree; (3) Document mode turns Triton docs, blog posts, OpenAI/Meta papers, and tutorial
-  PDFs into study notes. Mode is auto-detected from CWD markers. Use when the user wants to learn
-  Triton from scratch, onboard onto a Triton codebase, build an exercise list for Triton topics,
-  or preprocess Triton-related PDFs/docs into structured study material. Pair with the
-  `triton-tutor` skill to quiz against the resulting vault.
+  around 6 topics: Triton basics, tiling & autotuning, matmul patterns (tiled GEMM, split-K, FP8
+  `tl.dot`), attention & reductions (FlashAttention), compiler internals (TTIR/TTGIR/LLIR,
+  NVIDIA/AMD backends, WGMMA + TMA lowering), and ecosystem/production (`torch.compile`/Inductor,
+  AOT, `proton`); (2) Codebase mode generates an onboarding vault from a real Triton/Inductor
+  source tree; (3) Document mode turns Triton docs, blog posts, and tutorial PDFs into study notes.
+  Mode is auto-detected from CWD markers. Use when the user wants to learn Triton from scratch,
+  onboard onto a Triton codebase, build a Triton exercise list, or preprocess Triton PDFs/docs into
+  study material. Pair with the `triton-tutor` skill to quiz against the resulting vault.
 ---
 
 # Triton Tutor Setup — Build an Obsidian Triton StudyVault
@@ -106,7 +101,7 @@ Prerequisite chain (encode in the Dashboard's prereq DAG):
 | TU3 | Tag Standard | Define tag registry: `#topic-triton-basics`, `#topic-tiling-autotuning`, `#topic-matmul-patterns`, `#topic-attention-reductions`, `#topic-compiler-internals`, `#topic-ecosystem-production`, plus `#concept-*`, `#milestone-*`, `#pitfall-*`. English kebab-case. |
 | TU4 | Vault Structure | Create `StudyVault/` with `00-Dashboard/` + the 6 numbered topic folders + `99-Exercises/`. |
 | TU5 | Dashboard | MOC + Prereq DAG + Glossary + Quick Reference + Pitfall Index. |
-| TU6 | Per-Topic Notes | For each of the 6 topics: load `references/topic-{slug}.md` (lazy, one at a time to manage context), then generate concept notes per [templates.md](references/templates.md). |
+| TU6 | Per-Topic Notes | For each of the 6 topics: load `references/topic-{slug}.md` (lazy, one at a time to manage context), then generate concept notes per [templates.md](references/templates.md). For topics with a CUDA/CUTLASS/cuTile peer (Triton Basics, Tiling/Autotuning, Matmul Patterns, Attention/Reductions, Compiler Internals), the topic reference file ends with a "Cross-Stack Equivalent" appendix table — surface this in the generated vault notes so vault readers see the Rosetta mapping while studying the Triton-side concept. The full Rosetta is at `../tutor-core/references/cross-stack-rosetta.md` (consumed by `triton-tutor` at quiz time via symlink). |
 | TU7 | Hands-On Milestones | Per topic, materialize 3-7 "build/run/measure X" milestones as standalone notes with success criteria. |
 | TU8 | Pitfall Notes | Per topic, materialize the pitfalls section as `Pitfalls.md` with fold callouts. |
 | TU9 | Interlinking + Self-Review | Cross-link all notes per the prereq DAG, then verify against [quality-checklist.md](references/quality-checklist.md) **Curriculum Mode** section. |
