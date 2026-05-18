@@ -1,0 +1,29 @@
+\documentclass[problemset]{solution}
+\coursename{CS-TEST}
+\courseterm{Test Term 2026}
+\handoutnumber{1}
+\handouttitle{CUDA Kernels Problem Set — Solutions}
+
+\begin{document}
+\maketitle
+
+\problem[5]{Warp Size}
+What is the size of a warp on NVIDIA SM80, SM90, and SM100?
+\begin{solutionbox}
+	32 threads on all three. NVIDIA has never changed warp size in any released architecture.
+\end{solutionbox}
+
+\problem[10]{cp.async vs cp.async.bulk}
+\mcq{Both transfer per-thread 16 bytes.}
+{cp.async is per-thread 4/8/16 bytes; cp.async.bulk uses TMA descriptors for 1D-5D tensor copies.}
+{cp.async.bulk is available on SM70+.}
+{Both require a tensor map descriptor.}
+{B}
+
+\begin{solutionbox}
+	B. cp.async.bulk uses the Hopper TMA hardware and consumes a tensor map descriptor for
+	multi-dimensional copies. cp.async is the Ampere per-thread async copy with 4, 8, or 16
+	byte granularity.
+\end{solutionbox}
+
+\end{document}

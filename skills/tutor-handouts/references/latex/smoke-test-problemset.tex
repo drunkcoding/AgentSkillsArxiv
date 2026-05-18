@@ -1,0 +1,32 @@
+\documentclass{problemset}
+\coursename{CS-TEST}
+\courseterm{Test Term 2026}
+\handoutnumber{1}
+\handouttitle{CUDA Kernels Problem Set}
+
+\begin{document}
+\maketitle
+
+\problem[5]{Warp Size}
+What is the size of a warp on NVIDIA SM80, SM90, and SM100?
+\answerbox{0.6}
+
+\problem[10]{cp.async vs cp.async.bulk}
+\mcq{Both transfer per-thread 16 bytes.}
+{cp.async is per-thread 4/8/16 bytes; cp.async.bulk uses TMA descriptors for 1D-5D tensor copies.}
+{cp.async.bulk is available on SM70+.}
+{Both require a tensor map descriptor.}
+{B}
+
+\begin{solutionbox}
+	cp.async.bulk uses the Hopper TMA hardware and consumes a tensor map descriptor for
+	multi-dimensional copies. cp.async is the Ampere per-thread async copy with 4, 8, or 16
+	byte granularity.
+\end{solutionbox}
+
+\problem[15]{Bank Conflicts}
+Given a \code{__shared__ float tile[32][32]}, write the C expression that triggers a 32-way
+bank conflict. Why?
+\answerbox{1.5}
+
+\end{document}

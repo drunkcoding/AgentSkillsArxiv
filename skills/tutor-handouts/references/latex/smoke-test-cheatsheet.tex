@@ -1,0 +1,46 @@
+\documentclass{cheatsheet}
+\coursename{CS-TEST}
+\courseterm{Test Term 2026}
+\handouttitle{CUDA Cheatsheet}
+
+\begin{document}
+\maketitle
+\begin{multicols}{2}
+
+	\section{Memory hierarchy}
+	\begin{tabular}{ll}
+		\toprule
+		\textbf{Space} & \textbf{Latency (H100)} \\
+		\midrule
+		Register       & 1 cycle                 \\
+		Shared         & 20 cycles               \\
+		L1             & 30 cycles               \\
+		L2             & 200 cycles              \\
+		Global         & 400 cycles              \\
+		\bottomrule
+	\end{tabular}
+
+	\section{Launch}
+	\begin{itemize}
+		\item Grid: 3D blocks
+		\item Block: 3D threads (max 1024)
+		\item Warp: 32 threads
+		\item SM: 132 on H100, 4 warp schedulers each
+	\end{itemize}
+
+	\section{Synchronization}
+	\begin{itemize}
+		\item \code{__syncthreads()} — block barrier
+		\item \code{__syncwarp(mask)} — warp barrier
+		\item \code{cp.async.commit_group + wait_group(N)} — async copy fence
+	\end{itemize}
+
+	\section{Common pitfalls}
+	\begin{itemize}
+		\item Bank conflicts in shared memory (32 banks, 4-byte stride)
+		\item Warp divergence on \code{if} branches
+		\item Uncoalesced global loads (32-byte sectors)
+	\end{itemize}
+
+\end{multicols}
+\end{document}

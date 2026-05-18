@@ -1,0 +1,63 @@
+% smoke-test.tex — exercises every .cls and commonheader.sty feature.
+% Compile with: latexmk -pdf smoke-test.tex
+% Verifies Step 2 of the tutor-handouts plan.
+\documentclass[lecture]{handout}
+
+\coursename{CS-TEST Skill Smoke Test}
+\courseterm{Test Term 2026}
+\handoutnumber{1}
+\handouttitle{LaTeX Class Smoke Test}
+
+\begin{document}
+\maketitle
+
+\section{Typography}
+This sentence exercises body text with \code{cudaMemcpy} as inline code and a code listing below.
+The Hopper SM90 architecture provides 132 SMs at 1.83 GHz.
+
+\begin{lstlisting}[language=CUDA, caption={Vector add kernel — see CUDA C++ Programming Guide \S 2.2}]
+__global__ void vector_add(const float* A, const float* B, float* C, int N) {
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if (idx < N) C[idx] = A[idx] + B[idx];
+}
+\end{lstlisting}
+
+\section{Math}
+Hopper's TMA can transfer up to \(2^{16}\) bytes per descriptor:
+\[
+	\text{throughput} = \frac{\text{tile\_bytes}}{\text{latency} + \text{transfer\_time}}.
+\]
+
+\section{Lists}
+\begin{itemize}
+	\item One concrete number per page (1.83 GHz)
+	\item One primary citation (CUDA C++ Programming Guide \S 2.2)
+	\item One code listing
+\end{itemize}
+
+\section{Tables}
+\begin{center}
+	\begin{tabular}{lrr}
+		\toprule
+		\textbf{GPU} & \textbf{SMs} & \textbf{HBM (GB)} \\
+		\midrule
+		A100         & 108          & 80                \\
+		H100         & 132          & 80                \\
+		B200         & 148          & 192               \\
+		\bottomrule
+	\end{tabular}
+\end{center}
+
+\section{Triton Listing}
+\begin{lstlisting}[language=Triton, caption={Triton vector add — tutorial 01-vector-add.py}]
+@triton.jit
+def vector_add_kernel(A_ptr, B_ptr, C_ptr, N, BLOCK_SIZE: tl.constexpr):
+    pid = tl.program_id(0)
+    offsets = pid * BLOCK_SIZE + tl.arange(0, BLOCK_SIZE)
+    mask = offsets < N
+    a = tl.load(A_ptr + offsets, mask=mask)
+    b = tl.load(B_ptr + offsets, mask=mask)
+    tl.store(C_ptr + offsets, a + b, mask=mask)
+\end{lstlisting}
+
+\end{document}
