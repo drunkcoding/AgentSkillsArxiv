@@ -24,6 +24,27 @@ success() { printf "${GREEN}ok:${RESET} %s\n" "$*"; }
 warn()    { printf "${YELLOW}warn:${RESET} %s\n" "$*" >&2; }
 error()   { printf "${RED}error:${RESET} %s\n" "$*" >&2; }
 
+# ─── Install name resolution ──────────────────────────────────────────────────
+#
+# Direct skills:   skills/academic-rebuttal         → academic-rebuttal
+# Upstream skills: skills/sglang/add-jit-kernel     → sglang-add-jit-kernel
+# OpenClaw:        openclaw/openclaw-remote-bridge   → openclaw-remote-bridge
+# Community:       skills/community-skills/skills/X  → X
+
+get_install_name() {
+    local skill_dir="$1"
+    local parts
+    IFS='/' read -ra parts <<< "$skill_dir"
+    local nparts=${#parts[@]}
+
+    if [ "$nparts" -ge 3 ] && [ "${parts[1]}" != "community-skills" ]; then
+        # Nested upstream skill: prefix with parent dir to avoid collisions
+        echo "${parts[$((nparts-2))]}-${parts[$((nparts-1))]}"
+    else
+        echo "${parts[$((nparts-1))]}"
+    fi
+}
+
 # ─── Skill discovery ─────────────────────────────────────────────────────────
 
 discover_skills() {
@@ -33,18 +54,29 @@ discover_skills() {
         [ -d "${REPO_ROOT}/${skill_root}" ] || continue
         for dir in "${REPO_ROOT}/${skill_root}"/*/; do
             [ -d "$dir" ] || continue
-            local name rel
+            local name
             name="$(basename "$dir")"
             [[ "$name" == .* ]] && continue
-            [ -f "${dir}SKILL.md" ] || continue
-            rel="${skill_root}/${name}"
-            skills+=("$rel")
+            if [ -f "${dir}SKILL.md" ]; then
+                # Direct skill (e.g. skills/academic-rebuttal/)
+                skills+=("${skill_root}/${name}")
+            else
+                # Check for nested upstream skills (e.g. skills/sglang/add-jit-kernel/)
+                for subdir in "${dir}"*/; do
+                    [ -d "$subdir" ] || continue
+                    local subname
+                    subname="$(basename "$subdir")"
+                    [[ "$subname" == .* ]] && continue
+                    [ -f "${subdir}SKILL.md" ] || continue
+                    skills+=("${skill_root}/${name}/${subname}")
+                done
+            fi
         done
     done
-    # Collect local skill basenames for deduplication
+    # Collect local install names for deduplication against community skills
     local local_names=()
     for s in "${skills[@]}"; do
-        local_names+=("$(basename "$s")")
+        local_names+=("$(get_install_name "$s")")
     done
     # Submodule skills (skills/community-skills/skills/*)
     if [ -d "$SUBMODULE_SKILLS_DIR" ]; then
@@ -153,9 +185,8 @@ validate_skill() {
 install_skill() {
     local skill_dir="$1" target_base="$2" dry_run="$3" force="$4"
     local source="${REPO_ROOT}/${skill_dir}"
-    # Install under the skill's basename (e.g. "pdf" not "skills/community-skills/skills/pdf")
     local install_name
-    install_name="$(basename "$skill_dir")"
+    install_name="$(get_install_name "$skill_dir")"
     local target="${target_base}/${install_name}"
 
     if [ -L "$target" ]; then
@@ -217,7 +248,7 @@ install_skill() {
 uninstall_skill() {
     local skill_dir="$1" target_base="$2" dry_run="$3"
     local install_name
-    install_name="$(basename "$skill_dir")"
+    install_name="$(get_install_name "$skill_dir")"
     local target="${target_base}/${install_name}"
 
     if [ ! -L "$target" ]; then
@@ -273,7 +304,7 @@ list_skills() {
         fi
 
         local install_name
-        install_name="$(basename "$skill_dir")"
+        install_name="$(get_install_name "$skill_dir")"
         local target="${target_base}/${install_name}"
         if [ -L "$target" ]; then
             local link_target
@@ -400,7 +431,7 @@ cmd_uninstall() {
     local installed=()
     for skill_dir in "${all_skills[@]}"; do
         local install_name
-        install_name="$(basename "$skill_dir")"
+        install_name="$(get_install_name "$skill_dir")"
         local target="${target_base}/${install_name}"
         if [ -L "$target" ]; then
             installed+=("$skill_dir")
