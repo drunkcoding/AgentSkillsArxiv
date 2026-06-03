@@ -1,3 +1,6 @@
 [submodule "community-skills"]
 	path = skills/community-skills
 	url = https://github.com/anthropics/skills.git
+[submodule "skills/superpowers"]
+	path = skills/superpowers
+	url = https://github.com/obra/superpowers.git
