@@ -1,18 +1,24 @@
-# Citation Styles for Systems Conference Papers
+# Citation Styles for Conference Papers
 
 ## Overview
 
-Systems conference papers use numbered citation styles. The two primary formats are IEEE (used by USENIX venues like OSDI, NSDI, and FAST) and ACM (used by ACM venues like SIGCOMM, MOBICOM, and SOSP). Both use numbered references in square brackets.
+Two citation paradigms appear across the venues this skill covers:
+
+- **Numbered** (systems venues): IEEE (USENIX venues — OSDI, NSDI, FAST) and ACM (SIGCOMM, MOBICOM, SOSP) both use numbered references in square brackets `[1]`.
+- **Author-year** (AAAI / AI-ML): AAAI uses `natbib` author-year citations `(Smith 2025)`, NOT numbered brackets.
+
+Pick the style by venue, and always let the venue's LaTeX template/`.bst` do the formatting.
 
 ## Choosing the Right Style
 
 | Venue | Citation Style | Template |
 |-------|---------------|----------|
-| OSDI, NSDI, FAST, ATC | USENIX (IEEE-like) | USENIX LaTeX template |
-| SIGCOMM, MOBICOM, SOSP | ACM | ACM sigconf template |
-| EuroSys | ACM | ACM sigconf template |
+| OSDI, NSDI, FAST, ATC | USENIX (IEEE-like), numbered | USENIX LaTeX template |
+| SIGCOMM, MOBICOM, SOSP | ACM, numbered | ACM sigconf template |
+| EuroSys | ACM, numbered | ACM sigconf template |
+| **AAAI** | **Author-year (natbib)** | AAAI Press (`article` + `aaai<NN>.sty`) |
 
-**Default**: Use the LaTeX template provided by the venue. The template's bibliography style file (`.bst`) handles citation formatting automatically.
+**Default**: Use the LaTeX template provided by the venue. The template's bibliography style file (`.bst`) handles citation formatting automatically. For AAAI, the edition style package sets the matching `aaai<NN>.bst` — do not override it.
 
 ## IEEE Style
 
@@ -127,6 +133,57 @@ MapReduce [8] and Spark [15] pioneered large-scale data processing.
 - Reference list sorted alphabetically, not by appearance order
 - DOIs included when available
 - Conference proceedings use "In Proceedings of..." format
+
+## AAAI Author-Year Style (natbib)
+
+### Overview
+- Used by AAAI (and common across AI/ML venues).
+- **Author-year**, NOT numbered — in-text citations show authors and year, e.g. `(Newell 1980)`, `(Ford et al. 1997)`.
+- The AAAI style package (`aaai<NN>.sty`) loads `natbib` and sets the matching `aaai<NN>.bst`, which produces an author-year bibliography labeled "References".
+
+### In-Text Citations
+
+**Format**: author-year, parenthetical or textual.
+
+```
+Parenthetical: Transformers scale well with data (Vaswani et al. 2017).
+Textual:       Vaswani et al. (2017) introduced the Transformer.
+Multiple:      Several methods (Kingma and Ba 2015; Loshchilov and Hutter 2019) ...
+```
+
+### LaTeX Commands
+
+```latex
+\cite{vaswani2017}        % (Vaswani et al. 2017) — parenthetical author-year
+\citep{vaswani2017}       % (Vaswani et al. 2017)
+\citet{vaswani2017}       % Vaswani et al. (2017) — textual
+\citeauthor{vaswani2017}  % Vaswani et al.
+\citeyear{vaswani2017}    % 2017
+\shortcite{vaswani2017}   % (2017) — year only
+```
+
+- Use the `natbib` commands supplied by the AAAI style; do NOT add `natbib` options that alter the AAAI format.
+- Do NOT add `hyperref` or `navigator` — the AAAI kit warns they are incompatible with the style and can corrupt references.
+- References may be reduced to 9 pt / 10 pt leading, no smaller.
+
+### Reference List Format
+
+`aaai<NN>.bst` emits AAAI's author-year entries (no numeric labels). Example BibTeX (the `.bst` formats it):
+
+```bibtex
+@inproceedings{vaswani2017attention,
+  title={Attention Is All You Need},
+  author={Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and others},
+  booktitle={Advances in Neural Information Processing Systems (NeurIPS)},
+  year={2017}
+}
+```
+
+### Key Differences from IEEE/ACM Numbered Styles
+- In-text shows author and year, not a bracketed number.
+- No "cite the system by name + [n]" convention; the author-year cite already names the work.
+- **No official "typical reference count"** for AAAI — reference count is topic-dependent; do not present a fixed number as a venue standard.
+- In double-blind AAAI submissions, cite your own published work in the **third person** (e.g. "Smith et al. (2023) show…"), never "in our prior work (Smith et al. 2023)". If a citation would unmistakably de-anonymize and is not needed for review, use a suppressed form such as "Anonymous (2019)". Do not delete relevant published self-work — that distorts the related-work assessment.
 
 ## Systems-Specific Citation Conventions
 
@@ -342,7 +399,8 @@ https://doi.org/10.1145/3600006.3613165
 - [ ] Page numbers included for published papers
 - [ ] ArXiv preprints formatted correctly
 
-**Double-blind venues (SIGCOMM, MOBICOM, SOSP):**
+**Double-blind venues (SIGCOMM, MOBICOM, SOSP, and all AAAI submissions):**
 - [ ] Own work cited in third person
 - [ ] No self-identifying citation patterns
 - [ ] Anonymous repository URLs (or omitted)
+- [ ] AAAI: no citation/link to a non-anonymous preprint (arXiv) version of this submission

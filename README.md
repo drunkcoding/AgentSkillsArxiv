@@ -9,7 +9,7 @@ Claude Code skills and MCP tooling for academic research and development workflo
 | `academic-grant-proposal` | `skills/academic-grant-proposal/` | Grant proposal writing for NSF, NIH, ERC, Horizon Europe, DARPA/DoD/DOE, UKRI — sections, budget, biosketch/DMP, review critique |
 | `academic-rebuttal` | `skills/academic-rebuttal/` | Conference paper rebuttal writing — false impression taxonomy, venue constraints (HotCRP + OpenReview) |
 | `academic-reviewer` | `skills/academic-reviewer/` | Structured systems-paper review workflow |
-| `academic-writing` | `skills/academic-writing/` | Systems paper writing workflow |
+| `academic-writing` | `skills/academic-writing/` | Conference paper writing, venue-organized — systems venues (OSDI/NSDI/SIGCOMM/MOBICOM/SOSP/FAST) and AAAI (AI/ML): structure, format, citations, AAAI reproducibility checklist + double-blind review |
 | `ast-grep` | `skills/ast-grep/` | AST-aware structural search and rewrites |
 | `auto-gpu-kernel` | `skills/auto-gpu-kernel/` | Scaffold + workflow for an autonomous Triton GPU-kernel optimization loop on FlashInfer-Bench + Modal (MLSys-2026 DSA winner architecture) |
 | `better-grep` | `skills/better-grep/` | One-shot high-signal text search patterns |

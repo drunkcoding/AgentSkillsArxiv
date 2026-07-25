@@ -1,8 +1,10 @@
-# Writing Principles for Systems Conference Papers
+# Writing Principles for Conference Papers
 
 ## Overview
 
-Effective systems paper writing requires mastering fundamental principles that ensure clarity, precision, and impact. Systems conference papers prioritize accuracy, conciseness, directness, and quantitative rigor. This guide covers the core principles that distinguish well-written systems papers from poorly written ones and provides practical strategies for improvement.
+Effective paper writing requires mastering fundamental principles that ensure clarity, precision, and impact. Both **systems** conference papers (OSDI/NSDI/SIGCOMM/MOBICOM/SOSP/FAST) and **AAAI / AI-ML** papers prioritize accuracy, conciseness, directness, and quantitative rigor — these principles are shared across both paradigms. This guide covers the core principles that distinguish well-written papers from poorly written ones and provides practical strategies for improvement.
+
+**Where AAAI/AI-ML papers differ in craft** (see `aaai_paper_structure.md` for full structure): they use substantially more mathematics (objectives, assumptions, proofs), are method-centric rather than artifact-centric, use author-year citations, and report empirical claims as **mean ± variance over multiple seeds** with significance tests rather than single systems benchmark numbers. The examples below are drawn mostly from systems papers, but the underlying principles — precise language, active voice, quantified claims, no hype, consistent terminology — apply unchanged to AAAI submissions. See the "Systems vs. ML Conference Style Comparison" table below for the contrast.
 
 ## The Three Pillars of Scientific Writing
 

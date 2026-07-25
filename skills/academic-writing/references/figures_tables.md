@@ -264,7 +264,7 @@ Median latency alone is misleading. Tail latency (p99) determines user experienc
 ### Structure
 
 **Basic anatomy:**
-1. **Table number and title** (above table)
+1. **Table number and title** (above table for systems/USENIX/ACM styles; **AAAI places the table caption BELOW the table** — follow the venue style)
 2. **Column headers** (with units)
 3. **Row labels**
 4. **Data cells** (with appropriate precision)
@@ -552,12 +552,26 @@ tail (>p95), where locality-aware scheduling eliminates cold starts.
 - ACM requires figure permissions for adapted figures
 - Figures embedded in text
 
-### Common Across All Systems Venues
+### AAAI (AI / ML)
+
+AAAI enforces figure/table production rules unusually strictly — violations can cause desk rejection. Confirm details against the current edition's author kit.
+
+- AAAI Press two-column template (`article` + `aaai<NN>.sty`); figures count toward the 7 technical pages.
+- Accepted image formats for pdfLaTeX: **`.pdf`, `.png`, `.jpg` only** — no EPS, PostScript, or GIF; **no Type 3 fonts** (including inside graphics).
+- Raster images ≥ **300 dpi**; color figures in **CMYK** (not RGB).
+- **Body text must be black**; color is restricted to figures. Figures must maintain **WCAG contrast > 4.5:1** and remain intelligible in **grayscale** (archival version may print grayscale).
+- Figure labels ≥ 9 pt; figure captions are 10 pt roman **below** the figure.
+- **Table captions go BELOW the table** (differs from systems/USENIX/ACM). Tables use 10 pt, reducible to 9 pt.
+- Figures/tables must not cross the column margins or the inter-column gutter.
+- Method/architecture diagrams, ablation tables, and results with **mean ± variance over multiple seeds** are expected; report significance where appropriate (the reproducibility checklist asks for it).
+- With only 7 pages, budget fewer, denser display items than a 12-page systems paper.
+
+### Common Across All Venues
 
 - Figures must be legible in grayscale (reviewers may print)
-- Error bars expected for repeated experiments
+- Error bars / variance expected for repeated experiments
 - Baseline comparisons required in evaluation figures
-- Architecture diagram expected (usually Figure 1 or 2)
+- Architecture (systems) or method (AI/ML) diagram expected (usually Figure 1 or 2)
 - Ablation study results expected (figure or table)
 
 ## Pre-Submission Checklist

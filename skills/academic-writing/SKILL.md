@@ -1,262 +1,193 @@
 ---
 name: academic-writing
-description: "Write systems conference papers for OSDI, NSDI, SIGCOMM, MOBICOM, and FAST. Covers paper structure (Introduction, Background/Motivation, Design, Implementation, Evaluation, Related Work), systems writing style, IEEE/ACM citations, architecture diagrams, performance evaluation, and artifact preparation. Includes FAST-specific guidance for short papers (6 pages) and deployed-systems papers."
+description: "Write conference papers for systems venues (OSDI, NSDI, SIGCOMM, MOBICOM, SOSP, FAST) and the AAAI AI/ML venue. Organized by venue: pick the paradigm (systems problem-solution-evaluation vs. AAAI/AI-ML method-experiment), then follow venue-specific structure, format, citation style, and review rules. Covers paper structure per venue, writing style, IEEE/ACM numbered vs. AAAI author-year citations, figures/tables, AAAI's mandatory reproducibility checklist and double-blind two-phase review, and FAST short/deployed-systems papers. Use when asked to write, draft, structure, or format a systems or AAAI conference paper."
 ---
 
-# Systems Conference Paper Writing
+# Conference Paper Writing
 
-## Core Capabilities
+This skill covers two paper paradigms across two venue families. Start by identifying the target venue, then follow the matching structure and load the matching reference file.
 
-### 1. Paper Structure and Organization
+## 1. Choose the Venue and Paradigm (start here)
 
-Systems conference papers follow a standardized structure:
+Two paradigms, because a systems paper and an AAAI paper are organized around fundamentally different things:
+
+| | Systems paradigm | AI/ML paradigm (AAAI) |
+|---|---|---|
+| **Organized around** | A system that was built, deployed, measured | A method/model/theory and the evidence it works |
+| **Structure** | Problem → Design → Implementation → Evaluation | Problem → Method → Analysis → Experiments |
+| **Detailed reference** | `references/systems_paper_structure.md` | `references/aaai_paper_structure.md` |
+
+### Master venue table
+
+| Venue | Paradigm | Format / template | Tech. pages | Review | Citations | Reproducibility |
+|-------|----------|-------------------|-------------|--------|-----------|-----------------|
+| **OSDI** | Systems | USENIX | 12 | Single-blind | Numbered (IEEE) | Artifact: strongly encouraged |
+| **NSDI** | Systems | USENIX | 12 | Single-blind | Numbered (IEEE) | Artifact: encouraged |
+| **SIGCOMM** | Systems | ACM sigconf | 12 | Double-blind | Numbered (ACM) | Artifact: encouraged |
+| **MOBICOM** | Systems | ACM sigconf | 15 | Double-blind | Numbered (ACM) | Artifact: encouraged |
+| **SOSP** | Systems | ACM sigconf | 15 | Double-blind | Numbered (ACM) | Artifact: required |
+| **FAST** | Systems | USENIX | 12 long / 6 short | Double-blind | Numbered (IEEE) | Artifact: encouraged |
+| **AAAI** | AI/ML | AAAI Press two-column (`article` + `aaai<NN>.sty`) | 7 (refs + checklist outside) | Double-blind, two-phase | Author-year (natbib) | Checklist: **mandatory in PDF** |
+
+> Numbers drift each year. Confirm page limits, deadlines, and template names against the current edition's official author kit / Call for Papers before submitting.
+
+**Routing:** for a systems venue → read Section 3 and load `references/systems_paper_structure.md`. For AAAI → read Section 4 and load `references/aaai_paper_structure.md`. Writing craft shared by both (principles, citations, figures) is in Section 5.
+
+---
+
+## 2. The Two Paradigms in One Screen
+
+| Aspect | Systems (OSDI/SIGCOMM/FAST) | AAAI / AI-ML |
+|--------|-----------------------------|--------------|
+| Core contribution | A built system + its engineering | A method/model/theory + scientific evidence |
+| Implementation section | Common, explicit (LOC, frameworks) | Not required; folded into Experimental Setup |
+| Related Work placement | After Evaluation | Frequently early (convention) |
+| Mathematics | Minimal, practical | Central: objectives, proofs, assumptions |
+| Evaluation axes | Throughput, latency, scalability, cost | Accuracy/quality, robustness, sample/compute efficiency, provable properties |
+| Length | 12-15 pages | 7 technical pages |
+| Reproducibility | Artifact evaluation (badges) | Mandatory reproducibility checklist in the PDF |
+
+Everything downstream — structure, section order, what "evaluation" means, citation style — follows from which column you are in.
+
+---
+
+## 3. Systems Conference Papers (OSDI, NSDI, SIGCOMM, MOBICOM, SOSP, FAST)
+
+Standard structure (problem-solution-evaluation). Design + Evaluation together should be ~50% of the paper.
 
 | Section | Pages | Purpose |
 |---------|-------|---------|
-| Introduction | 1.5-2 | Problem, solution overview, contributions |
-| Background/Motivation | 1-2 | Technical context, evidence the problem exists |
-| Design | 2-3 | Architecture, mechanisms, trade-offs |
+| Introduction | 1.5-2 | Problem, solution overview, numbered contributions |
+| Background/Motivation | 1-2 | Technical context + **empirical evidence** the problem exists |
+| Design | 2-3 | Architecture, mechanisms, trade-offs (explain WHY) |
 | Implementation | 0.5-1 | LOC, languages, frameworks, integration |
-| Evaluation | 2-3 | Macrobenchmarks, microbenchmarks, ablation |
-| Related Work | 0.5-1 | Differentiation from prior systems |
+| Evaluation | 2-3 | Macro/micro-benchmarks, ablation, scaling |
+| Related Work | 0.5-1 | Differentiation from prior systems (placed after Evaluation) |
 | Conclusion | 0.25-0.5 | Summary, no new information |
 
-Design and Evaluation together should occupy approximately 50% of the paper.
+**Section highlights:**
+- **Title**: "SystemName: Descriptive Subtitle." Name the system.
+- **Abstract**: unstructured narrative (150-250 words): problem → gap → solution → key numbers → availability. Write last.
+- **Introduction**: 6-7 paragraphs — broad context with numbers, technical gap, solution + key insight, 3-4 numbered contributions mapping to sections.
+- **Motivation**: must DEMONSTRATE the problem with measurements/profiling, not assert it.
+- **Design**: explain WHY, discuss rejected alternatives, address failure modes.
+- **Evaluation**: exact hardware/software/workloads/baselines; every introduction claim must be supported here.
+- **Related Work**: after Evaluation; organize by category; always differentiate ("Unlike X, we do Y because Z").
 
-For detailed guidance on each section, refer to `references/systems_paper_structure.md`.
+**Venue-specific requirements:**
 
-### 2. Section-Specific Writing Guidance
-
-**Title**: Follow the "SystemName: Descriptive Subtitle" pattern. Name the system. Be specific about the problem and approach.
-
-**Abstract**: Unstructured narrative paragraph (150-250 words). Flow: problem context -> gap -> solution overview -> key quantitative results -> availability. Write this LAST.
-
-**Introduction**: Problem-solution structure in 6-7 paragraphs:
-1. Broad context with concrete numbers showing importance
-2. Specific technical gap and why existing approaches fail
-3. Solution overview with key insight
-4. Numbered contributions (3-4) mapping to paper sections
-5. Optional paper organization roadmap
-
-**Background/Motivation**: Provide technical prerequisites, then DEMONSTRATE the problem with measurements, profiling, or workload analysis. This section must contain empirical evidence, not just assertions.
-
-**Design**: Present architecture with diagrams. For each mechanism: state the challenge, present the approach, justify trade-offs. Explain WHY, not just WHAT.
-
-**Implementation**: Lines of code, programming languages, library versions, framework integration. Be specific and factual.
-
-**Evaluation**: Experimental setup (exact hardware, software, workloads, baselines), end-to-end results, component analysis, ablation studies, scalability experiments. Every claim in the introduction must be supported here.
-
-**Related Work**: Placed AFTER evaluation. Organize by category/approach. Always differentiate ("Unlike X, our system does Y because Z").
-
-**Conclusion**: Brief summary of system and key results. 1-2 paragraphs. No new information.
-
-### 3. Writing Principles and Style
-
-Apply fundamental writing principles adapted for systems conference papers. For detailed guidance, refer to `references/writing_principles.md`.
-
-**Clarity**:
-- Use precise, unambiguous technical language
-- Define systems terms at first use (e.g., "Remote Direct Memory Access (RDMA)")
-- Maintain logical flow within and between paragraphs
-- Use active voice: "We design", "We implement", "We evaluate"
-
-**Conciseness**:
-- Eliminate filler words and phrases
-- Favor direct statements over hedged ones
-- Systems papers have strict page limits; every sentence must earn its space
-- Average sentence length: 15-20 words
-
-**Directness**:
-- State claims confidently: "SystemName achieves 2.3x higher throughput"
-- Avoid hype: do NOT use "novel", "groundbreaking", "revolutionary"
-- Let the numbers speak: "3.5x speedup" is stronger than "significant improvement"
-- Avoid excessive hedging in evaluation: "achieves" not "seems to achieve"
-
-**Technical Precision**:
-- Specify exact configurations (GPU models, memory sizes, network bandwidth)
-- Report metrics consistently (same units, decimal places, measurement methodology)
-- Distinguish between median and tail latency (p50 vs p99)
-- Specify whether speedups are end-to-end or component-level
-
-### 4. Citation and Reference Management
-
-Systems papers use numbered citation styles. For comprehensive style guides, refer to `references/citation_styles.md`.
-
-**Primary Citation Styles:**
-- **IEEE**: Numbered citations in square brackets [1], common in USENIX venues (OSDI, NSDI, FAST)
-- **ACM**: Numbered citations, used by SIGCOMM, MOBICOM, SOSP
-
-**Systems-Specific Citation Practices:**
-- Cite systems by name: "Borg [1]" not just "[1]"
-- 30-50 references typical for a 12-page paper
-- Cite recent work heavily (last 3-5 years for active areas)
-- Always cite the systems you compare against in evaluation
-- Use BibTeX with entries from DBLP or ACM Digital Library
-
-### 5. Figures and Tables
-
-Create effective visualizations for systems papers. For detailed best practices, refer to `references/figures_tables.md`.
-
-**When to Use Tables vs. Figures:**
-- **Tables**: Hardware configurations, benchmark results with exact numbers, feature comparisons across systems
-- **Figures**: Performance trends, scaling behavior, latency distributions, architecture diagrams
-
-**Common Figure Types in Systems Papers:**
-- Architecture diagrams: System components, data flow, control flow
-- Performance bar charts: Comparing systems on throughput or latency
-- Scaling line plots: Performance vs. number of GPUs/nodes/clients
-- CDF plots: Latency distribution analysis
-- Timeline charts: Scheduling decisions, resource allocation
-- Stacked bar/area: Resource breakdown by component
-
-**Design Principles:**
-- Make each figure/table self-explanatory with complete captions
-- Bold the best result in comparison tables
-- Include error bars or confidence intervals on measurements
-- Use consistent colors and formatting across all figures
-- 5-8 figures typical for a 12-page paper
-- Figures should be readable in grayscale (for printing)
-
-### 6. Systems-Specific Terminology
-
-Use precise terminology appropriate to the systems subfield:
-
-**Distributed Systems:**
-- Consistency models: linearizable, sequentially consistent, eventually consistent, causal
-- Fault tolerance: crash-stop, Byzantine, failover, replication, checkpointing
-- Scalability: horizontal, vertical, weak scaling, strong scaling
-- Coordination: consensus, leader election, distributed locking
-
-**Networking (SIGCOMM, MOBICOM):**
-- Bandwidth, throughput, goodput
-- Round-trip time (RTT), flow completion time (FCT)
-- Congestion control, flow scheduling, traffic engineering
-- RDMA, DPDK, eBPF, programmable switches
-
-**Operating Systems (OSDI, NSDI):**
-- Scheduling: preemption, priority, fairness, work-stealing
-- Memory: virtual memory, page tables, TLB, cache hierarchy
-- Storage: block layer, file system, journaling, write-ahead log
-- Virtualization: containers, VMs, hypervisor, paravirtualization
-
-**ML Systems:**
-- Training: data parallelism, model parallelism, pipeline parallelism, tensor parallelism
-- Inference: batching, KV cache, prefill, decode, time-to-first-token (TTFT)
-- Throughput: tokens/sec, samples/sec, FLOPS utilization
-- Memory: activation memory, gradient memory, optimizer state
-
-**Performance Metrics:**
-- Throughput: requests/sec, tokens/sec, ops/sec, MB/s, Gbps
-- Latency: p50, p95, p99, tail latency, jitter
-- Utilization: GPU%, CPU%, memory%, network bandwidth%
-- Efficiency: speedup, scaling efficiency, cost per operation
-
-### 7. Venue-Specific Requirements
-
-| Venue | Format | Pages | Review | Artifact Eval |
-|-------|--------|-------|--------|---------------|
+| Venue | Format | Pages | Review | Artifact |
+|-------|--------|-------|--------|----------|
 | OSDI | USENIX | 12 | Single-blind | Strongly encouraged |
 | NSDI | USENIX | 12 | Single-blind | Encouraged |
 | SIGCOMM | ACM sigconf | 12 | Double-blind | Encouraged |
 | MOBICOM | ACM sigconf | 15 | Double-blind | Encouraged |
 | SOSP | ACM sigconf | 15 | Double-blind | Required |
-| FAST | USENIX | 12 (long) / 6 (short) | Double-blind | Encouraged |
+| FAST | USENIX | 12 / 6 | Double-blind | Encouraged |
 
-**Double-blind venues (SIGCOMM, MOBICOM, SOSP, FAST):**
-- Anonymize system name in submission
-- Remove repository URLs
-- Cite own work in third person
-- Remove acknowledgments
-- FAST: deployed-systems papers may identify products/companies but not authors
+**Double-blind systems venues (SIGCOMM, MOBICOM, SOSP, FAST):** anonymize the system name, remove repository URLs, cite own work in third person, remove acknowledgments.
 
-**USENIX venues (OSDI, NSDI):**
-- Single-blind: authors are identified
-- System name and URLs can be included
-- Use USENIX LaTeX template
+**FAST paper categories:**
+- *Short papers (6 pages, excl. references):* complete research with full problem statement and evaluation; prefix title "Short Paper: " at submission; same rigor as long papers on a focused contribution — do not sacrifice evaluation for space.
+- *Deployed-systems papers:* operational systems with practical deployment lessons; prefix "Deployed System: "; validate with production data; emphasize operational experience, failure modes, lessons at scale.
+- *Supplemental material:* optional single PDF, no page limit; reviewers not required to read it.
 
-**FAST-specific paper categories:**
+For full section-by-section guidance, examples, tense guide, and per-venue variations, load `references/systems_paper_structure.md`.
 
-*Short Papers (6 pages, excluding references):*
-- Must present completed research with a complete problem statement and evaluation
-- Prefix title with "Short Paper: " during submission (prefix not published in proceedings)
-- Same rigor as long papers but scoped to a focused contribution
-- Include full experimental setup, baselines, and results — do not sacrifice evaluation for space
-- Typical structure: Introduction (0.5-1 page), Background (0.5 page), Design (1-1.5 pages), Evaluation (1.5-2 pages), Related Work (0.5 page), Conclusion (0.25 page)
+---
 
-*Deployed-Systems Papers:*
-- Must describe operational systems offering practical deployment lessons
-- Prefix title with "Deployed System: " during submission (prefix not published in proceedings)
-- Must validate techniques with production data and address practical deployment challenges
-- Emphasize operational experience, failure modes encountered, and lessons learned
-- Production metrics and real-world scale are essential
+## 4. AAAI (AI / ML) Papers
 
-*Supplemental Material:*
-- Optional single PDF without page limits
-- Reviewers are not required to review supplemental material
-- Use for extended proofs, additional experiments, or detailed configurations
+AAAI follows the **method-experiment** paradigm. Conventional structure (strong convention, not an AAAI compliance rule):
 
-### 8. Common Pitfalls to Avoid
+Abstract → Introduction → Related Work → Background/Preliminaries → Method → Theory *(if any)* → Experimental Setup → Results → Ablations → Limitations → Conclusion → References → **Reproducibility Checklist**.
 
-**Top Rejection Reasons for Systems Papers:**
-1. "Not solving a real problem" - Weak motivation, no evidence the problem matters
-2. "Not solving the problem" - System doesn't actually achieve what is claimed
-3. "Paper too badly written" - Unclear prose obscures the contribution
-4. "Insufficient contribution" - Incremental improvement over existing systems
-5. Missing or unfair baselines in evaluation
-6. Evaluation doesn't support the claims in the introduction
-7. Design trade-offs not explained or justified
-8. Related work incomplete (missing key systems)
+**Hard format rules (enforced strictly — violations risk desk rejection):**
+- **7 pages of technical content.** References are outside the limit; the reproducibility checklist is appended after references and also does not count. Any in-paper appendix with proofs/experiments IS technical content and must fit in 7 pages — push overflow to the separately uploaded technical appendix.
+- **AAAI Press two-column template, required even for anonymous submission.** LaTeX = `article` class + the edition-specific style package (`\usepackage{aaai2026}`), **not** an `aaai.cls`. Do not add `hyperref`/`navigator`.
+- **No page numbers/headers/footers.** Body text black; color only in figures (CMYK, grayscale-safe). **Table captions go BELOW the table.**
+- Camera-ready: 7 base pages + up to 2 purchasable extra technical pages.
 
-**Writing Quality Issues:**
-- Passive voice obscuring who did what ("it was observed" vs "we observed")
-- Vague quantification ("significant improvement" vs "2.3x speedup")
-- Overstated claims not supported by evaluation
-- Inconsistent terminology for the same concept
-- Forward references to undefined terms
-- Prose table-of-contents abstracts instead of substantive abstracts
+**Structure implications of the 7-page budget:** background and related work are compressed; Method + Experiments (or Method + Theory) form the bulk; there is **no required standalone Implementation section**; AI/ML papers use substantially more mathematics (objectives, proofs, assumptions) than systems papers.
 
-## Workflow for Systems Paper Development
+**Reproducibility checklist (mandatory):** completed by every author at submission, placed in the main PDF after the references, shared with reviewers, and factored into the decision. It covers general clarity, theory (assumptions/proofs), datasets (appropriateness/availability), and computation (seeds, hardware/software versions, number of runs, variance, significance tests, hyperparameters/search ranges). Write the paper so every item can honestly be answered "yes."
 
-**Stage 1: Planning**
-1. Identify target venue and review page limits, deadlines, review type
-2. Outline the system's key contributions (what is new?)
-3. Plan the evaluation: what experiments prove the claims?
-4. Sketch the architecture diagram and key result figures
+**Review process:** double-blind (cite own work in third person; preprints/arXiv allowed but not cited/linked from the anonymous paper); mandatory **abstract registration** ~a week before the paper deadline; **two-phase review** where Phase-1 rejects get no feedback; a single author-feedback/rebuttal window for survivors (AAAI-26: 2,500-char cap, no URLs/files/new results). No dual/concurrent archival submission.
 
-**Stage 2: Drafting (recommended order)**
-1. Design section + architecture figures (the core contribution)
-2. Evaluation section + result figures (proof it works)
-3. Introduction (now you know the full story)
-4. Background/Motivation (setup for the design)
-5. Implementation (factual, straightforward)
-6. Related Work (position against the field)
-7. Conclusion (summary)
-8. Abstract (compress the whole story)
-9. Title (capture the essence)
+> There is **no separate "CARE" checklist** and **no official fixed reference count** for AAAI — do not invent either.
 
-**Stage 3: Revision**
-1. Verify every claim in the introduction is supported by evaluation
-2. Check that all figures and tables are referenced in the text
-3. Ensure consistent terminology throughout
-4. Verify numbers match between text, tables, and figures
-5. Check page limits and formatting requirements
-6. Proofread for grammar, spelling, and clarity
+For full section-by-section guidance, the complete checklist breakdown, appendix mechanics, and the systems↔AAAI contrast, load `references/aaai_paper_structure.md`.
 
-**Stage 4: Final Preparation**
-1. Format according to venue template (USENIX or ACM)
-2. Prepare artifact (code, scripts, README, Docker)
-3. Anonymize if double-blind venue
-4. Check figure resolution and readability
-5. Verify all references are complete and correctly formatted
-6. Build from clean git checkout before submission
+---
+
+## 5. Shared Craft (both paradigms)
+
+### 5.1 Writing principles
+
+- **Clarity**: precise technical language; define terms at first use; active voice ("We design", "We propose", "We evaluate").
+- **Conciseness**: strict page limits; every sentence earns its space; ~15-20 word sentences.
+- **Directness**: state claims with numbers ("2.3x higher throughput", "+4.1 points accuracy"); avoid hype ("novel", "groundbreaking").
+- **Precision**: exact configurations; consistent units and metrics; distinguish observation from interpretation; report variance.
+
+Full guidance, revision checklists, and the systems-vs-ML style comparison: `references/writing_principles.md`.
+
+### 5.2 Citations
+
+- **Systems venues** → numbered citations `[1]`: IEEE (USENIX: OSDI/NSDI/FAST) or ACM (SIGCOMM/MOBICOM/SOSP). Cite systems by name ("Borg [5]").
+- **AAAI** → author-year `(Smith 2025)` via `natbib` (`\citet`/`\citep`/`\citeauthor`/`\citeyear`); the AAAI `.sty` sets the matching `.bst`.
+- Cite recent work heavily; cite every baseline you compare against; keep self-citation modest and third-person in double-blind submissions.
+
+Full formats, BibTeX, and the numbered↔author-year comparison: `references/citation_styles.md`.
+
+### 5.3 Figures and tables
+
+- **Tables** for exact numbers, configurations, and comparisons; **figures** for trends, distributions (CDFs), scaling, and architecture/method diagrams.
+- Self-explanatory captions; error bars on measurements; **bold the best result**; consistent colors; grayscale-safe.
+- AAAI-specific: table captions **below** tables; figures ≥300 dpi in `.pdf`/`.png`/`.jpg` (no EPS/GIF), no Type 3 fonts.
+
+Full guidance and per-venue requirements: `references/figures_tables.md`.
+
+### 5.4 Terminology
+
+Use precise subfield terminology. Systems: consistency models, fault tolerance, scheduling, memory hierarchy, RDMA/DPDK/eBPF, parallelism (data/model/pipeline/tensor), TTFT, p50/p99. AI/ML: objective/loss, optimization, generalization, ablation, sample/compute efficiency, seeds/variance, assumptions/propositions/proofs. Define abbreviations at first use; use standard ones (GPU, API, SGD) without definition.
+
+---
+
+## 6. Common Pitfalls
+
+**Both paradigms:**
+- Passive voice obscuring who did what; vague quantification ("significant" vs. a number); overstated claims not supported by results; inconsistent terminology; abstract that is a prose table of contents.
+
+**Systems-specific rejection reasons:** not solving a real problem (weak motivation, no evidence); not actually solving it (evaluation doesn't support claims); missing/unfair baselines; unjustified design trade-offs; incomplete related work.
+
+**AAAI-specific pitfalls:** exceeding 7 pages or hiding technical content in "reference" pages; formatting violations (wrong template, added page numbers, `hyperref`); single-seed point estimates without variance/significance; a reproducibility checklist the paper cannot honestly support; de-anonymizing via first-person self-citation or arXiv links.
+
+---
+
+## 7. Workflow
+
+**Systems paper drafting order:**
+1. Design + architecture figures → 2. Evaluation + result figures → 3. Introduction → 4. Background/Motivation → 5. Implementation → 6. Related Work → 7. Conclusion → 8. Abstract → 9. Title.
+
+**AAAI paper drafting order:**
+1. Method + core equations/pseudocode → 2. Experiments (setup, results, ablations) *or* Theory → 3. Introduction → 4. Related Work + Preliminaries → 5. Limitations + Conclusion → 6. Abstract → 7. Title → 8. Reproducibility checklist (fill as experiments finalize; if an item can't be "yes", fix the paper, not the answer).
+
+**Shared revision + final prep (both):**
+1. Verify every introduction/abstract claim is supported by results.
+2. Check all figures/tables are referenced and numbers match across text/tables/figures.
+3. Ensure consistent terminology and correct citation style for the venue.
+4. Format with the exact venue template; check page limit and figure readability (grayscale).
+5. Anonymize for double-blind venues (systems double-blind venues and all of AAAI).
+6. Systems: prepare the artifact. AAAI: complete the reproducibility checklist and any uploaded appendix.
+
+---
 
 ## References
 
-This skill includes comprehensive reference files covering specific aspects of systems conference paper writing:
+Load the reference that matches your venue and task:
 
-- `references/systems_paper_structure.md`: Detailed guide to systems paper structure, section-by-section content, venue variations, and writing order
-- `references/citation_styles.md`: IEEE and ACM citation formats, BibTeX management, systems-specific citation conventions
-- `references/figures_tables.md`: Architecture diagrams, performance plots, CDFs, evaluation tables, and visual design
-- `references/writing_principles.md`: Core writing principles (clarity, conciseness, accuracy), systems-specific style, and revision checklists
-
-Load these references as needed when working on specific aspects of systems paper writing.
+- `references/systems_paper_structure.md`: Full systems paper structure (OSDI/NSDI/SIGCOMM/MOBICOM/SOSP/FAST) — section-by-section content, examples, tense guide, artifact evaluation, per-venue variations.
+- `references/aaai_paper_structure.md`: Full AAAI (AI/ML) paper structure — format/length hard rules, section-by-section content, the mandatory reproducibility checklist, double-blind two-phase review, appendix mechanics, and the systems↔AAAI contrast.
+- `references/citation_styles.md`: IEEE and ACM numbered styles (systems) and AAAI author-year (natbib), BibTeX management, and anonymization.
+- `references/figures_tables.md`: Architecture/method diagrams, performance plots, CDFs, evaluation tables, visual design, and per-venue figure requirements.
+- `references/writing_principles.md`: Core writing principles (clarity, conciseness, accuracy), systems-vs-ML style, and revision checklists.
