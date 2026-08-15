@@ -18,6 +18,7 @@ Claude Code skills and MCP tooling for academic research and development workflo
 | `cuda-tutor` | `skills/cuda-tutor/` | Interactive concept-level quiz tutor over a CUDA StudyVault built by `cuda-tutor-setup`. Shares quiz rules + proficiency math + CUDA↔Triton Rosetta with `triton-tutor` via `skills/tutor-core/` |
 | `cuda-tutor-setup` | `skills/cuda-tutor-setup/` | Generates an Obsidian CUDA StudyVault (curriculum / codebase / document modes) over the 6-topic NVIDIA learning path: CUDA kernels, CUTLASS, cuTile, open-gpu-kernel-modules, NCCL, NVSHMEM |
 | `function-dep-search` | `skills/function-dep-search/` | AST-accurate function dependency tracing |
+| `humanizer` | `skills/humanizer/` (submodule) | Removes AI-writing tells from prose (33 patterns from Wikipedia's "Signs of AI writing"). Tracked as a git submodule pinned to [github.com/blader/humanizer](https://github.com/blader/humanizer) — see [Remote skills](#remote-skills-submodules) below. Cross-referenced as a required final pass by the academic + writing skills |
 | `mem0` | `skills/mem0/` | Persistent memory integration patterns |
 | `openviking` | `skills/openviking/` | OpenViking context database reference |
 | `triton-tutor` | `skills/triton-tutor/` | Interactive concept-level quiz tutor over a Triton StudyVault built by `triton-tutor-setup`. Shares quiz rules + proficiency math + CUDA↔Triton Rosetta with `cuda-tutor` via `skills/tutor-core/` |
@@ -37,6 +38,23 @@ git submodule update --init
 
 Community skill folders are discovered from `skills/community-skills/skills/`.
 Local skills with the same name take precedence.
+
+## Remote skills (submodules)
+
+Some single-purpose skills are tracked as git submodules so they stay in sync with their upstream repos instead of being copied in:
+
+| Skill | Upstream | Path |
+|-------|----------|------|
+| `humanizer` | https://github.com/blader/humanizer | `skills/humanizer/` |
+
+Fetch after a fresh clone, and pull upstream updates, with:
+
+```bash
+git submodule update --init skills/humanizer      # fetch after cloning
+git submodule update --remote skills/humanizer    # bump to latest upstream, then commit the pointer
+```
+
+The harness symlinks and the writing-skill cross-references point at the skill by name, so updating the submodule updates every harness at once.
 
 ## Installation
 
