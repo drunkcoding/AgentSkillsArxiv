@@ -16,6 +16,10 @@ Write a research statement that **gets the candidate an interview**. The documen
 
 Everything else — eloquence, autobiography, exhaustive coverage — is secondary and usually counterproductive.
 
+## Final delivery: humanize the output
+
+**REQUIRED SUB-SKILL (run before returning any draft to the user).** Load the `humanizer` skill (via the skill tool) and run the finished text through it as a final editing pass. It removes AI-writing tells (inflated significance, copula avoidance like "serves as", rule-of-three, overused AI vocabulary such as "delve"/"testament"/"landscape", filler phrases, sycophancy, and em/en-dash overuse) without inventing any fact, name, number, date, or citation. Preserve the format and conventions this skill requires (length tier, section order, department-fit specifics), and if the user supplied a writing sample, pass it so humanizer matches their voice.
+
 ## The Mission/Strategy/Evidence/Story Frame
 
 Every effective research statement, regardless of discipline or region, can be checked against four questions. If any answer is missing, the draft is incomplete.
