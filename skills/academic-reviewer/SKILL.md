@@ -5,6 +5,10 @@ description: "Review systems conference papers for OSDI, NSDI, SIGCOMM, MOBICOM,
 
 # Systems Conference Paper Reviewing
 
+## Final delivery: humanize the output
+
+**REQUIRED SUB-SKILL (run before returning any draft to the user).** Load the `humanizer` skill (via the skill tool) and run the finished text through it as a final editing pass. It removes AI-writing tells (inflated significance, copula avoidance like "serves as", rule-of-three, overused AI vocabulary such as "delve"/"testament"/"landscape", filler phrases, sycophancy, and em/en-dash overuse) without inventing any fact, name, number, date, or citation. Preserve the format and conventions this skill requires (HotCRP field structure, severity labels, numbered questions), and if the user supplied a writing sample, pass it so humanizer matches their voice.
+
 ## Core Capabilities
 
 ### 1. Review Structure and Format

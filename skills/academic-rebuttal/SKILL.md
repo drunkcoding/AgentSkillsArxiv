@@ -11,6 +11,10 @@ Write rebuttals that **reject wrong reviewer comments with evidence** while main
 
 **Guiding principle:** rebuttals win when they remove decision-critical false impressions quickly, politely, and with concrete evidence. Everything else — style, verbosity, rhetoric — is secondary.
 
+## Final delivery: humanize the output
+
+**REQUIRED SUB-SKILL (run before returning any draft to the user).** Load the `humanizer` skill (via the skill tool) and run the finished text through it as a final editing pass. It removes AI-writing tells (inflated significance, copula avoidance like "serves as", rule-of-three, overused AI vocabulary such as "delve"/"testament"/"landscape", filler phrases, sycophancy, and em/en-dash overuse) without inventing any fact, name, number, date, or citation. Preserve the format and conventions this skill requires (venue character limits, per-reviewer response structure), and if the user supplied a writing sample, pass it so humanizer matches their voice.
+
 ## Rebuttal Workflow
 
 ### Stage 1: Triage Reviews (first 3 hours)
