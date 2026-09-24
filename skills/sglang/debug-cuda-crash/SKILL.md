@@ -74,30 +74,9 @@ python my_script.py
 ```
 
 Output in `debug.log`:
-```
-================================================================================
-[2026-03-19 00:47:30] SGLang Kernel API Call: sglang.quant_method.UnquantizedLinearMethod.apply
-Positional input arguments:
-  arg[0]=QKVParallelLinear(
-      repr=QKVParallelLinear(in_features=1024, output_features=4096, bias=False, tp_size=1, gather_output=False)
-    )
-  arg[1]=Tensor(
-      shape=(1, 1024)
-      dtype=torch.bfloat16
-      device=cuda:0
-      requires_grad=False
-      is_contiguous=True
-    )
-  arg[2]=None
-Output:
-  return=Tensor(
-      shape=(1, 4096)
-      dtype=torch.bfloat16
-      device=cuda:0
-      requires_grad=False
-      is_contiguous=True
-    )
-```
+
+> Full listing retained in [the example session reference](references/example-session.md). Apply the command above and compare the referenced output.
+
 
 This is a real level-3 excerpt captured from `Qwen/Qwen3-0.6B`.
 
@@ -160,30 +139,9 @@ Real `metadata.json` excerpt:
 
 Create a temporary reproducer:
 
-```bash
-python3 - <<'PY'
-from pathlib import Path
-Path("/tmp/sglang_llm_crash.py").write_text(
-    "import torch\\n"
-    "import torch.nn.functional as F\\n"
-    "from sglang.srt.utils.custom_op import register_custom_op\\n\\n"
-    "def _fake_embedding(indices, table):\\n"
-    "    return torch.empty((*indices.shape, table.shape[-1]), device=table.device, dtype=table.dtype)\\n\\n"
-    "@register_custom_op(op_name='mock_llm_cuda_crash', fake_impl=_fake_embedding)\\n"
-    "def mock_llm_cuda_crash(indices, table):\\n"
-    "    out = F.embedding(indices, table)\\n"
-    "    torch.cuda.synchronize()\\n"
-    "    return out\\n\\n"
-    "table = torch.randn(4, 8, device='cuda', dtype=torch.float16)\\n"
-    "indices = torch.tensor([0, 7], device='cuda', dtype=torch.long)\\n"
-    "mock_llm_cuda_crash(indices, table)\\n"
-)
-PY
 
-SGLANG_KERNEL_API_LOGLEVEL=1 \
-SGLANG_KERNEL_API_LOGDEST=/tmp/sglang_llm_level1.log \
-python3 /tmp/sglang_llm_crash.py
-```
+> Full listing retained in [the example session reference](references/example-session.md). Apply the command above and compare the referenced output.
+
 
 What to expect:
 - The script exits with a CUDA `device-side assert`
@@ -220,30 +178,9 @@ For real-model success-path level-10 dumps, it is often easier to temporarily di
 
 Create a temporary diffusion-side reproducer:
 
-```bash
-python3 - <<'PY'
-from pathlib import Path
-Path("/tmp/sglang_diffusion_crash.py").write_text(
-    "import torch\\n"
-    "import torch.nn.functional as F\\n"
-    "from sglang.multimodal_gen.runtime.layers.utils import register_custom_op\\n\\n"
-    "def _fake_embedding(positions, cache):\\n"
-    "    return torch.empty((*positions.shape, cache.shape[-1]), device=cache.device, dtype=cache.dtype)\\n\\n"
-    "@register_custom_op(op_name='mock_diffusion_cuda_crash', fake_impl=_fake_embedding)\\n"
-    "def mock_diffusion_cuda_crash(positions, cache):\\n"
-    "    out = F.embedding(positions, cache)\\n"
-    "    torch.cuda.synchronize()\\n"
-    "    return out\\n\\n"
-    "cache = torch.randn(4, 64, device='cuda', dtype=torch.float16)\\n"
-    "positions = torch.tensor([0, 9], device='cuda', dtype=torch.long)\\n"
-    "mock_diffusion_cuda_crash(positions, cache)\\n"
-)
-PY
 
-SGLANG_KERNEL_API_LOGLEVEL=1 \
-SGLANG_KERNEL_API_LOGDEST=/tmp/sglang_diffusion_level1.log \
-python3 /tmp/sglang_diffusion_crash.py
-```
+> Full listing retained in [the example session reference](references/example-session.md). Apply the command above and compare the referenced output.
+
 
 Try level 3:
 
@@ -474,19 +411,9 @@ When you own the CUDA kernel, `printf()` is still useful for narrowing down bad 
 
 Basic pattern:
 
-```cpp
-__global__ void MyKernel(const float* input, float* output, int n) {
-  int idx = blockIdx.x * blockDim.x + threadIdx.x;
 
-  if (threadIdx.x == 0 && blockIdx.x == 0) {
-    printf("n=%d input0=%f\n", n, input[0]);
-  }
+> Full listing retained in [the example session reference](references/example-session.md). Apply the command above and compare the referenced output.
 
-  if (idx < n) {
-    output[idx] = input[idx] * 2.0f;
-  }
-}
-```
 
 After launch, force the output to flush:
 
