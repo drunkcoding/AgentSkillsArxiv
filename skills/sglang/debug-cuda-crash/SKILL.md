@@ -98,7 +98,15 @@ This is a real level-5 excerpt captured from `black-forest-labs/FLUX.1-dev`.
 
 ### Crash-Safe Dumps (Inputs Saved Before Execution)
 
-```
+Level 10 saves inputs before execution. CUDA graph capture may skip tensor dumps.
+
+## Step 2: Reproduce an LLM CUDA Crash
+
+Create the temporary LLM reproducer and run it at levels 1, 3, and 10. The expected crash, last API boundary, and dump metadata are preserved in [Step 2](references/example-session.md#step-2-reproduce-an-llm-cuda-crash).
+
+> See [Step 2](references/example-session.md#step-2-reproduce-an-llm-cuda-crash) for the full reproducer commands and expected dump contents.
+
+The level-10 run should produce the API entry, `inputs.pt`, exception metadata, and no `outputs.pt` when execution aborts.
 
 Now you should see:
 - A log entry for `sglang.custom_op.mock_llm_cuda_crash`
@@ -418,51 +426,7 @@ static_assert(BLOCK_SIZE % 32 == 0, "BLOCK_SIZE must be warp aligned");
 | `SGLANG_KERNEL_API_DUMP_INCLUDE` | wildcard list | Only dump matching API names |
 | `SGLANG_KERNEL_API_DUMP_EXCLUDE` | wildcard list | Skip matching API names |
 
-## Best Practices
-
-### 1. Start with Level 3
-
-```bash
-export SGLANG_KERNEL_API_LOGLEVEL=3
-```
-
-Level 3 is usually enough to catch wrong shapes, wrong dtypes, and wrong devices.
-
-### 2. Use Level 5 for Numerical Issues
-
-```bash
-export SGLANG_KERNEL_API_LOGLEVEL=5
-```
-
-Use it when you suspect NaN or Inf values.
-
-### 3. Use Level 10 for Crash Reproduction
-
-```bash
-export SGLANG_KERNEL_API_LOGLEVEL=10
-```
-
-This is the most useful mode when the process crashes before you can inspect live tensors.
-
-If you need successful input/output dumps from a real model run, temporarily disable CUDA graph for that debug session.
-
-When level 10 is too noisy, pair it with `SGLANG_KERNEL_API_DUMP_INCLUDE` / `SGLANG_KERNEL_API_DUMP_EXCLUDE` instead of dumping every covered API.
-
-### 4. Log to File for Crashes
-
-```bash
-export SGLANG_KERNEL_API_LOGDEST=crash.log
-```
-
-File logs are safer than stdout when the process aborts.
-
-### 5. Disable Logging in Production
-
-```bash
-unset SGLANG_KERNEL_API_LOGLEVEL
-```
-
-When disabled, the decorator returns the original callable and adds no runtime logging overhead.
+> Additional level-selection guidance is preserved in [Best Practices](references/example-session.md#best-practices).
 
 ## Troubleshooting
 
