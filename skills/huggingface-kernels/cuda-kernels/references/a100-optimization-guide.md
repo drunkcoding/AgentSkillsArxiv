@@ -1,5 +1,7 @@
 # A100 GPU Optimization Guide for Diffusers/Transformers Kernels
 
+> Version pins (CUDA toolkit, GPU architectures, package versions) in this file reflect the state when it was written. Verify against current toolchain docs before relying on them.
+
 ## Contents
 
 - [A100 Ampere Architecture Overview](#a100-ampere-architecture-overview)

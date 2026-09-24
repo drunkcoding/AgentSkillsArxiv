@@ -2,6 +2,8 @@
 
 # CUDA Exercise Bank
 
+> Version pins (CUDA toolkit, GPU architectures, package versions) in this file reflect the state when it was written. Verify against current toolchain docs before relying on them.
+
 ## Contents
 
 - [E-CUDA-01 Vector Add](#e-cuda-01-vector-add)

@@ -14,6 +14,8 @@ allowed-tools: "Read, Grep, Glob, Bash"
 
 # CUDA Kernels for Diffusers & Transformers
 
+> Version pins (CUDA toolkit, GPU architectures, package versions) in this file reflect the state when it was written. Verify against current toolchain docs before relying on them.
+
 This skill provides patterns and guidance for developing optimized CUDA kernels targeting NVIDIA GPUs (H100, A100, T4) for use with HuggingFace **diffusers** and **transformers** libraries.
 
 ## Quick Start

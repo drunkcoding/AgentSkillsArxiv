@@ -8,6 +8,8 @@ keywords: cp.async, commit_group, wait_group, pipeline
 
 # cp.async (test fixture)
 
+> Version pins (CUDA toolkit, GPU architectures, package versions) in this file reflect the state when it was written. Verify against current toolchain docs before relying on them.
+
 #topic-cuda-kernels #concept-cp-async
 
 `cp.async` enables Ampere+ asynchronous global-to-shared copies. The 4/8/16-byte

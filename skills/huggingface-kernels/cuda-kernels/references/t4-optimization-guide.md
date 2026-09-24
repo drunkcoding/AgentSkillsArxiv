@@ -1,5 +1,7 @@
 # T4 GPU Optimization Guide for Diffusers/Transformers Kernels
 
+> Version pins (CUDA toolkit, GPU architectures, package versions) in this file reflect the state when it was written. Verify against current toolchain docs before relying on them.
+
 ## Contents
 
 - [T4 Turing Architecture Overview](#t4-turing-architecture-overview)

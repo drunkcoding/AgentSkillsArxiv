@@ -1,5 +1,7 @@
 # Exercise Workflow — E1–E4 Detail
 
+> Version pins (CUDA toolkit, GPU architectures, package versions) in this file reflect the state when it was written. Verify against current toolchain docs before relying on them.
+
 ## Contents
 
 - [Naming Convention](#naming-convention)

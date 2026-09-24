@@ -1,5 +1,7 @@
 # Rules — Exercise Content (E1, E2, E3, E4)
 
+> Version pins (CUDA toolkit, GPU architectures, package versions) in this file reflect the state when it was written. Verify against current toolchain docs before relying on them.
+
 ## Contents
 
 - [INV-5 + INV-6 + INV-7 Application](#inv-5--inv-6--inv-7-application)

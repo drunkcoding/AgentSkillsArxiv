@@ -1,5 +1,7 @@
 # CUDA Kernel Templates for H100 Diffusers
 
+> Version pins (CUDA toolkit, GPU architectures, package versions) in this file reflect the state when it was written. Verify against current toolchain docs before relying on them.
+
 ## Contents
 
 - [CRITICAL: Type Conversion Helpers](#critical-type-conversion-helpers)

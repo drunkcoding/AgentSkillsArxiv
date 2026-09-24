@@ -1,5 +1,7 @@
 # Rules — Handout Content (H1, H3, H4, H5)
 
+> Version pins (CUDA toolkit, GPU architectures, package versions) in this file reflect the state when it was written. Verify against current toolchain docs before relying on them.
+
 ## Contents
 
 - [INV-7 Application](#inv-7-application)

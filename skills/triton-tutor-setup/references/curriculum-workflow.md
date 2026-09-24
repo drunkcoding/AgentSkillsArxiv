@@ -1,5 +1,7 @@
 # Curriculum Mode — Triton Learning Path Workflow
 
+> Version pins (CUDA toolkit, GPU architectures, package versions) in this file reflect the state when it was written. Verify against current toolchain docs before relying on them.
+
 ## Contents
 
 - [Topic Slugs (fixed canonical names)](#topic-slugs-fixed-canonical-names)

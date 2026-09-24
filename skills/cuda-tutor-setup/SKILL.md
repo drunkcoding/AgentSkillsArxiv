@@ -17,6 +17,8 @@ description: >
 
 # CUDA Tutor Setup — Build an Obsidian CUDA StudyVault
 
+> Version pins (CUDA toolkit, GPU architectures, package versions) in this file reflect the state when it was written. Verify against current toolchain docs before relying on them.
+
 ## CWD Boundary Rule (ALL MODES)
 
 > **NEVER access files outside the current working directory (CWD).**
