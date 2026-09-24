@@ -72,7 +72,7 @@
 
 ## Cross-Stack Equivalent: CUTLASS + cuTile
 
-For users who already know CUTLASS/CuTe or cuTile, Triton matmul patterns map directly. Full table: `../../tutor-core/references/cross-stack-rosetta.md` §3 (Compute), §4 (Scheduling), §5 (Python Tile DSLs), §2 (Memory & Tile).
+For users who already know CUTLASS/CuTe or cuTile, Triton matmul patterns map directly. Full table: `cross-stack-rosetta.md` (in this references/ directory) §3 (Compute), §4 (Scheduling), §5 (Python Tile DSLs), §2 (Memory & Tile).
 
 | RID   | This topic's concept                                              | CUTLASS / CuTe / cuTile equivalent                                                |
 |-------|-------------------------------------------------------------------|------------------------------------------------------------------------------------|

@@ -69,7 +69,7 @@
 
 ## Cross-Stack Equivalent: CUTLASS (Stages, ThreadblockShape, profiler)
 
-For users who already know CUTLASS, Triton's autotune knobs map directly to CUTLASS template parameters and the CUTLASS profiler. Full table: `../../tutor-core/references/cross-stack-rosetta.md` §4 (Scheduling), §6 (Compiler & Profiling), §2 (Memory & Tile pipelining).
+For users who already know CUTLASS, Triton's autotune knobs map directly to CUTLASS template parameters and the CUTLASS profiler. Full table: `cross-stack-rosetta.md` (in this references/ directory) §4 (Scheduling), §6 (Compiler & Profiling), §2 (Memory & Tile pipelining).
 
 | RID   | This topic's concept                                      | CUTLASS / CUDA equivalent                                              |
 |-------|-----------------------------------------------------------|------------------------------------------------------------------------|

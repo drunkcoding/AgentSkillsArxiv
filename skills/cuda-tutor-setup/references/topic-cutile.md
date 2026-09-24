@@ -75,7 +75,7 @@
 
 ## Cross-Stack Equivalent: Triton (Python Tile DSL Sibling)
 
-cuTile and Triton occupy the same mental slot — both are Python-first tile DSLs that compile to GPU kernels via decorators. cuTile is NVIDIA-only; Triton is multi-backend (NVIDIA + AMD + Intel). Full table: `../../tutor-core/references/cross-stack-rosetta.md` §5 (Python Tile DSLs) + §2 (Memory & Tile).
+cuTile and Triton occupy the same mental slot — both are Python-first tile DSLs that compile to GPU kernels via decorators. cuTile is NVIDIA-only; Triton is multi-backend (NVIDIA + AMD + Intel). Full table: `cross-stack-rosetta.md` (in this references/ directory) §5 (Python Tile DSLs) + §2 (Memory & Tile).
 
 | RID   | This topic's concept (cuTile / CuTe-DSL)                            | Triton equivalent                                                                |
 |-------|---------------------------------------------------------------------|----------------------------------------------------------------------------------|

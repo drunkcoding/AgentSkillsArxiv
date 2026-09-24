@@ -24,8 +24,8 @@ tutor-core/
 
 - `skills/cuda-tutor/references/{quiz-rules-shared,proficiency-tracking-shared,cross-stack-rosetta}.md` → symlinks to the three files above.
 - `skills/triton-tutor/references/{quiz-rules-shared,proficiency-tracking-shared,cross-stack-rosetta}.md` → same.
-- `skills/cuda-tutor-setup/references/topic-*.md` (cutlass, cutile, cuda-kernels) → reference the Rosetta by path `../../tutor-core/references/cross-stack-rosetta.md` in their "Cross-Stack Equivalent" appendix.
-- `skills/triton-tutor-setup/references/topic-*.md` (triton-basics, tiling-autotuning, matmul-patterns, attention-reductions, compiler-internals) → same.
+- `skills/cuda-tutor-setup/references/topic-*.md` (cutlass, cutile, cuda-kernels) → reference the Rosetta via a local `references/cross-stack-rosetta.md` symlink in the `cuda-tutor-setup` skill (which points at the canonical copy above) in their "Cross-Stack Equivalent" appendix. The local symlink keeps the reference resolvable after the installer symlinks the skill directory into `~/.config/opencode/skills/` (where `tutor-core/` itself is absent).
+- `skills/triton-tutor-setup/references/topic-*.md` (triton-basics, tiling-autotuning, matmul-patterns, attention-reductions, compiler-internals) → same, via a local `references/cross-stack-rosetta.md` symlink in the `triton-tutor-setup` skill.
 
 ## Validation
 

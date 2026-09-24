@@ -72,7 +72,7 @@
 
 ## Cross-Stack Equivalent: Triton (Matmul Patterns + Compiler Internals)
 
-For users who already know Triton matmul kernels, these CUTLASS/CuTe concepts map directly. Full table: `../../tutor-core/references/cross-stack-rosetta.md` §2 (Memory & Tile), §3 (Compute), §4 (Scheduling).
+For users who already know Triton matmul kernels, these CUTLASS/CuTe concepts map directly. Full table: `cross-stack-rosetta.md` (in this references/ directory) §2 (Memory & Tile), §3 (Compute), §4 (Scheduling).
 
 | RID   | This topic's concept                                            | Triton equivalent                                                              |
 |-------|-----------------------------------------------------------------|--------------------------------------------------------------------------------|
