@@ -49,9 +49,9 @@ activation.gelu_fast(y, x)
 | **transformers** | LLaMA, Mistral, Qwen, Falcon | RMSNorm, Attention |
 | GPU | Compute Capability | Guide |
 |-----|-------------------|-------|
-| H100 | sm_90 | [h100-optimization-guide.md](references/h100-optimization-guide.md) |
-| A100 | sm_80 | [a100-optimization-guide.md](references/a100-optimization-guide.md) |
-| T4 | sm_75 | [t4-optimization-guide.md](references/t4-optimization-guide.md) |
+| H100 | sm_90 | [h100-optimization-guide.md](h100-optimization-guide.md) |
+| A100 | sm_80 | [a100-optimization-guide.md](a100-optimization-guide.md) |
+| T4 | sm_75 | [t4-optimization-guide.md](t4-optimization-guide.md) |
 
 ```bash
 # Full benchmark with all options
