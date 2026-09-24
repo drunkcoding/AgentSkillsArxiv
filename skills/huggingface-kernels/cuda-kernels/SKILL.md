@@ -22,7 +22,7 @@ This skill provides patterns and guidance for developing optimized CUDA kernels 
 
 **For benchmarking kernel performance:**
 
-> Full listing: see [the reference](references/kernel-examples.md).
+> Full listing: see [the reference](references/kernel-examples.md#rmsnorm).
 
 **For a minimal diffusers integration example (~150 lines):**
 ```bash
@@ -98,7 +98,7 @@ A complete working example is available at `examples/ltx_video/`. This demonstra
 Use the benchmark script to measure kernel performance:
 
 
-> Full listing: see [the reference](references/kernel-examples.md).
+> Full listing: see [the reference](references/kernel-examples.md#rope).
 
 ### Benchmark Script Options
 
@@ -151,7 +151,7 @@ The vectorized RMSNorm kernel achieves **2.67x average speedup** over PyTorch ba
 ## Project Structure
 
 
-> Full listing: see [the reference](references/kernel-examples.md).
+> Full listing: see [the reference](references/kernel-examples.md#adaln).
 
 ## GPU Architecture Reference
 
@@ -184,7 +184,7 @@ The vectorized RMSNorm kernel achieves **2.67x average speedup** over PyTorch ba
 
 **BFloat16 vectorization using `__nv_bfloat162`:**
 
-> Full listing: see [the reference](references/kernel-examples.md).
+> Full listing: see [the reference](references/kernel-examples.md#geglu).
 
 **FP16 vectorization using `__half2`:**
 ```cuda
@@ -273,7 +273,7 @@ cuda-capabilities = ["9.0"]
 Load pre-compiled, optimized kernels directly from HuggingFace Hub without local compilation:
 
 
-> Full listing: see [the reference](references/kernel-examples.md).
+> Full listing: see [the reference](references/kernel-examples.md#attention).
 
 **Key functions:**
 - `get_kernel(repo_id, version=None)` - Download and load kernel from Hub
@@ -301,7 +301,7 @@ Load pre-compiled, optimized kernels directly from HuggingFace Hub without local
 
 **Minimal transformers pattern:**
 
-> Full listing: see [the reference](references/kernel-examples.md).
+> Full listing: see [the reference](references/kernel-examples.md#integration).
 
 ### Diffusers Critical Pitfalls
 
@@ -352,7 +352,7 @@ pipe.enable_model_cpu_offload()  # Now safe
 ### Minimal Integration Pattern
 
 
-> Complete listing moved to [the reference](references/kernel-examples.md). Follow the surrounding step and command sequence.
+> Complete listing moved to [the reference](references/kernel-examples.md#benchmarking). Follow the surrounding step and command sequence.
 
 ## Kernel-Specific Guidelines
 
@@ -415,7 +415,7 @@ torch._dynamo.exc.Unsupported: Attempted to call function marked as skipped
 
 **To register as custom op (for torch.compile compatibility):**
 
-> Full listing: see [the reference](references/kernel-examples.md).
+> Full listing: see [the reference](references/kernel-examples.md#troubleshooting).
 
 ## See Also
 
