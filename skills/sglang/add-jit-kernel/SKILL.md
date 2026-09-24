@@ -5,9 +5,9 @@ description: Step-by-step tutorial for adding a new lightweight JIT CUDA kernel 
 
 ## Contents
 
-- [Abstractions](#common-abstractions-in-pythonsglangjit_kernelincludesgl_kernel)
-- [CUDA kernel](#step-1-implement-the-cuda-kernel-in-jit_kernelcsrc)
-- [Python wrapper](#step-2-add-the-python-wrapper-in-jit_kernel)
+- [Abstractions](#goal)
+- [CUDA kernel](#step-0-optional-generate-a-clangd-config-for-better-ide-support)
+- [Python wrapper](#troubleshooting)
 - [Tests](#step-4-write-tests-required)
 - [Benchmark](#step-5-add-a-benchmark-required)
 
