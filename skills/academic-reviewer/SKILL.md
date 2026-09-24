@@ -1,19 +1,30 @@
 ---
 name: academic-reviewer
-description: "Review systems conference papers for OSDI, NSDI, SIGCOMM, MOBICOM, SOSP, and FAST. Produces structured HotCRP-style reviews with paper summary, strengths, weaknesses, detailed comments, questions for authors, and overall merit/confidence scoring. Covers evaluation criteria (novelty, soundness, significance, evaluation quality, clarity, relevance, reproducibility), venue-specific expectations, common paper weaknesses, constructive feedback tone, one-shot revision reviews, and reviewer ethics. Use when asked to review, critique, or provide feedback on a systems conference paper submission."
+description: "Use when reviewing, critiquing, or providing feedback on submissions to systems venues (OSDI, NSDI, SIGCOMM, MOBICOM, SOSP, FAST) or AI/ML venues (NeurIPS, ICML, ICLR, AAAI), including HotCRP-style and OpenReview-style reviews."
 ---
 
-# Systems Conference Paper Reviewing
+# Conference Paper Reviewing
+
+Review systems and AI/ML papers against the target venue's actual form and norms. Route by venue before choosing fields or scores; never reuse a HotCRP scale for an OpenReview venue.
+
+## 1. Choose the Venue and Review Paradigm (start here)
+
+| Venue | Paradigm | Review platform/style | Primary reference |
+|-------|----------|-----------------------|-------------------|
+| OSDI, NSDI, SIGCOMM, MOBICOM, SOSP, FAST | Systems | HotCRP-style | `references/review_form_templates.md` and `references/review_criteria.md` |
+| NeurIPS, ICML, ICLR, AAAI | AI/ML | OpenReview-style; edition-specific fields and scales | `references/ml_venue_review_forms.md` |
+
+Confirm the edition before drafting. Review forms, scales, visibility, rebuttal duties, and LLM-use rules can change annually. For venue format rules that affect what a submission was required to contain, use `academic-writing`. For the author-response tactics your questions will trigger, use `academic-rebuttal`.
 
 ## Final delivery: humanize the output
 
-**REQUIRED SUB-SKILL (run before returning any draft to the user).** Load the `humanizer` skill (via the skill tool) and run the finished text through it as a final editing pass. It removes AI-writing tells (inflated significance, copula avoidance like "serves as", rule-of-three, overused AI vocabulary such as "delve"/"testament"/"landscape", filler phrases, sycophancy, and em/en-dash overuse) without inventing any fact, name, number, date, or citation. Preserve the format and conventions this skill requires (HotCRP field structure, severity labels, numbered questions), and if the user supplied a writing sample, pass it so humanizer matches their voice.
+**REQUIRED SUB-SKILL (run before returning any draft to the user).** Load the `humanizer` skill (via the skill tool) and run the finished text through it as a final editing pass. It removes AI-writing tells (inflated significance, copula avoidance like "serves as", rule-of-three, overused AI vocabulary such as "delve"/"testament"/"landscape", filler phrases, sycophancy, and em/en-dash overuse) without inventing any fact, name, number, date, or citation. Preserve the target venue's format and conventions (HotCRP or OpenReview fields, score labels, severity labels, numbered questions), and if the user supplied a writing sample, pass it so humanizer matches their voice.
 
 ## Core Capabilities
 
 ### 1. Review Structure and Format
 
-All reviews follow the HotCRP form structure used by OSDI, NSDI, SIGCOMM, MOBICOM, SOSP, and FAST:
+Systems reviews follow the HotCRP form structure used by OSDI, NSDI, SIGCOMM, MOBICOM, SOSP, and FAST:
 
 | Field | Required | Content |
 |-------|----------|---------|
@@ -27,6 +38,8 @@ All reviews follow the HotCRP form structure used by OSDI, NSDI, SIGCOMM, MOBICO
 | Minor Issues | Optional | Typos, formatting, editorial items |
 
 For detailed field-by-field guidance and complete example reviews, load `references/review_form_templates.md`.
+
+For NeurIPS, ICML, ICLR, or AAAI, do not use this table or the systems score scales. Load `references/ml_venue_review_forms.md` and reproduce the target edition's OpenReview fields.
 
 ### 2. Evaluation Dimensions
 
@@ -43,6 +56,8 @@ Evaluate every paper along seven dimensions. Weight them according to venue-spec
 | **Reproducibility** | Could someone reproduce the results? | Missing hardware specs; no code availability; insufficient methodology |
 
 Evaluation quality is the **most common area of weakness** in systems paper submissions. Check it rigorously: map each numbered contribution to specific experiments and flag any unsupported claims.
+
+**AI/ML adjustment:** separate soundness from significance and treat originality more broadly than “new method.” Credit new understanding, careful analysis of known methods, useful resources/data, removal of restrictive assumptions, and well-justified applications. Assess reproducibility checklists against evidence (seeds, run counts, variance, hyperparameter search, compute/software, data provenance, and proofs), not as box-ticking. Evaluate limitations and ethics flags independently from technical merit; reward candid limitations and flag ethics only when specialist review is warranted.
 
 For detailed rubrics (5-point scale per dimension), venue-specific weights, and specific checks, load `references/review_criteria.md`.
 
@@ -188,7 +203,7 @@ When asked to review a paper from multiple perspectives (or to simulate a PC sub
 - **Limited knowledge**: Constrains scope to presentation and methodology, explicitly defers on domain-specific dimensions
 
 **Each review must:**
-- Use the full HotCRP form (summary, strengths, weaknesses, detailed comments, questions, merit, confidence)
+- Use the full target-venue form: HotCRP for systems; the edition-specific OpenReview form for ML
 - Set the overall merit score independently based on that reviewer's perspective and assessable dimensions
 - State what the reviewer can and cannot assess at their confidence level
 - Use hedging language appropriate to the confidence level (see reference below)
@@ -231,7 +246,7 @@ Follow this four-stage workflow to produce a thorough, calibrated review.
 
 ### Stage 3: Write the Review
 
-Write the review fields in this order:
+For systems/HotCRP, write the review fields in this order:
 
 1. **Paper Summary**: Neutral, factual, in your own words. 3-5 sentences.
 2. **Strengths**: 3-6 specific positive observations, most important first. Reference sections and figures.
@@ -242,6 +257,8 @@ Write the review fields in this order:
 7. **Reviewer Confidence**: Honest self-assessment of your expertise.
 8. **Minor Issues**: Typos, formatting, editorial items (optional).
 
+For ML/OpenReview, load `references/ml_venue_review_forms.md` and write every field in the venue's current order. Never translate the venue's score into the systems 1-5 scale. Preserve required subscores, limitations/ethics fields, LLM-policy acknowledgement or disclosure, and post-rebuttal justification.
+
 ### Stage 4: Calibration (self-check before submission)
 
 Run through the 8-item self-assessment checklist:
@@ -251,7 +268,7 @@ Run through the 8-item self-assessment checklist:
 3. Would my review help the authors improve, even if rejected?
 4. Does the tone match the score?
 5. Have I evaluated the paper for what it is, not what I wish it were?
-6. Have I addressed all seven dimensions?
+6. Have I addressed every dimension required by this venue (all seven for systems; the named form dimensions for ML)?
 7. Is my summary neutral and factual?
 8. Does my confidence accurately reflect my expertise?
 
@@ -261,12 +278,13 @@ If any answer is "no," revise before submitting.
 
 ## References
 
-This skill includes comprehensive reference files covering specific aspects of systems paper reviewing:
+This skill includes comprehensive reference files covering systems and AI/ML paper reviewing:
 
 - `references/review_criteria.md`: Detailed rubrics for all 7 evaluation dimensions, venue-specific review priorities and weights, and scoring calibration guidelines
 - `references/review_form_templates.md`: HotCRP field-by-field guide, 3 complete example reviews (score 5, 3, and 2), and one-shot revision templates
 - `references/review_ethics_and_tone.md`: Roscoe and Levin-Redell frameworks, constructive vs. destructive critique examples, tone calibration by score, 6 anti-patterns, self-assessment checklist, and edge case handling
 - `references/common_paper_weaknesses.md`: Catalog of ~27 common weaknesses by section (motivation, design, evaluation, presentation, scope), severity classification, and constructive phrasing templates
 - `references/confidence_level_profiles.md`: Per-confidence-level behavioral profiles, dimension weight shifts, scoring behavior, worked 4-review example, and multi-perspective anti-patterns
+- `references/ml_venue_review_forms.md`: Edition-labelled NeurIPS/ICML/ICLR/AAAI OpenReview fields, scales, calibration, discussion duties, LLM-use policies, reproducibility and ethics guidance, and an ICML example review
 
 Load these references as needed when working on specific aspects of paper reviewing.
