@@ -18,7 +18,8 @@ the `paper_style()` context manager to set up correct dimensions and rcParams.
 
 ```python
 import sys
-sys.path.insert(0, "/home/xly/.claude/skills/conference-plot/scripts")
+# <skill-base-dir> = the "Base directory for this skill" stated when this skill loads
+sys.path.insert(0, "<skill-base-dir>/scripts")
 from plot_utils import paper_style, WONG_PALETTE, HATCHES, save_dual_output
 import matplotlib.pyplot as plt
 import numpy as np
