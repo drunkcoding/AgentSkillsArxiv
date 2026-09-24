@@ -1,7 +1,5 @@
 # Pitfalls — CUTLASS (test fixture)
 
-> Version pins (CUDA toolkit, GPU architectures, package versions) in this file reflect the state when it was written. Verify against current toolchain docs before relying on them.
-
 > [!danger]- MMA atom does not match arch
 > **What**: Selecting `MMA_Atom<SM80_16x8x16>` for an sm_90 build silently
 > falls back to slower kernels.

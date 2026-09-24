@@ -20,7 +20,9 @@ Local-first, session-persistent memory layer. Each agent stores knowledge under 
 
 This skill requires the mem0 MCP server. Install it with the repo installer:
 
-    ./infra/scripts/install-mcp-servers.sh   # from the AgentSkillsArxiv repo root
+```bash
+./infra/scripts/install-mcp-servers.sh   # from the AgentSkillsArxiv repo root
+```
 
 If the mem0 MCP tools are not available in the current session, say so and fall back
 to session-local context: do NOT silently skip memory operations the user asked for,

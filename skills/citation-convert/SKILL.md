@@ -9,7 +9,9 @@ description: "Fetch BibTeX citations from DOI, arXiv ID, journal URL, or paper t
 
 This skill drives the `doi2bib3` CLI. Check availability first:
 
-    command -v doi2bib3 || pip install --user doi2bib3
+```bash
+command -v doi2bib3 || pip install --user doi2bib3
+```
 
 If it cannot be installed, fall back to fetching BibTeX via the Crossref/arXiv HTTP APIs described in references/doi2bib3-guide.md.
 
