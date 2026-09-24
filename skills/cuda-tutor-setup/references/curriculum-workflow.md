@@ -1,5 +1,18 @@
 # Curriculum Mode — CUDA Learning Path Workflow
 
+## Contents
+
+- [Topic Slugs (fixed canonical names)](#topic-slugs-fixed-canonical-names)
+- [Phase CU1: Pre-flight](#phase-cu1-pre-flight)
+- [Phase CU2: Topic Plan](#phase-cu2-topic-plan)
+- [Phase CU3: Tag Standard](#phase-cu3-tag-standard)
+- [Phase CU4: Vault Structure](#phase-cu4-vault-structure)
+- [Phase CU5: Dashboard](#phase-cu5-dashboard)
+- [Phase CU6: Per-Topic Notes (LAZY-LOADED)](#phase-cu6-per-topic-notes-lazy-loaded)
+- [Phase CU7: Hands-On Milestones (cross-topic exercises)](#phase-cu7-hands-on-milestones-cross-topic-exercises)
+- [Phase CU8: Pitfall Notes](#phase-cu8-pitfall-notes)
+- [Phase CU9: Interlinking + Self-Review](#phase-cu9-interlinking--self-review)
+
 > Generate a 6-topic CUDA StudyVault from scratch. No source files required.
 > All vault output MUST stay within CWD.
 

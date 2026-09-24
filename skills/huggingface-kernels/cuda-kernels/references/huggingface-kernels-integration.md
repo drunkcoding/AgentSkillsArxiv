@@ -1,5 +1,19 @@
 # HuggingFace Kernels Integration Guide
 
+## Contents
+
+- [Overview](#overview)
+- [Installation](#installation)
+- [Core API](#core-api)
+- [Usage Examples](#usage-examples)
+- [Publishing Kernels to Hub](#publishing-kernels-to-hub)
+- [Available Community Kernels](#available-community-kernels)
+- [Inspecting Kernel Functions](#inspecting-kernel-functions)
+- [Caching and Offline Usage](#caching-and-offline-usage)
+- [Best Practices](#best-practices)
+- [Troubleshooting](#troubleshooting)
+- [See Also](#see-also)
+
 Complete guide for using and publishing CUDA kernels with the HuggingFace Kernels library (`get_kernel`).
 
 > **Quick Start:** See [huggingface_kernels_example.py](../scripts/huggingface_kernels_example.py) for a minimal working example.

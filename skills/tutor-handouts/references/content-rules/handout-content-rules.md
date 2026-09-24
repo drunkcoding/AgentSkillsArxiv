@@ -1,5 +1,16 @@
 # Rules — Handout Content (H1, H3, H4, H5)
 
+## Contents
+
+- [INV-7 Application](#inv-7-application)
+- [Universal Rules (apply to H1, H3, H4, H5)](#universal-rules-apply-to-h1-h3-h4-h5)
+- [H3-Specific Rules (Programming Assignment)](#h3-specific-rules-programming-assignment)
+- [H4-Specific Rules (Problem Set)](#h4-specific-rules-problem-set)
+- [H1-Specific Rules (Lecture Handout)](#h1-specific-rules-lecture-handout)
+- [H5-Specific Rules (Capstone)](#h5-specific-rules-capstone)
+- [Idempotence Header](#idempotence-header)
+- [How These Rules Are Enforced](#how-these-rules-are-enforced)
+
 Apply these rules to EVERY emitted handout. Violations are blocking; if the
 banned-phrase scan in TH8 finds a hit, regenerate the offending section before
 reporting completion.

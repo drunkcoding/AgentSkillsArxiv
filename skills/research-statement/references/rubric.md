@@ -1,5 +1,14 @@
 # Self-Grading Rubric
 
+## Contents
+
+- [Master Rubric (8 Criteria, 0–5 Scale, Total /40)](#master-rubric-8-criteria-05-scale-total-40)
+- [Per-Criterion Scoring Anchors](#per-criterion-scoring-anchors)
+- [Discipline-Specific Adjustments to Rubric](#discipline-specific-adjustments-to-rubric)
+- [US-School Overlay Checks](#us-school-overlay-checks)
+- [Calibration Sources](#calibration-sources)
+- [How to Use This Rubric When Reviewing Someone Else's Draft](#how-to-use-this-rubric-when-reviewing-someone-elses-draft)
+
 Use this rubric to score every draft before delivery. Score independently, then revise any criterion below threshold.
 
 ## Master Rubric (8 Criteria, 0–5 Scale, Total /40)

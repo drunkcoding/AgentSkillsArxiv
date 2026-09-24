@@ -1,5 +1,17 @@
 # CUDA Kernel Templates for H100 Diffusers
 
+## Contents
+
+- [CRITICAL: Type Conversion Helpers](#critical-type-conversion-helpers)
+- [Template 1: Element-wise Operation (RoPE style)](#template-1-element-wise-operation-rope-style)
+- [Template 2: Row-wise Reduction (LayerNorm style)](#template-2-row-wise-reduction-layernorm-style)
+- [Template 3: Tiled Matrix Operation (Attention style)](#template-3-tiled-matrix-operation-attention-style)
+- [Template 4: PyTorch Binding](#template-4-pytorch-binding)
+- [Template 5: Python API](#template-5-python-api)
+- [Template 6: build.toml Entry](#template-6-buildtoml-entry)
+- [Template 7: Test Case](#template-7-test-case)
+- [Working Example Reference](#working-example-reference)
+
 Complete, copy-paste ready templates for implementing new kernels.
 
 ## CRITICAL: Type Conversion Helpers

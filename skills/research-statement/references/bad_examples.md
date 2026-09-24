@@ -1,5 +1,15 @@
 # Annotated Bad Examples
 
+## Contents
+
+- [How to Use This File](#how-to-use-this-file)
+- [Bad Example 1: The Boy-Genius Opener (CS PhD applications)](#bad-example-1-the-boy-genius-opener-cs-phd-applications)
+- [Bad Example 2: The Vague Generic (ML application)](#bad-example-2-the-vague-generic-ml-application)
+- [Bad Example 3: Karen Kelsky's "Worst Job Letter" Pattern](#bad-example-3-karen-kelskys-worst-job-letter-pattern)
+- [Bad Example 4: The Generic Lesson Learned](#bad-example-4-the-generic-lesson-learned)
+- [Bad Example 5: The Coy Theorist](#bad-example-5-the-coy-theorist)
+- [Diagnosis Vocabulary](#diagnosis-vocabulary)
+
 Five bad-example excerpts with diagnosis-and-fix. Use to recognize anti-patterns in drafts under review.
 
 ## How to Use This File

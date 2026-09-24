@@ -1,5 +1,21 @@
 # T4 GPU Optimization Guide for Diffusers/Transformers Kernels
 
+## Contents
+
+- [T4 Turing Architecture Overview](#t4-turing-architecture-overview)
+- [Memory Considerations](#memory-considerations)
+- [Shared Memory Configuration](#shared-memory-configuration)
+- [Occupancy Tuning](#occupancy-tuning)
+- [Numerical Stability with FP16](#numerical-stability-with-fp16)
+- [Build Configuration](#build-configuration)
+- [T4-Specific Optimizations](#t4-specific-optimizations)
+- [Memory Management](#memory-management)
+- [Performance Profiling](#performance-profiling)
+- [Migration from H100/A100 to T4](#migration-from-h100a100-to-t4)
+- [Best Practices Summary (T4)](#best-practices-summary-t4)
+- [Working Example](#working-example)
+- [T4 Cloud Instance Notes](#t4-cloud-instance-notes)
+
 Deep dive into T4-specific optimizations for diffusion model and LLM CUDA kernels. The T4 is a Turing architecture GPU commonly found in cloud instances (GCP, AWS, etc.) and is popular for inference workloads.
 
 ## T4 Turing Architecture Overview

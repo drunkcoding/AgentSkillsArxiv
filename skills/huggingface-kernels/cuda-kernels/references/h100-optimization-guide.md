@@ -1,5 +1,19 @@
 # H100 GPU Optimization Guide for Diffusers Kernels
 
+## Contents
+
+- [H100 Hopper Architecture Overview](#h100-hopper-architecture-overview)
+- [Memory Hierarchy Optimization](#memory-hierarchy-optimization)
+- [Warp-Level Optimizations](#warp-level-optimizations)
+- [Register Optimization](#register-optimization)
+- [Occupancy Tuning](#occupancy-tuning)
+- [Precision and Numerical Stability](#precision-and-numerical-stability)
+- [Diffusers-Specific Optimizations](#diffusers-specific-optimizations)
+- [Profiling and Debugging](#profiling-and-debugging)
+- [CUDA Compilation Flags](#cuda-compilation-flags)
+- [Best Practices Summary](#best-practices-summary)
+- [Working Example](#working-example)
+
 Deep dive into H100-specific optimizations for diffusion model CUDA kernels.
 
 ## H100 Hopper Architecture Overview

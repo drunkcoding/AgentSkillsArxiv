@@ -1,5 +1,17 @@
 # Rules — Exercise Content (E1, E2, E3, E4)
 
+## Contents
+
+- [INV-5 + INV-6 + INV-7 Application](#inv-5--inv-6--inv-7-application)
+- [Universal Rules](#universal-rules)
+- [README.md Rules](#readmemd-rules)
+- [challenge.py Rules](#challengepy-rules)
+- [starter/starter.{cu,triton.py,pytorch.py} Rules](#starterstartercutritonpypytorchpy-rules)
+- [reference/reference.{cu,triton.py,pytorch.py} Rules](#referencereferencecutritonpypytorchpy-rules)
+- [Solutions/ Rules (★★★ only)](#solutions-rules--only)
+- [Makefile Rules](#makefile-rules)
+- [Cross-Cutting](#cross-cutting)
+
 Apply these rules to EVERY emitted programming exercise scaffold under
 `Coursepack/Exercises/`.
 

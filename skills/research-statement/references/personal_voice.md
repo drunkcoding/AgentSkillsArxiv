@@ -1,5 +1,15 @@
 # Personal Voice and "From the Heart" Prose
 
+## Contents
+
+- [What "From the Heart" Means in Academia](#what-from-the-heart-means-in-academia)
+- [The Show / Tell Transformation](#the-show--tell-transformation)
+- [Authentic-Motivation Phrasebook](#authentic-motivation-phrasebook)
+- [Anti-Patterns Specific to Personal-Voice Prose](#anti-patterns-specific-to-personal-voice-prose)
+- [Voice Mechanics for Personal-Voice Sections](#voice-mechanics-for-personal-voice-sections)
+- [When to Skip Personal Voice](#when-to-skip-personal-voice)
+- [The Ten-Word Test](#the-ten-word-test)
+
 This reference applies when the brief explicitly requests **personal motivation**, **intrinsic motivation**, **what drives you**, **research vision**, **passion**, or **written from the heart** — language common in Dutch, German, and some UK briefs.
 
 ## What "From the Heart" Means in Academia

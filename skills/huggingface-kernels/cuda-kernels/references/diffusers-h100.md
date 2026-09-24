@@ -1,6 +1,23 @@
 
 # H100 CUDA Kernels for Diffusers
 
+## Contents
+
+- [Quick Start](#quick-start)
+- [When This Skill Applies](#when-this-skill-applies)
+- [Working Example](#working-example)
+- [Benchmarking Kernels](#benchmarking-kernels)
+- [Project Structure](#project-structure)
+- [H100 Architecture Reference](#h100-architecture-reference)
+- [Core Kernel Patterns](#core-kernel-patterns)
+- [Supported Data Types](#supported-data-types)
+- [Building Kernels](#building-kernels)
+- [Diffusers Integration](#diffusers-integration)
+- [Kernel-Specific Guidelines](#kernel-specific-guidelines)
+- [Performance Profiling](#performance-profiling)
+- [Common Issues](#common-issues)
+- [See Also](#see-also)
+
 This skill provides patterns and guidance for developing optimized CUDA kernels targeting NVIDIA H100 GPUs (compute capability 9.0) for use with the HuggingFace diffusers library.
 
 ## Quick Start

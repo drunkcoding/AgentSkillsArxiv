@@ -1,5 +1,18 @@
 # Sessions API
 
+## Contents
+
+- [client.session()](#clientsession)
+- [Session.add_message()](#sessionadd_message)
+- [Session.used()](#sessionused)
+- [Session.update_tool_part()](#sessionupdate_tool_part)
+- [Session.commit()](#sessioncommit)
+- [Session.load()](#sessionload)
+- [Session.get_context_for_search()](#sessionget_context_for_search)
+- [Session Properties](#session-properties)
+- [Session Storage Structure](#session-storage-structure)
+- [Full Example](#full-example)
+
 Sessions manage conversation state, track context usage, and extract long-term memories.
 
 ## client.session()

@@ -1,5 +1,19 @@
 # A100 GPU Optimization Guide for Diffusers/Transformers Kernels
 
+## Contents
+
+- [A100 Ampere Architecture Overview](#a100-ampere-architecture-overview)
+- [Memory Hierarchy Optimization](#memory-hierarchy-optimization)
+- [Warp-Level Optimizations](#warp-level-optimizations)
+- [Occupancy Tuning](#occupancy-tuning)
+- [Precision and Tensor Cores](#precision-and-tensor-cores)
+- [Build Configuration](#build-configuration)
+- [A100-Specific Optimizations](#a100-specific-optimizations)
+- [Performance Profiling](#performance-profiling)
+- [Migration from H100 to A100](#migration-from-h100-to-a100)
+- [Best Practices Summary (A100)](#best-practices-summary-a100)
+- [Working Example](#working-example)
+
 Deep dive into A100-specific optimizations for diffusion model and LLM CUDA kernels.
 
 ## A100 Ampere Architecture Overview

@@ -1,5 +1,15 @@
 # CUDA Question Bank — Seed Pool
 
+## Contents
+
+- [1. CUDA Kernels (10 seeds)](#1-cuda-kernels-10-seeds)
+- [2. CUTLASS + CuTe (10 seeds)](#2-cutlass--cute-10-seeds)
+- [3. cuTile (10 seeds)](#3-cutile-10-seeds)
+- [4. Open GPU Kernel Modules (10 seeds)](#4-open-gpu-kernel-modules-10-seeds)
+- [5. NCCL (10 seeds)](#5-nccl-10-seeds)
+- [6. NVSHMEM (10 seeds)](#6-nvshmem-10-seeds)
+- [Rotation Hooks (for the tutor to vary seeds)](#rotation-hooks-for-the-tutor-to-vary-seeds)
+
 > 60 seed questions (10 per topic × 6 topics). These are STARTING POINTS for the quiz tutor — NOT a closed bank. Per `quiz-rules.md`, the tutor must rephrase / rotate context / change GPU generation / change failure scenario when re-using a seed in a follow-up round on the same concept.
 >
 > Each seed lists the concept it probes; the tutor uses that to update the matching row in `concepts/{topic}.md` after grading.

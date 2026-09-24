@@ -1,5 +1,18 @@
 # Proficiency Tracking — Exact Math and Edge Cases (Shared Core)
 
+## Contents
+
+- [Per-Concept Status](#per-concept-status)
+- [Per-Topic Badge](#per-topic-badge)
+- [Cumulative (Whole-Vault) Rate](#cumulative-whole-vault-rate)
+- [Weakest / Strongest Topic](#weakest--strongest-topic)
+- [Resolved / Unresolved Concept Counts](#resolved--unresolved-concept-counts)
+- [Dual-Attribution Rule](#dual-attribution-rule)
+- [Cross-Stack-Question Attribution](#cross-stack-question-attribution)
+- [Edge Cases](#edge-cases)
+- [Error-Note Lifecycle](#error-note-lifecycle)
+- [Verifiability Hook](#verifiability-hook)
+
 > Stack-agnostic. Both `cuda-tutor` and `triton-tutor` load this file via symlink, then load their own stack-specific addendum (`proficiency-tracking-{cuda,triton}.md`) for stack-flavored examples and template-path references.
 
 Read this file when updating the dashboard or a concept file. Provides the precise formulas the quiz tutor must implement deterministically.

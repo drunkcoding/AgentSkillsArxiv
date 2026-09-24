@@ -1,5 +1,17 @@
 # Codebase Mode — Triton Onboarding Vault Workflow
 
+## Contents
+
+- [Phase C1: Project Exploration](#phase-c1-project-exploration)
+- [Phase C2: Architecture Analysis](#phase-c2-architecture-analysis)
+- [Phase C3: Tag Standard](#phase-c3-tag-standard)
+- [Phase C4: Vault Structure](#phase-c4-vault-structure)
+- [Phase C5: Dashboard](#phase-c5-dashboard)
+- [Phase C6: Module Notes](#phase-c6-module-notes)
+- [Phase C7: Onboarding Exercises](#phase-c7-onboarding-exercises)
+- [Phase C8: Interlinking](#phase-c8-interlinking)
+- [Phase C9: Self-Review](#phase-c9-self-review)
+
 > Generate a StudyVault that helps a new developer understand a Triton kernel library / Inductor backend / Triton compiler fork.
 > All scanning and output MUST stay within CWD.
 

@@ -1,5 +1,16 @@
 # Department Fit Paragraph
 
+## Contents
+
+- [The High-Leverage Formula](#the-high-leverage-formula)
+- [Template](#template)
+- [The Three Rules](#the-three-rules)
+- [How to Research a Department](#how-to-research-a-department)
+- [Region-Specific Fit Weighting](#region-specific-fit-weighting)
+- [Reuse Discipline](#reuse-discipline)
+- [Common Failure Modes](#common-failure-modes)
+- [Validation Test](#validation-test)
+
 The fit paragraph is where most international applicants under-invest and lose. Generic praise loses; specific engagement wins.
 
 ## The High-Leverage Formula

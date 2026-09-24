@@ -2,6 +2,24 @@
 
 # CUDA Exercise Bank
 
+## Contents
+
+- [E-CUDA-01 Vector Add](#e-cuda-01-vector-add)
+- [E-CUDA-02 Tiled Matmul (Shared Memory)](#e-cuda-02-tiled-matmul-shared-memory)
+- [E-CUDA-03 Block Reduction](#e-cuda-03-block-reduction)
+- [E-CUDA-04 Prefix Sum (Scan)](#e-cuda-04-prefix-sum-scan)
+- [E-CUDA-05 cp.async Pipelined Copy](#e-cuda-05-cpasync-pipelined-copy)
+- [E-CUTLASS-01 CuTe Layout and Stride](#e-cutlass-01-cute-layout-and-stride)
+- [E-CUTLASS-02 CUTLASS GEMM with MMA Atom](#e-cutlass-02-cutlass-gemm-with-mma-atom)
+- [E-CUTLASS-03 WGMMA Hopper Kernel](#e-cutlass-03-wgmma-hopper-kernel)
+- [E-CUTILE-01 cuTile Matmul](#e-cutile-01-cutile-matmul)
+- [E-OGKM-01 RM Init Trace](#e-ogkm-01-rm-init-trace)
+- [E-OGKM-02 GSP RPC Inspection](#e-ogkm-02-gsp-rpc-inspection)
+- [E-NCCL-01 Custom Ring AllReduce](#e-nccl-01-custom-ring-allreduce)
+- [E-NCCL-02 NVLink-SHARP Throughput Measurement](#e-nccl-02-nvlink-sharp-throughput-measurement)
+- [E-NVSHMEM-01 Symmetric Heap put/get](#e-nvshmem-01-symmetric-heap-putget)
+- [E-NVSHMEM-02 IBGDA On-Stream Collective](#e-nvshmem-02-ibgda-on-stream-collective)
+
 15 exercise seeds covering the 6 CUDA topics from `cuda-tutor-setup`. Each
 entry MUST have all 10 required fields (validated by
 `scripts/validate-exercise-bank.py`).

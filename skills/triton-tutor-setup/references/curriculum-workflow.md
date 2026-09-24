@@ -1,5 +1,18 @@
 # Curriculum Mode — Triton Learning Path Workflow
 
+## Contents
+
+- [Topic Slugs (fixed canonical names)](#topic-slugs-fixed-canonical-names)
+- [Phase TU1: Pre-flight](#phase-tu1-pre-flight)
+- [Phase TU2: Topic Plan](#phase-tu2-topic-plan)
+- [Phase TU3: Tag Standard](#phase-tu3-tag-standard)
+- [Phase TU4: Vault Structure](#phase-tu4-vault-structure)
+- [Phase TU5: Dashboard](#phase-tu5-dashboard)
+- [Phase TU6: Per-Topic Notes (LAZY-LOADED)](#phase-tu6-per-topic-notes-lazy-loaded)
+- [Phase TU7: Hands-On Milestones (cross-topic exercises)](#phase-tu7-hands-on-milestones-cross-topic-exercises)
+- [Phase TU8: Pitfall Notes](#phase-tu8-pitfall-notes)
+- [Phase TU9: Interlinking + Self-Review](#phase-tu9-interlinking--self-review)
+
 > Generate a 6-topic Triton StudyVault from scratch. No source files required.
 > All vault output MUST stay within CWD.
 

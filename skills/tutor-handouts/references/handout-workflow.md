@@ -1,5 +1,17 @@
 # Handout Workflow — Procedural Detail of Phases TH0–TH8
 
+## Contents
+
+- [TH0: Detect](#th0-detect)
+- [TH1: Scope](#th1-scope)
+- [TH2: Bootstrap](#th2-bootstrap)
+- [TH3: Per-Topic Handouts](#th3-per-topic-handouts)
+- [TH4: Programming Assignments](#th4-programming-assignments)
+- [TH5: Exercise Scaffolds](#th5-exercise-scaffolds)
+- [TH6: Capstone + Syllabus](#th6-capstone--syllabus)
+- [TH7: Solutions + Orchestrator](#th7-solutions--orchestrator)
+- [TH8: Build + Self-Review](#th8-build--self-review)
+
 ## TH0: Detect
 
 ### Inputs

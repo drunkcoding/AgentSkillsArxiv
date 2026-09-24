@@ -2,6 +2,24 @@
 
 # Triton Exercise Bank
 
+## Contents
+
+- [E-TRI-01 Vector Add](#e-tri-01-vector-add)
+- [E-TRI-02 Fused Softmax](#e-tri-02-fused-softmax)
+- [E-TRI-03 Block Matmul](#e-tri-03-block-matmul)
+- [E-TRI-04 Autotune Sweep](#e-tri-04-autotune-sweep)
+- [E-TRI-05 pid Swizzling](#e-tri-05-pid-swizzling)
+- [E-TRI-06 Persistent Matmul](#e-tri-06-persistent-matmul)
+- [E-TRI-07 FlashAttention Forward](#e-tri-07-flashattention-forward)
+- [E-TRI-08 FlashAttention Backward](#e-tri-08-flashattention-backward)
+- [E-TRI-09 Online Softmax](#e-tri-09-online-softmax)
+- [E-TRI-10 tl.associative_scan Prefix Sum](#e-tri-10-tlassociative_scan-prefix-sum)
+- [E-TRI-11 TTIR to TTGIR Inspection](#e-tri-11-ttir-to-ttgir-inspection)
+- [E-TRI-12 Custom Layout Encoding](#e-tri-12-custom-layout-encoding)
+- [E-TRI-13 torch.compile Integration](#e-tri-13-torchcompile-integration)
+- [E-TRI-14 proton Profiling Trace](#e-tri-14-proton-profiling-trace)
+- [E-TRI-15 Triton AOT Compilation](#e-tri-15-triton-aot-compilation)
+
 15 exercise seeds covering the 6 Triton topics from `triton-tutor-setup`. Each
 entry MUST have all 10 required fields (validated by
 `scripts/validate-exercise-bank.py`).

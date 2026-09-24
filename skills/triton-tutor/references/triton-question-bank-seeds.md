@@ -1,5 +1,15 @@
 # Triton Question Bank — Seed Pool
 
+## Contents
+
+- [1. Triton Basics (10 seeds)](#1-triton-basics-10-seeds)
+- [2. Tiling & Autotuning (10 seeds)](#2-tiling--autotuning-10-seeds)
+- [3. Matmul Patterns (10 seeds)](#3-matmul-patterns-10-seeds)
+- [4. Attention & Reductions (10 seeds)](#4-attention--reductions-10-seeds)
+- [5. Compiler Internals (10 seeds)](#5-compiler-internals-10-seeds)
+- [6. Ecosystem & Production (10 seeds)](#6-ecosystem--production-10-seeds)
+- [Rotation Hooks (for the tutor to vary seeds)](#rotation-hooks-for-the-tutor-to-vary-seeds)
+
 > 60 seed questions (10 per topic × 6 topics). These are STARTING POINTS for the quiz tutor — NOT a closed bank. Per `quiz-rules.md`, the tutor must rephrase / rotate context / change GPU backend / change failure scenario when re-using a seed in a follow-up round on the same concept.
 >
 > Each seed lists the concept it probes; the tutor uses that to update the matching row in `concepts/{topic}.md` after grading.

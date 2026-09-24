@@ -1,5 +1,13 @@
 # OpenViking Quickstart
 
+## Contents
+
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Model Requirements](#model-requirements)
+- [Configuration](#configuration)
+- [First Example](#first-example)
+
 ## Prerequisites
 
 - Python 3.9+

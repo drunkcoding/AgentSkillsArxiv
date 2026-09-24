@@ -1,5 +1,13 @@
 # Venue-Specific Formatting Specifications
 
+## Contents
+
+- [Dimension Summary](#dimension-summary)
+- [ACM Venues](#acm-venues)
+- [IEEE Venues](#ieee-venues)
+- [USENIX Venues](#usenix-venues)
+- [Common Gotchas](#common-gotchas)
+
 Detailed reference for figure dimensions, font requirements, and submission
 rules across major systems conference venues.
 

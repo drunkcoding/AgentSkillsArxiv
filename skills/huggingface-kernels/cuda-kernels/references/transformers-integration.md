@@ -1,5 +1,18 @@
 # Transformers Library Integration Guide
 
+## Contents
+
+- [Overview](#overview)
+- [Model Architecture Analysis](#model-architecture-analysis)
+- [Common Transformers Architectures](#common-transformers-architectures)
+- [Integration Pattern](#integration-pattern)
+- [Key Differences from Diffusers](#key-differences-from-diffusers)
+- [Model-Specific Integration](#model-specific-integration)
+- [Verification](#verification)
+- [Performance Optimization](#performance-optimization)
+- [Troubleshooting](#troubleshooting)
+- [Complete Example](#complete-example)
+
 Complete guide for integrating custom CUDA kernels into HuggingFace transformers models.
 
 > **Quick Start:** See [transformers_injection_example.py](../scripts/transformers_injection_example.py) for a minimal working example (~120 lines).
