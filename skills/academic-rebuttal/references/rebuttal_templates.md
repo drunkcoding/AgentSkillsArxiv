@@ -42,7 +42,7 @@ We will revise [specific sections] to make these points explicit in the camera-r
 
 ---
 
-### Template 2: Per-Review Response (NeurIPS/ICML-like, 5K–10K chars)
+### Template 2: Per-Review Response (NeurIPS/ICML-like; use the edition's live cap)
 
 Use when system enforces per-review response fields.
 
@@ -79,6 +79,7 @@ in [Section].
 - Include one concrete number or citation per disputed claim
 - Reserve ~10% for revision commitments
 - Bold the reviewer's question for scannability
+- For ICML 2026, write each response as part of the potential public record: make only precise concessions and commitments that the camera-ready can honor
 
 ---
 
@@ -163,12 +164,19 @@ Use when strict limits or expectation that AC scans quickly. The first 25% of th
 - ~400 chars on opening + revision commitments
 - **Zero budget for narrative or transitions**
 
-### 5,000 characters per review (ICML-like)
+### 5,000 characters per review (ICML 2025 historical mechanic)
 - ~2,500 chars on primary concern (1–2 paragraphs with evidence)
 - ~1,500 chars on secondary concerns (1 paragraph each)
 - ~500 chars on minor clarifications
 - ~500 chars on revision commitments
-- **Plan for follow-up round** — save strongest new evidence for it
+- Do **not** reuse this budget for ICML 2026 unless the live response form confirms the same cap
+- Answer decision-critical concerns in the initial response; use the limited follow-up for genuine questions, not evidence deliberately withheld
+
+### ICLR 2026 public discussion
+- Check the OpenReview comment box for its per-comment word limit; the Author Guide does not publish the number
+- Split responses across as many comments as needed, but respect reviewer attention
+- Revise the 10-page paper, title, abstract, or supplement only through Dec 3; communicate each change and expect `pdfdiff`
+- Keep each comment independently useful because the discussion and submitted versions remain publicly visible after decisions
 
 ### 10,000 characters per review (NeurIPS-like)
 - Full mini-structure per concern: direct answer → evidence → clarification → revision plan
@@ -218,6 +226,7 @@ Use when strict limits or expectation that AC scans quickly. The first 25% of th
 - [ ] Anonymity preserved (double-blind venues)
 - [ ] No revised paper upload if disallowed
 - [ ] No new experiments if disallowed
+- [ ] Public-record responses contain no casual concessions, unsupported promises, or language you would not stand behind after publication
 - [ ] Final read by at least one coauthor
 
 ---
@@ -234,3 +243,4 @@ Use when strict limits or expectation that AC scans quickly. The first 25% of th
 | Unmarked uncertainty | Explicitly state what is unknown or not yet evaluated |
 | Exceeding limit | Draft at 80% of limit, then expand selectively |
 | Tone escalation on poor reviews | Write factual correction, delete emotional language, wait 6h, re-read |
+| Treating an archival rebuttal as disposable | Write durable, citable prose; keep concessions narrow and align every promise with the final paper |

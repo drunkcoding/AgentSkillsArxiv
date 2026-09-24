@@ -1,6 +1,6 @@
 ---
 name: academic-rebuttal
-description: "Write conference paper rebuttals and author responses that effectively counter incorrect or unreasonable reviewer comments. Targets systems venues (OSDI, NSDI, SIGCOMM, MOBICOM, SOSP, ASPLOS, EuroSys, USENIX Security, CCS, PLDI) on HotCRP and ML venues (NeurIPS, ICML, ICLR, AAAI) on OpenReview. Core focus: identify and resolve reviewer false impressions with evidence-backed, firm-but-professional corrections. Covers rebuttal triage, false impression taxonomy (8 types with resolution playbooks), venue-specific constraints, response structure patterns, and ready-to-use phrase templates. Use when asked to write, draft, review, or improve a conference paper rebuttal, author response, or response to reviewer comments."
+description: "Use when writing, reviewing, or improving a conference-paper rebuttal, author response, reviewer discussion reply, or response to reviews for systems venues on HotCRP or ML/AI venues on OpenReview."
 ---
 
 # Conference Paper Rebuttal Writing
@@ -30,7 +30,7 @@ Write rebuttals that **reject wrong reviewer comments with evidence** while main
 | **MC** (Minor Clarification) | Wording, typo, or presentation concern | **Low** — one-liner if budget allows |
 
 3. Rank by **decision impact**: what would flip the AC's assessment from reject to accept?
-4. Check venue constraints before drafting. Load `references/venue_policies.md` for limits, format, and what is allowed/forbidden.
+4. Check venue constraints before drafting. Load `references/venue_policies.md` for limits, format, and what is allowed/forbidden. For paper-format and venue-structure rules, use the sibling `academic-writing` skill rather than duplicating them here.
 
 ### Stage 2: Draft Response
 
@@ -49,6 +49,7 @@ Write rebuttals that **reject wrong reviewer comments with evidence** while main
    - No forbidden links/files/attachments
    - Anonymity preserved (double-blind venues)
    - No new experiments if venue disallows
+   - If responses become public (ICML 2026 accepted papers; ICLR public discussion), every concession and commitment is precise, professional, and consistent with the final paper
 4. Coauthor review pass before submission.
 
 ### Self-Awareness Check
@@ -173,7 +174,7 @@ This sequence defuses tone risk while maximizing decision usefulness for the AC.
 
 ## Response Patterns
 
-### Pattern A: Per-Review (NeurIPS/ICML)
+### Pattern A: Per-Review (NeurIPS/ICML; verify the edition's live cap)
 System enforces per-review fields. Inside each:
 1. One-line appreciation
 2. Direct answer to primary concern
@@ -252,6 +253,7 @@ For full templates with examples and budgeting strategy by cap size, load `refer
 7. Introduce major new contributions not in the submission.
 8. Promise changes that fundamentally alter the paper's scope.
 9. Ignore negative reviews or cherry-pick which concerns to address.
+10. Treat an archival rebuttal as disposable; ICML 2026 publishes accepted-paper rebuttals and discussions.
 
 ---
 

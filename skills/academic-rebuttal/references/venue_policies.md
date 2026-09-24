@@ -26,7 +26,25 @@
 | Discussion phase | Reviewer-author discussion window follows rebuttal window |
 | Source | neurips.cc/Conferences/2025/PaperInformation/NeurIPS-FAQ |
 
-### ICML 2025
+### ICML 2026
+| Field | Value |
+|-------|-------|
+| Platform | OpenReview |
+| Submission format | **8 pages** for the main paper; accepted papers receive **1 extra camera-ready page** |
+| Review model | Double-blind; author list frozen at the Jan 23 abstract deadline |
+| Deadlines | Abstract: **Jan 23, 2026 AoE**; paper: **Jan 28, 2026 AoE** |
+| Response granularity | Respond per review; organize by reviewer ID |
+| Response limit | **5,000 characters per round.** The author-reviewer discussion has **three rounds — rebuttal, reviewer follow-up, author follow-up — each limited to 5,000 characters** (per the 2026 Reviewer Instructions). |
+| Revised paper upload | Not allowed during the author feedback period |
+| Discussion flow | Three-round discussion: author rebuttal → reviewer follow-up (with required acknowledgement) → author follow-up |
+| Public record | For every accepted paper, ICML publishes the original submission and supplementary material, anonymized reviews, meta-reviews, **rebuttal**, and reviewer-author discussion alongside the camera-ready. Rejected papers may opt in. |
+| Reciprocal reviewing | Designate a qualified author-reviewer for each submission; one person may cover at most 2 of their submissions. Authors on 4+ submissions must review (subject to listed exemptions). Unmet requirements or inadequate reviewing may cause the reviewer's own papers to be desk-rejected. |
+| Other mandatory policies | Include an Impact Statement. Treat prompt injection as grounds for desk rejection. Use LLMs only as tools, never as authors, and accept responsibility for their output. |
+| Sources | https://icml.cc/Conferences/2026/CallForPapers; https://icml.cc/Conferences/2026/AuthorInstructions; https://icml.cc/Conferences/2026/ReviewerInstructions |
+
+**Write for the public record.** Treat every ICML 2026 response as durable scholarly prose: correct the record precisely, keep the tone professional, and avoid throwaway concessions or promises that conflict with the final paper.
+
+### ICML 2025 (historical response mechanics)
 | Field | Value |
 |-------|-------|
 | Platform | OpenReview |
@@ -37,18 +55,24 @@
 | Links/URLs | No non-anonymized/personal/shortened URLs |
 | Revised paper upload | Not allowed during feedback period |
 | Discussion flow | Author rebuttal → reviewer acknowledgement (required) → limited follow-up round |
-| Source | icml.cc/Conferences/2025/AuthorInstructions |
+| Source | https://icml.cc/Conferences/2025/AuthorInstructions |
+
+ICML 2026 keeps a **5,000-character** cap, now applied to **each of three discussion rounds** (see the ICML 2026 section above). Confirm the live response form at rebuttal time as usual.
 
 ### ICLR 2026
 | Field | Value |
 |-------|-------|
 | Platform | OpenReview |
 | Response model | Public discussion with author comments and reviewer interaction |
-| Per-comment limit | Word limit exists but exact number not confirmed in public docs |
-| Number of comments | No limit on number of comments |
-| Revised paper | Allowed during discussion period (diff tooling available) |
-| Discussion model | Iterative — treat as evolving thread, not terminal message |
-| Source | iclr.cc/Conferences/2026/AuthorGuide |
+| Per-comment limit | **Word limit per comment.** The Author Guide confirms a limit exists but does not publish the number; check the comment box in OpenReview. |
+| Number of comments | No limit; post multiple replies to each reviewer if useful |
+| Timeline | Reviews released **Nov 11**; public discussion and author replies **Nov 11–Dec 3**; private reviewer/AC discussion **Dec 3–Jan 22**; decisions **Jan 22** |
+| Revised paper | Revise the paper, title, abstract, and supplementary material through **Dec 3**. OpenReview applies `pdfdiff`; reviewers/ACs may ignore substantially divergent changes. |
+| Paper length | **9 pages** at submission; **10 pages** during discussion and for camera-ready |
+| Visibility | Reviews are public. All submissions are de-anonymized and released after decisions. Papers withdrawn after the submission deadline remain publicly hosted and are immediately de-anonymized. |
+| Reciprocal reviewing | Authors on 3+ papers must review at least 6 papers; failure to finish by rebuttal may risk desk rejection. |
+| Discussion model | Iterative — treat it as an evolving public thread, not a terminal message |
+| Source | https://iclr.cc/Conferences/2026/AuthorGuide |
 
 ### AAAI-26
 | Field | Value |
@@ -166,8 +190,9 @@
 | Venue | Platform | Cap | Granularity | New Results? |
 |-------|----------|-----|-------------|--------------|
 | NeurIPS 2025 | OpenReview | 10,000 chars/review | Per-review | No |
+| ICML 2026 | OpenReview | 5,000 chars per round × 3 rounds | Per-review; rebuttal → reviewer follow-up → author follow-up | No revised upload |
 | ICML 2025 | OpenReview | 5,000 chars/review | Per-review | No |
-| ICLR 2026 | OpenReview | Per-comment limit (TBD) | Discussion thread | Yes (revision allowed) |
+| ICLR 2026 | OpenReview | Word limit/comment (number unpublished); unlimited comments | Public discussion thread | Yes, through Dec 3 (`pdfdiff`) |
 | AAAI-26 | OpenReview | 2,500 chars total | Single global | No |
 | OSDI 2025 | HotCRP | 2,000 words | Global | No |
 | SOSP 2025 | HotCRP | ~500 words (soft) | Global | Check CFP |
