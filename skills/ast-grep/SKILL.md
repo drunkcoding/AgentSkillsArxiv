@@ -12,7 +12,8 @@ AST-aware search, replace, and lint. Matches code structure, not text patterns.
 Before first use, ensure ast-grep is installed:
 
 ```bash
-bash scripts/ensure_installed.sh   # run from this skill's base directory
+# <skill-base-dir> = the "Base directory for this skill" stated when this skill loads
+bash "<skill-base-dir>/scripts/ensure_installed.sh"
 ```
 
 ## When to Use ast-grep vs ripgrep
