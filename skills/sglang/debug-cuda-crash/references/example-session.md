@@ -158,8 +158,6 @@ Tensor(
 
 ### Example: Spot a Shape Bug from the Log
 
-## Diagnostic Outputs
-
 ## Kernel Debugging Listings
 
 ```cpp
@@ -209,24 +207,6 @@ __global__ void WarpSpecializedKernel(...) {
 | `SGLANG_KERNEL_API_DUMP_DIR` | `<path>` | Directory for level-10 dumps |
 | `SGLANG_KERNEL_API_DUMP_INCLUDE` | wildcard list | Only dump matching API names |
 | `SGLANG_KERNEL_API_DUMP_EXCLUDE` | wildcard list | Skip matching API names |
-
-### 1. Start with Level 3
-
-### 2. Use Level 5 for Numerical Issues
-
-### 3. Use Level 10 for Crash Reproduction
-
-### 4. Log to File for Crashes
-
-### 5. Disable Logging in Production
-
-### No Logs Appear
-
-### Too Much Output
-
-### Statistics Are Skipped During CUDA Graph Capture
-
-### Tensor Dumps Are Skipped During CUDA Graph Capture
 
 ## Best Practices
 

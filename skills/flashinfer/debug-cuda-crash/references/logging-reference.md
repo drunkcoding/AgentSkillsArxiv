@@ -3,7 +3,6 @@
 ## Contents
 
 - [Output listings](#output-listings)
-- [Reference tables](#reference-tables)
 
 ## Output Listings
 

@@ -91,7 +91,7 @@ python my_script.py
 
 Additional output:
 
-> Complete command/output listing moved to [the example session reference](references/example-session.md#step-1-enable-kernel-api-logging). Use the surrounding command and expected result as the operational procedure.
+> Complete command/output listing moved to [the example session reference](references/example-session.md#logging-excerpts). Use the surrounding command and expected result as the operational procedure.
 
 
 This is a real level-5 excerpt captured from `black-forest-labs/FLUX.1-dev`.
@@ -102,9 +102,9 @@ Level 10 saves inputs before execution. CUDA graph capture may skip tensor dumps
 
 ## Step 2: Reproduce an LLM CUDA Crash
 
-Create the temporary LLM reproducer and run it at levels 1, 3, and 10. The expected crash, last API boundary, and dump metadata are preserved in [Step 2](references/example-session.md#step-2-reproduce-an-llm-cuda-crash).
+Create the temporary LLM reproducer and run it at levels 1, 3, and 10. The expected crash, last API boundary, and dump metadata are preserved in [Step 2](references/example-session.md#llm-and-diffusion-reproducers).
 
-> See [Step 2](references/example-session.md#step-2-reproduce-an-llm-cuda-crash) for the full reproducer commands and expected dump contents.
+> See [Step 2](references/example-session.md#llm-and-diffusion-reproducers) for the full reproducer commands and expected dump contents.
 
 The level-10 run should produce the API entry, `inputs.pt`, exception metadata, and no `outputs.pt` when execution aborts.
 

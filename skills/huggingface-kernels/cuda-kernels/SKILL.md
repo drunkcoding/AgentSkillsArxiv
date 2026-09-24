@@ -415,7 +415,7 @@ torch._dynamo.exc.Unsupported: Attempted to call function marked as skipped
 
 **To register as custom op (for torch.compile compatibility):**
 
-> Full listing: see [the reference](references/kernel-examples.md#troubleshooting).
+> Full troubleshooting and custom-op registration guidance: see [troubleshooting.md](references/troubleshooting.md).
 
 ## See Also
 

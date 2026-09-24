@@ -3,7 +3,6 @@
 ## Contents
 
 - [Code and output listings](#code-and-output-listings)
-- [Reference tables](#reference-tables)
 
 ## Code and Output Listings
 
