@@ -1,6 +1,6 @@
 ---
 name: academic-writing
-description: "Write conference papers for systems venues (OSDI, NSDI, SIGCOMM, MOBICOM, SOSP, FAST) and the AAAI AI/ML venue. Organized by venue: pick the paradigm (systems problem-solution-evaluation vs. AAAI/AI-ML method-experiment), then follow venue-specific structure, format, citation style, and review rules. Covers paper structure per venue, writing style, IEEE/ACM numbered vs. AAAI author-year citations, figures/tables, AAAI's mandatory reproducibility checklist and double-blind two-phase review, and FAST short/deployed-systems papers. Use when asked to write, draft, structure, or format a systems or AAAI conference paper."
+description: "Use when writing, drafting, structuring, or formatting papers for systems venues (OSDI, NSDI, SIGCOMM, MOBICOM, SOSP, FAST) or AI/ML venues (AAAI, ICML, ICLR, NeurIPS), including venue-specific structure, templates, page limits, citations, reproducibility/checklist requirements, OpenReview mechanics, and reciprocal reviewing."
 ---
 
 # Conference Paper Writing
@@ -13,13 +13,13 @@ This skill covers two paper paradigms across two venue families. Start by identi
 
 ## 1. Choose the Venue and Paradigm (start here)
 
-Two paradigms, because a systems paper and an AAAI paper are organized around fundamentally different things:
+Two paradigms, because a systems paper and an AI/ML paper are organized around fundamentally different things:
 
-| | Systems paradigm | AI/ML paradigm (AAAI) |
+| | Systems paradigm | AI/ML paradigm (AAAI, ICML, ICLR, NeurIPS) |
 |---|---|---|
 | **Organized around** | A system that was built, deployed, measured | A method/model/theory and the evidence it works |
 | **Structure** | Problem → Design → Implementation → Evaluation | Problem → Method → Analysis → Experiments |
-| **Detailed reference** | `references/systems_paper_structure.md` | `references/aaai_paper_structure.md` |
+| **Detailed reference** | `references/systems_paper_structure.md` | `references/aaai_paper_structure.md` (AAAI) / `references/ml_venues_paper_structure.md` (ICML, ICLR, NeurIPS) |
 
 ### Master venue table
 
@@ -32,24 +32,27 @@ Two paradigms, because a systems paper and an AAAI paper are organized around fu
 | **SOSP** | Systems | ACM sigconf | 15 | Double-blind | Numbered (ACM) | Artifact: required |
 | **FAST** | Systems | USENIX | 12 long / 6 short | Double-blind | Numbered (IEEE) | Artifact: encouraged |
 | **AAAI** | AI/ML | AAAI Press two-column (`article` + `aaai<NN>.sty`) | 7 (refs + checklist outside) | Double-blind, two-phase | Author-year (natbib) | Checklist: **mandatory in PDF** |
+| **ICML** | AI/ML | ICML two-column (`icml<YYYY>.sty`) | 8 (+1 camera-ready; refs/appendix/impact stmt outside) | Double-blind, OpenReview, per-review rebuttal | Author-year (natbib) | **Impact statement mandatory** |
+| **ICLR** | AI/ML | ICLR single-column (`iclr<YYYY>` Master-Template) | 9 at submission, 10 at rebuttal/camera-ready (refs/appendix outside) | Double-blind, OpenReview, **public reviews + open discussion** | Author-year (natbib) | Ethics + reproducibility statements recommended |
+| **NeurIPS** | AI/ML | NeurIPS two-column edition kit (`neurips_2025.sty` in 2025) | 9 (+1 camera-ready; refs/appendix/checklist outside) | Double-blind, OpenReview, private during review; per-review rebuttal | Numeric (bundled natbib/template) | **Paper Checklist mandatory in PDF** |
 
 > Numbers drift each year. Confirm page limits, deadlines, and template names against the current edition's official author kit / Call for Papers before submitting.
 
-**Routing:** for a systems venue → read Section 3 and load `references/systems_paper_structure.md`. For AAAI → read Section 4 and load `references/aaai_paper_structure.md`. Writing craft shared by both (principles, citations, figures) is in Section 5.
+**Routing:** for a systems venue → read Section 3 and load `references/systems_paper_structure.md`. For AAAI → read Section 4 and load `references/aaai_paper_structure.md`. For ICML, ICLR, or NeurIPS → read Sections 4-4b and load `references/ml_venues_paper_structure.md`. Writing craft shared by both paradigms (principles, citations, figures) is in Section 5.
 
 ---
 
 ## 2. The Two Paradigms in One Screen
 
-| Aspect | Systems (OSDI/SIGCOMM/FAST) | AAAI / AI-ML |
-|--------|-----------------------------|--------------|
+| Aspect | Systems (OSDI/SIGCOMM/FAST) | AI-ML (AAAI/ICML/ICLR/NeurIPS) |
+|--------|-----------------------------|------------------------|
 | Core contribution | A built system + its engineering | A method/model/theory + scientific evidence |
 | Implementation section | Common, explicit (LOC, frameworks) | Not required; folded into Experimental Setup |
 | Related Work placement | After Evaluation | Frequently early (convention) |
 | Mathematics | Minimal, practical | Central: objectives, proofs, assumptions |
 | Evaluation axes | Throughput, latency, scalability, cost | Accuracy/quality, robustness, sample/compute efficiency, provable properties |
-| Length | 12-15 pages | 7 technical pages |
-| Reproducibility | Artifact evaluation (badges) | Mandatory reproducibility checklist in the PDF |
+| Length | 12-15 pages | 7 (AAAI) / 8 (ICML) / 9-10 (ICLR) / 9+1 camera-ready (NeurIPS) technical pages |
+| Reproducibility | Artifact evaluation (badges) | AAAI checklist / ICML impact statement / ICLR reproducibility + ethics statements / NeurIPS Paper Checklist |
 
 Everything downstream — structure, section order, what "evaluation" means, citation style — follows from which column you are in.
 
@@ -124,6 +127,38 @@ For full section-by-section guidance, the complete checklist breakdown, appendix
 
 ---
 
+## 4b. ICML, ICLR, and NeurIPS (AI / ML) Papers
+
+Use the same **method-experiment** paradigm and section skeleton as AAAI (Section 4), with more page budget and different hard rules. Facts are verified against ICML 2026, ICLR 2026, and NeurIPS 2025/2026 — always re-check the current CFP/Author Guide.
+
+**ICML hard rules:**
+- **8 pages main paper** (+1 at camera-ready); unlimited pages for references, the **impact statement**, and appendices — all in a **single file**, no separate supplement deadline. Two-column `icml<YYYY>.sty`; non-conforming papers rejected without review.
+- **Impact Statement mandatory**: broader-impact section co-located with Acknowledgements before References, outside the page limit; official boilerplate sentence allowed for standard cases.
+- Abstract deadline ~5 days before paper deadline; **author list frozen at abstract deadline**.
+- **Reciprocal reviewing**: each submission designates a qualified author-reviewer (max 2 submissions per person); authors with 4+ submissions must review. Violations or bad reviews can desk-reject your own papers.
+- New for 2026: accepted papers get the submitted version + anonymized reviews + rebuttal **published**; lay summary required at camera-ready; per-review rebuttal on OpenReview (three 5,000-char discussion rounds at ICML 2026).
+
+**ICLR hard rules:**
+- **9 pages main text at submission → 10 pages at rebuttal/camera-ready** (strictly enforced; over-limit = desk reject). References + appendices unlimited (reviewers not required to read appendix); supplement due with the paper. **Single-column** `iclr<YYYY>` Master-Template.
+- **Reviews are public**; ~3-week open discussion period with unlimited author comments and **paper revisions allowed** (pdfdiff applied). Plan the 9-page submission so the 10th page can absorb rebuttal-phase results. Treat the rebuttal as an evolving thread.
+- **Withdrawal trap**: papers withdrawn after the deadline stay publicly hosted and are **immediately de-anonymized**; all submissions are de-anonymized and released after decisions.
+- **Statements** (recommended, outside page limit): Ethics Statement and Reproducibility Statement at the end of main text before references. **LLM-usage section mandatory if LLMs contributed significantly** — nondisclosure risks desk rejection.
+- **Reciprocal reviewing**: authors on 3+ papers must review ≥6 papers; each submission needs a registered qualified reviewer-author.
+
+**NeurIPS hard rules:**
+- **9 content pages at submission → 10 at camera-ready**; references, optional technical appendices, and the mandatory checklist do not count. Use one PDF ordered paper → references → optional appendices → checklist. Use the official two-column edition kit (`neurips_2025.sty` in 2025).
+- **Paper Checklist mandatory**: keep it last in the PDF; omission risks desk rejection. It does not count toward the limit; justified `no`/`n/a` answers are generally acceptable.
+- OpenReview, double-blind, private during review. NeurIPS 2025 used per-review rebuttals (**10,000 characters each**), no files/links/PDF revisions, followed by rolling discussion. Accepted and opted-in rejected records become public after notification.
+- Abstract deadline gap: 4 days in 2025, 2 days in 2026; author list freezes at abstract registration. Authors may be asked to review; the 2025 CFP states no numeric reciprocal quota, but negligent reviewer-authors risk access restrictions and desk-rejection sanctions.
+- arXiv is allowed without self-citing or advertising the anonymous submission. No concurrent substantially similar archival or cross-track submission. Disclose LLM/agent use when it is an important, original, or non-standard methodological component; ordinary editing need not be declared.
+- Route dataset/benchmark work to the separate track/portal: Datasets & Benchmarks in 2025, renamed **Evaluations & Datasets** in 2026.
+
+All three: OpenReview, double-blind, arXiv allowed under venue anonymity rules, and prompt injection forbidden. ICML/ICLR use author-year citations; NeurIPS uses the numeric mode supplied by its template.
+
+For the full comparison table, per-venue statement/checklist mechanics, OpenReview review-phase details, track notes, and section proportions, load `references/ml_venues_paper_structure.md`.
+
+---
+
 ## 5. Shared Craft (both paradigms)
 
 ### 5.1 Writing principles
@@ -139,6 +174,8 @@ Full guidance, revision checklists, and the systems-vs-ML style comparison: `ref
 
 - **Systems venues** → numbered citations `[1]`: IEEE (USENIX: OSDI/NSDI/FAST) or ACM (SIGCOMM/MOBICOM/SOSP). Cite systems by name ("Borg [5]").
 - **AAAI** → author-year `(Smith 2025)` via `natbib` (`\citet`/`\citep`/`\citeauthor`/`\citeyear`); the AAAI `.sty` sets the matching `.bst`.
+- **ICML / ICLR** → author-year with comma `(Smith, 2025)` via `natbib` (`\citep`/`\citet`); use the `.bst` shipped in the venue style zip.
+- **NeurIPS** → numeric citations via the natbib/bibliography configuration bundled with the official edition kit; do not override the template's citation mode or `.bst`.
 - Cite recent work heavily; cite every baseline you compare against; keep self-citation modest and third-person in double-blind submissions.
 
 Full formats, BibTeX, and the numbered↔author-year comparison: `references/citation_styles.md`.
@@ -166,6 +203,8 @@ Use precise subfield terminology. Systems: consistency models, fault tolerance, 
 
 **AAAI-specific pitfalls:** exceeding 7 pages or hiding technical content in "reference" pages; formatting violations (wrong template, added page numbers, `hyperref`); single-seed point estimates without variance/significance; a reproducibility checklist the paper cannot honestly support; de-anonymizing via first-person self-citation or arXiv links.
 
+**ICML/ICLR/NeurIPS-specific pitfalls:** missing the early abstract-registration deadline or submitting a placeholder abstract; ignoring reviewer-author obligations; ICML: omitting the impact statement or exceeding 8 pages; ICLR: exceeding 9 pages at submission, burying contribution-critical material in the appendix, forgetting that withdrawn papers are published and de-anonymized, or failing to disclose significant LLM usage; NeurIPS: exceeding 9 content pages, removing/misplacing the checklist, treating the appendix as required reading, trying to revise the PDF during rebuttal, or submitting dataset/benchmark work to the wrong track portal.
+
 ---
 
 ## 7. Workflow
@@ -173,16 +212,16 @@ Use precise subfield terminology. Systems: consistency models, fault tolerance, 
 **Systems paper drafting order:**
 1. Design + architecture figures → 2. Evaluation + result figures → 3. Introduction → 4. Background/Motivation → 5. Implementation → 6. Related Work → 7. Conclusion → 8. Abstract → 9. Title.
 
-**AAAI paper drafting order:**
-1. Method + core equations/pseudocode → 2. Experiments (setup, results, ablations) *or* Theory → 3. Introduction → 4. Related Work + Preliminaries → 5. Limitations + Conclusion → 6. Abstract → 7. Title → 8. Reproducibility checklist (fill as experiments finalize; if an item can't be "yes", fix the paper, not the answer).
+**AI/ML paper drafting order (AAAI, ICML, ICLR, NeurIPS):**
+1. Method + core equations/pseudocode → 2. Experiments (setup, results, ablations) *or* Theory → 3. Introduction → 4. Related Work + Preliminaries → 5. Limitations + Conclusion → 6. Abstract → 7. Title → 8. Venue statements: AAAI reproducibility checklist / ICML impact statement / ICLR ethics + reproducibility statements / NeurIPS Paper Checklist. If a checklist item cannot be supported, fix the paper or justify the answer. For ICLR, plan which rebuttal-phase results would fill the 10th page; for NeurIPS, do not plan on rebuttal-phase PDF revisions.
 
 **Shared revision + final prep (both):**
 1. Verify every introduction/abstract claim is supported by results.
 2. Check all figures/tables are referenced and numbers match across text/tables/figures.
 3. Ensure consistent terminology and correct citation style for the venue.
 4. Format with the exact venue template; check page limit and figure readability (grayscale).
-5. Anonymize for double-blind venues (systems double-blind venues and all of AAAI).
-6. Systems: prepare the artifact. AAAI: complete the reproducibility checklist and any uploaded appendix.
+5. Anonymize for double-blind venues (systems double-blind venues and all AI/ML venues: AAAI, ICML, ICLR, NeurIPS main track).
+6. Systems: prepare the artifact. AAAI: complete the reproducibility checklist and any uploaded appendix. ICML: write the impact statement. ICLR: add ethics/reproducibility statements and anonymized code supplement. NeurIPS: complete and place the Paper Checklist last; use the correct main/E&D track portal.
 
 ---
 
@@ -192,6 +231,7 @@ Load the reference that matches your venue and task:
 
 - `references/systems_paper_structure.md`: Full systems paper structure (OSDI/NSDI/SIGCOMM/MOBICOM/SOSP/FAST) — section-by-section content, examples, tense guide, artifact evaluation, per-venue variations.
 - `references/aaai_paper_structure.md`: Full AAAI (AI/ML) paper structure — format/length hard rules, section-by-section content, the mandatory reproducibility checklist, double-blind two-phase review, appendix mechanics, and the systems↔AAAI contrast.
-- `references/citation_styles.md`: IEEE and ACM numbered styles (systems) and AAAI author-year (natbib), BibTeX management, and anonymization.
+- `references/ml_venues_paper_structure.md`: ICML, ICLR, and NeurIPS paper rules — page limits and templates, required statements/checklists, OpenReview review mechanics, reciprocal reviewing, dual-submission/arXiv/LLM policies, NeurIPS E&D track routing, and section proportions.
+- `references/citation_styles.md`: IEEE and ACM numbered styles (systems), AAAI/ICML/ICLR author-year, and NeurIPS numeric template citations, plus BibTeX management and anonymization.
 - `references/figures_tables.md`: Architecture/method diagrams, performance plots, CDFs, evaluation tables, visual design, and per-venue figure requirements.
 - `references/writing_principles.md`: Core writing principles (clarity, conciseness, accuracy), systems-vs-ML style, and revision checklists.

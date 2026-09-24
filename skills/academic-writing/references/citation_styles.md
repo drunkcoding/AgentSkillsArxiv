@@ -5,7 +5,7 @@
 Two citation paradigms appear across the venues this skill covers:
 
 - **Numbered** (systems venues): IEEE (USENIX venues — OSDI, NSDI, FAST) and ACM (SIGCOMM, MOBICOM, SOSP) both use numbered references in square brackets `[1]`.
-- **Author-year** (AAAI / AI-ML): AAAI uses `natbib` author-year citations `(Smith 2025)`, NOT numbered brackets.
+- **AI/ML template-defined** (AAAI / ICML / ICLR / NeurIPS): AAAI uses `natbib` author-year citations `(Smith 2025)`, NOT numbered brackets. ICML and ICLR also use `natbib` author-year, rendered with a comma: `(Smith, 2025)` / `\citet` → `Smith (2025)`. NeurIPS uses the numeric mode bundled with its official natbib/template configuration. Never override a venue's supplied bibliography setup. See `ml_venues_paper_structure.md` for ICML/ICLR/NeurIPS rules.
 
 Pick the style by venue, and always let the venue's LaTeX template/`.bst` do the formatting.
 
@@ -17,6 +17,9 @@ Pick the style by venue, and always let the venue's LaTeX template/`.bst` do the
 | SIGCOMM, MOBICOM, SOSP | ACM, numbered | ACM sigconf template |
 | EuroSys | ACM, numbered | ACM sigconf template |
 | **AAAI** | **Author-year (natbib)** | AAAI Press (`article` + `aaai<NN>.sty`) |
+| **ICML** | **Author-year (natbib)** | ICML two-column (`icml<YYYY>.sty`) |
+| **ICLR** | **Author-year (natbib)** | ICLR single-column (`iclr<YYYY>` Master-Template) |
+| **NeurIPS** | **Numeric (bundled natbib/template settings)** | NeurIPS two-column edition kit (`neurips_2025.sty` in 2025) |
 
 **Default**: Use the LaTeX template provided by the venue. The template's bibliography style file (`.bst`) handles citation formatting automatically. For AAAI, the edition style package sets the matching `aaai<NN>.bst` — do not override it.
 
@@ -399,7 +402,7 @@ https://doi.org/10.1145/3600006.3613165
 - [ ] Page numbers included for published papers
 - [ ] ArXiv preprints formatted correctly
 
-**Double-blind venues (SIGCOMM, MOBICOM, SOSP, and all AAAI submissions):**
+**Double-blind venues (SIGCOMM, MOBICOM, SOSP, and all AAAI/ICML/ICLR/NeurIPS main-track submissions):**
 - [ ] Own work cited in third person
 - [ ] No self-identifying citation patterns
 - [ ] Anonymous repository URLs (or omitted)
