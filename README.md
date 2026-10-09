@@ -19,6 +19,7 @@ Claude Code skills and MCP tooling for academic research and development workflo
 | `cuda-tutor-setup` | `skills/cuda-tutor-setup/` | Generates an Obsidian CUDA StudyVault (curriculum / codebase / document modes) over the 6-topic NVIDIA learning path: CUDA kernels, CUTLASS, cuTile, open-gpu-kernel-modules, NCCL, NVSHMEM |
 | `function-dep-search` | `skills/function-dep-search/` | AST-accurate function dependency tracing |
 | `humanizer` | `skills/humanizer/` (submodule) | Removes AI-writing tells from prose (33 patterns from Wikipedia's "Signs of AI writing"). Tracked as a git submodule pinned to [github.com/blader/humanizer](https://github.com/blader/humanizer) — see [Remote skills](#remote-skills-submodules) below. Cross-referenced as a required final pass by the academic + writing skills |
+| `humanizer-zh` | `skills/humanizer-zh/` (submodule) | Chinese-language sibling of `humanizer` — removes AI-writing tells from **Chinese** prose (31 patterns adapted from blader/humanizer, targeting 空话铺垫, 模板化排比, over-used connectors, inflated 四字格). Tracked as a git submodule pinned to [github.com/op7418/humanizer-zh](https://github.com/op7418/humanizer-zh) — see [Remote skills](#remote-skills-submodules) below. Cross-referenced as the required final pass by the academic + writing skills **when the draft is in Chinese** |
 | `mem0` | `skills/mem0/` | Persistent memory integration patterns |
 | `openviking` | `skills/openviking/` | OpenViking context database reference |
 | `triton-tutor` | `skills/triton-tutor/` | Interactive concept-level quiz tutor over a Triton StudyVault built by `triton-tutor-setup`. Shares quiz rules + proficiency math + CUDA↔Triton Rosetta with `cuda-tutor` via `skills/tutor-core/` |
@@ -46,15 +47,16 @@ Some single-purpose skills are tracked as git submodules so they stay in sync wi
 | Skill | Upstream | Path |
 |-------|----------|------|
 | `humanizer` | https://github.com/blader/humanizer | `skills/humanizer/` |
+| `humanizer-zh` | https://github.com/op7418/humanizer-zh | `skills/humanizer-zh/` |
 
 Fetch after a fresh clone, and pull upstream updates, with:
 
 ```bash
-git submodule update --init skills/humanizer      # fetch after cloning
-git submodule update --remote skills/humanizer    # bump to latest upstream, then commit the pointer
+git submodule update --init skills/humanizer skills/humanizer-zh      # fetch after cloning
+git submodule update --remote skills/humanizer skills/humanizer-zh    # bump to latest upstream, then commit the pointer
 ```
 
-The harness symlinks and the writing-skill cross-references point at the skill by name, so updating the submodule updates every harness at once.
+The harness symlinks and the writing-skill cross-references point at each skill by name, so updating a submodule updates every harness at once. The academic + writing skills call `humanizer` for English drafts and `humanizer-zh` for Chinese drafts.
 
 ## Installation
 
