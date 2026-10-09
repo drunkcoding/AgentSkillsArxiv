@@ -1,5 +1,11 @@
 # Quality Checklist — Self-Review
 
+## Contents
+
+- [Curriculum Mode](#curriculum-mode)
+- [Codebase Mode](#codebase-mode)
+- [Document Mode](#document-mode)
+
 Before reporting completion, verify every item in the relevant mode's section. Fix and re-verify if any check fails.
 
 ---

@@ -1,5 +1,11 @@
 # US School Guidance Overlay
 
+## Contents
+
+- [Source-Calibrated Rules](#source-calibrated-rules)
+- [US Overlay Checklist](#us-overlay-checklist)
+- [Source Catalog](#source-catalog)
+
 Use this reference for **any US faculty or postdoc research statement** and whenever the user cites advice from Cornell, CMU, MIT, Caltech, Penn, Yale, Harvard, UConn, Notre Dame, Delaware, Berkeley, Stanford, Purdue, or similar US university career/writing centers.
 
 The US guidance corpus converges on one message: the statement is a **research-only, committee-readable, forward-looking argument** that the candidate has a coherent identity, can run an independent program, can attract resources, and will fit this department's students, facilities, collaborators, and institutional mission.

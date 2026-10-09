@@ -1,5 +1,16 @@
 # CUDA Codebase Mode — Templates
 
+> Version pins (CUDA toolkit, GPU architectures, package versions) in this file reflect the state when it was written. Verify against current toolchain docs before relying on them.
+
+## Contents
+
+- [Vault Folder Structure](#vault-folder-structure)
+- [Dashboard MOC Template](#dashboard-moc-template)
+- [Module Note Template](#module-note-template)
+- [Kernel Note Template (one per significant kernel)](#kernel-note-template-one-per-significant-kernel)
+- [Onboarding Exercise Template](#onboarding-exercise-template)
+- [Formatting Rules](#formatting-rules)
+
 ## Vault Folder Structure
 
 ```

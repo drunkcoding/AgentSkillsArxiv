@@ -1,5 +1,13 @@
 # Length Tiers
 
+## Contents
+
+- [Length Tiers and Their Markets](#length-tiers-and-their-markets)
+- [Allocation Tables](#allocation-tables)
+- [What Gets Cut at Each Step Down](#what-gets-cut-at-each-step-down)
+- [Format Defaults](#format-defaults)
+- [Detection Heuristic](#detection-heuristic)
+
 The length cap is the single biggest determinant of content allocation. Following the brief is non-negotiable — over-length is one of the most-cited automatic-rejection reasons at European universities, and disciplined under-length signals editing skill.
 
 ## Length Tiers and Their Markets

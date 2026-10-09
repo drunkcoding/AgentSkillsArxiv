@@ -1,5 +1,15 @@
 # Resources API
 
+## Contents
+
+- [Supported Formats](#supported-formats)
+- [Processing Pipeline](#processing-pipeline)
+- [add_resource()](#add_resource)
+- [export_ovpack()](#export_ovpack)
+- [import_ovpack()](#import_ovpack)
+- [Managing Resources](#managing-resources)
+- [Best Practices](#best-practices)
+
 Resources are external knowledge agents can reference.
 
 ## Supported Formats

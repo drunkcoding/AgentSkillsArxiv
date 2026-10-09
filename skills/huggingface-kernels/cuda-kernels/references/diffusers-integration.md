@@ -1,5 +1,16 @@
 # Diffusers Pipeline Integration Guide
 
+## Contents
+
+- [Overview](#overview)
+- [Model Architecture Analysis](#model-architecture-analysis)
+- [LTX-Video Architecture](#ltx-video-architecture)
+- [Integration Pattern](#integration-pattern)
+- [Model-Specific Differences](#model-specific-differences)
+- [Verification](#verification)
+- [Troubleshooting](#troubleshooting)
+- [Complete Example](#complete-example)
+
 Complete guide for integrating custom CUDA kernels into HuggingFace diffusers pipelines.
 
 > **Quick Start:** See [ltx_kernel_injection_example.py](ltx_kernel_injection_example.py) for a minimal working example (~150 lines).

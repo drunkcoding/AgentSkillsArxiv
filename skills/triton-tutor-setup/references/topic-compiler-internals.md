@@ -74,7 +74,7 @@
 
 ## Cross-Stack Equivalent: PTX / SASS + CuTe Layouts
 
-For users who already know the CUDA compilation pipeline, Triton's compiler internals are conceptually parallel. Full table: `../../tutor-core/references/cross-stack-rosetta.md` §6 (Compiler & Profiling), §2 (Memory & Tile), §3 (Compute).
+For users who already know the CUDA compilation pipeline, Triton's compiler internals are conceptually parallel. Full table: `cross-stack-rosetta.md` (in this references/ directory) §6 (Compiler & Profiling), §2 (Memory & Tile), §3 (Compute).
 
 | RID   | This topic's concept                                              | CUDA / CUTLASS equivalent                                                |
 |-------|-------------------------------------------------------------------|--------------------------------------------------------------------------|

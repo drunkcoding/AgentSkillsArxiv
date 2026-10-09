@@ -1,5 +1,13 @@
 # Red-Flag Phrases and Patterns
 
+## Contents
+
+- [How to Use This Reference](#how-to-use-this-reference)
+- [Top 20 Red Flags with Replacements](#top-20-red-flags-with-replacements)
+- [Patterns (Not Single Phrases) to Scan For](#patterns-not-single-phrases-to-scan-for)
+- [Pre-Submission Anti-Pattern Scan (5 minutes)](#pre-submission-anti-pattern-scan-5-minutes)
+- [Source Catalog](#source-catalog)
+
 This is the active blacklist. Every flagged item must be removed or replaced before submission. Catalogued from Andy Pavlo (CMU), Karen Kelsky (The Professor Is In), Adrian Sampson (Cornell), GradPilot, Cynthia Lee (Stanford), Valdosta State "Kisses of Death", and direct review of bad-statement examples.
 
 ## How to Use This Reference

@@ -3,6 +3,15 @@ name: debug-cuda-crash
 description: Call this skill when you need to debug CUDA crashes in SGLang using kernel API logging
 ---
 
+## Contents
+
+- [Tutorial](#tutorial-debugging-cuda-crashes-with-kernel-api-logging)
+- [Logging levels](#step-1-enable-kernel-api-logging)
+- [Reproduction](#step-2-reproduce-an-llm-cuda-crash)
+- [Diagnosis](#step-6-common-cuda-errors-and-what-to-check)
+- [Tools](#step-7-combine-with-compute-sanitizer)
+- [Environment reference](#environment-variables-reference)
+
 # Tutorial: Debugging CUDA Crashes with Kernel API Logging
 
 This tutorial shows you how to debug CUDA crashes and errors in SGLang using the `@debug_kernel_api` logging decorator.
@@ -65,30 +74,9 @@ python my_script.py
 ```
 
 Output in `debug.log`:
-```
-================================================================================
-[2026-03-19 00:47:30] SGLang Kernel API Call: sglang.quant_method.UnquantizedLinearMethod.apply
-Positional input arguments:
-  arg[0]=QKVParallelLinear(
-      repr=QKVParallelLinear(in_features=1024, output_features=4096, bias=False, tp_size=1, gather_output=False)
-    )
-  arg[1]=Tensor(
-      shape=(1, 1024)
-      dtype=torch.bfloat16
-      device=cuda:0
-      requires_grad=False
-      is_contiguous=True
-    )
-  arg[2]=None
-Output:
-  return=Tensor(
-      shape=(1, 4096)
-      dtype=torch.bfloat16
-      device=cuda:0
-      requires_grad=False
-      is_contiguous=True
-    )
-```
+
+> Full listing retained in [the example session reference](references/example-session.md). Apply the command above and compare the referenced output.
+
 
 This is a real level-3 excerpt captured from `Qwen/Qwen3-0.6B`.
 
@@ -102,129 +90,23 @@ python my_script.py
 ```
 
 Additional output:
-```
-================================================================================
-[2026-03-19 01:00:42] SGLang Kernel API Call: diffusion.quant_method.UnquantizedLinearMethod.apply
-Positional input arguments:
-  arg[1]=Tensor(
-      shape=(1, 77, 768)
-      dtype=torch.bfloat16
-      device=cuda:0
-      requires_grad=False
-      is_contiguous=True
-      min=-27.250000
-      max=28.500000
-      mean=0.011723
-      nan_count=0
-      inf_count=0
-    )
-Output:
-  return=Tensor(
-      shape=(1, 77, 2304)
-      dtype=torch.bfloat16
-      device=cuda:0
-      requires_grad=False
-      is_contiguous=True
-      min=-8.937500
-      max=9.375000
-      mean=0.009460
-      nan_count=0
-      inf_count=0
-    )
-```
+
+> Complete command/output listing moved to [the example session reference](references/example-session.md#logging-excerpts). Use the surrounding command and expected result as the operational procedure.
+
 
 This is a real level-5 excerpt captured from `black-forest-labs/FLUX.1-dev`.
 
 ### Crash-Safe Dumps (Inputs Saved Before Execution)
 
-```bash
-export SGLANG_KERNEL_API_LOGLEVEL=10
-export SGLANG_KERNEL_API_LOGDEST=debug.log
-export SGLANG_KERNEL_API_DUMP_DIR=/tmp/sglang_kernel_api_dumps
-
-python my_script.py
-```
-
-At level 10, SGLang saves the inputs before execution. If the kernel crashes, the dump directory still contains the inputs and exception metadata.
-
-If CUDA graph capture is active, tensor dumps are skipped automatically to avoid capture-time CUDA errors. In that case, you still get the kernel API call log, but not `inputs.pt` / `outputs.pt`.
-
-Level-10 dumps are best understood as crash-safe call snapshots. They always preserve the observed call boundary. They do not guarantee one-click replay for every method, because some methods depend on module state that is not serialized into the dump.
-
-Real level-10 dump layout from `Qwen/Qwen3-0.6B`:
-
-```text
-/tmp/sglang_kernel_api_validation/qwen_qwen3_0_6b_level10_dumps
-/tmp/sglang_kernel_api_validation/qwen_qwen3_0_6b_level10_dumps/20260319_004821_182_pid919286_RotaryEmbedding.forward_call0001
-/tmp/sglang_kernel_api_validation/qwen_qwen3_0_6b_level10_dumps/20260319_004821_182_pid919286_RotaryEmbedding.forward_call0001/inputs.pt
-/tmp/sglang_kernel_api_validation/qwen_qwen3_0_6b_level10_dumps/20260319_004821_182_pid919286_RotaryEmbedding.forward_call0001/metadata.json
-/tmp/sglang_kernel_api_validation/qwen_qwen3_0_6b_level10_dumps/20260319_004821_182_pid919286_RotaryEmbedding.forward_call0001/outputs.pt
-```
-
-Real `metadata.json` excerpt:
-
-```json
-{
-  "function_name": "RotaryEmbedding.forward",
-  "timestamp": "20260319_004821_182",
-  "process_id": 919286,
-  "execution_status": "completed",
-  "input_tensor_keys": ["arg_0", "arg_1", "arg_2"],
-  "output_tensor_keys": ["result_0", "result_1"]
-}
-```
+Level 10 saves inputs before execution. CUDA graph capture may skip tensor dumps.
 
 ## Step 2: Reproduce an LLM CUDA Crash
 
-Create a temporary reproducer:
+Create the temporary LLM reproducer and run it at levels 1, 3, and 10. The expected crash, last API boundary, and dump metadata are preserved in [Step 2](references/example-session.md#llm-and-diffusion-reproducers).
 
-```bash
-python3 - <<'PY'
-from pathlib import Path
-Path("/tmp/sglang_llm_crash.py").write_text(
-    "import torch\\n"
-    "import torch.nn.functional as F\\n"
-    "from sglang.srt.utils.custom_op import register_custom_op\\n\\n"
-    "def _fake_embedding(indices, table):\\n"
-    "    return torch.empty((*indices.shape, table.shape[-1]), device=table.device, dtype=table.dtype)\\n\\n"
-    "@register_custom_op(op_name='mock_llm_cuda_crash', fake_impl=_fake_embedding)\\n"
-    "def mock_llm_cuda_crash(indices, table):\\n"
-    "    out = F.embedding(indices, table)\\n"
-    "    torch.cuda.synchronize()\\n"
-    "    return out\\n\\n"
-    "table = torch.randn(4, 8, device='cuda', dtype=torch.float16)\\n"
-    "indices = torch.tensor([0, 7], device='cuda', dtype=torch.long)\\n"
-    "mock_llm_cuda_crash(indices, table)\\n"
-)
-PY
+> See [Step 2](references/example-session.md#llm-and-diffusion-reproducers) for the full reproducer commands and expected dump contents.
 
-SGLANG_KERNEL_API_LOGLEVEL=1 \
-SGLANG_KERNEL_API_LOGDEST=/tmp/sglang_llm_level1.log \
-python3 /tmp/sglang_llm_crash.py
-```
-
-What to expect:
-- The script exits with a CUDA `device-side assert`
-- The log still contains the last API boundary before the crash
-
-Try the same example at level 3:
-
-```bash
-SGLANG_KERNEL_API_LOGLEVEL=3 \
-SGLANG_KERNEL_API_LOGDEST=/tmp/sglang_llm_level3.log \
-python3 /tmp/sglang_llm_crash.py
-```
-
-Now the log shows tensor metadata before the crash.
-
-Try level 10:
-
-```bash
-SGLANG_KERNEL_API_LOGLEVEL=10 \
-SGLANG_KERNEL_API_LOGDEST=/tmp/sglang_llm_level10.log \
-SGLANG_KERNEL_API_DUMP_DIR=/tmp/sglang_llm_level10_dumps \
-python3 /tmp/sglang_llm_crash.py
-```
+The level-10 run should produce the API entry, `inputs.pt`, exception metadata, and no `outputs.pt` when execution aborts.
 
 Now you should see:
 - A log entry for `sglang.custom_op.mock_llm_cuda_crash`
@@ -238,30 +120,9 @@ For real-model success-path level-10 dumps, it is often easier to temporarily di
 
 Create a temporary diffusion-side reproducer:
 
-```bash
-python3 - <<'PY'
-from pathlib import Path
-Path("/tmp/sglang_diffusion_crash.py").write_text(
-    "import torch\\n"
-    "import torch.nn.functional as F\\n"
-    "from sglang.multimodal_gen.runtime.layers.utils import register_custom_op\\n\\n"
-    "def _fake_embedding(positions, cache):\\n"
-    "    return torch.empty((*positions.shape, cache.shape[-1]), device=cache.device, dtype=cache.dtype)\\n\\n"
-    "@register_custom_op(op_name='mock_diffusion_cuda_crash', fake_impl=_fake_embedding)\\n"
-    "def mock_diffusion_cuda_crash(positions, cache):\\n"
-    "    out = F.embedding(positions, cache)\\n"
-    "    torch.cuda.synchronize()\\n"
-    "    return out\\n\\n"
-    "cache = torch.randn(4, 64, device='cuda', dtype=torch.float16)\\n"
-    "positions = torch.tensor([0, 9], device='cuda', dtype=torch.long)\\n"
-    "mock_diffusion_cuda_crash(positions, cache)\\n"
-)
-PY
 
-SGLANG_KERNEL_API_LOGLEVEL=1 \
-SGLANG_KERNEL_API_LOGDEST=/tmp/sglang_diffusion_level1.log \
-python3 /tmp/sglang_diffusion_crash.py
-```
+> Full listing retained in [the example session reference](references/example-session.md). Apply the command above and compare the referenced output.
+
 
 Try level 3:
 
@@ -492,19 +353,9 @@ When you own the CUDA kernel, `printf()` is still useful for narrowing down bad 
 
 Basic pattern:
 
-```cpp
-__global__ void MyKernel(const float* input, float* output, int n) {
-  int idx = blockIdx.x * blockDim.x + threadIdx.x;
 
-  if (threadIdx.x == 0 && blockIdx.x == 0) {
-    printf("n=%d input0=%f\n", n, input[0]);
-  }
+> Full listing retained in [the example session reference](references/example-session.md). Apply the command above and compare the referenced output.
 
-  if (idx < n) {
-    output[idx] = input[idx] * 2.0f;
-  }
-}
-```
 
 After launch, force the output to flush:
 
@@ -575,51 +426,7 @@ static_assert(BLOCK_SIZE % 32 == 0, "BLOCK_SIZE must be warp aligned");
 | `SGLANG_KERNEL_API_DUMP_INCLUDE` | wildcard list | Only dump matching API names |
 | `SGLANG_KERNEL_API_DUMP_EXCLUDE` | wildcard list | Skip matching API names |
 
-## Best Practices
-
-### 1. Start with Level 3
-
-```bash
-export SGLANG_KERNEL_API_LOGLEVEL=3
-```
-
-Level 3 is usually enough to catch wrong shapes, wrong dtypes, and wrong devices.
-
-### 2. Use Level 5 for Numerical Issues
-
-```bash
-export SGLANG_KERNEL_API_LOGLEVEL=5
-```
-
-Use it when you suspect NaN or Inf values.
-
-### 3. Use Level 10 for Crash Reproduction
-
-```bash
-export SGLANG_KERNEL_API_LOGLEVEL=10
-```
-
-This is the most useful mode when the process crashes before you can inspect live tensors.
-
-If you need successful input/output dumps from a real model run, temporarily disable CUDA graph for that debug session.
-
-When level 10 is too noisy, pair it with `SGLANG_KERNEL_API_DUMP_INCLUDE` / `SGLANG_KERNEL_API_DUMP_EXCLUDE` instead of dumping every covered API.
-
-### 4. Log to File for Crashes
-
-```bash
-export SGLANG_KERNEL_API_LOGDEST=crash.log
-```
-
-File logs are safer than stdout when the process aborts.
-
-### 5. Disable Logging in Production
-
-```bash
-unset SGLANG_KERNEL_API_LOGLEVEL
-```
-
-When disabled, the decorator returns the original callable and adds no runtime logging overhead.
+> Additional level-selection guidance is preserved in [Best Practices](references/example-session.md#best-practices).
 
 ## Troubleshooting
 

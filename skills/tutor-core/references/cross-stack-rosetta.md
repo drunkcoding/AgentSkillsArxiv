@@ -1,5 +1,16 @@
 # Cross-Stack Rosetta — CUDA / CUTLASS / cuTile ↔ Triton
 
+## Contents
+
+- [How to read this file](#how-to-read-this-file)
+- [Citation rule (MANDATORY)](#citation-rule-mandatory)
+- [2. Memory & Tile Abstractions](#2-memory--tile-abstractions)
+- [3. Compute Primitives](#3-compute-primitives)
+- [4. Scheduling & Tiling](#4-scheduling--tiling)
+- [5. Python Tile DSLs (cuTile ↔ Triton)](#5-python-tile-dsls-cutile--triton)
+- [6. Compiler & Profiling](#6-compiler--profiling)
+- [7. Cross-Stack Question Seeds](#7-cross-stack-question-seeds)
+
 > Bidirectional concept map. Used by both `cuda-tutor` and `triton-tutor` when a session includes any topic with a cross-stack peer (per `quiz-rules-shared.md` Cross-Stack Question Rule).
 
 ## How to read this file

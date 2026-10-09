@@ -1,5 +1,16 @@
 # Templates Reference (Curriculum + Document Modes)
 
+## Contents
+
+- [Vault Folder Structure (Curriculum Mode canonical)](#vault-folder-structure-curriculum-mode-canonical)
+- [Dashboard MOC Template](#dashboard-moc-template)
+- [Overview Note Template (per topic)](#overview-note-template-per-topic)
+- [Concept Note Template](#concept-note-template)
+- [Milestones Template (per topic)](#milestones-template-per-topic)
+- [Pitfalls Template (per topic)](#pitfalls-template-per-topic)
+- [Practice Question Template (Document Mode + cross-topic)](#practice-question-template-document-mode--cross-topic)
+- [Formatting Rules](#formatting-rules)
+
 ## Vault Folder Structure (Curriculum Mode canonical)
 
 ```

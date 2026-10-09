@@ -1,5 +1,17 @@
 # Quality Checklist — Self-Review (TH8)
 
+## Contents
+
+- [Tree Completeness](#tree-completeness)
+- [LaTeX Hygiene (Run After `make all`)](#latex-hygiene-run-after-make-all)
+- [Code Hygiene](#code-hygiene)
+- [Content Hygiene — INV-7 Anti-AI-Slop](#content-hygiene--inv-7-anti-ai-slop)
+- [Handout Structural Rules](#handout-structural-rules)
+- [Rubric Quality (RR rules)](#rubric-quality-rr-rules)
+- [Exercise Quality (ECR rules)](#exercise-quality-ecr-rules)
+- [Invariant Coverage (INV-1 … INV-8)](#invariant-coverage-inv-1--inv-8)
+- [Reporting Format Compliance](#reporting-format-compliance)
+
 Before reporting completion in TH8, verify every gate below. Each gate
 references a rule ID from `content-rules/handout-content-rules.md`
 (HCR-N), `content-rules/exercise-content-rules.md` (ECR-N),

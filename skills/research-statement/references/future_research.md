@@ -1,5 +1,16 @@
 # Future Research Section
 
+## Contents
+
+- [The 6-Element Fundable-Line Shape](#the-6-element-fundable-line-shape)
+- [How Many Lines?](#how-many-lines)
+- [Risk Calibration](#risk-calibration)
+- [Horizon Planning](#horizon-planning)
+- [Connecting Future to Past](#connecting-future-to-past)
+- [Funding Vocabulary by Region](#funding-vocabulary-by-region)
+- [Industrial Collaboration](#industrial-collaboration)
+- [What Makes a Future-Research Section Fail](#what-makes-a-future-research-section-fail)
+
 This is the section that gets the candidate the interview. It must look like the embryo of a fundable proposal — reviewers mentally cost it.
 
 ## The 6-Element Fundable-Line Shape

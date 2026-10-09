@@ -1,5 +1,15 @@
 # Task Format for Code Dispatch
 
+## Contents
+
+- [Format](#format)
+- [Examples](#examples)
+- [Checklist Items](#checklist-items)
+- [Status Log](#status-log)
+- [WhatsApp Notifications](#whatsapp-notifications)
+- [Tips](#tips)
+- [Real-World Examples (Verified 2026-03-01)](#real-world-examples-verified-2026-03-01)
+
 Create tasks in the **🤖 CodeDispatch** TickTick project. The dispatcher picks them up automatically.
 
 ## Format

@@ -1,5 +1,15 @@
 # Pedagogy & Supervision Reference Palette
 
+## Contents
+
+- [1. Evidence-Based CS Pedagogy](#1-evidence-based-cs-pedagogy)
+- [2. Supervision Frameworks](#2-supervision-frameworks)
+- [3. Inclusion & Diversity in CS](#3-inclusion--diversity-in-cs)
+- [4. Modern CS-Specific Topics](#4-modern-cs-specific-topics)
+- [5. Assessment in CS](#5-assessment-in-cs)
+- [Key Venues for Deeper Reading](#key-venues-for-deeper-reading)
+- [How to Use This Document](#how-to-use-this-document)
+
 > **Purpose**: Evidence-based concepts an academic CS applicant can reference in a Statement on Education, organized by statement section. Not a checklist — draw selectively from what fits your experience and context. Aim for substance over volume; citing a few frameworks you genuinely apply is far more credible than name-dropping everything.
 
 ---

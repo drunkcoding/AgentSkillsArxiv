@@ -1,5 +1,20 @@
 # Style Guide — Typography, Palette, Layout
 
+## Contents
+
+- [INV-2 (No Commercial Fonts)](#inv-2-no-commercial-fonts)
+- [INV-3 (No minted)](#inv-3-no-minted)
+- [Palette Catalog](#palette-catalog)
+- [Layout Defaults](#layout-defaults)
+- [Section Style](#section-style)
+- [Code Listing Style](#code-listing-style)
+- [Inline Code](#inline-code)
+- [Table Style](#table-style)
+- [Math Style](#math-style)
+- [Hyperref Style](#hyperref-style)
+- [Anti-AI-Slop Typography](#anti-ai-slop-typography)
+- [Generated-At Header](#generated-at-header)
+
 Applies to every `.tex` artifact emitted under `Coursepack/Handouts/` and
 `Coursepack/Syllabus/`.
 

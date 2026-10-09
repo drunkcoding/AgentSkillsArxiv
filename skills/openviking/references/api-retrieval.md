@@ -1,5 +1,14 @@
 # Retrieval API
 
+## Contents
+
+- [find vs search](#find-vs-search)
+- [find()](#find)
+- [search()](#search)
+- [Retrieval Pipeline](#retrieval-pipeline)
+- [Working with Results](#working-with-results)
+- [Best Practices](#best-practices)
+
 Two search methods: `find` (simple) and `search` (complex with session context).
 
 ## find vs search

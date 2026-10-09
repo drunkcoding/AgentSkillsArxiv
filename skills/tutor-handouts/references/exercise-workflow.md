@@ -1,5 +1,16 @@
 # Exercise Workflow — E1–E4 Detail
 
+> Version pins (CUDA toolkit, GPU architectures, package versions) in this file reflect the state when it was written. Verify against current toolchain docs before relying on them.
+
+## Contents
+
+- [Naming Convention](#naming-convention)
+- [E1 — Exercise Scaffold Anatomy](#e1--exercise-scaffold-anatomy)
+- [E3 — Harness Anatomy](#e3--harness-anatomy)
+- [Idempotence](#idempotence)
+- [Anti-AI-slop for exercises](#anti-ai-slop-for-exercises)
+- [Failure modes to handle gracefully](#failure-modes-to-handle-gracefully)
+
 Companion to `handout-workflow.md` TH4 and TH5. Use when emitting Programming Exercises (E1) and the autograder harness (E3).
 
 ## Naming Convention

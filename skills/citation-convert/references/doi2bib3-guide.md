@@ -1,5 +1,18 @@
 # doi2bib3 Detailed Reference Guide
 
+## Contents
+
+- [Installation](#installation)
+- [Public API](#public-api)
+- [Internal Functions](#internal-functions)
+- [CLI Reference](#cli-reference)
+- [Resolution Strategy Details](#resolution-strategy-details)
+- [Normalization Details](#normalization-details)
+- [Batch Processing Patterns](#batch-processing-patterns)
+- [Error Handling](#error-handling)
+- [Integration with LaTeX Workflows](#integration-with-latex-workflows)
+- [Project Information](#project-information)
+
 ## Installation
 
 ### pip (recommended)

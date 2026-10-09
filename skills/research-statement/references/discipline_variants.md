@@ -1,5 +1,23 @@
 # Discipline-Specific Variations
 
+## Contents
+
+- [At-a-Glance Comparison](#at-a-glance-comparison)
+- [CS / Engineering](#cs--engineering)
+- [Life Sciences (Biology / Microbiology / Genetics / Neuroscience)](#life-sciences-biology--microbiology--genetics--neuroscience)
+- [Chemistry](#chemistry)
+- [Physics](#physics)
+- [Medicine / Biomedical](#medicine--biomedical)
+- [Mathematics](#mathematics)
+- [Theoretical CS](#theoretical-cs)
+- [Social Sciences (Sociology / Political Science / Anthropology)](#social-sciences-sociology--political-science--anthropology)
+- [Economics](#economics)
+- [Psychology](#psychology)
+- [Humanities (Junior — Pre-Tenure / First Job)](#humanities-junior--pre-tenure--first-job)
+- [Humanities (Senior / Lateral / Endowed Chair)](#humanities-senior--lateral--endowed-chair)
+- [Law](#law)
+- [Cross-Disciplinary Sources](#cross-disciplinary-sources)
+
 The general rubric and structure apply across disciplines, but allocations, expectations, and key signals differ. Load only the section for your discipline.
 
 ## At-a-Glance Comparison

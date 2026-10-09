@@ -75,7 +75,7 @@
 
 ## Cross-Stack Equivalent: Triton
 
-For users who already know Triton, these CUDA-kernel concepts map directly. Full table: `../../tutor-core/references/cross-stack-rosetta.md` §2 (Memory & Tile), §3 (Compute), §6 (Compiler & Profiling). The path is relative from this file in `skills/cuda-tutor-setup/references/` to the canonical Rosetta in `skills/tutor-core/references/`.
+For users who already know Triton, these CUDA-kernel concepts map directly. Full table: `cross-stack-rosetta.md` (in this references/ directory) §2 (Memory & Tile), §3 (Compute), §6 (Compiler & Profiling).
 
 | RID   | This topic's concept                                   | Triton equivalent                                                          |
 |-------|--------------------------------------------------------|----------------------------------------------------------------------------|

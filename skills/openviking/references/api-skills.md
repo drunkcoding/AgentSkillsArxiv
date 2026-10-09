@@ -1,5 +1,13 @@
 # Skills API
 
+## Contents
+
+- [add_skill()](#add_skill)
+- [SKILL.md Format](#skillmd-format)
+- [Managing Skills](#managing-skills)
+- [Skill Storage Structure](#skill-storage-structure)
+- [MCP Conversion](#mcp-conversion)
+
 Skills are callable capabilities that agents can invoke.
 
 ## add_skill()

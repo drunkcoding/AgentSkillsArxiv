@@ -1,5 +1,17 @@
 # Client API
 
+## Contents
+
+- [Deployment Modes](#deployment-modes)
+- [OpenViking()](#openviking)
+- [initialize()](#initialize)
+- [close()](#close)
+- [wait_processed()](#wait_processed)
+- [reset()](#reset)
+- [observers](#observers)
+- [Singleton Behavior](#singleton-behavior)
+- [Error Handling](#error-handling)
+
 The OpenViking client is the main entry point for all operations.
 
 ## Deployment Modes

@@ -72,7 +72,7 @@
 
 ## Cross-Stack Equivalent: CUDA Kernels
 
-For users who already know CUDA, these Triton-Basics concepts map to CUDA primitives. Full table: `../../tutor-core/references/cross-stack-rosetta.md` §2 (Memory & Tile), §4 (Scheduling).
+For users who already know CUDA, these Triton-Basics concepts map to CUDA primitives. Full table: `cross-stack-rosetta.md` (in this references/ directory) §2 (Memory & Tile), §4 (Scheduling).
 
 | RID   | This topic's concept                                      | CUDA / CUTLASS equivalent                                              |
 |-------|-----------------------------------------------------------|------------------------------------------------------------------------|

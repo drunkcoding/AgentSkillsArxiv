@@ -1,5 +1,15 @@
 # Configuration Reference
 
+## Contents
+
+- [Configuration File](#configuration-file)
+- [Configuration Sections](#configuration-sections)
+- [Environment Variables](#environment-variables)
+- [Configuration Priority](#configuration-priority)
+- [Programmatic Configuration](#programmatic-configuration)
+- [Model Providers](#model-providers)
+- [Troubleshooting](#troubleshooting)
+
 ## Configuration File
 
 Create `ov.conf` in project directory:

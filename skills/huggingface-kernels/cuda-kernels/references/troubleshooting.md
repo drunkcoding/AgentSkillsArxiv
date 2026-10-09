@@ -1,5 +1,13 @@
 # Troubleshooting Guide
 
+## Contents
+
+- [Build Issues](#build-issues)
+- [Performance Issues](#performance-issues)
+- [Integration Issues](#integration-issues)
+- [torch.compile Compatibility](#torchcompile-compatibility)
+- [Debugging Tips](#debugging-tips)
+
 Common issues and solutions when working with H100 CUDA kernels for diffusers.
 
 ## Build Issues

@@ -1,5 +1,16 @@
 # TU Delft CS Curricula — Reference Sheet
 
+## Contents
+
+- [Programmes](#programmes)
+- [1. BSc Computer Science and Engineering (CSE)](#1-bsc-computer-science-and-engineering-cse)
+- [2. MSc Computer Science](#2-msc-computer-science)
+- [3. MSc Data Science and AI Technology (DSAIT)](#3-msc-data-science-and-ai-technology-dsait)
+- [4. EEMCS Faculty — CS Departments](#4-eemcs-faculty--cs-departments)
+- [5. Mapping Applicant Expertise to TU Delft Courses](#5-mapping-applicant-expertise-to-tu-delft-courses)
+- [6. Three-Tier Mapping Template](#6-three-tier-mapping-template)
+- [Final Verification Checklist](#final-verification-checklist)
+
 > **Purpose**: Verified course names and themes from the three target TU Delft programmes, so the statement maps applicant expertise to *real* courses, not invented ones. **Verify against [studyguide.tudelft.nl](https://studyguide.tudelft.nl/) before submission** — curricula change.
 
 ## Programmes

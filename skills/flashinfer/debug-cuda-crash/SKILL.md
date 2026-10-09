@@ -3,6 +3,14 @@ name: debug-cuda-crash
 description: Tutorial for debugging CUDA crashes using API logging
 ---
 
+## Contents
+
+- [Logging levels](#step-1-enable-api-logging)
+- [Crash reproduction](#step-2-reproduce-the-crash)
+- [Common errors](#step-3-common-cuda-errors-and-how-to-debug)
+- [Advanced tools](#step-5-advanced-debugging-with-compute-sanitizer)
+- [Full session](#example-full-debug-session)
+
 # Tutorial: Debugging CUDA Crashes with API Logging
 
 This tutorial shows you how to debug CUDA crashes and errors in FlashInfer using the `@flashinfer_api` logging decorator.
@@ -47,39 +55,8 @@ python my_script.py
 ```
 
 Output in `debug.log`:
-```
-================================================================================
-[2025-12-18 10:30:45] FlashInfer API Logging - System Information
-================================================================================
-FlashInfer version: 0.6.0
-CUDA toolkit version: 12.1
-GPU 0: NVIDIA H100 PCIe
-  Compute capability: 9.0 (SM90)
-PyTorch version: 2.1.0
-================================================================================
 
-================================================================================
-[2025-12-18 10:30:46] FlashInfer API Call: batch_decode_with_padded_kv_cache
---------------------------------------------------------------------------------
-Positional input arguments:
-  arg[0]:
-    Tensor(
-      shape=(32, 8, 128)
-      dtype=torch.bfloat16
-      device=cuda:0
-      requires_grad=False
-      is_contiguous=True
-    )
-Keyword input arguments:
-  kv_cache=
-    Tensor(
-      shape=(1024, 2, 8, 128)
-      dtype=torch.bfloat16
-      device=cuda:0
-      requires_grad=False
-      is_contiguous=True
-    )
-```
+> Complete listing moved to [the reference](references/logging-reference.md). Follow the surrounding step and command sequence.
 
 ### Full Logging (With Tensor Statistics)
 
@@ -91,20 +68,8 @@ python my_script.py
 ```
 
 Additional output:
-```
-  Tensor(
-    shape=(32, 8, 128)
-    dtype=torch.bfloat16
-    device=cuda:0
-    requires_grad=False
-    is_contiguous=True
-    min=-3.125000
-    max=4.250000
-    mean=0.015625
-    nan_count=0
-    inf_count=0
-  )
-```
+
+> Full listing: see [the reference](references/logging-reference.md).
 
 ## Step 2: Reproduce the Crash
 
@@ -125,21 +90,8 @@ python my_script.py
 ```
 
 The log shows inputs before the crash:
-```
-[2025-12-18 10:32:15] FlashInfer API Call: batch_decode_with_padded_kv_cache
-Positional input arguments:
-  arg[0]:
-    Tensor(
-      shape=(32, 8, 128)      # Query tensor
-      ...
-    )
-Keyword input arguments:
-  kv_cache=
-    Tensor(
-      shape=(1024, 2, 8, 64)  # ❌ Wrong! Should be (..., 128) not (..., 64)
-      ...
-    )
-```
+
+> Full listing: see [the reference](references/logging-reference.md).
 
 **Found the bug**: `head_dim` mismatch (64 vs 128)
 
@@ -312,20 +264,8 @@ You can use `printf()` inside CUDA kernels for debugging:
 
 ### Basic Usage
 
-```cpp
-__global__ void MyKernel(const float* input, float* output, int n) {
-  int idx = blockIdx.x * blockDim.x + threadIdx.x;
 
-  // Print from one thread to avoid spam
-  if (threadIdx.x == 0 && blockIdx.x == 0) {
-    printf("n=%d, input[0]=%f\n", n, input[0]);
-  }
-
-  if (idx < n) {
-    output[idx] = input[idx] * 2.0f;
-  }
-}
-```
+> Full listing: see [the reference](references/logging-reference.md).
 
 **Important**: Flush printf buffer after kernel:
 ```python
@@ -339,17 +279,8 @@ torch.cuda.synchronize()  # ← Flushes printf output
 
 **Solution**: Choose one representative thread per specialization group.
 
-```cpp
-__global__ void WarpSpecializedKernel(...) {
-  // Define your group's representative thread
-  // e.g., first thread of each warp: threadIdx.x % 32 == 0
-  // e.g., first thread of each 4-warp group: threadIdx.x % 128 == 0
 
-  if (is_group_representative) {
-    printf("Group %d processing\n", group_id);
-  }
-}
-```
+> Full listing: see [the reference](references/logging-reference.md).
 
 **Common mistake** ❌:
 ```cpp
@@ -520,22 +451,8 @@ python test.py
 ```
 
 ### Check debug.log:
-```
-[2025-12-18 10:45:23] FlashInfer API Call: batch_decode_with_padded_kv_cache
-Positional input arguments:
-  arg[0]:
-    Tensor(
-      shape=(32, 8, 128)
-      dtype=torch.bfloat16
-      ...
-    )
-  arg[1]:
-    Tensor(
-      shape=(1024, 2, 8, 64)    # ❌ Found it! Last dim should be 128
-      dtype=torch.bfloat16
-      ...
-    )
-```
+
+> Full listing: see [the reference](references/logging-reference.md).
 
 ### Fix the bug:
 ```python

@@ -18,6 +18,8 @@ and skills via a virtual filesystem (`viking://` URIs), provides 3-layer progres
 loading (L0 Abstract / L1 Overview / L2 Detail), and supports directory-recursive semantic
 retrieval with intent analysis.
 
+> **Availability:** this skill assumes the `openviking` Python package is importable and, for server-backed workflows, an OpenViking instance is reachable. If neither holds, state that and answer from the reference docs only — do not fabricate API results.
+
 ## Quick Reference
 
 ```python

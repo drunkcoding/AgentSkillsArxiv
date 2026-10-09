@@ -1,5 +1,21 @@
 # Annotated Real Examples
 
+## Contents
+
+- [How to Use This File](#how-to-use-this-file)
+- [Example 1: Mae Milano (PL × Distributed Systems)](#example-1-mae-milano-pl--distributed-systems)
+- [Example 2: Sam Westrick (PL / Parallelism)](#example-2-sam-westrick-pl--parallelism)
+- [Example 3: Ryan Marcus (ML for Database Systems)](#example-3-ryan-marcus-ml-for-database-systems)
+- [Example 4: Talia Ringer (Verification)](#example-4-talia-ringer-verification)
+- [Example 5: Bharath Hariharan (Computer Vision)](#example-5-bharath-hariharan-computer-vision)
+- [Example 6: Ashok Cutkosky (ML / Optimization)](#example-6-ashok-cutkosky-ml--optimization)
+- [Example 7: Talia Ringer (paragraph 2 — vision elaboration)](#example-7-talia-ringer-paragraph-2--vision-elaboration)
+- [Example 8: Dimi Racordon (PL)](#example-8-dimi-racordon-pl)
+- [Example 9: Michael D. Adams (PL)](#example-9-michael-d-adams-pl)
+- [Example 10: Pratik Chaudhari (ML)](#example-10-pratik-chaudhari-ml)
+- [Pattern Inventory (from the 10 examples)](#pattern-inventory-from-the-10-examples)
+- [What All 10 Have in Common](#what-all-10-have-in-common)
+
 Ten dissected real opening paragraphs from successful CS faculty applications. Patterns extend to other disciplines.
 
 ## How to Use This File

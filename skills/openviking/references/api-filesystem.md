@@ -1,5 +1,20 @@
 # File System API
 
+## Contents
+
+- [abstract()](#abstract)
+- [overview()](#overview)
+- [read()](#read)
+- [ls()](#ls)
+- [tree()](#tree)
+- [rm()](#rm)
+- [mv()](#mv)
+- [grep()](#grep)
+- [glob()](#glob)
+- [link()](#link)
+- [relations()](#relations)
+- [unlink()](#unlink)
+
 Unix-like file system operations for managing context.
 
 ## abstract()

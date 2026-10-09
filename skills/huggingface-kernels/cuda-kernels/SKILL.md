@@ -4,7 +4,17 @@ description: "Provides guidance for writing and benchmarking optimized CUDA kern
 allowed-tools: "Read, Grep, Glob, Bash"
 ---
 
+## Contents
+
+- [Quick start](#quick-start)
+- [Kernel patterns](#core-kernel-patterns)
+- [Integration examples](#minimal-integration-pattern)
+- [Kernel-specific guidelines](#kernel-specific-guidelines)
+- [Build and troubleshooting](#building-kernels)
+
 # CUDA Kernels for Diffusers & Transformers
+
+> Version pins (CUDA toolkit, GPU architectures, package versions) in this file reflect the state when it was written. Verify against current toolchain docs before relying on them.
 
 This skill provides patterns and guidance for developing optimized CUDA kernels targeting NVIDIA GPUs (H100, A100, T4) for use with HuggingFace **diffusers** and **transformers** libraries.
 
@@ -13,17 +23,8 @@ This skill provides patterns and guidance for developing optimized CUDA kernels 
 ### Diffusers (Video/Image Generation)
 
 **For benchmarking kernel performance:**
-```bash
-# Benchmark with optimized kernels (6% end-to-end speedup)
-python generate_video.py --use-optimized-kernels
 
-# Benchmark baseline with torch.compile (34% speedup)
-python generate_video.py --no-optimized-kernels --compile
-
-# Compare configurations (note: --compile and --use-optimized-kernels are mutually exclusive)
-python generate_video.py --use-optimized-kernels && \
-python generate_video.py --no-optimized-kernels --compile
-```
+> Full listing: see [the reference](references/kernel-examples.md#rmsnorm).
 
 **For a minimal diffusers integration example (~150 lines):**
 ```bash
@@ -98,18 +99,8 @@ A complete working example is available at `examples/ltx_video/`. This demonstra
 
 Use the benchmark script to measure kernel performance:
 
-```bash
-# Full benchmark with all options
-python scripts/benchmark_example.py \
-    --use-optimized-kernels \
-    --compile \
-    --batch-size 1 \
-    --num-frames 161 \
-    --height 512 \
-    --width 768 \
-    --steps 50 \
-    --warmup-iterations 2
-```
+
+> Full listing: see [the reference](references/kernel-examples.md#rope).
 
 ### Benchmark Script Options
 
@@ -161,33 +152,8 @@ The vectorized RMSNorm kernel achieves **2.67x average speedup** over PyTorch ba
 
 ## Project Structure
 
-```
-.claude/skills/cuda-kernels/
-├── scripts/
-│   ├── benchmark_example.py              # End-to-end video generation benchmark
-│   ├── benchmark_rmsnorm.py              # Isolated RMSNorm micro-benchmark
-│   ├── ltx_kernel_injection_example.py   # Minimal diffusers integration (~150 lines)
-│   ├── transformers_injection_example.py # Minimal transformers integration (~120 lines)
-│   └── huggingface_kernels_example.py    # HuggingFace Kernels Hub integration
-├── references/
-│   ├── diffusers-integration.md          # Complete diffusers integration guide
-│   ├── transformers-integration.md       # Complete transformers integration guide
-│   ├── huggingface-kernels-integration.md # HuggingFace Kernels Hub (get_kernel) guide
-│   ├── troubleshooting.md                # Common issues and solutions
-│   ├── kernel-templates.md               # CUDA kernel templates (includes vectorized)
-│   ├── h100-optimization-guide.md        # H100 (Hopper) optimization deep dive
-│   ├── a100-optimization-guide.md        # A100 (Ampere) optimization deep dive
-│   └── t4-optimization-guide.md          # T4 (Turing) optimization deep dive
-└── SKILL.md                              # This file
 
-examples/ltx_video/                  # Complete working example
-├── kernel_src/
-│   └── rmsnorm.cu                  # Vectorized RMSNorm kernel (2.67x faster)
-├── torch-ext/                      # PyTorch bindings
-├── generate_video.py               # Full benchmark script
-├── benchmark_rmsnorm.py            # Isolated kernel benchmark
-└── setup.py                        # pip install -e .
-```
+> Full listing: see [the reference](references/kernel-examples.md#adaln).
 
 ## GPU Architecture Reference
 
@@ -219,18 +185,8 @@ examples/ltx_video/                  # Complete working example
 ### Vectorized Memory Access (Critical for Performance)
 
 **BFloat16 vectorization using `__nv_bfloat162`:**
-```cuda
-// Load 2 bfloat16 elements at once (32-bit load)
-const __nv_bfloat162* vec_input = reinterpret_cast<const __nv_bfloat162*>(row_input);
 
-#pragma unroll 4
-for (int i = tid; i < vec_hidden; i += stride) {
-    __nv_bfloat162 v = vec_input[i];
-    float v0 = __bfloat162float(v.x);
-    float v1 = __bfloat162float(v.y);
-    sum_sq += v0 * v0 + v1 * v1;
-}
-```
+> Full listing: see [the reference](references/kernel-examples.md#geglu).
 
 **FP16 vectorization using `__half2`:**
 ```cuda
@@ -318,18 +274,8 @@ cuda-capabilities = ["9.0"]
 
 Load pre-compiled, optimized kernels directly from HuggingFace Hub without local compilation:
 
-```python
-from kernels import get_kernel, has_kernel
 
-# Check availability and load
-if has_kernel("kernels-community/activation"):
-    activation = get_kernel("kernels-community/activation", version=1)
-
-    # Use the kernel
-    x = torch.randn((4, 4), dtype=torch.float16, device="cuda")
-    y = torch.empty_like(x)
-    activation.gelu_fast(y, x)
-```
+> Full listing: see [the reference](references/kernel-examples.md#attention).
 
 **Key functions:**
 - `get_kernel(repo_id, version=None)` - Download and load kernel from Hub
@@ -356,23 +302,8 @@ if has_kernel("kernels-community/activation"):
 - No `set_processor()` pattern - use Flash Attention 2 instead
 
 **Minimal transformers pattern:**
-```python
-from transformers import AutoModelForCausalLM
-from ltx_kernels import rmsnorm
 
-def patch_rmsnorm(model):
-    for name, module in model.named_modules():
-        if 'RMSNorm' in type(module).__name__:
-            eps = getattr(module, 'variance_epsilon', None) or getattr(module, 'eps', 1e-6)
-            def make_forward(mod, epsilon):
-                def forward(x):
-                    return rmsnorm(x, mod.weight, eps=epsilon)
-                return forward
-            module.forward = make_forward(module, eps)
-
-model = AutoModelForCausalLM.from_pretrained("meta-llama/Llama-2-7b-hf", torch_dtype=torch.bfloat16)
-patch_rmsnorm(model)
-```
+> Full listing: see [the reference](references/kernel-examples.md#integration).
 
 ### Diffusers Critical Pitfalls
 
@@ -422,37 +353,8 @@ pipe.enable_model_cpu_offload()  # Now safe
 
 ### Minimal Integration Pattern
 
-```python
-from diffusers import LTXPipeline
-from ltx_kernels import rmsnorm
 
-def patch_rmsnorm_modules(model):
-    """Patch all RMSNorm modules to use custom kernel."""
-    for name, module in model.named_modules():
-        if type(module).__name__ == 'RMSNorm':
-            eps = getattr(module, 'eps', 1e-6)
-            has_weight = hasattr(module, 'weight') and module.weight is not None
-
-            if has_weight:
-                def make_forward(mod, epsilon):
-                    def forward(x):
-                        return rmsnorm(x, mod.weight, eps=epsilon)
-                    return forward
-                module.forward = make_forward(module, eps)
-            else:
-                def make_forward(epsilon):
-                    def forward(x):
-                        w = torch.ones(x.shape[-1], device=x.device, dtype=x.dtype)
-                        return rmsnorm(x, w, eps=epsilon)
-                    return forward
-                module.forward = make_forward(eps)
-
-# Usage
-pipe = LTXPipeline.from_pretrained("Lightricks/LTX-Video", torch_dtype=torch.bfloat16)
-pipe.to("cuda")
-patch_rmsnorm_modules(pipe.transformer)
-pipe.enable_model_cpu_offload()
-```
+> Complete listing moved to [the reference](references/kernel-examples.md#benchmarking). Follow the surrounding step and command sequence.
 
 ## Kernel-Specific Guidelines
 
@@ -514,17 +416,8 @@ torch._dynamo.exc.Unsupported: Attempted to call function marked as skipped
 3. Register kernel as custom op (advanced, requires `torch.library`)
 
 **To register as custom op (for torch.compile compatibility):**
-```python
-import torch
 
-@torch.library.custom_op("ltx_kernels::rmsnorm", mutates_args={"out"})
-def rmsnorm(out: torch.Tensor, input: torch.Tensor, weight: torch.Tensor, eps: float) -> None:
-    ops.rmsnorm_forward(out, input.contiguous(), weight.contiguous(), eps)
-
-@rmsnorm.register_fake
-def _(out, input, weight, eps):
-    pass  # No shape changes
-```
+> Full troubleshooting and custom-op registration guidance: see [troubleshooting.md](references/troubleshooting.md).
 
 ## See Also
 
