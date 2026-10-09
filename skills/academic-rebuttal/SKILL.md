@@ -15,6 +15,8 @@ Write rebuttals that **reject wrong reviewer comments with evidence** while main
 
 **REQUIRED SUB-SKILL (run before returning any draft to the user).** Load the `humanizer` skill (via the skill tool) and run the finished text through it as a final editing pass. It removes AI-writing tells (inflated significance, copula avoidance like "serves as", rule-of-three, overused AI vocabulary such as "delve"/"testament"/"landscape", filler phrases, sycophancy, and em/en-dash overuse) without inventing any fact, name, number, date, or citation. Preserve the format and conventions this skill requires (venue character limits, per-reviewer response structure), and if the user supplied a writing sample, pass it so humanizer matches their voice.
 
+**If the draft is written in Chinese, load the `humanizer-zh` skill instead of `humanizer`** (via the skill tool) — it applies the same no-fabrication discipline to Chinese prose, targeting 空话铺垫 (empty build-up), 模板化排比 (templated parallelism), over-used connectors (首先/其次/综上所述), and inflated 四字格, while preserving the same format and conventions required above.
+
 ## Rebuttal Workflow
 
 ### Stage 1: Triage Reviews (first 3 hours)
