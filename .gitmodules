@@ -7,3 +7,6 @@
 [submodule "skills/humanizer"]
 	path = skills/humanizer
 	url = https://github.com/blader/humanizer.git
+[submodule "skills/humanizer-zh"]
+	path = skills/humanizer-zh
+	url = https://github.com/op7418/humanizer-zh.git
