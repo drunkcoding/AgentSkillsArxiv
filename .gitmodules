@@ -10,3 +10,6 @@
 [submodule "skills/humanizer-zh"]
 	path = skills/humanizer-zh
 	url = https://github.com/op7418/humanizer-zh.git
+[submodule "skills/matt-pocock-skills"]
+	path = skills/matt-pocock-skills
+	url = https://github.com/mattpocock/skills.git
