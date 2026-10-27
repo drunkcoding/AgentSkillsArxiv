@@ -9,7 +9,7 @@ Use this reference for NeurIPS, ICML, ICLR, and AAAI OpenReview-style reviews. E
 3. [NeurIPS 2025](#3-neurips-2025)
 4. [ICML 2026](#4-icml-2026)
 5. [ICLR 2026](#5-iclr-2026)
-6. [AAAI-26](#6-aaai-26)
+6. [AAAI-26 / AAAI-27](#6-aaai-26--aaai-27)
 7. [Discussion-Phase Duties](#7-discussion-phase-duties)
 8. [Common Mistakes](#8-common-mistakes)
 9. [Filled Example: ICML 2026](#9-filled-example-icml-2026)
@@ -25,6 +25,7 @@ Use this reference for NeurIPS, ICML, ICLR, and AAAI OpenReview-style reviews. E
 | ICML 2026 | 1-6 | 1-5 | Soundness, Presentation, Significance, Originality: 1-4 | Mandatory author-response acknowledgement and final post-rebuttal justification |
 | ICLR 2026 | 0, 2, 4, 6, 8, 10 | 1-5 | Soundness, Presentation, Contribution: 1-4 | Public reviews; active public discussion; revisions allowed through Dec. 3 |
 | AAAI-26 | Public guide does not publish anchors; confirm the live OpenReview form | Confirm live form | Reproducibility is explicitly decision-relevant | Two phases; Phase-1 rejects have no rebuttal opportunity |
+| AAAI-27 | Reviewer pages unpublished as of Oct 2026; confirm the live OpenReview form | Confirm live form | Reproducibility decision-relevant; checklist is a separate upload; "release after acceptance" is not evidence | Two phases (Phase-1 rejects Sept 24, 2026); novelty check across overlapping-author submissions |
 
 Do not translate these scores to the systems 1-5 merit scale. Enter the venue's own fields and preserve its anchors.
 
@@ -203,9 +204,17 @@ General-purpose writing assistance is allowed, but the reviewer owns every claim
 
 ---
 
-## 6. AAAI-26
+## 6. AAAI-26 / AAAI-27
 
-**Edition source:** AAAI-26 Reviewer Instructions, Review Process, Reproducibility Checklist, and Ethical Guidelines.
+**Edition source:** AAAI-26 Reviewer Instructions, Review Process, Reproducibility Checklist, and Ethical Guidelines; AAAI-27 Submission Instructions (verified Oct 2026).
+
+**AAAI-27 deltas (from the AAAI-27 submission instructions):**
+
+- The reproducibility checklist is **uploaded separately from the main paper** in a designated submission-form field (AAAI-26 had it appended in the PDF after references) and is made available to reviewers.
+- Reviewers evaluate reproducibility **only from materials included at submission** (main paper, Code and Data Supplement, Supplementary Document). "Will be released after acceptance/publication" must **not** be treated as evidence — assume such materials will not be made available.
+- The review process includes a **substantial novelty check across submissions with overlapping authors**; substantially similar or thin-sliced submissions may be summarily rejected.
+- Timeline: Phase-1 rejections Sept 24, 2026; author feedback Oct 24-31, 2026; final notification Nov 30, 2026.
+- AAAI-27 reviewer instruction pages were not yet published at the AAAI-26 URL pattern as of Oct 2026 — confirm rating/confidence anchors and any AI-review pilot details on the live OpenReview form.
 
 ### 6.1 Review structure and fields
 
@@ -346,3 +355,10 @@ After reading the response, maintain/raise/lower the recommendation from X to Y.
 - Review Process: https://aaai.org/conference/aaai/aaai-26/review-process/
 - Reproducibility Checklist: https://aaai.org/conference/aaai/aaai-26/reproducibility-checklist/
 - Ethical Guidelines: https://aaai.org/conference/aaai/aaai-26/ethical-guidelines-for-aaai-26-reviewers/
+
+### AAAI-27
+
+- Submission Instructions (incl. reproducibility guidelines + timeline): https://aaai.org/conference/aaai/aaai-27/submission-instructions
+- Main Technical Track Call: https://aaai.org/conference/aaai/aaai-27/main-technical-track-call/
+- Author Kit (style + reproducibility checklist): https://aaai.org/authorkit27/
+- OpenReview conference portal (canonical live form): https://openreview.net/group?id=AAAI.org/2027/Conference

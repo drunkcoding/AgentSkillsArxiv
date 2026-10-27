@@ -18,14 +18,24 @@ AAAI (the AAAI Conference on Artificial Intelligence) is a top-tier archival ven
 10. Limitations / Broader Implications *(when relevant)*
 11. Conclusion
 12. References
-13. Reproducibility Checklist *(mandatory, appended after references)*
+13. Reproducibility Checklist *(mandatory; AAAI-25/26: appended after references in the PDF; AAAI-27: uploaded as a separate form field — see Reproducibility Checklist below)*
 14. Separately uploaded technical appendix *(optional)*
 
 **Target venue:** AAAI main technical track (this reference). Special tracks (AI for Social Impact, AI Alignment), Student Abstracts, IAAI, EAAI, Doctoral Consortium, and demos are separate programs with distinct page limits, templates, and review criteria — do **not** apply main-track rules to them.
 
-**Typical length:** 7 pages of technical content (references and the reproducibility checklist are outside this limit — see Format and Length below).
+**Typical length:** 7 pages of technical content (references are outside this limit — see Format and Length below).
 
-> **Standards drift every year. Always confirm the exact numbers against the current edition's official author kit and Call for Papers** (e.g. `aaai.org/conference/aaai/aaai-<NN>/submission-instructions/` and the matching `authorkit<NN>` page). The rules below are stable across AAAI-24/25/26 unless flagged as edition-specific; treat dated fees, deadlines, and reviewer counts as illustrative, not permanent.
+> **Standards drift every year. Always confirm the exact numbers against the current edition's official author kit and Call for Papers** (e.g. `aaai.org/conference/aaai/aaai-<NN>/submission-instructions/` and the matching `authorkit<NN>` page). The rules below are stable across AAAI-24 through AAAI-27 unless flagged as edition-specific; treat dated fees, deadlines, and reviewer counts as illustrative, not permanent.
+
+### AAAI-27 key facts (verified Oct 2026 against aaai.org)
+
+- **Conference:** February 16-23, 2027, Montréal, Canada. Submission via **OpenReview**; author kit at `aaai.org/authorkit27/` (`aaai2027` style).
+- **Timeline (AoE/UTC-12):** abstracts July 21, 2026; full papers July 28, 2026; supplementary material + code July 31, 2026; Phase-1 rejection notification September 24, 2026; **author feedback window October 24-31, 2026** (rescheduled from Oct 19-25); final notification November 30, 2026; camera-ready December 14, 2026.
+- **Page limit:** the main submission PDF may have **up to 9 pages total, with pages 8-9 reserved exclusively for references** — i.e. up to 7 pages of non-reference content. Ethical statements, if included, count **inside** the 7 content pages. Acknowledgements are omitted at submission.
+- **Reproducibility checklist is NOT in the PDF:** it is **uploaded separately in a designated field of the submission form** and shared with reviewers (change from AAAI-25/26, where it was appended after the references).
+- **Reproducibility evidence rule:** reviewers evaluate reproducibility from materials included *at submission*; claims that code/data "will be released after acceptance" must **not** be treated as evidence of reproducibility.
+- **Submission cap and novelty check:** ≤10 combined submissions per author to the technical track (excluding AI Alignment and AI for Social Impact special tracks); authors cannot be added after submission; the review process includes a **substantial novelty check across submissions with overlapping authors** — "thin-sliced" or substantially similar papers may be summarily rejected.
+- **Contemporaneous work:** papers published less than two months before the July 28, 2026 deadline are contemporaneous; authors are not obliged to address them (encouraged at camera-ready).
 
 ## Format and Length Requirements (Hard Rules)
 
@@ -33,10 +43,10 @@ AAAI enforces formatting far more strictly than many venues. Formatting violatio
 
 ### Page limit
 
-- **7 pages of technical content** for regular main-track submissions (stable across AAAI-24/25/26).
-- **References do not count** toward the 7 pages — additional pages are allowed *solely* for references.
-- The **reproducibility checklist is appended after the references and does not count** toward the page limit (explicit for AAAI-25/26).
-- **Any main-paper appendix containing proofs, experiments, methods, or other technical material IS technical content** and must fit within the 7 pages. The exempt pages are for references (and the checklist), not general-purpose appendix material. Push overflow technical material into the *separately uploaded* technical appendix instead.
+- **7 pages of technical content** for regular main-track submissions (stable across AAAI-24 through AAAI-27).
+- **References do not count** toward the 7 pages — additional pages are allowed *solely* for references. AAAI-27 makes the cap explicit: the submission PDF may have **at most 9 pages total**, with pages 8-9 exclusively for references.
+- **Reproducibility checklist placement is edition-specific:** AAAI-25/26 appended it after the references inside the PDF (outside the page limit); **AAAI-27 uploads it separately in a designated submission-form field** — it does not appear in the PDF at all.
+- **Any main-paper appendix containing proofs, experiments, methods, or other technical material IS technical content** and must fit within the 7 pages. The exempt pages are for references, not general-purpose appendix material. Push overflow technical material into the *separately uploaded* technical appendix instead. AAAI-27 also states explicitly that **ethical statements count inside the 7 content pages**.
 - **Camera-ready:** 7 base technical pages plus **up to 2 purchasable additional technical pages** (fee per page, e.g. \$300/page at AAAI-25/26). Extra pages are not granted automatically.
 
 ### Template
@@ -46,11 +56,11 @@ AAAI enforces formatting far more strictly than many venues. Formatting violatio
 
   ```latex
   \documentclass[letterpaper]{article}
-  \usepackage{aaai2026}   % edition-specific: aaai24.sty / aaai25.sty / aaai2026.sty
+  \usepackage{aaai2027}   % edition-specific: aaai24.sty / aaai25.sty / aaai2026.sty / aaai2027.sty
   \usepackage{times}
   ```
 
-- **BibTeX:** the AAAI style sets the matching edition-specific `.bst` (`aaai24.bst` / `aaai25.bst` / `aaai2026.bst`), which produces an author-year bibliography. Do not manually select an incompatible bibliography style.
+- **BibTeX:** the AAAI style sets the matching edition-specific `.bst` (`aaai24.bst` / `aaai25.bst` / `aaai2026.bst` / `aaai2027.bst`), which produces an author-year bibliography. Do not manually select an incompatible bibliography style.
 - **Word:** official templates exist for anonymous and camera-ready papers. Use the official edition template, not an approximate reproduction.
 - **`hyperref` and `navigator` are incompatible with the AAAI style** and can corrupt references — do not add them.
 
@@ -168,14 +178,14 @@ AAAI does **not** require a standalone "Implementation" section (unlike systems 
 
 ## Reproducibility Checklist (Mandatory)
 
-AAAI requires **every** author to complete the reproducibility checklist at submission (AAAI-24/25/26).
+AAAI requires **every** author to complete the reproducibility checklist at submission (AAAI-24 through AAAI-27).
 
-**Mechanics (AAAI-25/26, explicit):**
+**Mechanics — edition-specific, do not mix them up:**
 
-- Put the answers **in the main submission PDF, after the references**.
-- Do **not** submit a separate checklist form.
-- It **does not count** toward the 7-page limit.
-- It is shared with reviewers, and the reproducibility assessment **contributes to the final decision**.
+- **AAAI-27:** complete the checklist from the AAAI-27 Author Kit and **upload it separately from the main paper in the designated field of the submission form** at paper-submission time. It does not appear in the PDF. The completed checklist is made available to reviewers.
+- **AAAI-25/26:** the answers went **in the main submission PDF, after the references** (outside the 7-page limit); no separate form.
+- In all recent editions it is shared with reviewers, and the reproducibility assessment **contributes to the final decision**.
+- **AAAI-27 evidence rule:** reviewers evaluate reproducibility only from materials included at submission (main paper, Code and Data Supplement, Supplementary Document). "Code/data will be released after acceptance" must **not** be treated as evidence — reviewers are told to assume such materials will not be made available. Address each reproducibility criterion in the Supplementary Document when relevant.
 - A missing checklist generally cannot be newly uploaded during rebuttal — answer reproducibility concerns in the response, and the full checklist is collected at camera-ready for accepted papers.
 
 **What it covers (four groups):**
@@ -201,8 +211,8 @@ Answers use variants of **yes / partial / no / N/A**, with optional explanation 
 
 - **Mandatory abstract registration** roughly a week before the paper deadline. Placeholder titles/abstracts are deleted (blocking later full-paper submission), and substantial abstract changes before the paper deadline can trigger rejection.
 - **Two-phase review:** Phase-1 papers with sufficiently negative reviews can be **rejected without an author-feedback opportunity**. Surviving papers get additional reviewers and a **single author-feedback (rebuttal) window** covering all reviews.
-- **Rebuttal (AAAI-26 specifics — verify per edition):** one response, **max 2,500 characters**, markdown allowed, **no URLs, no code, no additional files, no new experimental results**, and no updating of supplementary material.
-- Recent editions submit via **OpenReview** (AAAI-25/26; AAAI-24 used CMT).
+- **Rebuttal (AAAI-26 specifics):** one response, **max 2,500 characters**, markdown allowed, **no URLs, no code, no additional files, no new experimental results**, and no updating of supplementary material. **AAAI-27 has not published a rebuttal FAQ at the AAAI-26 URL** — its author feedback window is October 24-31, 2026; confirm the character cap and content rules on the live OpenReview form rather than assuming the AAAI-26 numbers.
+- Recent editions submit via **OpenReview** (AAAI-25/26/27; AAAI-24 used CMT).
 
 ## Supplementary Material and Appendix
 
@@ -222,11 +232,12 @@ Rules across editions:
 
 ## Ethics and Dual-Submission Policy
 
-- **No concurrent archival submission:** the work cannot be already published/accepted at, or simultaneously under review at, another archival conference or journal. Workshops and preprint servers (arXiv) are fine.
+- **No concurrent archival submission:** the work cannot be already published/accepted at, or simultaneously under review at, another archival conference or journal. Workshops and preprint servers (arXiv) are fine. Withdrawing from another venue is allowed if completed **before** the AAAI submission.
 - After submitting to AAAI, do not submit the same work elsewhere until an AAAI decision or withdrawal. Non-identical submissions with excessive technical overlap can still violate policy.
+- **AAAI-27 overlapping-submission novelty check:** submissions involving overlapping author sets are assessed together for novelty. Prohibited patterns include resubmitting with cosmetic changes, "thin slicing" one contribution into several minimally different papers, splitting results across methods/datasets/domains that belong in one paper, and obfuscated duplicates. Violations are **summarily rejected** (final), and the other venue may be informed.
 - Authors must follow the **AAAI Publications Ethics and Malpractice Statement** and the **AAAI Code of Professional Conduct**. Responsible-research issues (human participants, sensitive data, data/algorithmic bias) are review considerations.
 
-> There is **no separately branded "CARE" checklist** in the verified AAAI-24/25/26 main-track requirements. The mandatory items are the reproducibility checklist plus the ethics/conduct statements above. If a future edition introduces a new form, add it only from a primary AAAI source.
+> There is **no separately branded "CARE" checklist** in the verified AAAI-24 through AAAI-27 main-track requirements. The mandatory items are the reproducibility checklist plus the ethics/conduct statements above. If a future edition introduces a new form, add it only from a primary AAAI source.
 
 ## Citation Style
 
@@ -285,7 +296,7 @@ Method plus Experiments (or Method plus Theory) form the bulk of the paper.
 | **Citations** | Numbered IEEE/ACM `[1]` | Author-year `(Smith 2025)` |
 | **Length** | 12-15 pages | 7 pages of technical content |
 | **Review** | Single- or double-blind by venue | Double-blind, two-phase, abstract-then-paper |
-| **Reproducibility** | Artifact evaluation (badges) | Mandatory reproducibility checklist in the PDF |
+| **Reproducibility** | Artifact evaluation (badges) | Mandatory reproducibility checklist (in-PDF through AAAI-26; separate upload at AAAI-27) |
 | **Template** | USENIX / ACM sigconf | AAAI Press two-column (`article` + `aaai<NN>.sty`) |
 
 A paper describing an AI *system* may still include an implementation section — the correct framing is "not structurally required," not "forbidden." Match the norms of the specific subfield (learning, planning, reasoning, NLP, vision, robotics, KR, theory) by reading recent accepted AAAI papers in that area.

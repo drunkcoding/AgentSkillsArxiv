@@ -87,6 +87,17 @@ ICML 2026 keeps a **5,000-character** cap, now applied to **each of three discus
 | Decision note | Recommendations are not simple score averages; senior-area review uses broader signals including rebuttal/discussion |
 | Source | aaai.org/conference/aaai/aaai-26/aaai-26-faq-for-authors-rebuttal/ |
 
+### AAAI-27
+| Field | Value |
+|-------|-------|
+| Platform | OpenReview |
+| Author feedback window | **October 24-31, 2026** (rescheduled from Oct 19-25); Phase-1 rejects (notified Sept 24, 2026) get no rebuttal |
+| Response model | Expected single global response as in AAAI-26 — **confirm on the live OpenReview form** |
+| Character limit | **Not published as of Oct 2026** (no AAAI-27 rebuttal FAQ at the AAAI-26 URL pattern); AAAI-26 was 2,500 chars total — verify on the live form before drafting to length |
+| New results | Assume disallowed per AAAI precedent unless the live form says otherwise |
+| Final notification | November 30, 2026; camera-ready December 14, 2026 |
+| Source | aaai.org/conference/aaai/aaai-27/submission-instructions + live OpenReview console |
+
 ---
 
 ## HotCRP Venues
@@ -194,6 +205,7 @@ ICML 2026 keeps a **5,000-character** cap, now applied to **each of three discus
 | ICML 2025 | OpenReview | 5,000 chars/review | Per-review | No |
 | ICLR 2026 | OpenReview | Word limit/comment (number unpublished); unlimited comments | Public discussion thread | Yes, through Dec 3 (`pdfdiff`) |
 | AAAI-26 | OpenReview | 2,500 chars total | Single global | No |
+| AAAI-27 | OpenReview | Unpublished — verify live form (AAAI-26 was 2,500 chars) | Single global (expected) | Assume no |
 | OSDI 2025 | HotCRP | 2,000 words | Global | No |
 | SOSP 2025 | HotCRP | ~500 words (soft) | Global | Check CFP |
 | ASPLOS 2025 | HotCRP | ~800 words (soft) | Global | Yes (if revision realistic) |

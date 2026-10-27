@@ -33,7 +33,7 @@ Two paradigms, because a systems paper and an AI/ML paper are organized around f
 | **MOBICOM** | Systems | ACM sigconf | 15 | Double-blind | Numbered (ACM) | Artifact: encouraged |
 | **SOSP** | Systems | ACM sigconf | 15 | Double-blind | Numbered (ACM) | Artifact: required |
 | **FAST** | Systems | USENIX | 12 long / 6 short | Double-blind | Numbered (IEEE) | Artifact: encouraged |
-| **AAAI** | AI/ML | AAAI Press two-column (`article` + `aaai<NN>.sty`) | 7 (refs + checklist outside) | Double-blind, two-phase | Author-year (natbib) | Checklist: **mandatory in PDF** |
+| **AAAI** | AI/ML | AAAI Press two-column (`article` + `aaai<NN>.sty`) | 7 content (+2 pages refs only; 9-page PDF cap at AAAI-27) | Double-blind, two-phase | Author-year (natbib) | Checklist mandatory: **in PDF through AAAI-26; separate upload at AAAI-27** |
 | **ICML** | AI/ML | ICML two-column (`icml<YYYY>.sty`) | 8 (+1 camera-ready; refs/appendix/impact stmt outside) | Double-blind, OpenReview, per-review rebuttal | Author-year (natbib) | **Impact statement mandatory** |
 | **ICLR** | AI/ML | ICLR single-column (`iclr<YYYY>` Master-Template) | 9 at submission, 10 at rebuttal/camera-ready (refs/appendix outside) | Double-blind, OpenReview, **public reviews + open discussion** | Author-year (natbib) | Ethics + reproducibility statements recommended |
 | **NeurIPS** | AI/ML | NeurIPS two-column edition kit (`neurips_2025.sty` in 2025) | 9 (+1 camera-ready; refs/appendix/checklist outside) | Double-blind, OpenReview, private during review; per-review rebuttal | Numeric (bundled natbib/template) | **Paper Checklist mandatory in PDF** |
@@ -109,19 +109,19 @@ For full section-by-section guidance, examples, tense guide, and per-venue varia
 
 AAAI follows the **method-experiment** paradigm. Conventional structure (strong convention, not an AAAI compliance rule):
 
-Abstract → Introduction → Related Work → Background/Preliminaries → Method → Theory *(if any)* → Experimental Setup → Results → Ablations → Limitations → Conclusion → References → **Reproducibility Checklist**.
+Abstract → Introduction → Related Work → Background/Preliminaries → Method → Theory *(if any)* → Experimental Setup → Results → Ablations → Limitations → Conclusion → References → **Reproducibility Checklist** *(in-PDF through AAAI-26; separate form upload at AAAI-27)*.
 
 **Hard format rules (enforced strictly — violations risk desk rejection):**
-- **7 pages of technical content.** References are outside the limit; the reproducibility checklist is appended after references and also does not count. Any in-paper appendix with proofs/experiments IS technical content and must fit in 7 pages — push overflow to the separately uploaded technical appendix.
-- **AAAI Press two-column template, required even for anonymous submission.** LaTeX = `article` class + the edition-specific style package (`\usepackage{aaai2026}`), **not** an `aaai.cls`. Do not add `hyperref`/`navigator`.
+- **7 pages of technical content.** References are outside the limit; AAAI-27 caps the submission PDF at **9 pages total, pages 8-9 exclusively references**, and counts ethical statements inside the 7 content pages. Any in-paper appendix with proofs/experiments IS technical content and must fit in 7 pages — push overflow to the separately uploaded technical appendix.
+- **AAAI Press two-column template, required even for anonymous submission.** LaTeX = `article` class + the edition-specific style package (`\usepackage{aaai2027}` for AAAI-27), **not** an `aaai.cls`. Do not add `hyperref`/`navigator`.
 - **No page numbers/headers/footers.** Body text black; color only in figures (CMYK, grayscale-safe). **Table captions go BELOW the table.**
 - Camera-ready: 7 base pages + up to 2 purchasable extra technical pages.
 
 **Structure implications of the 7-page budget:** background and related work are compressed; Method + Experiments (or Method + Theory) form the bulk; there is **no required standalone Implementation section**; AI/ML papers use substantially more mathematics (objectives, proofs, assumptions) than systems papers.
 
-**Reproducibility checklist (mandatory):** completed by every author at submission, placed in the main PDF after the references, shared with reviewers, and factored into the decision. It covers general clarity, theory (assumptions/proofs), datasets (appropriateness/availability), and computation (seeds, hardware/software versions, number of runs, variance, significance tests, hyperparameters/search ranges). Write the paper so every item can honestly be answered "yes."
+**Reproducibility checklist (mandatory):** completed by every author at submission — **AAAI-27: uploaded separately in a designated submission-form field; AAAI-25/26: placed in the main PDF after the references** — shared with reviewers, and factored into the decision. It covers general clarity, theory (assumptions/proofs), datasets (appropriateness/availability), and computation (seeds, hardware/software versions, number of runs, variance, significance tests, hyperparameters/search ranges). Write the paper so every item can honestly be answered "yes." **AAAI-27:** "code/data will be released after acceptance" is explicitly NOT evidence of reproducibility — include materials in the Code and Data Supplement / Supplementary Document at submission.
 
-**Review process:** double-blind (cite own work in third person; preprints/arXiv allowed but not cited/linked from the anonymous paper); mandatory **abstract registration** ~a week before the paper deadline; **two-phase review** where Phase-1 rejects get no feedback; a single author-feedback/rebuttal window for survivors (AAAI-26: 2,500-char cap, no URLs/files/new results). No dual/concurrent archival submission.
+**Review process:** double-blind (cite own work in third person; preprints/arXiv allowed but not cited/linked from the anonymous paper); mandatory **abstract registration** ~a week before the paper deadline; **two-phase review** where Phase-1 rejects get no feedback; a single author-feedback/rebuttal window for survivors (AAAI-26: 2,500-char cap, no URLs/files/new results; AAAI-27 window Oct 24-31, 2026 — confirm cap on the live OpenReview form). No dual/concurrent archival submission; ≤10 submissions per author; AAAI-27 adds a **novelty check across submissions with overlapping authors** (thin-sliced or substantially similar papers may be summarily rejected).
 
 > There is **no separate "CARE" checklist** and **no official fixed reference count** for AAAI — do not invent either.
 
@@ -223,7 +223,7 @@ Use precise subfield terminology. Systems: consistency models, fault tolerance, 
 3. Ensure consistent terminology and correct citation style for the venue.
 4. Format with the exact venue template; check page limit and figure readability (grayscale).
 5. Anonymize for double-blind venues (systems double-blind venues and all AI/ML venues: AAAI, ICML, ICLR, NeurIPS main track).
-6. Systems: prepare the artifact. AAAI: complete the reproducibility checklist and any uploaded appendix. ICML: write the impact statement. ICLR: add ethics/reproducibility statements and anonymized code supplement. NeurIPS: complete and place the Paper Checklist last; use the correct main/E&D track portal.
+6. Systems: prepare the artifact. AAAI: complete the reproducibility checklist (separate form upload at AAAI-27; in-PDF through AAAI-26) and any uploaded appendix. ICML: write the impact statement. ICLR: add ethics/reproducibility statements and anonymized code supplement. NeurIPS: complete and place the Paper Checklist last; use the correct main/E&D track portal.
 
 ---
 

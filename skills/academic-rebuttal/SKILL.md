@@ -184,7 +184,7 @@ System enforces per-review fields. Inside each:
 4. Short "we will clarify X in revision" line
 
 ### Pattern B: Single Global (AAAI, tight cap)
-One response covering all reviews:
+One response covering all reviews (AAAI-26 cap was 2,500 chars; AAAI-27 has not published a cap — verify on the live OpenReview form):
 1. 2–3 line global summary
 2. Top 2 concerns subsection
 3. Additional clarifications as one-liners
