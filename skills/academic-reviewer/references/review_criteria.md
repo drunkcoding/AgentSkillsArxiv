@@ -223,7 +223,7 @@ Different venues weight the evaluation dimensions differently, shaped by their c
 4. **Evaluation** (medium-high) — Must be convincing, but "exciting and imperfect" may beat "boring and thorough"
 5. **Presentation** (medium) — Should be clear, but a well-motivated rough paper may survive
 6. **Relevance** (medium) — Broad scope; most systems topics welcome
-7. **Reproducibility** (medium) — Artifact evaluation encouraged (optional; see the call for artifacts)
+7. **Reproducibility** (medium) — Artifact evaluation is optional; all accepted papers are encouraged to participate (OSDI '26 call for artifacts; the OSDI '27 call is not yet published)
 
 **Key signals for OSDI reviewers:**
 - Would you enthusiastically advocate for this paper in the PC meeting?
@@ -270,7 +270,7 @@ Different venues weight the evaluation dimensions differently, shaped by their c
 **NSDI-specific considerations:**
 - Papers describing deployed systems get extra credit for production experience
 - Measurement papers must provide new insights, not just data
-- The OSR process means borderline papers may get a conditional accept
+- Borderline papers that are not accepted may be offered a one-shot revision: the authors resubmit at the next deadline with a marked-up paper, and the same reviewers re-review it
 
 **Scoring adjustment guidance for NSDI:**
 
@@ -286,7 +286,7 @@ Different venues weight the evaluation dimensions differently, shaped by their c
 
 ### 2.3 SIGCOMM (ACM Conference on Data Communication)
 
-**Review philosophy**: "Lasting impact on the field." SIGCOMM has a high bar and values work that fundamentally advances networking. Acceptance rate is typically ~15%.
+**Review philosophy**: "Lasting impact on the field." SIGCOMM has a high bar and values work that fundamentally advances networking. No official acceptance count was found (SIGCOMM publishes none on its conference site).
 
 **Priority weights:**
 1. **Novelty** (very high) — Must advance the state of the art substantially
@@ -298,7 +298,7 @@ Different venues weight the evaluation dimensions differently, shaped by their c
 7. **Reproducibility** (medium) — Valued but not always feasible for ISP/datacenter-scale work
 
 **SIGCOMM scoring convention:**
-- Scores of 3 or higher (on a typical 1-5 scale; confirm on the live form) generally indicate the paper is acceptable
+- SIGCOMM 2027 uses "collaborative reviewing" and sends authors a single short consensus review; no numeric acceptance threshold is published, so rely on the live form's scale
 - A paper needs strong advocate(s) to be accepted — lukewarm support is insufficient
 - The PC discussion is a critical stage; champion your paper or flag concerns clearly
 
@@ -313,7 +313,7 @@ Different venues weight the evaluation dimensions differently, shaped by their c
 |-----------|-------------------|
 | Novelty ≤ 2 | Cap Overall Merit at 2. SIGCOMM demands substantial advancement. |
 | Significance ≤ 2 | Cap Overall Merit at 2. Lasting impact potential is essential. |
-| Novelty = 3, Significance = 3 | Cap Overall Merit at 3. Both must be strong for acceptance at ~15% rate. |
+| Novelty = 3, Significance = 3 | Cap Overall Merit at 3. Both must be strong for acceptance at SIGCOMM's high bar. |
 | Evaluation ≤ 2 | Cap Overall Merit at 2. Protocol and algorithm claims need rigorous validation. |
 | Relevance ≤ 2 | Cap Overall Merit at 2. A non-networking paper cannot be accepted regardless of quality. |
 | Presentation ≤ 2 | Cap Overall Merit at 3. SIGCOMM expects polished papers but won't reject solely on writing. |
@@ -440,9 +440,9 @@ Different venues weight the evaluation dimensions differently, shaped by their c
 
 ### Overall Merit Scale (1-5)
 
-*Typical form; scales are set per HotCRP/OpenReview instance and are not published officially — use the scale on the live review form.*
+*Illustrative scales only. None of OSDI, NSDI, SOSP, SIGCOMM, MobiCom or FAST publishes its HotCRP review form (checked 2026-11-12); HotCRP's own templates offer e.g. Overall merit 1-5 (Reject ... Strong Accept), Reviewer confidence 1-3 and Reviewer expertise 1-5, and each chair customizes them. This 1-5 merit / 1-4 confidence form is a representative template, not any venue's actual form: use the scales on the live review form.*
 
-Use this calibration to assign scores consistently. Remember that top systems venues accept ~15-20% of submissions.
+Use this calibration to assign scores consistently. Remember that top systems venues accept roughly 12-23% of submissions in recent editions where counts are known (e.g., NSDI '25 12.5%, NSDI '26 22.8%; see the venue table in SKILL.md).
 
 | Score | Label | What It Means | Accept? |
 |-------|-------|---------------|---------|
@@ -455,7 +455,7 @@ Use this calibration to assign scores consistently. Remember that top systems ve
 ### Calibration Guidelines
 
 **Anchoring to acceptance rate:**
-- At ~15-20% acceptance, a score of 3 is NOT a recommendation to accept — it means "I could be convinced either way"
+- At these low acceptance rates, a score of 3 is NOT a recommendation to accept — it means "I could be convinced either way"
 - Most accepted papers should receive scores of 4 or 5 from at least one reviewer
 - A paper with all 3s is typically rejected unless discussion reveals hidden strengths
 
@@ -463,11 +463,11 @@ Use this calibration to assign scores consistently. Remember that top systems ve
 - Do not cluster all scores at 3 — differentiate between papers
 - Reserve 5s for genuinely excellent work (top 5-10% of submissions you review)
 - Use the full range: a clearly flawed paper should get a 1 or 2, not a generous 3
-- Your scores should roughly match the acceptance rate: ~15-20% of papers you review should receive 4 or higher
+- Your scores should roughly match the acceptance rate: roughly the venue's acceptance fraction (about one in five or fewer) of the papers you review should receive 4 or higher
 
 **Expected score distribution across a review batch:**
 
-If you review 20 papers at a top systems venue (~15-20% acceptance rate), your scores should approximately distribute as follows:
+If you review 20 papers at a top systems venue (roughly 12-23% acceptance rate), your scores should approximately distribute as follows:
 
 | Score | Expected Count | Fraction | Description |
 |-------|---------------|----------|-------------|
@@ -479,7 +479,7 @@ If you review 20 papers at a top systems venue (~15-20% acceptance rate), your s
 
 If your distribution deviates significantly from this:
 - **Too many 3s** (>30%): You are not differentiating enough. Re-examine your borderline papers and push them toward 2 or 4.
-- **Too many 4s and 5s** (>30%): You are being too generous. At 15-20% acceptance, most papers should be below the bar.
+- **Too many 4s and 5s** (>30%): You are being too generous. At 12-23% acceptance, most papers should be below the bar.
 - **Too many 1s** (>30%): You may be too harsh, or you may have a particularly weak batch. Compare notes with co-reviewers.
 - **No 5s at all**: Reconsider whether any paper in your batch is genuinely excellent. Being stingy with 5s can prevent strong papers from being championed.
 
@@ -519,7 +519,7 @@ A paper addresses a real problem (scheduling ML training jobs on heterogeneous c
 
 ### Reviewer Confidence Scale (1-4)
 
-*Typical form; scales are set per HotCRP/OpenReview instance and are not published officially — use the scale on the live review form.*
+*Illustrative scales only. None of OSDI, NSDI, SOSP, SIGCOMM, MobiCom or FAST publishes its HotCRP review form (checked 2026-11-12); HotCRP's own templates offer e.g. Overall merit 1-5 (Reject ... Strong Accept), Reviewer confidence 1-3 and Reviewer expertise 1-5, and each chair customizes them. This 1-5 merit / 1-4 confidence form is a representative template, not any venue's actual form: use the scales on the live review form.*
 
 | Score | Label | What It Means |
 |-------|-------|---------------|

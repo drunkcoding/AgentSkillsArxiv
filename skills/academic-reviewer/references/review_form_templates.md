@@ -1,6 +1,6 @@
 # Review Form Templates
 
-> **Venue facts last verified 2026-11-12** against the OSDI '26/'27, NSDI '27, SIGCOMM 2026/2027, MobiCom 2026/2027 and SOSP 2026 CFPs. Forms and policies change every cycle — confirm on the live form and reviewer instructions.
+> **Venue facts last verified 2026-11-12** against the OSDI '26/'27, NSDI '27, FAST '27, SIGCOMM 2026/2027, MobiCom 2026/2027 and SOSP 2026 CFPs and HotCRP's public field library. Forms and policies change every cycle — confirm on the live form and reviewer instructions.
 
 ## Contents
 
@@ -15,7 +15,7 @@ This reference provides the HotCRP review form field guide, complete example rev
 
 ## 1. HotCRP Review Form Field Guide
 
-*Typical form; scales are set per HotCRP/OpenReview instance and are not published officially — use the scale on the live review form.*
+*Illustrative scales only. None of OSDI, NSDI, SOSP, SIGCOMM, MobiCom or FAST publishes its HotCRP review form (checked 2026-11-12); HotCRP's own templates offer e.g. Overall merit 1-5 (Reject ... Strong Accept), Reviewer confidence 1-3 and Reviewer expertise 1-5, and each chair customizes them. The 1-5 merit / 1-4 confidence form below is a representative template, not any venue's actual form: use the scales on the live review form.*
 
 HotCRP is the standard review platform for OSDI, NSDI, SIGCOMM, MOBICOM, SOSP, and FAST. Reviews follow a structured form with these fields.
 
@@ -31,7 +31,7 @@ Score on a 1-5 scale. This is the primary signal for accept/reject decisions.
 | 2 | Weak Reject | Some merit but significant problems. Below the bar. Needs major revision. |
 | 1 | Strong Reject | Fundamental problems. Not suitable even with revision. |
 
-**Calibration reminder**: At ~15-20% acceptance, a score of 3 means "uncertain" — not "acceptable." Most accepted papers need at least one score of 4 or 5.
+**Calibration reminder**: At the low acceptance rates of top systems venues (roughly 12-23% in recent editions with published counts), a score of 3 means "uncertain" — not "acceptable." Most accepted papers need at least one score of 4 or 5.
 
 ### 1.2 Reviewer Confidence (Required)
 
@@ -343,7 +343,7 @@ Q3: Could you add brief definitions of "network function chaining" and "NF state
 
 ### 3.1 When OSR Applies
 
-Some venues (currently NSDI, MOBICOM, FAST; SIGCOMM through 2026 but not 2027) offer a one-shot revision (OSR) process for borderline papers. OSR means the paper is not accepted outright but is given a specific set of required changes. If the authors successfully address these changes within a short revision period (typically 4-6 weeks), the paper is accepted.
+Some venues (currently NSDI, MOBICOM, FAST; SIGCOMM through 2026 but not 2027) offer a one-shot revision (OSR) process for borderline papers. OSR means the paper is not accepted outright but is given a specific set of required changes. The authors resubmit a revision (at the next deadline for NSDI, MobiCom and FAST; no fixed revision period is stated by their CFPs), the same reviewers re-check it, and if the required changes are addressed the paper is accepted.
 
 **OSR is appropriate when:**
 - The core contribution is sound and significant
@@ -356,7 +356,7 @@ Some venues (currently NSDI, MOBICOM, FAST; SIGCOMM through 2026 but not 2027) o
 - The fundamental approach is flawed
 - The novelty is questionable (novelty cannot be added in revision)
 - The changes require new system design or major re-implementation
-- The required experiments would take more than 4-6 weeks
+- The required experiments could not be completed by the resubmission deadline (MobiCom's CFP notes OSR action points "could take more than 4-6 weeks")
 - The weaknesses are subjective or hard to verify
 
 ### 3.2 OSR Review Template
@@ -424,10 +424,10 @@ The revision should NOT require [state what would be out of scope — e.g.,
 
 | Venue | OSR Available | Typical Revision Period | Max Required Changes |
 |-------|--------------|------------------------|---------------------|
-| NSDI | Yes (shepherd-based; confirm in CFP) | 6 weeks | 3-5 concrete items |
-| SIGCOMM | Through 2026 only; SIGCOMM 2027 CFP: "No rebuttals or one-shot revisions" | About 1 month (SIGCOMM 2026 CFP) | 3-4 concrete items |
-| MOBICOM | Yes (major/minor revision; confirm in CFP) | 4-8 weeks | Varies by major/minor |
-| FAST | Yes (one-shot revision) | 4-6 weeks | 3-5 concrete items |
+| NSDI | Yes: resubmit at the next deadline with a marked-up paper and a summary of changes (NSDI '27 CFP); the same reviewers re-review | Interval to the next deadline (no fixed length stated; spring to fall '27 is about 8 weeks) | No number stated; reviewers give "a list of issues" |
+| SIGCOMM | Through 2026 only (shepherd-managed); SIGCOMM 2027 CFP: "no rebuttals or one-shot revisions" | About 1 month (SIGCOMM 2026 CFP) | No number stated |
+| MOBICOM | Yes: "One-Shot-Revision" decision (alongside Accept and Reject); resubmit at the next deadline | Not stated; may exceed 4-6 weeks (MobiCom 2027 CFP) | At most 3 major changes/clarifications |
+| FAST | Yes: one-shot revision; resubmit at the subsequent deadline (fall '27 -> first FAST '28 deadline); only accept or reject after revision | Interval to the next deadline (no fixed length stated) | No number stated; may include new experiments |
 | OSDI | No OSR; OSDI '26 replaced revise-and-resubmit with a conditional-accept decision and removed the author-response period (OSDI '26 CFP) | N/A (conditional accept; shepherd for accepted papers) | N/A |
 | SOSP | No formal OSR | N/A (shepherd for accepted papers) | N/A |
 

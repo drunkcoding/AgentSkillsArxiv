@@ -25,12 +25,13 @@ Use this reference for NeurIPS, ICML, ICLR, and AAAI OpenReview-style reviews. E
 | NeurIPS 2026 | 1-6 (unchanged per the 2026 Main Track Handbook) | 1-5 | Quality, Clarity, Significance, Originality: 1-4 | Contribution types (General, Theory, Use-Inspired, Concept & Feasibility, Negative Results); LLM-use experiment (see 3.6) |
 | ICML 2026 | 1-6 | 1-5 | Soundness, Presentation, Significance, Originality: 1-4 | Mandatory author-response acknowledgement and final post-rebuttal justification |
 | ICLR 2026 | 0, 2, 4, 6, 8, 10 | 1-5 | Soundness, Presentation, Contribution: 1-4 | Public reviews; active public discussion; revisions allowed through Dec. 3 |
-| AAAI-26 | Public guide does not publish anchors; confirm the live OpenReview form | Confirm live form | Reproducibility is explicitly decision-relevant | Two phases; Phase-1 rejects have no rebuttal opportunity |
-| AAAI-27 | Reviewer pages unpublished as of Oct 2026; confirm the live OpenReview form | Confirm live form | Reproducibility decision-relevant; checklist is a separate upload; "release after acceptance" is not evidence | Two phases (Phase-1 rejects Sept 24, 2026); novelty check across overlapping-author submissions |
+| ICLR 2027 | Review form not public (checked 2026-11-12); do not assume the 2026 scale | Not public | Not public | Reviewer AI use must be disclosed with a self-written assessment (see 5.5); discussion and revisions to Nov 18, 2026 |
+| AAAI-26 | 1-10 (OpenReview Phase-2 form; labels in 6.1) | 1-5 | Reproducibility is explicitly decision-relevant | Two phases; Phase-1 rejects have no rebuttal opportunity |
+| AAAI-27 | No reviewer-instruction page or rating form is public (checked 2026-11-12); do not assume the AAAI-26 1-10 scale carries over | Not public | Reproducibility decision-relevant; checklist is a separate upload; "release after acceptance" is not evidence | Two phases (Phase-1 rejects Sept 24, 2026); novelty check across overlapping-author submissions |
 
 Do not translate these scores to the systems 1-5 merit scale. Enter the venue's own fields and preserve its anchors.
 
-*Typical form; scales are set per HotCRP/OpenReview instance and are not published officially — use the scale on the live review form.* (Applies in particular to the ICLR 2026 row; ICLR sub-scores and confidence are not published on an official page.)
+*Scales for NeurIPS 2025, ICLR 2026 and AAAI-26 (Phase-2 form) were read from the public OpenReview review invitations on 2026-11-12; ICML 2026 from public review notes; NeurIPS 2026 from the Main Track Handbook. Scales can change each cycle — use the scale on the live review form.*
 
 ---
 
@@ -75,6 +76,10 @@ Reward candid limitations. Flag an ethics concern only when specialist review is
 11. Ethical-concerns flag
 12. Code-of-conduct acknowledgement
 13. Responsible-reviewing acknowledgement
+14. Paper-formatting concerns (text, up to 5,000 characters)
+15. Final justification (post-rebuttal)
+
+The ethical-concerns flag is a multi-select with eight "Major Concern: …" categories. Field names are from the NeurIPS 2025 OpenReview Official_Review invitation.
 
 The official 2025 form is **not** a 1-10 overall scale. Earlier-edition memories must not override the 2025 guide.
 
@@ -186,34 +191,40 @@ Any deviation can violate peer-review ethics and risk desk rejection of the revi
 
 ### 5.1 Review fields
 
-The 2026 form contains Summary, Strengths, Weaknesses, Questions, Soundness, Presentation, Contribution, Overall Rating, Confidence, a two-question Code-of-Ethics report, and an LLM-use disclosure. The reviewer guide additionally requires a clear initial accept/reject recommendation with one or two key reasons and separates decision-relevant arguments from optional improvement feedback.
+The 2026 form (public OpenReview Official_Review invitation, read 2026-11-12) contains Summary, Soundness, Presentation, Contribution, Strengths, Weaknesses, Questions, an ethics-review flag (multi-select, with optional details), Overall Rating, Confidence, a code-of-conduct acknowledgement, and an optional `LLM_usage` checkbox that flags a paper whose significant LLM use is undisclosed. It has no field for the reviewer's own LLM use, although the Reviewer Guide says reviewers must disclose it (see 5.4). The reviewer guide additionally requires a clear initial accept/reject recommendation with one or two key reasons and separates decision-relevant arguments from optional improvement feedback.
 
 ### 5.2 Score calibration
 
 **Subscores:** Soundness, Presentation, and Contribution use 1-4, from poor to excellent. Explain every low subscore in the prose.
 
-**Overall Rating (2026 public form):** use only the offered points.
+**Overall Rating (2026 public form):** use only the offered points. Labels are the form's own wording.
 
-| Score | Label | Well-calibrated use |
-|-------|-------|---------------------|
-| 10 | Strong accept | Outstanding on every major dimension; clear conference highlight |
-| 8 | Accept | Strong evidence, clear presentation, and a genuinely valuable contribution |
-| 6 | Weak accept | Solid and above the bar, with bounded weaknesses |
-| 4 | Borderline reject | No fatal flaw, but the acceptance case is not yet strong enough |
-| 2 | Reject | Major technical, experimental, novelty, or reproducibility problems |
-| 0 | Strong reject | Fundamentally flawed, already known, or substantially unfinished |
+| Score | Official label | Well-calibrated use |
+|-------|----------------|---------------------|
+| 10 | strong accept, should be highlighted at the conference as spotlight or oral | Outstanding on every major dimension; clear conference highlight |
+| 8 | accept, good paper (poster) | Strong evidence, clear presentation, and a genuinely valuable contribution |
+| 6 | marginally above the acceptance threshold. But would not mind if paper is rejected | Solid and above the bar, with bounded weaknesses |
+| 4 | marginally below the acceptance threshold. But would not mind if paper is accepted | No fatal flaw, but the acceptance case is not yet strong enough |
+| 2 | reject, not good enough | Major technical, experimental, novelty, or reproducibility problems |
+| 0 | strong reject | Fundamentally flawed, already known, or substantially unfinished |
 
-**Confidence:** 1-5. Treat 5 as deep expertise plus careful checking and 1 as an educated guess. Confirm the current invitation before submission if OpenReview changes an option or label.
+**Sub-scores:** 4 excellent, 3 good, 2 fair, 1 poor.
 
-*Typical form; scales are set per HotCRP/OpenReview instance and are not published officially — use the scale on the live review form.* (The {0,2,4,6,8,10} overall scale, 1-4 sub-scores and 1-5 confidence above are not published on an official ICLR page.)
+**Confidence (1-5):** 5 absolutely certain, very familiar with the related work, checked the math/other details carefully; 4 confident but not absolutely certain; 3 fairly confident; 2 willing to defend the assessment, but quite likely did not understand central parts or related work; 1 unable to assess the paper and has alerted the ACs to seek another opinion. Do not inflate confidence because the prose is polished.
+
+Source: the public OpenReview Official_Review invitation for ICLR 2026 (guest-readable); the scores, labels and ranges above match it.
 
 ### 5.3 Public discussion and revisions
 
 Official reviews are public. Engage actively from **November 11 through December 3, 2025**. Authors may post unlimited comments and revise title, abstract, paper, and supplement; `pdfdiff` exposes changes. Reviewers may ignore revisions that differ significantly from the original scope. Read revisions and other reviews, join a borderline-paper meeting if requested, then update the final recommendation and state what did or did not change it. All submissions are de-anonymized and released after decisions; post-deadline withdrawals are immediately public and de-anonymized.
 
-### 5.4 Reviewer LLM policy
+### 5.4 Reviewer LLM policy (ICLR 2026)
 
-General-purpose writing assistance is allowed, but the reviewer owns every claim and must disclose any LLM use in the review form. Fabrication, plagiarism, scientific misconduct, low-quality generated content, or nondisclosure can put the reviewer's own papers at risk of desk rejection. Preserve submission confidentiality.
+General-purpose writing assistance is allowed, but the reviewer owns every claim. The ICLR 2026 Reviewer Guide says: "we mandate that reviewers disclose the use of LLMs in their reviews. The review form will include a field to specify how you used LLMs, if at all. Failing to disclose this usage may put the reviewers' papers at risk for desk rejection as well." The public form read on 2026-11-12 shows no such reviewer field: its optional `LLM_usage` checkbox is about the paper ("If you believe this paper made significant use of LLMs beyond typos and grammar, and this usage is not described in the paper, check this box to flag it for further review."). Follow the guide anyway and tell the AC if you used an LLM. Fabrication, plagiarism, scientific misconduct, low-quality generated content, or nondisclosure can put the reviewer's own papers at risk of desk rejection. Preserve submission confidentiality.
+
+### 5.5 ICLR 2027 reviewer AI rule
+
+Source: ICLR 2027 AI Policy for Reviewers (iclr.cc/Conferences/2027/AIPolicyForReviewers, read 2026-11-12). "We permit limited and responsible use of AI tools to assist human writing of peer reviews and meta-reviews. However, it is mandatory to disclose use of AI tools. The reviewing form would solicit this information. If you use LLMs to generate or edit any portion of your (meta) reviews, you will be required to report your original, self-written paper assessment, and any LM interactions, in an accompanying textbox." Consequences "may include desk-rejecting all papers authored by the (meta) reviewer or restrictions on submission to future conferences". The ICLR 2027 review form itself is not public (checked 2026-11-12): do not assume the 2026 scale.
 
 ---
 
@@ -228,7 +239,7 @@ General-purpose writing assistance is allowed, but the reviewer owns every claim
 - The review process includes a **substantial novelty check across submissions with overlapping authors**; substantially similar or thin-sliced submissions may be summarily rejected.
 - Timeline: Phase-1 rejections Sept 24, 2026; author feedback Oct 24-31, 2026; final notification Nov 30, 2026.
 - The AAAI-27 Main Technical Track Call states: "Phase 1: Two reviews supplemented by one AI-generated, non-decisional review." (Phase 2 adds further reviews for papers not rejected in Phase 1.) Treat it like the AAAI-26 AI review: do not copy it, and form your own judgement.
-- AAAI-27 reviewer instruction pages were not yet published at the AAAI-26 URL pattern as of Oct 2026 — confirm rating/confidence anchors and any AI-review pilot details on the live OpenReview form.
+- No AAAI-27 reviewer-instruction page exists at the AAAI-26 URL pattern or elsewhere under aaai.org/conference/aaai/aaai-27 (checked 2026-11-12); the review-process page describes the two phases only. Confirm rating/confidence anchors on the live OpenReview form; do not assume the AAAI-26 scale carries over.
 
 ### 6.1 Review structure and fields
 
@@ -241,7 +252,20 @@ AAAI-26 explicitly says it does not require a fixed prose structure. Its recomme
 5. Reproducibility assessment informed by the submitted checklist
 6. Ethics/conflict reporting and required acknowledgements in the live form
 
-The public AAAI-26 reviewer pages do **not** publish the numeric rating or confidence anchors. Do not import another venue's scale or an older AAAI scale. Confirm both against the current OpenReview form.
+The public AAAI-26 reviewer web pages do not publish the anchors, but the AAAI-26 OpenReview Official_Review form (Phase-2 form, read 2026-11-12; the Phase-1 form is not guest-visible) uses a 10-point rating and a 5-point confidence. Do not import another venue's scale.
+
+| Rating | AAAI-26 label | | Confidence | AAAI-26 label |
+|--------|---------------|-|------------|---------------|
+| 10 | Top 5% of accepted papers, seminal paper | | 5 | Absolutely certain, very familiar with the relevant literature |
+| 9 | Top 15% of accepted papers, strong accept | | 4 | Confident but not absolutely certain |
+| 8 | Top 50% of accepted papers, clear accept | | 3 | Fairly confident |
+| 7 | Good paper, accept | | 2 | Willing to defend the evaluation, but quite likely did not understand central parts of the paper |
+| 6 | Marginally above acceptance threshold | | 1 | Educated guess |
+| 5 | Marginally below acceptance threshold | | | |
+| 4 | Ok but not good enough - rejection | | | |
+| 3 | Clear rejection | | | |
+| 2 | Strong rejection | | | |
+| 1 | Trivial or wrong | | | |
 
 ### 6.2 Two-phase process
 
@@ -361,6 +385,10 @@ After reading the response, maintain/raise/lower the recommendation from X to Y.
 - LLM Policy: https://icml.cc/Conferences/2026/LLM-Policy
 - Call for Papers: https://icml.cc/Conferences/2026/CallForPapers
 
+### ICLR 2027
+
+- AI Policy for Reviewers: https://iclr.cc/Conferences/2027/AIPolicyForReviewers
+
 ### ICLR 2026
 
 - Reviewer Guide: https://iclr.cc/Conferences/2026/ReviewerGuide
@@ -378,5 +406,6 @@ After reading the response, maintain/raise/lower the recommendation from X to Y.
 
 - Submission Instructions (incl. reproducibility guidelines + timeline): https://aaai.org/conference/aaai/aaai-27/submission-instructions
 - Main Technical Track Call: https://aaai.org/conference/aaai/aaai-27/main-technical-track-call/
+- Review Process (two phases; no reviewer instructions): https://aaai.org/conference/aaai/aaai-27/review-process/
 - Author Kit (style + reproducibility checklist): https://aaai.org/authorkit27/
 - OpenReview conference portal (canonical live form): https://openreview.net/group?id=AAAI.org/2027/Conference
