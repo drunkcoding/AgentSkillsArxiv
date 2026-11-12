@@ -23,9 +23,9 @@ Run before submission. Read the proposal **adopting a reviewer's mindset** — s
 
 ### Procedure
 
-1. **Print or read** the proposal in one sitting (~45 minutes for a 15 pp NSF, ~90 minutes for a 45 pp Horizon).
+1. **Print or read** the proposal in one sitting (~45 minutes for a 15 pp NSF, ~90 minutes for a 40-45 pp Horizon).
 2. **Open the funder's published evaluation criteria** alongside.
-3. **Score each criterion** as the reviewer would (1-5 NIH, 1-5 Horizon, 1-9 ERC) with one sentence of justification.
+3. **Score each criterion** as the reviewer would (NIH 1-9 for overall impact and for the two scored factors, 1 = best; Horizon 0-5 per criterion; ERC letter grades A/B/C at each step, not numbers) with one sentence of justification.
 4. **List the top 5 weaknesses** you would write in a review.
 5. **List the top 3 strengths** as the reviewer would phrase them.
 6. **Predict the reject/revise/accept verdict.**
@@ -33,7 +33,7 @@ Run before submission. Read the proposal **adopting a reviewer's mindset** — s
 
 ### Calibration
 
-If your self-score is uniformly above 4/5 (Horizon) or below 3 (NIH), recalibrate — proposals that look perfect to authors usually have blind spots. Aim for *honest* scores; act on the lowest one.
+If your self-score is uniformly above 4/5 (Horizon) or uniformly 1-2 on the NIH 1-9 scale (1 = best), recalibrate — proposals that look perfect to authors usually have blind spots. Aim for *honest* scores; act on the lowest one.
 
 ## Funder-Specific Rubric Checklists
 
@@ -53,6 +53,8 @@ If your self-score is uniformly above 4/5 (Horizon) or below 3 (NIH), recalibrat
 - [ ] Are appropriate beneficiaries explicitly identified?
 
 ### NIH Reviewer Checklist (Significance / Innovation / Approach + Investigator + Environment)
+
+For most research project grants with due dates on or after January 25, 2025, NIH uses the Simplified Review Framework: **Factor 1 Importance of the Research** (Significance, Innovation) and **Factor 2 Rigor and Feasibility** (Approach) are each scored 1-9, **Factor 3 Expertise and Resources** (Investigators, Environment) is rated sufficient or not, and all three feed the 1-9 overall impact score. The questions below map onto those factors; confirm the framework for your mechanism in the NIH notice (NOT-OD-24-010) and the funding opportunity.
 
 **Significance:**
 - [ ] Does the project address an important problem in the field?
@@ -77,13 +79,13 @@ If your self-score is uniformly above 4/5 (Horizon) or below 3 (NIH), recalibrat
 
 ### ERC Reviewer Checklist
 
-**Project (B1 + B2):**
+**Project (Part I + Part II):**
 - [ ] Ground-breaking nature, ambition, and feasibility
 - [ ] High-gain / high-risk articulated
 - [ ] Methodology adequate to the question
 
 **PI:**
-- [ ] Track record demonstrates capacity to produce ground-breaking work
+- [ ] CV and Track Record demonstrate capacity to produce ground-breaking work
 - [ ] Independence from prior advisors (StG / CoG)
 - [ ] Appropriate to grant tier (StG: emerging; CoG: consolidating; AdG: senior)
 
@@ -181,7 +183,7 @@ Stay within 1 page. Use full sentences, not bullet lists, for NIH style.
 
 ## NSF Resubmission
 
-NSF does not have a formal A1 mechanism — a resubmitted proposal is a new submission. However, panels remember (especially CISE no-deadline programs).
+NSF does not have a formal A1 mechanism — a resubmitted proposal is a new submission. However, reviewers may have seen the earlier version.
 
 - **Address prior panel feedback proactively** in the new submission
 - Often included in **Results from Prior NSF Support** section (if PI had NSF funding) or as an **introductory paragraph**
@@ -190,13 +192,9 @@ NSF does not have a formal A1 mechanism — a resubmitted proposal is a new subm
 
 ## ERC Resubmission
 
-ERC has a **cooling-off** mechanism:
+ERC has **resubmission restrictions** that depend on the earlier outcome and are re-issued in every work programme. Under the Work Programme 2027 table, a C (2025 calls) or a B or C (2026 calls) at Step 1 can make the PI ineligible for some or all of the 2027 calls, depending on which call was applied to (for example, a Synergy 2025 C bars only the Synergy 2027 call); see the table summary in [erc.md](erc.md#submission-logistics). There is no restriction listed for a B at Step 2. Read the restrictions table of the work programme that governs your call.
 
-- Score "C" at Step 1 → **2-year ban** on ERC applications
-- Score "B" at Step 2 → **1-year ban**
-- Otherwise: free to resubmit, must substantially revise
-
-ERC does not have a formal response document — submit a revised B1 + B2. The revised proposal may reference how it has evolved, but the bulk of the work is in the science itself.
+ERC does not have a formal response document — submit a revised Part I + Part II (and CV and Track Record). The revised proposal may reference how it has evolved, but the bulk of the work is in the science itself.
 
 ## Horizon Resubmission
 
@@ -204,8 +202,8 @@ Horizon proposals receive an **Evaluation Summary Report (ESR)** with per-criter
 
 - Read the ESR systematically; address each weakness
 - A revised proposal may reference the ESR comments in a brief intro, but most response is via revised content
-- If the score was just below threshold (e.g., 13.5/15), targeted revision often succeeds
-- If a criterion failed threshold (<3.0/5), substantial restructure needed
+- If the score passed the formal thresholds (each criterion ≥ 3 and overall ≥ 10 out of 15) but fell below the funding cut-off of a competitive call (e.g., 13.5/15), targeted revision often succeeds
+- If a criterion fell below its threshold (< 3/5), or the total below 10/15, substantial restructure is needed
 
 ## Tone and Phrase Templates for Responses
 
@@ -236,4 +234,4 @@ Horizon proposals receive an **Evaluation Summary Report (ESR)** with per-criter
 - [ ] Within length limits for the response document (NIH: 1 page Intro)
 - [ ] No new contradictions introduced between sections
 - [ ] Updated preliminary data, citations, team if relevant
-- [ ] Cooling-off rules verified (ERC, sometimes Horizon)
+- [ ] Resubmission restrictions verified (ERC; check the call for Horizon and UKRI)

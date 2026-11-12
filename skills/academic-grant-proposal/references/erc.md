@@ -1,13 +1,15 @@
 # ERC Proposals
 
+> Facts last verified 2026-11-12 against the ERC Work Programmes 2025, 2026 and 2027 (the 2027 edition governs the calls with 2026-2027 deadlines). Funder rules change with every work programme — confirm against the current call documents before relying on any limit or amount.
+
 European Research Council. Funds **frontier, ground-breaking research** chosen on scientific excellence — single criterion, single PI. Hosted at any EU/associated-country institution.
 
 ## Table of Contents
 
 1. [Mechanism Selection](#mechanism-selection)
-2. [Application Structure (B1 + B2)](#application-structure-b1--b2)
-3. [Part B1: Extended Synopsis (5 pages)](#part-b1-extended-synopsis-5-pages)
-4. [Part B2: Full Scientific Proposal (15 pages)](#part-b2-full-scientific-proposal-15-pages)
+2. [Application Structure (Part I + Part II)](#application-structure-part-i--part-ii)
+3. [Part I of the Scientific Proposal (5 pages)](#part-i-of-the-scientific-proposal-5-pages)
+4. [Part II of the Scientific Proposal (7 pages)](#part-ii-of-the-scientific-proposal-7-pages)
 5. [Ground-Breaking Nature, High Gain / High Risk](#ground-breaking-nature-high-gain--high-risk)
 6. [PI Track Record](#pi-track-record)
 7. [Two-Step Evaluation](#two-step-evaluation)
@@ -18,34 +20,40 @@ European Research Council. Funds **frontier, ground-breaking research** chosen o
 
 ## Mechanism Selection
 
-| Grant | Career stage (years post-PhD) | Budget | Duration |
+| Grant | Eligibility (years since PhD defence) | Budget (max, WP2027) | Duration |
 |---|---|---|---|
-| **Starting Grant (StG)** | 2-7 years | up to €1.5M (+ €1M startup/equipment) | 5 years |
-| **Consolidator Grant (CoG)** | 7-12 years | up to €2M (+ €1M) | 5 years |
-| **Advanced Grant (AdG)** | senior, established (10+ yr exceptional record) | up to €2.5M (+ €1M) | 5 years |
-| **Synergy Grant (SyG)** | 2-4 PIs (any stage) | up to €10M (+ €4M) | 6 years |
+| **Starting Grant (StG)** | WP2027: > 0 and ≤ 10 years before 1 Jan 2027. WP2026 and earlier: 2-7 years | up to €1.5M (+ up to €1M additional funding) | 5 years |
+| **Consolidator Grant (CoG)** | WP2027: > 5 and ≤ 15 years before 1 Jan 2027. WP2026 and earlier: 7-12 years | up to €2M (+ up to €1M) | 5 years |
+| **Advanced Grant (AdG)** | No specific academic eligibility period ("open to all researchers"); the PI is expected to be an established research leader with a track record of significant research achievements | up to €2.5M (+ up to €1M) | 5 years |
+| **Synergy Grant (SyG)** | 2-4 PIs of any seniority, each with a track record matching their career stage | up to €10M (+ up to €4M) | 6 years |
 | **Proof of Concept (PoC)** | existing ERC grantees only | €150K | 18 months |
 
-The career-stage clock has documented allowances (parental leave, illness, military service). Verify eligibility in the current ERC Work Programme.
+Additional funding is "intended to cover further eligible costs for any cost category when these are necessary to carry out the proposed work" and must be justified in the proposal (StG/CoG/AdG PIs relocating to the EU or an Associated Country from elsewhere can request up to €2M). The eligibility windows differ by work programme, so check which one governs your call; the 2027 windows were newly introduced in WP2027. The career-stage clock has documented allowances (e.g., maternity leave, long illness, other well-documented circumstances). Verify eligibility in the current ERC Work Programme.
 
-## Application Structure (B1 + B2)
+**ERC Plus Grant (WP2027):** open to all researchers; up to €7M, 48-84 months, no additional funding; only about 30 are awarded per year; requires a Statement of Vision (½-2 pages) explaining what the project achieves beyond a regular ERC grant.
 
-ERC applications have two scientific files plus administrative attachments:
+## Application Structure (Part I + Part II)
 
-- **Part B1** (≤5 pp synopsis + ≤2 pp track record + CV) — read at **Step 1** (remote panel review)
-- **Part B2** (≤15 pp full scientific proposal) — read at **Step 2** (panel + interview)
+Under WP2026 and WP2027 the ERC Scientific Proposal has two parts (older material calls them B1/B2; WP2025 used a 5-page "Extended Synopsis" plus a 14-page "Scientific Proposal"). WP2027 §1.5.1 lists these sections and page limits for StG, CoG, AdG, ERC Plus and SyG:
 
-ERC is **two-step**: B1 alone determines whether your proposal advances to Step 2. Most rejections happen at Step 1. **Treat B1 as a self-contained sales pitch**, not a teaser for B2.
+- **Part I** of the Scientific Proposal — up to **five pages**
+- **Part II** of the Scientific Proposal — up to **seven pages** (up to ten for Synergy Grant proposals)
+- **Curriculum Vitae (CV) and Track Record** — up to **four pages for each Principal Investigator** (one combined section)
+- **Resources and Time Commitment** — up to two pages (SyG may exceed two)
+- **Host Institution Support Letter**, **Ethics Issues Table**, plus (StG/CoG only) PhD record and eligibility documents and (AdG/ERC Plus only) an Equipment Depreciation Table
+
+References and the funding ID section do not count towards these page limits. "Only the material that is presented within these limits will be evaluated." Proposals missing a required section may be declared inadmissible.
+
+**Evaluation steps.** StG, CoG, AdG and ERC Plus are two-step; **Synergy Grants are three-step** (interviews at Step 3). At **Step 1** only Part I and the CV and Track Record (plus the Statement of Vision for ERC Plus) are assessed, so **Part I plus the CV/Track Record alone decide whether you advance**. Most rejections happen at Step 1. **Treat Part I as a self-contained sales pitch**, not a teaser for Part II. At Step 2 the complete Research Proposal is assessed (StG/CoG/AdG: with an interview).
 
 Plus:
-- **CV** (max 2 pp)
-- **Track Record** (max 2 pp; AdG: 4 pp) — appended to B1
-- **Host Institution Support letter** (StG/CoG only, optional but customary)
+- **CV and Track Record** (one section, up to 4 pp per PI): see [PI Track Record](#pi-track-record)
+- **Host Institution Support Letter** — a binding statement of support that "must be provided at the time of application" for all grant types; proposals without it "may be declared inadmissible" (template annexed to the Information for Applicants)
 - **Administrative forms** in EU Funding & Tenders portal
 
-## Part B1: Extended Synopsis (5 pages)
+## Part I of the Scientific Proposal (5 pages)
 
-The most-read document. **A panel reviews 80+ B1s in a few days.** Front-load aggressively. Recommended structure:
+The most-read document. Part I "should present the envisaged research": current state of knowledge, the scientific question and objectives, and the overall approach or research strategy. Panels read many Part I texts in a short time, so front-load aggressively. Suggested structure (a drafting heuristic, not an ERC template):
 
 1. **State of the Art and Objectives** (1.5 pp)
    - Open with the field's status quo and the specific bottleneck
@@ -68,17 +76,16 @@ The most-read document. **A panel reviews 80+ B1s in a few days.** Front-load ag
 
 Tone: confident, direct, future-tense. Reviewers look for **bold, well-justified ambition**.
 
-## Part B2: Full Scientific Proposal (15 pages)
+## Part II of the Scientific Proposal (7 pages)
 
-Read at Step 2 (after passing Step 1). Recommended structure:
+Read at Step 2 (after passing Step 1; ten pages for Synergy Grants). WP2027 describes it as "a detailed explanation of the project implementation, including research methodology, work plan, risk assessment, and mitigating measures and any further necessary background not included in Part I". An annex listing all ongoing research grants and pending applications related to the proposal is also supplied; it does not count towards the page limit. Synergy Grant Part II must also describe and justify the collaborative arrangements and each PI's contribution. Suggested structure (a drafting heuristic; allocate the seven pages by what the project needs):
 
-1. **State of the Art** (2-3 pp) — comprehensive, with citations
-2. **Objectives** (1 pp) — refined from B1
-3. **Methodology / Work Plan** (8-10 pp)
+1. **Objectives (refined from Part I) and any background not in Part I** — keep short; do not repeat Part I
+2. **Methodology / Work Plan** — the bulk of Part II
    - Per work package: scientific challenge, approach, preliminary results, milestones, deliverables, risks + mitigations
    - Include a **Gantt chart** (typical 5-year timeline)
-4. **Resources** (1 pp) — personnel, equipment, travel, justification
-5. **Bibliography** — counts toward the 15-page limit since 2024 (verify current rules)
+3. **Risk assessment and mitigation** — could be integrated per work package
+4. **Resources** — put the detailed budget table, the justification and the PI's time commitment in the separate **Resources and Time Commitment** section (up to two pages, outside Part II), not here
 
 ERC does not have prescribed sub-section headings — choose what is clearest. Most successful proposals use 3-5 work packages with explicit interdependencies and milestones.
 
@@ -99,23 +106,26 @@ ERC is **not interested in incremental work**. Phrases that signal incrementalis
 
 ## PI Track Record
 
-The 2-page Track Record (AdG: 4 pp) is **the single decisive document** beyond B1. Structure (per current ERC template):
+The **CV and Track Record** (up to four pages for each Principal Investigator, as one combined section under WP2026/WP2027) is **the single decisive document** beyond Part I. Per WP2027 §1.5.1 it contains:
 
-- **10 most representative publications** (StG: 5 since PhD)
-- **Major invited presentations** at international conferences (5-10)
-- **Major prizes / awards / academic distinctions**
-- **Other relevant achievements** — patents, software releases, organized workshops, editorial roles, mentorship
+- Personal details, education, key qualifications, current and previous positions
+- A list of **up to ten research outputs** (any type) that demonstrate how you have advanced knowledge in your field, emphasising more recent achievements
+- A list of selected examples of **significant peer recognition**
+- Optionally, a short explanation of the significance of each output, your role in it, and why it shows capacity to carry out the project
+- Optionally, information on career breaks, diverse career paths and life events, and noteworthy contributions to the research community (panels use this to judge achievements relative to career stage)
 
-Lead-author / corresponding-author publications are weighted heavily for StG/CoG. CS proposals: list **citation counts and venue rank** for each paper (ERC panels are heterogeneous; signaling matters).
+Lead-author / corresponding-author publications are weighted heavily for StG/CoG. CS proposals: where the format allows, give **citation counts and venue rank** for each output (ERC panels are heterogeneous; signaling matters). Software, datasets and other non-paper outputs are valid research outputs.
 
 ## Two-Step Evaluation
 
 | Step | Evaluators | Read | Typical pass rate |
 |---|---|---|---|
-| **Step 1** | Panel members (remote) | B1 + CV + Track Record | ~25-35% |
-| **Step 2** | Panel + external reviewers + **interview** | B1 + B2 + reviews | ~30-40% of Step 2 |
+| **Step 1** | Panel members (remote) | Part I + CV and Track Record | ~25-35% (not verified; confirm in the current Information for Applicants) |
+| **Step 2** | Panel + external reviewers + **interview** (StG/CoG/AdG) | Full Research Proposal (Part I + Part II + CV/Track Record + Resources) + reviews | ~30-40% of Step 2 (not verified; confirm in the current Information for Applicants) |
 
-Overall success rate ≈10-15%. The interview at Step 2 is **15-25 minutes** (StG: 10 min talk + 15 min Q&A). Prepare a 5-slide deck on B2 work packages, anticipated criticisms, and key results.
+Synergy Grants have a third step: Step 1 and Step 2 as above, with interviews at Step 3 (WP2027 §1.6.3).
+
+**Scores** are letter grades, not numeric: at Step 1 *A invited*, *A not invited*, *B* or *C*; at the final step *A* (recommended for funding if funds allow) or *B* (not funded). Overall success rate ≈10-15% (not verified; confirm in the current Information for Applicants). The interview at Step 2 is **15-25 minutes** (StG: 10 min talk + 15 min Q&A) (not verified; confirm in the current Information for Applicants). Prepare a 5-slide deck on the Part II work packages, anticipated criticisms, and key results.
 
 ## Common Differences from US Proposals
 
@@ -125,23 +135,24 @@ Overall success rate ≈10-15%. The interview at Step 2 is **15-25 minutes** (St
 | **Author count** | Single PI (or 2-4 SyG) | PI + co-PIs |
 | **Reviewer panel** | Disciplinary panels (PE / LS / SH) | Mixed-discipline study sections |
 | **Risk tolerance** | High-risk welcomed | More risk-averse |
-| **Length** | 5+15 pp + appendices | 15 pp (NSF) or 12 pp (NIH R01) |
-| **Resubmission** | Limited (cooling-off after multiple rejections) | A1 resubmission (NIH) standard |
+| **Length** | Part I 5 pp + Part II 7 pp + CV/Track Record up to 4 pp per PI + Resources up to 2 pp (WP2026/WP2027) | 15 pp (NSF) or 12 pp (NIH R01) |
+| **Resubmission** | Eligibility restrictions after a low Step-1 score (see Submission Logistics) | A1 resubmission (NIH) standard |
 | **Compute justification** | Less granular than NSF | Itemized |
-| **Ethics** | Required Ethics Self-Assessment (separate form) | IRB/IACUC if applicable |
+| **Ethics** | Required Ethics Issues Table | IRB/IACUC if applicable |
 
 ## Submission Logistics
 
 - **Portal:** EU Funding & Tenders Opportunities Portal (F&T)
-- **Calls:** typically annual — StG (Oct deadline), CoG (Jan), AdG (May), SyG (Nov) — verify in current Work Programme
-- **Letter of commitment from Host Institution** — required (provides ~50% effort, lab space)
-- **Ethics Self-Assessment** — separate ethics issues table covering data, human/animal subjects, dual use
-- **Common Step-1 rejection reasons:** B1 reads as incremental, scientific question not ground-breaking, methodology not justified, PI track record insufficient for grant tier, panel mismatch (panel selection matters — pick wisely)
-- **Cooling-off:** if scored "C" at Step 1, you may not apply for 2 years; "B" at Step 2 → 1-year cooling-off
+- **Calls:** typically annual; dates shift with each work programme. WP2027 (provisional dates): StG opened 22 Jul 2026, deadline **14 Oct 2026** (already passed as of 2026-11-12); CoG opened 24 Sep 2026, deadline **12 Jan 2027**; SyG opens 17 Feb 2027, deadline **11 May 2027**; AdG opens 27 May 2027, deadline **26 Aug 2027**; ERC Plus deadline 1 Sep 2027. The ERC may move dates, so verify in the current Work Programme and call page.
+- **Host Institution Support Letter** — required for all grant types, a binding statement of support provided at application (see Application Structure)
+- **PI minimum time commitment** (an eligibility rule on the PI, separate from the host letter; WP2027 Table 5): at least **50% of working time on the project for StG, 40% for CoG, 30% for AdG** (30% for each PI in a SyG), and at least 50% of working time in an EU Member State or Associated Country. Applicants who do not meet it are ineligible. State the percentages in the Resources and Time Commitment section.
+- **Ethics Issues Table** — covers data, human/animal subjects, dual use
+- **Common Step-1 rejection reasons:** Part I reads as incremental, scientific question not ground-breaking, methodology not justified, PI track record insufficient for grant tier, panel mismatch (panel selection matters — pick wisely)
+- **Resubmission restrictions** (WP2027 Table 6, "Resubmission Restrictions"): a restriction ties an earlier outcome to ineligibility for later calls. For the 2027 calls: a **C at Step 1 in the 2025 StG/CoG/AdG calls**, or a **B or C at Step 1 in the 2026 StG/CoG calls**, makes the PI ineligible for the StG, CoG, AdG, ERC Plus and SyG 2027 calls; a B or C at Step 1 in the 2026 AdG call makes the PI ineligible for the StG, CoG, AdG and ERC Plus 2027 calls. For Synergy Grants, a C (2025) or B/C (2026) at Step 1 bars the SyG 2027 call; an ERC Plus 2026 proposal "not retained" at Step 1 bars the ERC Plus 2027 call. A research-integrity rejection in the 2025 or 2026 calls bars all 2027 main calls. An *A not invited* at Step 1 is not listed as a restriction. **The table is re-issued in every work programme**, so read section 1.4 of the Work Programme that governs your call.
 
 ## CS / Systems / ML Notes for ERC
 
 - ERC panels relevant to CS: **PE6** (Computer Science and Informatics) — most CS proposals; **PE7** (Systems and Communication Engineering) for hardware-adjacent; **LS** panels for computational biology; **SH** for human-AI / digital humanities
 - PE6 rewards **theoretical depth**; pure systems-engineering proposals fare better in PE7 or via larger collaborative calls
 - **Open-source release** is increasingly mentioned in ERC ethics/reproducibility discussions but is not formally graded
-- ERC interviews are **technical** — expect questions about ablations, baselines, scaling assumptions
+- ERC interviews are **technical** — expect questions about ablations, baselines, scaling assumptions (practitioner experience, not an ERC rule)

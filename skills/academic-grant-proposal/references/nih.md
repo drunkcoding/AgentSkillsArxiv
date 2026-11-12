@@ -1,5 +1,7 @@
 # NIH Proposals
 
+Facts last verified 2026-11-12 against NIH Guide notices NOT-OD-24-010 (Simplified Review Framework), NOT-OD-26-018 and NOT-OD-26-033 (Common Forms), and NOT-OD-25-132 (application limit). Funder rules change frequently — confirm against the current solicitation/NOFO before relying on any limit or amount.
+
 US National Institutes of Health. CS/ML proposals typically go to **NIBIB** (Bioimaging/Bioengineering), **NLM** (Library of Medicine — biomedical informatics, computational biology), or as cross-cutting BD2K / Bridge2AI / DataScience initiatives.
 
 ## Table of Contents
@@ -8,7 +10,7 @@ US National Institutes of Health. CS/ML proposals typically go to **NIBIB** (Bio
 2. [SF424 Components](#sf424-components)
 3. [Specific Aims (1 page) — the most important page](#specific-aims-1-page--the-most-important-page)
 4. [Research Strategy (12 pages)](#research-strategy-12-pages)
-5. [Significance, Innovation, Approach Scoring](#significance-innovation-approach-scoring)
+5. [Review Criteria and Scoring (Simplified Review Framework)](#review-criteria-and-scoring-simplified-review-framework)
 6. [R01 vs R21 Strategic Differences](#r01-vs-r21-strategic-differences)
 7. [K-Awards (Career Development)](#k-awards-career-development)
 8. [F-Awards (Fellowships)](#f-awards-fellowships)
@@ -22,8 +24,8 @@ US National Institutes of Health. CS/ML proposals typically go to **NIBIB** (Bio
 | Mechanism | Purpose | Budget (annual) | Duration | Research Strategy pp |
 |---|---|---|---|---|
 | **R01** | Mature, hypothesis-driven research | typically $250-500K direct | up to 5 yr | 12 pp |
-| **R21** | Exploratory / high-risk-high-reward | $275K total over 2 yr | 2 yr | 6 pp |
-| **R03** | Small grants, pilot projects | $50K/yr | 2 yr | 6 pp |
+| **R21** | Exploratory / high-risk-high-reward | $275K total over 2 yr (confirm on grants.nih.gov) | 2 yr | 6 pp (confirm on grants.nih.gov) |
+| **R03** | Small grants, pilot projects | $50K/yr (confirm on grants.nih.gov) | 2 yr | 6 pp |
 | **R37** | MERIT extension of R01 | as R01 | up to 7 yr | as R01 |
 | **K99/R00** | Postdoc → faculty transition | varies | 5 yr (2+3) | 12 pp |
 | **K01/K08/K23** | Career development for junior PIs | salary support + research | 3-5 yr | 12 pp |
@@ -45,7 +47,7 @@ PHS 398/PHS 2590 / SF424 (R&R) Application Guide — required documents (most cu
 6. **Bibliography & References Cited** — no page limit
 7. **Facilities & Other Resources** — no page limit
 8. **Equipment** — no page limit
-9. **Biosketch** (per senior person, NIH format) — 5 pages max, SciENcv-generated
+9. **Biographical Sketch** (per senior person) — Common Form + NIH Biographical Sketch Supplement for due dates on/after Jan 25, 2026, SciENcv-generated, no page limit for the combined PDF (NOT-OD-26-018); also **Current and Pending (Other) Support** Common Form
 10. **Budget + Budget Justification** — modular ($250K/yr cap) or detailed (>$250K)
 11. **Resource Sharing Plans** — Data Management & Sharing Plan, Model Organism Sharing
 12. **Vertebrate Animals** / **Human Subjects** sections (if applicable)
@@ -120,18 +122,19 @@ Per Aim, a self-contained subsection containing:
 
 Approach is graded most heavily of the three. Reviewers look for: rigor (statistical power, blinding, controls), feasibility (preliminary data + team expertise), and explicit alternative strategies.
 
-## Significance, Innovation, Approach Scoring
+## Review Criteria and Scoring (Simplified Review Framework)
 
-NIH 1-9 scoring (1 = exceptional, 9 = poor). Each criterion scored separately, plus an Overall Impact score. Funding line is currently around **2.0-3.0** at most institutes (varies by NI). Below 2.5 has a strong chance; above 4.0 rarely funded.
+For most research project grant (RPG) applications — including R01, R03, R21, R34, U01 and the other activity codes listed in NOT-OD-24-010 — with receipt dates **on or after Jan 25, 2025**, NIH uses the **Simplified Review Framework**. It reorganizes the five regulatory criteria (Significance, Investigators, Innovation, Approach, Environment) into three factors:
 
-| Score | Descriptor | Likelihood |
+| Factor | Contains | How reviewers rate it |
 |---|---|---|
-| 1-2 | Exceptional / Outstanding | High |
-| 3 | Excellent | Probable |
-| 4-5 | Very good / Good | Discussed but unlikely |
-| 6-9 | Satisfactory / Poor | Triaged (not discussed) |
+| **1. Importance of the Research** | Significance, Innovation | Criterion score 1-9 |
+| **2. Rigor and Feasibility** | Approach | Criterion score 1-9 |
+| **3. Expertise and Resources** | Investigator(s), Environment | Not numerically scored; reviewer selects "Appropriate" or "Identify need for additional expertise and/or resources" (the latter requires a brief explanation of the gaps) |
 
-**Triage threshold:** the bottom ~50% of applications are not discussed at study section. Your goal in the Specific Aims is to avoid triage.
+All three factors feed an **Overall Impact** score (1-9; 1 = exceptional, 9 = poor). Additional review criteria (human subjects, vertebrate animals, biohazards, resubmission/renewal/revision) are considered in the overall score but get no separate score. Clinical-trial and inclusion considerations are folded into Factor 2. Because Factor 3 is a sufficiency check, put your effort into Factors 1 and 2: state why the work matters (Significance, Innovation) and show rigor and feasibility (Approach: controls, sample-size justification, preliminary data, pitfalls and alternatives). In Biographical Sketch and Facilities text, show the team and resources fit *this project* rather than general reputation.
+
+Informal rules of thumb (unverified approximations, not NIH policy; they vary by institute and year — confirm on grants.nih.gov): funding lines are often cited as roughly 2.0-3.0 overall impact at many institutes, and scores above about 4 are rarely funded. The commonly cited "bottom ~50% not discussed (triaged)" threshold is likewise an unverified rule of thumb; check the current process for your study section.
 
 ## R01 vs R21 Strategic Differences
 
@@ -168,18 +171,17 @@ F31 (predoc), F32 (postdoc). Distinguishing requirements:
 
 ## Auxiliary Documents
 
-### NIH Biosketch (5 pages max)
-SciENcv-generated. Structure:
-- **A. Personal Statement** — narrative; explain why you are qualified for THIS specific project; cite up to 4 publications relevant to this proposal
-- **B. Positions, Scientific Appointments, and Honors**
-- **C. Contributions to Science** — up to 5 contributions, each with a paragraph + up to 4 cited publications. **Each contribution should describe an arc of research**, not list one paper.
-- **D. (removed since 2015)** — research support is now in Other Support
+### NIH Biographical Sketch (Common Form + NIH Supplement)
+NOT-OD-26-018 requires the **Biographical Sketch Common Form** plus the **NIH Biographical Sketch Supplement**, prepared in **SciENcv**, for application due dates (and JIT, RPPR, prior-approval submissions) on or after **Jan 25, 2026**. NOT-OD-26-033 extended a warning-only leniency period through May 2026, after which validations become errors on a date NIH announces; confirm current enforcement on grants.nih.gov. The combined PDF has no page limit. Details and character limits: see [biosketch_dmp.md](biosketch_dmp.md#nih-biosketch-and-other-support-common-forms-sciencv-required). In brief:
+- **Common Form** — Professional Preparation, Appointments and Positions, Products (up to 5 most closely related + up to 5 other significant)
+- **Supplement** — Personal Statement (no citations; 3,500 characters) and Contributions to Science (up to 5, each up to 2,000 characters; no citations). **Each contribution should describe an arc of research**, not list one paper.
+- Pre-2026 format (5 pages; sections A-C with cited publications) is legacy; Section D (research support) was removed earlier in favor of Other Support.
 
-### Other Support
-SciENcv-generated. Lists active and pending support per senior person. Disclose foreign affiliations (mandatory since 2021 due to research-security policies).
+### Current and Pending (Other) Support
+Common Form, SciENcv-generated, same Jan 25, 2026 effective date (NOT-OD-26-018); effort in person-months; own Statement of Potential Overlap per entry; supporting documentation (e.g., foreign contracts) attached separately. Disclose foreign affiliations (mandatory since 2021 due to research-security policies).
 
 ### Data Management and Sharing Plan (DMS Plan)
-**Mandatory since January 2023** for all R-mechanism applications. ≤2 pages. Address: data types, related tools/software, standards, data preservation/sharing, access/distribution, oversight. CS proposals: code release plan (license, repository) belongs here.
+**Mandatory since January 2023** for all R-mechanism applications. ≤2 pages (confirm on grants.nih.gov). Address: data types, related tools/software, standards, data preservation/sharing, access/distribution, oversight. CS proposals: code release plan (license, repository) belongs here.
 
 ### Vertebrate Animals / Human Subjects
 If applicable, structured sections required by NIH. CS-only proposals usually mark "no" and skip.
@@ -187,8 +189,9 @@ If applicable, structured sections required by NIH. CS-only proposals usually ma
 ## Submission Logistics
 
 - **Portal:** eRA Commons (via Grants.gov or ASSIST)
-- **Standard deadlines:** Feb 5, June 5, Oct 5 (R01 new); Mar 5, July 5, Nov 5 (R01 renewals/resubmissions); other mechanisms have separate dates — check the specific FOA
+- **Standard deadlines:** Feb 5, June 5, Oct 5 (R01 new); Mar 5, July 5, Nov 5 (R01 renewals/resubmissions) (confirm on grants.nih.gov); other mechanisms have separate dates — check the specific FOA
+- **Application limit:** NIH accepts at most six new, renewal, resubmission or revision applications per PI/PD (or MPI) per calendar year across all council rounds, for submissions from the Sep 25, 2025 receipt date onward; the limit applies to all activity codes except T codes and R13 (NOT-OD-25-132)
 - **Compliance check:** Office of Sponsored Research must validate before submission; allow ≥1 week
-- **Resubmission policy:** A1 (one resubmission) allowed for most mechanisms, must be submitted within 37 months of original A0; **the Introduction page (1 page) addresses prior reviewer comments**
+- **Resubmission policy:** A1 (one resubmission) allowed for most mechanisms, must be submitted within 37 months of original A0 (confirm on grants.nih.gov); **the Introduction page (1 page) addresses prior reviewer comments**
 - **Just-in-Time (JIT) information** requested ~3 months before award (after favorable score) — IRB/IACUC approvals, Other Support updates
-- **Common pitfalls:** Specific Aims over 1 page; Research Strategy over page limit; missing required appendix sections; Biosketch over 5 pages; not using SciENcv
+- **Common pitfalls:** Specific Aims over 1 page; Research Strategy over page limit; missing required appendix sections; Biosketch not on the Common Form / Supplement; exceeding Supplement character limits; not using SciENcv

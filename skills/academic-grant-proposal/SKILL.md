@@ -1,6 +1,6 @@
 ---
 name: academic-grant-proposal
-description: "Write academic grant proposals for major funders — NSF (CAREER, standard, CRII), NIH (R01, R21, K-series, F-series), ERC (Starting, Consolidator, Advanced), EU Horizon Europe, DARPA/DoD/DOE BAAs, and UKRI/EPSRC/Royal Society. Covers section drafting (Specific Aims, Project Description, Broader Impacts, Excellence/Impact/Implementation, Heilmeier Catechism), mock-reviewer critique against funder criteria, budget and budget justification, biosketches, Data Management Plans, and responses to reviewer critique on resubmission. Discipline focus: CS / Systems / ML, with examples aligned to compute-heavy research. Use when asked to draft, review, critique, revise, or budget any academic grant proposal, white paper, pre-proposal, or LOI."
+description: "Write, review, and revise academic GRANT proposals for major funders: NSF (CAREER, standard, CRII), NIH (R01, R21, K, F), ERC (Starting, Consolidator, Advanced, Synergy), EU Horizon Europe/EIC/MSCA, DARPA/DoD/DOE BAAs, and UKRI/EPSRC/Royal Society. Covers section drafting (Specific Aims, Project Description, Broader Impacts, Excellence/Impact/Implementation, Heilmeier Catechism), letters of intent, pre-proposals and white papers, mock-reviewer critique, budgets, biosketches, data management plans, and responses to funder reviews on grant resubmission. Focus: CS / systems / ML. Not for conference-paper rebuttals (use academic-rebuttal) or papers (academic-writing)."
 ---
 
 # Academic Grant Proposal Writing
@@ -13,7 +13,7 @@ Produce **fundable** grant proposals — proposals that pass each funder's speci
 
 ## Final delivery: humanize the output
 
-**REQUIRED SUB-SKILL (run before returning any draft to the user).** Load the `humanizer` skill (via the skill tool) and run the finished text through it as a final editing pass. It removes AI-writing tells (inflated significance, copula avoidance like "serves as", rule-of-three, overused AI vocabulary such as "delve"/"testament"/"landscape", filler phrases, sycophancy, and em/en-dash overuse) without inventing any fact, name, number, date, or citation. Preserve the format and conventions this skill requires (funder page limits, required headings, budget tables), and if the user supplied a writing sample, pass it so humanizer matches their voice.
+**REQUIRED SUB-SKILL (run before returning any draft to the user).** Load the `humanizer` skill (via the skill tool) and run the finished text through it as a final editing pass. It removes AI-writing tells (inflated significance, copula avoidance like "serves as", rule-of-three, overused AI vocabulary such as "delve"/"testament"/"landscape", filler phrases, sycophancy, and em/en-dash overuse) without inventing any fact, name, number, date, or citation. Preserve the format and conventions this skill requires (funder page limits, required headings, budget tables), and if the user supplied a writing sample, pass it so humanizer matches their voice. **Fallback:** if `humanizer` (or `humanizer-zh`) is unavailable in this environment, deliver the text anyway and tell the user the humanizer pass was skipped.
 
 **If the draft is written in Chinese, load the `humanizer-zh` skill instead of `humanizer`** (via the skill tool) — it applies the same no-fabrication discipline to Chinese prose, targeting 空话铺垫 (empty build-up), 模板化排比 (templated parallelism), over-used connectors (首先/其次/综上所述), and inflated 四字格, while preserving the same format and conventions required above.
 
@@ -21,18 +21,25 @@ Produce **fundable** grant proposals — proposals that pass each funder's speci
 
 ### Stage 1: Identify Funder + Mechanism (before drafting anything)
 
-Funder and mechanism determine structure, page limits, evaluation criteria, and tone. **Read the current solicitation/call before writing.** Different funders use different terms for similar concepts (NSF "Intellectual Merit" ≈ ERC "Ground-breaking nature" ≈ Horizon "Excellence").
+Funder and mechanism determine structure, page limits, evaluation criteria, and tone. **Read the current solicitation/call before writing.** If you cannot fetch it (no network access), use the values stored in the reference files, state the date on which they were last verified (2026-11-12), and tell the user to confirm them against the current call. Different funders use different terms for similar concepts (NSF "Intellectual Merit" ≈ ERC "Ground-breaking nature" ≈ Horizon "Excellence").
+
+Facts in the reference files were last verified 2026-11-12 against official funder pages. Funder rules change with every work programme or solicitation: confirm against the current call documents before relying on any limit, date or amount.
 
 Route to the matching reference file:
 
-| Funder | Trigger keywords | Load |
+| Funder / task | Trigger keywords | Load |
 |---|---|---|
 | **NSF** | NSF, CAREER, CRII, CISE, "Intellectual Merit", "Broader Impacts" | [references/nsf.md](references/nsf.md) |
 | **NIH** | NIH, R01, R21, R03, K-award, F-award, "Specific Aims", SF424 | [references/nih.md](references/nih.md) |
-| **ERC** | ERC, Starting Grant, StG, Consolidator, CoG, Advanced, AdG, "B1/B2", "ground-breaking" | [references/erc.md](references/erc.md) |
+| **ERC** | ERC, Starting Grant, StG, Consolidator, CoG, Advanced, AdG, Synergy, "Part I / Part II" (older: "B1/B2"), "ground-breaking" | [references/erc.md](references/erc.md) |
 | **EU Horizon** | Horizon Europe, EIC, MSCA, "Excellence/Impact/Implementation", work package, deliverables | [references/horizon_europe.md](references/horizon_europe.md) |
 | **DARPA/DoD/DOE** | DARPA, BAA, ARO, ONR, AFOSR, DOE, ASCR, Heilmeier, white paper | [references/darpa_dod_doe.md](references/darpa_dod_doe.md) |
-| **UKRI/EPSRC/Royal Society** | UKRI, EPSRC, BBSRC, NERC, Royal Society, URF, "Case for Support", "Pathways to Impact" | [references/ukri.md](references/ukri.md) |
+| **UKRI/EPSRC/Royal Society** | UKRI, EPSRC, BBSRC, NERC, Royal Society, URF, Funding Service, R4RI, New Investigator Award. Legacy terms "Case for Support" and "Pathways to Impact" also route here and are mapped to their current Funding Service equivalents | [references/ukri.md](references/ukri.md) |
+| **Pre-proposal / LOI** | letter of intent, pre-proposal, concept paper, white paper (general; see also DARPA row) | [references/proposal_sections.md](references/proposal_sections.md#letters-of-intent-pre-proposals-and-concept-outlines) |
+| **Section drafting (any funder)** | Aims, significance, innovation, approach, impact, team, timeline, risks, management | [references/proposal_sections.md](references/proposal_sections.md) |
+| **Budget** | budget, budget justification, costing | [references/budget_justification.md](references/budget_justification.md) |
+| **Biosketch / DMP** | biosketch, CV, track record, data management plan | [references/biosketch_dmp.md](references/biosketch_dmp.md) |
+| **Critique / resubmission** | mock review, rejection reasons, response to reviewers, resubmission | [references/review_critique.md](references/review_critique.md) |
 
 If the user asks generally without naming a funder, ask which agency/mechanism before drafting.
 
@@ -40,12 +47,12 @@ If the user asks generally without naming a funder, ask which agency/mechanism b
 
 Most funders require the same logical components under different names. Map the user's request to one of these standard components and consult [references/proposal_sections.md](references/proposal_sections.md) for the cross-funder drafting playbook:
 
-- **Aims / Objectives** (NIH Specific Aims, ERC B1 synopsis, Horizon Objectives, NSF "Goals")
+- **Aims / Objectives** (NIH Specific Aims, ERC Part I, Horizon Objectives, NSF "Goals")
 - **Significance / Excellence** — why this matters
 - **Innovation / Ground-breaking** — why this is novel beyond incremental work
 - **Approach / Methodology** — technical plan, work packages, milestones, risk mitigation
 - **Preliminary Results** — feasibility evidence (critical for NIH R01, ERC, NSF resubmissions)
-- **Broader Impact / Impact** (NSF Broader Impacts, Horizon Impact, NIH Significance, UKRI Pathways)
+- **Broader Impact / Impact** (NSF Broader Impacts, Horizon Impact, NIH Significance, UKRI impact embedded in Vision/Approach; legacy "Pathways to Impact")
 - **Team / PI Track Record** — why you/we can do this
 - **Timeline / Work Plan / Gantt** — year-by-year plan, deliverables
 - **Risks and Mitigation**
@@ -60,7 +67,7 @@ Most submissions require auxiliary documents alongside the science:
 - **Data Management Plan / DMP / ORRP** → [references/biosketch_dmp.md](references/biosketch_dmp.md)
 - **Letters of Support / Collaboration Letters**
 - **Facilities & Resources / Current & Pending Support**
-- **Mentoring Plan** (NSF postdoc), **Sponsor Plan** (NIH F-awards)
+- **Mentoring Plan** (NSF: required when NSF funding is requested for postdoctoral scholars or graduate students; PAPPG 24-1), **Sponsor Plan** (NIH F-awards)
 
 ### Stage 4: Self-Review and Reviewer-Style Critique
 
@@ -68,7 +75,7 @@ Before submission, run a mock-reviewer pass against the funder's published crite
 
 ### Stage 5: Resubmission / Response to Reviewers (if applicable)
 
-NIH, NSF, and ERC permit resubmissions with substantive revisions. Responses must be evidence-based and concrete. See [references/review_critique.md](references/review_critique.md) §Response-to-Reviewers.
+NIH permits an A1 resubmission, NSF treats a resubmission as a new proposal, and ERC and UKRI restrict resubmissions by earlier outcome or per opportunity. Responses and revisions must be evidence-based and concrete. See [references/review_critique.md](references/review_critique.md) §Response-to-Reviewers.
 
 ---
 
@@ -114,7 +121,7 @@ This skill assumes a CS / systems / ML proposal context, matching sibling skills
 
 ## What Authors Must Do
 
-1. Read the **current** solicitation/call. Funder requirements change yearly.
+1. Read the **current** solicitation/call. Funder requirements change yearly. (No network access: use stored values, state their 2026-11-12 verification date, and tell the user to confirm.)
 2. Match section headers and length limits to the funder's template exactly.
 3. Quantify every claim of importance, novelty, and feasibility.
 4. Write Aims/Objectives that are independent, hypothesis-driven, and milestone-quantified.
@@ -137,18 +144,4 @@ This skill assumes a CS / systems / ML proposal context, matching sibling skills
 
 ## References
 
-This skill loads funder-specific guidance on demand. Identify the funder first, then load only the relevant files.
-
-**Funder-specific guides** (load the one matching the user's funder):
-- [references/nsf.md](references/nsf.md) — NSF CAREER, standard, CRII; Intellectual Merit + Broader Impacts
-- [references/nih.md](references/nih.md) — NIH R01, R21, R03, K-series, F-series; Specific Aims structure
-- [references/erc.md](references/erc.md) — ERC Starting, Consolidator, Advanced; B1 synopsis + B2 proposal
-- [references/horizon_europe.md](references/horizon_europe.md) — Horizon Europe collaborative projects, work packages, consortium
-- [references/darpa_dod_doe.md](references/darpa_dod_doe.md) — DARPA BAAs, Heilmeier Catechism, DoD/DOE programs
-- [references/ukri.md](references/ukri.md) — UKRI / EPSRC / Royal Society Case for Support, J-aQR
-
-**Cross-cutting guides** (load when the activity matches):
-- [references/proposal_sections.md](references/proposal_sections.md) — Section-by-section drafting playbook (Aims, Significance, Approach, Broader Impact)
-- [references/budget_justification.md](references/budget_justification.md) — Budget construction and justification narrative
-- [references/biosketch_dmp.md](references/biosketch_dmp.md) — Biosketch (NSF, NIH, ERC formats) and Data Management Plan templates
-- [references/review_critique.md](references/review_critique.md) — Mock-reviewer rubric, common rejection reasons, response-to-reviewers for resubmissions
+All reference files are routed in the Stage 1 table above (funder guides, pre-proposals/LOIs, section drafting, budget, biosketch/DMP, critique/resubmission). Identify the funder or task first, then load only the relevant file(s) from `references/`.

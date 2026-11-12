@@ -1,5 +1,7 @@
 # DARPA / DoD / DOE Proposals
 
+Facts last verified 2026-11-12 against darpa.mil (Heilmeier Catechism page; Offices page) and 2 CFR 200.1 (eCFR). Funder rules change frequently — confirm against the current solicitation/NOFO before relying on any limit or amount. Figures marked "(confirm in the current NOFO/BAA)" were not independently verified.
+
 US Department of Defense and Department of Energy research funding. Proposals are judged on **disruption potential and concrete deliverables**, not academic rigor for its own sake. Different cultural conventions from NSF/NIH.
 
 ## Table of Contents
@@ -22,7 +24,7 @@ US Department of Defense and Department of Energy research funding. Proposals ar
 
 | Agency | Office/Program | CS/ML focus |
 |---|---|---|
-| **DARPA** | I2O, MTO, DSO, ITO | High-risk transformative; AI/ML/cyber/HPC |
+| **DARPA** | Six technical offices listed on darpa.mil/about/offices (2026-11-12): Biological Technologies, Defense Sciences, Information Processing Techniques, Multi X, Strategic Technology, Tactical Technology (office list changes; confirm on darpa.mil) | High-risk transformative; AI/ML/cyber/HPC |
 | **ARO** (Army Research Office) | Computing Sciences | Robotics, autonomy, ISR analytics |
 | **ONR** (Office of Naval Research) | Code 31/32 | Autonomy, AI for naval ops, HPC |
 | **AFOSR** (Air Force Office of Scientific Research) | RTA1/RTA2 | AI/ML, cyber, autonomy |
@@ -54,7 +56,7 @@ DARPA BAAs additionally contain a **technical area description** specifying the 
 
 Most DARPA / DoD BAAs use a two-step process:
 
-### Phase 1: White Paper / Concept Paper (5-15 pp)
+### Phase 1: White Paper / Concept Paper (5-15 pp; confirm in the current NOFO/BAA)
 
 - Compact pitch of the technical approach
 - Heilmeier-style framing
@@ -62,7 +64,7 @@ Most DARPA / DoD BAAs use a two-step process:
 - Team and rough budget envelope
 - Agency reviews and **encourages or discourages** full proposal — non-binding but strong signal
 
-**Encourage rate is typically 20-40%.** Discouraged proposals can still submit but rarely fund.
+**Encourage rate is typically 20-40% (confirm in the current NOFO/BAA).** Discouraged proposals can still submit but rarely fund.
 
 ### Phase 2: Full Proposal (typically 30-60 pp Vol I + Vol II cost)
 
@@ -74,17 +76,18 @@ PMs frequently **invite phone calls** between Phase 1 and Phase 2 to refine the 
 
 ## The Heilmeier Catechism
 
-Devised by George Heilmeier (former DARPA Director). Every DARPA white paper and proposal must answer these nine questions, **explicitly and concisely**. Many BAAs require these as a labeled section.
+Devised by George Heilmeier (DARPA Director 1975-1977). DARPA describes the catechism as "a set of eight questions" and says it uses it to assess every proposed research program. BAAs commonly expect proposals to answer them **explicitly and concisely**, and many make them a labeled section — check your BAA.
 
-1. **What are you trying to do?** Articulate objectives in plain language. No jargon.
+1. **What are you trying to do?** Articulate your objectives using absolutely no jargon.
 2. **How is it done today, and what are the limits of current practice?**
 3. **What is new in your approach and why do you think it will be successful?**
-4. **Who cares?** If you succeed, what difference does it make?
+4. **Who cares?** If you are successful, what difference will it make?
 5. **What are the risks?**
 6. **How much will it cost?**
 7. **How long will it take?**
 8. **What are the mid-term and final "exams" to check for success?**
-9. **(Optional)** What is the path to transition / scale?
+
+*Optional addition (this skill's suggestion, not part of DARPA's catechism):* **What is the path to transition / scale?** DARPA reviewers care about who picks up the result, so answer this alongside the eight questions.
 
 **Best practice:** include a 1-page Heilmeier-formatted summary at the front of every DoD/DARPA white paper — even when not explicitly required. Reviewers love it.
 
@@ -152,7 +155,7 @@ Cost proposals are **scrutinized**. DoD requires DCAA-compliant cost accounting.
 - **Personnel** — PI, co-I, postdoc, student labor; salary by year with 2-3% escalation; effort percent
 - **Fringe Benefits** — institutional rate, applied to salary
 - **Travel** — itemized: # trips × destination × cost
-- **Equipment** — items >$5K, with quotes
+- **Equipment** — items at or above the per-unit threshold (lesser of the institution's capitalization level or $10,000 under 2 CFR 200.1, effective Oct 1, 2024; formerly $5,000), with quotes; check the BAA for any different definition
 - **Materials/Supplies** — itemized
 - **Consultants/Subcontracts** — separate cost narratives per subaward
 - **Indirect (F&A)** — institutional negotiated rate, applied to MTDC
@@ -164,12 +167,12 @@ DoD requires **detailed budget narrative** justifying each line. Compute / cloud
 
 Single-investigator-friendly mechanisms (lower budget than DARPA, longer term, more academic in tone):
 
-- **ARO Single Investigator** — typically $500K over 3 years, white-paper first
-- **ONR YIP** (Young Investigator Program) — early-career, ~$510K over 3 yr
+- **ARO Single Investigator** — typically $500K over 3 years, white-paper first (confirm in the current NOFO/BAA)
+- **ONR YIP** (Young Investigator Program) — early-career, ~$510K over 3 yr (confirm in the current NOFO/BAA)
 - **AFOSR YIP** — early-career, $450K over 3 yr
-- **MURI** (Multidisciplinary University Research Initiative) — $1.5M/yr × 3-5 yr × team of 3-7 PIs
+- **MURI** (Multidisciplinary University Research Initiative) — $1.5M/yr × 3-5 yr × team of 3-7 PIs (confirm in the current NOFO/BAA)
 
-**MURI is the largest DoD basic-research mechanism**: topics published annually (~24 topics), team responds with white paper then full proposal. Highly competitive (~5%). Strategic differentiators: multidisciplinarity (real, not bolted on), Heilmeier framing, transition plan to a Service.
+**MURI is the largest DoD basic-research mechanism**: topics published annually (~24 topics; confirm in the current NOFO/BAA), team responds with white paper then full proposal. Highly competitive (~5%; confirm in the current NOFO/BAA). Strategic differentiators: multidisciplinarity (real, not bolted on), Heilmeier framing, transition plan to a Service.
 
 ## DOE-Specific (ASCR, BES, ARPA-E)
 
@@ -178,7 +181,7 @@ DOE basic research differs from DoD:
 - **ASCR** funds AI for science, exascale, scientific machine learning, applied math. Calls come via FOAs at https://science.osti.gov/grants
 - DOE proposals typically **20-25 pages Project Narrative**, single FOA-defined structure
 - **DOE National Lab partnerships** strengthen proposals — co-PI from a National Lab brings facility access (Argonne ALCF, Oak Ridge OLCF, NERSC) and DOE familiarity
-- **ARPA-E** uses DARPA-style Heilmeier/program-manager-driven model; ~$2-5M / 2-3 yr awards focused on energy applications
+- **ARPA-E** uses DARPA-style Heilmeier/program-manager-driven model; ~$2-5M / 2-3 yr awards focused on energy applications (confirm in the current NOFO/BAA)
 
 DOE is **mission-driven**: align with one of DOE's strategic priorities (clean energy, scientific discovery, national security). Proposals that look like generic ML research without an energy/science mission are filtered.
 

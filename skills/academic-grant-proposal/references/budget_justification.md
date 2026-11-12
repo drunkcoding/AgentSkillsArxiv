@@ -1,5 +1,7 @@
 # Budget and Budget Justification
 
+Facts last verified 2026-11-12 against 2 CFR 200.1 (eCFR, current text effective Oct 1, 2024; compared with the pre-Oct-2024 text) and NIH notices NOT-OD-26-034 / NOT-OD-26-038 (salary limitation). Funder rules change frequently — confirm against the current solicitation/NOFO before relying on any limit or amount. (UK/EU rows were not re-audited in this pass.)
+
 Budgets are read **carefully** — reviewers check that costs match the scientific work plan. A mismatched budget triggers reduced scores even when the science is strong.
 
 ## Table of Contents
@@ -24,7 +26,7 @@ Budgets are read **carefully** — reviewers check that costs match the scientif
 |---|---|
 | **Personnel (Salaries)** | PI, co-I, postdoc, student, technician, admin |
 | **Fringe Benefits** | Institutional rate × salary |
-| **Equipment** | Items >$5K (US) or >£10K (UK), tangible, durable |
+| **Equipment** | US federal awards: per-unit acquisition cost at or above the lesser of the recipient's capitalization level or $10,000 (2 CFR 200.1, effective Oct 1, 2024; formerly $5,000), useful life >1 year; UK: >£10K (not re-audited); tangible, durable |
 | **Travel** | Domestic/international conference, fieldwork, partner visits |
 | **Materials/Supplies** | Consumables, software licenses, small instruments |
 | **Compute / Cloud** | GPU/CPU compute purchases, cloud credits |
@@ -71,7 +73,7 @@ prior award actual].
 The largest line for most CS proposals. Address each role:
 
 ### PI Salary
-- US (NSF/NIH): typically 1-2 months/year summer salary or partial AY buyout. NIH limit: NIH salary cap (varies annually, currently ~$221K/yr).
+- US (NSF/NIH): typically 1-2 months/year summer salary or partial AY buyout. NIH limit: salary cap at Executive Level II, revised annually — $228,000, effective Jan 1, 2026 (NOT-OD-26-034 as corrected by NOT-OD-26-038); check the current notice.
 - ERC/Horizon/UKRI: PI time charged at investigator rate (estimated effort, not invoiced).
 - DARPA/DoD: 1-2 months summer + AY buyout common; full effort allowed for sabbatical-funded years.
 
@@ -95,7 +97,7 @@ Per person per year:
 
 ## Equipment
 
-Items above the institution's capitalization threshold (typically $5K US, £10K UK). One-time purchase; not consumables.
+Items at or above the lesser of the institution's capitalization threshold and the federal ceiling of $10,000 per unit (US; 2 CFR 200.1, effective Oct 1, 2024 — an institution may set a lower threshold, e.g. $5K; UK: £10K, not re-audited). One-time purchase; not consumables.
 
 ### Justification structure
 
@@ -140,7 +142,7 @@ Itemize. CS-specific examples:
 When work is done by another institution:
 
 - **Subaward agreement**: separate budget + justification from the partner
-- US: **first $25K of subaward MTDC** is included in your indirect-cost base; remainder is excluded
+- US: **up to the first $50,000 of each subaward** is included in your indirect-cost (MTDC) base (2 CFR 200.1, effective Oct 1, 2024; previously $25,000); the portion above $50,000 is excluded
 - Horizon: each consortium partner has its own budget; "Linked Third Parties" concept exists for legal entities not yet partners but contributing
 - Justify: why this work is procured externally, not done in-house
 
@@ -148,7 +150,7 @@ When work is done by another institution:
 
 Institution's negotiated rate × Modified Total Direct Costs (MTDC) base.
 
-- **MTDC base** = direct costs minus equipment, tuition, first-$25K-of-subaward, participant support
+- **MTDC base** = direct costs minus equipment, tuition remission, the portion of each subaward above $50,000, participant support
 - Federal F&A rates (US): negotiated with cognizant agency (DHHS or ONR); typical R1 rate 55-70% MTDC
 - ERC/Horizon: flat **25% indirect** (unit cost grants vary)
 - UKRI fEC: institutional indirect via TRAC; UKRI pays 80% of fEC

@@ -1,5 +1,7 @@
 # Horizon Europe Proposals
 
+> Facts last verified 2026-11-12 against the Horizon Europe Work Programme 2026-2027 General Annexes and the official EIC Pathfinder FAQ. Funder rules change with every work programme — confirm against the current call documents before relying on any limit or amount.
+
 EU Framework Programme for Research and Innovation (2021-2027). **Collaborative, consortium-driven** — distinct from ERC (single-PI). CS/ML projects typically map to:
 
 - **Pillar I**: ERC, MSCA (covered separately), Research Infrastructures
@@ -12,9 +14,9 @@ EU Framework Programme for Research and Innovation (2021-2027). **Collaborative,
 2. [Three-Criterion Evaluation: Excellence, Impact, Implementation](#three-criterion-evaluation-excellence-impact-implementation)
 3. [Part A (Forms)](#part-a-forms)
 4. [Part B (Technical Annex)](#part-b-technical-annex)
-5. [Excellence Section (typically ~10 pp)](#excellence-section-typically-10-pp)
-6. [Impact Section (~10 pp)](#impact-section-10-pp)
-7. [Implementation Section (~25 pp)](#implementation-section-25-pp)
+5. [Excellence Section (~22% of the page limit)](#excellence-section-22-of-the-page-limit)
+6. [Impact Section (~22% of the page limit)](#impact-section-22-of-the-page-limit)
+7. [Implementation Section (~55% of the page limit)](#implementation-section-55-of-the-page-limit)
 8. [Consortium Building](#consortium-building)
 9. [EIC Pathfinder Specifics](#eic-pathfinder-specifics)
 10. [Submission Logistics](#submission-logistics)
@@ -28,8 +30,8 @@ EU Framework Programme for Research and Innovation (2021-2027). **Collaborative,
 | **RIA** (Research and Innovation Action) | Frontier research, basic/applied | 100% | €3-7M | ≥3 partners from ≥3 EU/Associated countries |
 | **IA** (Innovation Action) | Closer-to-market | 70% (non-profits 100%) | €5-15M | ≥3/3 |
 | **CSA** (Coordination and Support) | Coordination, networking | 100% | €1-3M | varies |
-| **EIC Pathfinder Open** | Bottom-up high-risk research | 100% | up to €3M | ≥3/3 OR single applicant |
-| **EIC Pathfinder Challenges** | Top-down high-risk on stated themes | 100% | up to €4M | ≥3/3 |
+| **EIC Pathfinder Open** | Bottom-up high-risk research | 100% | requested EU contribution up to €4M | consortium (≥2 independent entities in different EU/Associated countries; ≥3 entities need ≥3 countries); single legal entities **not** eligible |
+| **EIC Pathfinder Challenges** | Top-down high-risk on stated themes | 100% | requested EU contribution up to €4M | single legal entities may apply (mid-caps and larger companies cannot apply alone) or consortia meeting the same composition rules |
 | **EIC Transition** | Pathfinder → market | 100% | up to €2.5M | ≥1 (existing IP) |
 | **MSCA Doctoral Networks** | PhD training networks | 100% | varies | ≥3 EU + ≥1 non-academic |
 
@@ -37,15 +39,15 @@ CS Cluster 4 frequent topics: trustworthy AI, HPC + AI convergence, edge AI, 6G,
 
 ## Three-Criterion Evaluation: Excellence, Impact, Implementation
 
-Every Horizon Europe proposal is scored on three equally weighted criteria:
+Every full Horizon Europe application is scored on three criteria (General Annexes 2026-2027): each criterion is scored out of 5, and "the threshold for individual criteria will be 3. The overall threshold, applying to the sum of the three individual scores, will be 10." Scores are not weighted except that, to rank **Innovation Actions**, the Impact score is given a weight of 1.5. Proposals that pass both the individual and overall thresholds are considered for funding within the call budget; the rest are rejected. Confirm the thresholds in the call conditions.
 
-| Criterion | Weight | Threshold | Pass mark |
-|---|---|---|---|
-| **Excellence** | 1/3 | 3.0 / 5 | usually need 4.5+ |
-| **Impact** | 1/3 | 3.0 / 5 | usually need 4.0+ |
-| **Implementation** | 1/3 | 3.0 / 5 | usually need 4.0+ |
+| Criterion | Formal threshold | Informal heuristic (experience, not a rule) |
+|---|---|---|
+| **Excellence** | 3 / 5 | competitive calls often need 4.5+ |
+| **Impact** | 3 / 5 | often 4.0+ |
+| **Implementation** | 3 / 5 | often 4.0+ |
 
-Score 0-5 per criterion (half points allowed); fail any threshold → unfunded. Funded proposals typically score 14.0+/15. **Impact is where most proposals lose points** — it is treated as boilerplate by inexperienced authors but graded rigorously.
+Overall formal threshold: 10 / 15. Half-point steps are commonly used (confirm in the evaluation form). The funding cut-off in a competitive call usually sits well above these formal thresholds, depending on how many proposals compete. For first-stage applications in two-stage calls only Excellence and Impact are scored; the individual threshold is 4 and the overall threshold is set per call (expected to be about 8 or 8.5). **Impact is where most proposals lose points** — it is treated as boilerplate by inexperienced authors but graded rigorously.
 
 ## Part A (Forms)
 
@@ -58,9 +60,11 @@ Administrative metadata via the EU Funding & Tenders Portal. Captures:
 
 ## Part B (Technical Annex)
 
-Single PDF, page-limited per call. Typical RIA limit: **45 pages** for Sections 1+2+3 (Excellence + Impact + Implementation). Sections 4 (consortium descriptions) and 5 (ethics) plus annexes are **outside** the 45-page count for most calls — **verify in the specific call topic**.
+Single PDF, page-limited per call. General Annexes 2026-2027: "Unless provided otherwise in the specific call/topic conditions, the limit for a full application is **40 pages**" (Coordination and support actions: 25; Programme co-fund: 65). "For topics using lump sum funding, the limit for 'Research and Innovation' actions and 'Innovation' actions is **45 pages**" (CSA: 28). A first-stage application is limited to 10 pages. Excess pages are made invisible to evaluators after the deadline. The page limits and the sections they cover are shown in the application template for your topic — **verify in the specific call topic**.
 
-Mandatory section headers (do not invent your own — reviewers look for these literally):
+**Template note:** the section headings and per-section page allocations below are drafting heuristics (proportions of the applicable page limit: about 22% Excellence, 22% Impact, 55% Implementation, i.e. ≈9 + 9 + 22 pages of a 40-page limit or ≈10 + 10 + 25 pages of a 45-page limit). Take the exact headings, numbering and any per-section limits from the current Part B template for your topic.
+
+Typical section headers in earlier templates (confirm in the current template before reusing):
 
 ```
 1. Excellence
@@ -76,22 +80,26 @@ Mandatory section headers (do not invent your own — reviewers look for these l
 5. Ethics and Security
 ```
 
-## Excellence Section (typically ~10 pp)
+## Excellence Section (~22% of the page limit)
 
-### 1.1 Objectives and Ambition (~3-4 pp)
-- **Specific, measurable objectives** (numbered O1, O2, … typically 4-6)
+Heuristic: ≈9 pp of a 40-page limit, ≈10 pp of a 45-page limit.
+
+### 1.1 Objectives and Ambition (about one third of Excellence)
+- **Specific, measurable objectives** (numbered O1, O2, … typically 4-6; informal heuristic)
 - Ambition vs. state of the art — quantify gaps
 - "Beyond-state-of-the-art" advances claim, mapped to objectives
 - For high-risk topics (Pathfinder, RIAs in trustworthy AI): explicit risk-reward framing
 
-### 1.2 Methodology (~6-7 pp)
+### 1.2 Methodology (about two thirds of Excellence)
 - Concept and overall methodology — diagram
 - Per-objective methods, including theoretical/algorithmic foundations
 - Interdisciplinary integration where relevant
 - Open-science practices (FAIR data, open access publishing, reproducibility)
 - Gender dimension — **mandatory consideration in research content where relevant**, evaluated under Excellence; for CS, address training-data bias, demographic generalization, AI fairness; document why N/A if it truly is
 
-## Impact Section (~10 pp)
+## Impact Section (~22% of the page limit)
+
+Heuristic: ≈9 pp of a 40-page limit, ≈10 pp of a 45-page limit.
 
 ### 2.1 Pathways towards Impact
 - **Expected outcomes** (immediate, after project end)
@@ -107,7 +115,9 @@ Mandatory section headers (do not invent your own — reviewers look for these l
 
 CS / open-source hint: explicit commitment to upstream contributions to widely used projects (e.g., PyTorch, vLLM, OpenStack), benchmark suites (MLPerf), and standards bodies (IEEE, IETF, MLCommons) reads strongly under Exploitation.
 
-## Implementation Section (~25 pp)
+## Implementation Section (~55% of the page limit)
+
+Heuristic: ≈22 pp of a 40-page limit, ≈25 pp of a 45-page limit.
 
 ### 3.1 Work Plan and Resources
 
@@ -153,14 +163,15 @@ Partner search tools: EU Funding & Tenders portal Partner Search, CORDIS databas
 
 ## EIC Pathfinder Specifics
 
-EIC Pathfinder is closer to ERC in spirit (high-risk frontier research) but consortium-based. Distinguishing features:
+EIC Pathfinder is closer to ERC in spirit (high-risk frontier research) but is generally consortium-based. Distinguishing features:
 
-- Either **single applicant** (Pathfinder Open only) or **3+ partners** consortium
-- Funds **science-toward-technology breakthroughs** — must articulate a future technology, not just science
-- **Three-step evaluation**: remote → consensus → interview (for shortlisted)
-- **15-page Part B** for Pathfinder Open (much shorter than RIA)
+- **Pathfinder Open: single legal entities are not eligible** ("Applications from single legal entities are not eligible under the EIC Pathfinder Open call"); single entities can apply under **Pathfinder Challenges**, where they compete with consortia. Consortium composition rules are in the FAQ and call text
+- Requested EU contribution of **up to €4 million** for both Pathfinder Open and Challenges (larger requests are possible if properly justified); eligible costs take the form of a lump sum
+- Funds **science-toward-technology breakthroughs** — must articulate a future technology, not just science (expected TRL range typically 1-4)
+- **From 2027, Pathfinder Open is two-stage**: Stage 1 short proposals (Part B up to **10 pages**, evaluated on Excellence and Impact, plus letters of commitment, which are mandatory) → top-ranked invited to Stage 2 full proposals (Part B up to **23 pages**, all three criteria); the interview takes place during the panel evaluation of Stage 2 proposals (10-minute pitch, then three clarifying questions)
+- **Pathfinder Challenges**: Part B sections 1-3 up to **30 pages**, with extra requirements from the Challenge Guide
 - **EIC Programme Manager** assigned post-award; portfolio-managed actively
-- **EIC Pathfinder Challenges**: top-down topics — read the specific challenge text *very* carefully; the challenge defines acceptance criteria
+- **EIC Pathfinder Challenges** are top-down: read the specific challenge text and Challenge Guide *very* carefully; the challenge defines acceptance criteria
 
 ## Submission Logistics
 
@@ -184,4 +195,4 @@ EIC Pathfinder is closer to ERC in spirit (high-risk frontier research) but cons
 - **EuroHPC JU** (separate but Horizon-adjacent) funds compute and HPC-AI projects — pre-exascale and exascale machines available as in-kind compute
 - **GAIA-X** / **EOSC** alignment scores points in data-infrastructure proposals
 - Open-source mandates: Horizon Europe defaults to **open-source software, open-access publishing (Plan S compliant), FAIR data** — write the DMP accordingly
-- Exclude UK/CH/IL etc. from financial budgets only when current Work Programme excludes them — eligibility for association status changes; verify in the specific call
+- Association status changes over time and some topics restrict participation. The United Kingdom and Switzerland are on the General Annexes 2026-2027 list of countries associated to Horizon Europe, so their entities are normally eligible for funding. Association can exclude some instruments: the General Annexes state the UK is associated "with the only exception of the EIC fund (which is part of the EIC Accelerator of Horizon Europe that provides investment through equity or other repayable form), for award procedures implementing Union budget for the year 2024 and onwards". Do not exclude associated countries from the budget by default; check the current association list and the topic-level restrictions on the Funding & Tenders Portal and confirm before finalising the consortium

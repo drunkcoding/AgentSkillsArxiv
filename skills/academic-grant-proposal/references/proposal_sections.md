@@ -14,12 +14,13 @@ Most funders require the same logical components under different names. This fil
 8. [Timeline / Work Plan / Gantt](#timeline--work-plan--gantt)
 9. [Risks and Mitigation](#risks-and-mitigation)
 10. [Management Plan (multi-PI / consortium)](#management-plan-multi-pi--consortium)
+11. [Letters of Intent, pre-proposals and concept outlines](#letters-of-intent-pre-proposals-and-concept-outlines)
 
 ---
 
 ## Aims / Objectives / Specific Aims
 
-**Funder names:** NIH "Specific Aims"; NSF "Goals" / "Research Thrusts"; ERC B1 "Objectives"; Horizon "Objectives"; UKRI "Objectives".
+**Funder names:** NIH "Specific Aims"; NSF "Goals" / "Research Thrusts"; ERC Part I "Objectives"; Horizon "Objectives"; UKRI "Objectives".
 
 ### Universal pattern
 
@@ -54,14 +55,14 @@ Mentally remove Aim 1's success: can Aims 2 and 3 still execute and produce resu
 | NIH R21 | 2 |
 | NSF (any) | 3-4 thrusts |
 | ERC StG/CoG | 4-6 objectives |
-| Horizon RIA | 4-7 objectives |
+| Horizon RIA | 4-6 objectives (informal heuristic; follow the topic and template) |
 | DARPA white paper | 3-5 TAs |
 
 More than 5 Aims signals scope creep; reviewers cut down rather than reward.
 
 ## Significance / Excellence / Importance
 
-**Funder names:** NIH "Significance"; NSF "Intellectual Merit" (also Broader Impacts); ERC "Ground-breaking nature"; Horizon "Excellence"; UKRI "Quality, Importance, National Importance".
+**Funder names:** NIH "Significance"; NSF "Intellectual Merit" (also Broader Impacts); ERC "Ground-breaking nature"; Horizon "Excellence"; UKRI "Vision" / "Approach" (Funding Service; legacy Je-S criteria were Quality, Importance, National Importance).
 
 ### What reviewers want
 
@@ -180,7 +181,7 @@ For early-career mechanisms or genuinely new directions, substitute:
 
 ## Broader Impact / Impact / Pathways
 
-**Funder names:** NSF "Broader Impacts" (mandatory criterion); NIH "Significance" + DMP; ERC limited; Horizon "Impact" (1/3 of score); UKRI "Pathways to Impact" (now embedded).
+**Funder names:** NSF "Broader Impacts" (mandatory criterion); NIH "Significance" + DMP; ERC limited; Horizon "Impact" (one of three criteria, each scored 0-5 and unweighted, except Impact is weighted 1.5 when ranking Innovation Actions); UKRI "Pathways to Impact" (now embedded).
 
 ### Framework: Beneficiaries × Activities × Evidence
 
@@ -294,3 +295,18 @@ NIH multi-PI requires a **Leadership Plan** addressing the above. Reviewers expl
 ### Horizon specifics
 
 Beyond management plan: **General Assembly**, **Project Coordinator**, **WP leads**, **Steering Committee**, **Advisory Board**, **Innovation Board**, **Ethics Advisor** (if applicable). Standard Horizon governance terminology should appear by name.
+
+## Letters of Intent, pre-proposals and concept outlines
+
+**Purpose.** These short documents come before a full proposal. Depending on the call they serve one of two roles: *screening / reviewer assignment* (the funder uses the letter to plan review panels or to check fit, and often does not score it), or a *competitive down-select* (the funder invites only some applicants to submit the full proposal). Check which role the call describes, because it changes how much you should sell and how much you should simply state.
+
+**What they usually contain:**
+- One paragraph on the problem and **why now** (the gap, and the enabling change that makes it solvable today)
+- Objectives or aims, stated as concretely as in the full proposal
+- The approach in brief: the core idea and why it should work, without full methods
+- The team and why this team (key people, roles, relevant prior results)
+- A rough budget or funding range, where the call asks for one
+
+**Rules that come from the call, not from this skill.** Length, required fields, format, whether the letter is mandatory, whether it is binding (for example, whether the full proposal must match it or may differ), and whether it is evaluated all come from the specific solicitation. Do not assume numbers from another funder. Read the call, copy its field names and limits, and ask the user for the call text if it is missing.
+
+**Drafting tips.** Reuse the same objective wording you will use in the full proposal so that reviewers see one consistent project. Write the first paragraph so it works as a standalone summary. Leave out preliminary data detail unless the call asks for it. For DARPA/DoD-style white papers, also see [darpa_dod_doe.md](darpa_dod_doe.md); for ERC and Horizon, their short first-stage documents are described in [erc.md](erc.md) and [horizon_europe.md](horizon_europe.md).
