@@ -29,20 +29,20 @@ Two paradigms, because a systems paper and an AI/ML paper are organized around f
 
 | Venue | Paradigm | Format / template | Tech. pages | Review | Citations | Reproducibility |
 |-------|----------|-------------------|-------------|--------|-----------|-----------------|
-| **OSDI** | Systems | USENIX | 12 | Double-blind | Numbered (IEEE) | Artifact: see the call for artifacts |
+| **OSDI** | Systems | USENIX | 12 | Double-blind | Numbered (IEEE) | Artifact: optional, all accepted papers encouraged (OSDI '26 call; the OSDI '27 call was not yet published) |
 | **NSDI** | Systems | USENIX | 12 | Double-blind | Numbered (IEEE) | Artifact evaluation: optional, encouraged |
-| **SIGCOMM** | Systems | ACM sigconf (template not stated in the CFP text checked; use the one the submission site specifies) | 12 | Double-blind | Numbered (ACM) | Artifact: strongly encouraged |
-| **MOBICOM** | Systems | ACM `sigconf,10pt` | 12 incl. figures/tables/all other material (refs unlimited) | Double-blind | Numbered (ACM) | Artifact: strongly encouraged |
+| **SIGCOMM** | Systems | ACM `sigconf` (the template linked from the SIGCOMM 2027 submission page uses `\documentclass[sigconf,anon,review]{acmart}`) | 12 | Double-blind | Numbered (ACM) | Artifact: strongly encouraged |
+| **MOBICOM** | Systems | ACM `sigconf,10pt` | 12 incl. figures/tables/all other material (refs unlimited; appendices after refs don't count) | Double-blind | Numbered (ACM) | Artifact: strongly encouraged |
 | **SOSP** | Systems | ACM `sigplan,10pt` (2026 CFP) | 12 technical (refs not included) | Double-blind | Numbered (ACM) | Artifact evaluation: optional |
 | **FAST** | Systems | USENIX | 12 long / 6 short | Double-blind | Numbered (IEEE) | Artifact: optional, accepted papers encouraged |
 | **AAAI** | AI/ML | AAAI Press two-column (`article` + `aaai<NN>.sty`) | 7 content (+2 pages refs only; 9-page PDF cap at AAAI-27) | Double-blind, two-phase | Author-year (natbib) | Checklist mandatory: **in PDF through AAAI-26; separate upload at AAAI-27** |
 | **ICML** | AI/ML | ICML two-column (`icml<YYYY>.sty`) | 8 (+1 camera-ready; refs/appendix/impact stmt outside) | Double-blind, OpenReview, per-review rebuttal | Author-year (natbib) | **Impact statement mandatory** |
-| **ICLR** | AI/ML | ICLR single-column (`iclr<YYYY>` Master-Template) | 9 at submission, 10 at rebuttal/camera-ready (refs/appendix outside) | Double-blind, OpenReview, **public reviews + open discussion** | Author-year (natbib) | Ethics + reproducibility statements recommended |
-| **NeurIPS** | AI/ML | NeurIPS single-column edition kit (`neurips_2025.sty` in 2025) | 9 (+1 camera-ready; refs/appendix/checklist outside) | Double-blind, OpenReview, private during review; per-review rebuttal | Author-year or numeric, author's choice, kept internally consistent (natbib loaded by default) | **Paper Checklist mandatory in PDF** |
+| **ICLR** | AI/ML | ICLR single-column (`iclr<YYYY>` Master-Template; `iclr2027_conference.sty` in 2027) | 9 at submission, 10 at rebuttal/camera-ready (refs/appendix outside) | Double-blind, OpenReview, **public reviews + open discussion** | Author-year (natbib) | Ethics + reproducibility statements recommended |
+| **NeurIPS** | AI/ML | NeurIPS single-column edition kit (`neurips_2025.sty` in 2025, `neurips_2026.sty` in 2026) | 9 (+1 camera-ready; refs/appendix/checklist outside) | Double-blind, OpenReview, private during review; per-review rebuttal | Author-year or numeric, author's choice, kept internally consistent (natbib loaded by default) | **Paper Checklist mandatory in PDF** |
 
 > Numbers drift each year. Confirm page limits, deadlines, and template names against the current edition's official author kit / Call for Papers before submitting. **If you have no network access,** use the stored values, state which cycle they were verified for (below), and tell the user to confirm them against the live CFP.
 >
-> Facts last verified 2026-11-12 against the latest official CFPs / author kits available that day (systems: OSDI '27, NSDI '27, SIGCOMM 2026-2027, MobiCom 2026-2027, SOSP 2026, FAST '27; ML: AAAI-27, ICML 2026, ICLR 2026 guide and ICLR 2027 CFP, NeurIPS 2025/2026). Venue rules change every cycle — confirm against the live CFP before relying on any number. Current-cycle items (submission caps, AI-use rules, blind-review changes) are in `references/systems_paper_structure.md` → "Current-cycle requirements".
+> Facts last verified 2026-11-12 against the latest official CFPs / author kits available that day (systems: OSDI '27, NSDI '27, SIGCOMM 2026-2027, MobiCom 2026-2027, SOSP 2026, FAST '27; ML: AAAI-27, ICML 2026 plus the ICML 2027 Dates page, ICLR 2026 guide and ICLR 2027 Author Guidelines, NeurIPS 2025 kit and 2026 CFP/kit). Venue rules change every cycle — confirm against the live CFP before relying on any number. Current-cycle items (submission caps, AI-use rules, blind-review changes) are in `references/systems_paper_structure.md` → "Current-cycle requirements".
 
 **Routing:** for a systems venue → read Section 3 and load `references/systems_paper_structure.md`. For AAAI → read Section 4 and load `references/aaai_paper_structure.md`. For ICML, ICLR, or NeurIPS → read Sections 4-4b and load `references/ml_venues_paper_structure.md`. Writing craft shared by both paradigms (principles, citations, figures) is in Section 5.
 
@@ -87,20 +87,11 @@ Standard structure (problem-solution-evaluation). Design + Evaluation together s
 - **Evaluation**: exact hardware/software/workloads/baselines; every introduction claim must be supported here.
 - **Related Work**: after Evaluation; organize by category; always differentiate ("Unlike X, we do Y because Z").
 
-**Venue-specific requirements:**
-
-| Venue | Format | Pages | Review | Artifact |
-|-------|--------|-------|--------|----------|
-| OSDI | USENIX | 12 | Double-blind | See the call for artifacts |
-| NSDI | USENIX | 12 | Double-blind | Optional, encouraged |
-| SIGCOMM | ACM sigconf | 12 | Double-blind | Strongly encouraged |
-| MOBICOM | ACM `sigconf,10pt` | 12 (incl. everything except references; appendices after refs don't count) | Double-blind | Strongly encouraged |
-| SOSP | ACM `sigplan,10pt` (2026 CFP) | 12 technical (refs not included) | Double-blind | Optional |
-| FAST | USENIX | 12 / 6 | Double-blind | Optional, accepted papers encouraged |
+**Venue-specific requirements:** format, page limit, review mode and artifact policy for each systems venue are in the master venue table in Section 1 (one table, to avoid divergent copies); per-venue detail is in `references/systems_paper_structure.md` → Venue-Specific Variations.
 
 **All six systems venues are double-blind (OSDI, NSDI, SIGCOMM, MOBICOM, SOSP, FAST):** anonymize the system name, remove repository URLs, cite own work in third person, remove acknowledgments.
 
-**Edition notes:** the SOSP 2027 CFP was not yet published on 2026-11-12, so SOSP numbers here come from the 2025 and 2026 CFPs. **Current-cycle requirements (verified 2026-11-12)** such as submission caps, AI-use and ethics statements, and rebuttal changes are listed in `references/systems_paper_structure.md`. **Systems venues not in these tables** (ASPLOS, EuroSys, USENIX Security, ATC): the generic systems guidance applies, but every hard number (page limit, blind policy, artifact rules, dates) must come from that venue's own CFP.
+**Edition notes:** the SOSP 2027 CFP was not yet published on 2026-11-12 (its HotCRP site exists but shows no dates), so SOSP numbers here come from the 2025 and 2026 CFPs. **Current-cycle requirements (verified 2026-11-12)** such as submission caps, AI-use and ethics statements, and rebuttal changes are listed in `references/systems_paper_structure.md`. **Systems venues not in these tables** (ASPLOS, EuroSys, USENIX Security, ATC): the generic systems guidance applies, but every hard number (page limit, blind policy, artifact rules, dates) must come from that venue's own CFP.
 
 **FAST paper categories:**
 - *Short papers (6 pages, excl. references):* complete research with full problem statement and evaluation; prefix title "Short Paper: " at submission; same rigor as long papers on a focused contribution — do not sacrifice evaluation for space.
@@ -113,61 +104,22 @@ For full section-by-section guidance, examples, tense guide, and per-venue varia
 
 ## 4. AAAI (AI / ML) Papers
 
-AAAI follows the **method-experiment** paradigm. Conventional structure (strong convention, not an AAAI compliance rule):
-
-Abstract → Introduction → Related Work → Background/Preliminaries → Method → Theory *(if any)* → Experimental Setup → Results → Ablations → Limitations → Conclusion → References → **Reproducibility Checklist** *(in-PDF through AAAI-26; separate form upload at AAAI-27)*.
-
-**Hard format rules (enforced strictly — violations risk desk rejection):**
-- **7 pages of technical content.** References are outside the limit; AAAI-27 caps the submission PDF at **9 pages total, pages 8-9 exclusively references**, and counts ethical statements inside the 7 content pages. Any in-paper appendix with proofs/experiments IS technical content and must fit in 7 pages — push overflow to the separately uploaded technical appendix.
-- **AAAI Press two-column template, required even for anonymous submission.** LaTeX = `article` class + the edition-specific style package (`\usepackage[submission]{aaai2027}` for an anonymous AAAI-27 submission), **not** an `aaai.cls`. Do not add `hyperref`/`navigator`, and do not load font packages such as `\usepackage{times}` (the AAAI-27 `.sty` loads `newtxtext` itself).
-- **No page numbers/headers/footers.** Body text black; color only in figures (CMYK, grayscale-safe). **Table captions go BELOW the table.**
-- Camera-ready: 7 base pages + up to 2 purchasable extra technical pages.
-
-**Structure implications of the 7-page budget:** background and related work are compressed; Method + Experiments (or Method + Theory) form the bulk; there is **no required standalone Implementation section**; AI/ML papers use substantially more mathematics (objectives, proofs, assumptions) than systems papers.
-
-**Reproducibility checklist (mandatory):** completed by every author at submission — **AAAI-27: uploaded separately in a designated submission-form field; AAAI-25/26: placed in the main PDF after the references** — shared with reviewers, and factored into the decision. It covers general clarity, theory (assumptions/proofs), datasets (appropriateness/availability), and computation (seeds, hardware/software versions, number of runs, variance, significance tests, hyperparameters/search ranges). Write the paper so every item can honestly be answered "yes." **AAAI-27:** "code/data will be released after acceptance" is explicitly NOT evidence of reproducibility — include materials in the Code and Data Supplement / Supplementary Document at submission.
-
-**Review process:** double-blind (cite own work in third person; preprints/arXiv allowed but not cited/linked from the anonymous paper); mandatory **abstract registration** ~a week before the paper deadline; **two-phase review** where Phase-1 rejects get no feedback; a single author-feedback/rebuttal window for survivors (AAAI-26: 2,500-char cap, no URLs/files/new results; AAAI-27: window was Oct 24-31, 2026 and has closed; its cap has not been published here — check the OpenReview form/instructions). AAAI-27 dates: final notification Nov 30, 2026; camera-ready Dec 14, 2026. No dual/concurrent archival submission; ≤10 submissions per author; AAAI-27 adds a **novelty check across submissions with overlapping authors** (thin-sliced or substantially similar papers may be summarily rejected). **Reciprocal reviewing:** the AAAI-27 instructions say all authors of AAAI-27 submissions are expected to join the reviewer pool unless prevented by extenuating circumstances (no quota stated).
-
-**AAAI-27 LLM / authorship / attendance policy** (per the AAAI-27 author policies page, checked 2026-11-12): text generated by an LLM is prohibited unless it is presented as part of the paper's experimental analysis; using LLMs to edit or polish author-written text is allowed. AI systems cannot be authors and cannot be cited as sources. Authors are fully responsible for content, plagiarism and veracity. At least one author must register at the in-person rate and present the paper in person.
-
-> There is **no separate "CARE" checklist** and **no official fixed reference count** for AAAI — do not invent either.
-
-For full section-by-section guidance, the complete checklist breakdown, appendix mechanics, and the systems↔AAAI contrast, load `references/aaai_paper_structure.md`.
+AAAI follows the **method-experiment** paradigm. **When writing for AAAI, read `references/aaai_paper_structure.md`** (section structure, format rules, checklist, review process and dates, LLM policy, appendices, systems↔AAAI contrast). AAAI-27 desk-reject traps:
+- **Length:** 7 content pages inside a 9-page PDF (pages 8-9 references only; ethical statements count inside the 7).
+- **Template:** `\usepackage[submission]{aaai2027}` for the anonymous version; no `hyperref`, no `\usepackage{times}`.
+- **Checklist:** mandatory, uploaded separately in the submission form at AAAI-27 (in the PDF through AAAI-26).
+- **Review:** double-blind, two-phase (Phase-1 rejects get no feedback); the anonymous paper must not cite or link a non-anonymous preprint.
+- **LLM text:** LLM-generated text is prohibited unless it is part of the experimental analysis; LLM editing of your own text is allowed.
 
 ---
 
 ## 4b. ICML, ICLR, and NeurIPS (AI / ML) Papers
 
-Use the same **method-experiment** paradigm and section skeleton as AAAI (Section 4), with more page budget and different hard rules. Facts are verified against ICML 2026, ICLR 2026, and NeurIPS 2025/2026 — always re-check the current CFP/Author Guide.
+Same **method-experiment** paradigm and section skeleton as AAAI (Section 4; skeleton in `references/aaai_paper_structure.md`), with more page budget. **When writing for ICML, ICLR, or NeurIPS, read `references/ml_venues_paper_structure.md`**: page limits and templates, required statements/checklist, OpenReview mechanics, reciprocal reviewing, dual-submission/arXiv/LLM rules, 2027 changes, and section proportions. Only the desk-reject traps are repeated here:
 
-**ICML hard rules:**
-- **8 pages main paper** (+1 at camera-ready); unlimited pages for references, the **impact statement**, and appendices, all in a **single PDF**. Optional Supplementary Material (code/data, referenced anonymous papers) may be uploaded at submission with the **same deadline as the paper** (no separate deadline, and none at camera-ready). Two-column `icml<YYYY>.sty`; non-conforming papers rejected without review.
-- **Impact Statement mandatory**: broader-impact section co-located with Acknowledgements before References, outside the page limit; official boilerplate sentence allowed for standard cases.
-- Abstract deadline ~5 days before paper deadline; **author list frozen at abstract deadline**.
-- The ICML 2027 CFP was not yet published on 2026-11-12, so all ICML rules here are from the 2026 cycle.
-- **Reciprocal reviewing**: each submission designates a qualified author-reviewer (max 2 submissions per person); authors with 4+ submissions must review. Violations or bad reviews can desk-reject your own papers.
-- New for 2026: accepted papers get the submitted version + anonymized reviews + rebuttal **published**; lay summary required at camera-ready; per-review rebuttal on OpenReview (three 5,000-char discussion rounds at ICML 2026).
-
-**ICLR hard rules:**
-- **9 pages main text at submission → 10 pages at rebuttal/camera-ready** (strictly enforced; over-limit = desk reject). References + appendices unlimited (reviewers not required to read appendix); supplement due with the paper. **Single-column** `iclr<YYYY>` Master-Template.
-- **Reviews are public**; at ICLR 2026 the open discussion ran ~3 weeks (Nov 11 - Dec 3, 2025) with unlimited author comments and **paper revisions allowed** (pdfdiff applied). Plan the 9-page submission so the 10th page can absorb rebuttal-phase results. Treat the rebuttal as an evolving thread.
-- **Withdrawal trap**: papers withdrawn after the deadline stay publicly hosted and are **immediately de-anonymized**; all submissions are de-anonymized and released after decisions.
-- **Statements** (recommended, outside page limit): Ethics Statement and Reproducibility Statement at the end of main text before references. **LLM-usage section mandatory if LLMs contributed significantly** — nondisclosure risks desk rejection.
-- **Reciprocal reviewing**: authors on 3+ papers must review ≥6 papers; each submission needs a registered qualified reviewer-author.
-- **ICLR 2027 (CFP checked 2026-11-12):** abstract Sep 18, 2026; paper Sep 25, 2026 (AoE); reviews released and author-reviewer discussion Nov 5-18, 2026; reviewer-AC discussion Nov 19 - Dec 16; final decisions Dec 16, 2026. The 2027 CFP announces new policies on co-authorship, reciprocal reviewing and AI use; the 2027 author guide was not available when this was verified, so the 9/10-page limits and the "3+ papers → review ≥6" rule above are confirmed for ICLR 2026 only.
-
-**NeurIPS hard rules:**
-- **9 content pages at submission → 10 at camera-ready**; references, optional technical appendices, and the mandatory checklist do not count. Use one PDF ordered paper → references → optional appendices → checklist. Use the official single-column edition kit (`neurips_2025.sty` in 2025).
-- **Paper Checklist mandatory**: keep it last in the PDF; omission risks desk rejection. It does not count toward the limit; justified `no`/`n/a` answers are generally acceptable.
-- OpenReview, double-blind, private during review. NeurIPS 2025 used per-review rebuttals (**10,000 characters each**), no files/links/PDF revisions, followed by rolling discussion. Responses may include new results, but the original submission remains the basis for the decision (2025 FAQ, 2026 handbook). Accepted and opted-in rejected records become public after notification.
-- Abstract deadline gap: 4 days in 2025, 2 days in 2026; author list freezes at abstract registration. Authors may be asked to review; the 2025 CFP states no numeric reciprocal quota, but negligent reviewer-authors risk access restrictions and desk-rejection sanctions.
-- arXiv is allowed without self-citing or advertising the anonymous submission. No concurrent substantially similar archival or cross-track submission. Disclose LLM/agent use when it is an important, original, or non-standard methodological component; ordinary editing need not be declared.
-- Route dataset/benchmark work to the separate track/portal: Datasets & Benchmarks in 2025, renamed **Evaluations & Datasets** in 2026.
-
-All three: OpenReview, double-blind, arXiv allowed under venue anonymity rules, and prompt injection forbidden. ICML/ICLR use author-year citations; NeurIPS lets authors choose author-year or numeric as long as they stay consistent (its kit loads plain natbib).
-
-For the full comparison table, per-venue statement/checklist mechanics, OpenReview review-phase details, track notes, and section proportions, load `references/ml_venues_paper_structure.md`.
+- **ICML** (read `references/ml_venues_paper_structure.md` §3-4, §10): 8 main pages (+1 camera-ready), non-conforming papers are rejected without review; the Impact Statement is mandatory (outside the limit). Reciprocal-reviewing failures and prompt injection can desk-reject; the author list freezes at the abstract deadline. ICML 2027 had only its Dates page published on 2026-11-12, so these are 2026-cycle rules.
+- **ICLR** (read §5-6, §9-10): 9 pages at submission (10 during discussion and at camera-ready), strictly enforced; significant LLM use must be disclosed (2027: a mandatory AI-use statement outside the page limit). Withdrawn papers stay public and de-anonymized; reciprocal-reviewing failures can desk-reject (ICLR 2027 adds author quotas, see `references/ml_venues_paper_structure.md` §5).
+- **NeurIPS** (read §7, §9-11): 9 content pages (+1 camera-ready) in the single-column kit (`neurips_2025.sty` / `neurips_2026.sty`); the Paper Checklist is mandatory and goes last in the PDF (omission is a desk-reject). Disclose LLM/agent use that is a methodological component; no revised PDF during rebuttal; dataset/benchmark work goes to the separate track portal.
 
 ---
 

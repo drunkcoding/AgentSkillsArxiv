@@ -562,7 +562,7 @@ tail (>p95), where locality-aware scheduling eliminates cold starts.
 
 ### ACM (SIGCOMM, MOBICOM, SOSP)
 
-- ACM `acmart` template (MobiCom: `sigconf,10pt`; the SOSP 2026 CFP recommends `sigplan,10pt`; check the SIGCOMM CFP/submission instructions)
+- ACM `acmart` template (MobiCom: `sigconf,10pt`; the SOSP 2026 CFP recommends `sigplan,10pt`; SIGCOMM: `sigconf`, per the template linked from the SIGCOMM 2027 submission page)
 - Figures count toward the 12-page limit at all three venues (references extra; at SOSP the limit is 12 pages of technical content)
 - PDF preferred for figures
 - ACM requires figure permissions for adapted figures

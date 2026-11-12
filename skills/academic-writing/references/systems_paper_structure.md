@@ -534,7 +534,7 @@ at [URL].
 ## Artifact Evaluation
 
 ### Overview
-Artifact evaluation is run by a separate committee after acceptance. Per the current CFPs: SIGCOMM and MobiCom call participation voluntary but strongly encouraged, NSDI optional but encouraged, SOSP optional; for OSDI see its call for artifacts; for FAST '27, participation is optional and all accepted papers are encouraged to participate (FAST '27 call for artifacts, checked 2026-11-12). Preparing a good artifact significantly strengthens the paper.
+Artifact evaluation is run by a separate committee after acceptance. Per the current CFPs: SIGCOMM and MobiCom call participation voluntary but strongly encouraged, NSDI optional but encouraged, SOSP optional; OSDI '26 ran an optional process in which all accepted papers were encouraged to participate (the OSDI '27 call for artifacts was not published on 2026-11-12); MobiCom's is open to accepted and conditionally accepted papers; for FAST '27, participation is optional and all accepted papers are encouraged to participate (FAST '27 call for artifacts, checked 2026-11-12). Preparing a good artifact significantly strengthens the paper.
 
 ### What to Prepare
 - **Source code**: Complete, buildable, with README
@@ -578,11 +578,11 @@ Design and Evaluation together should occupy approximately 50% of the paper.
 - **Format**: USENIX LaTeX template
 - **Pages**: 12 pages including figures and tables (references extra; OSDI '27 allows 14 pages plus references for accepted papers)
 - **Review**: Double-blind (OSDI '25-'27 and NSDI '25-'27 CFPs)
-- **Artifact evaluation**: OSDI: see the call for artifacts. NSDI: optional but encouraged
+- **Artifact evaluation**: OSDI: optional, all accepted papers encouraged (OSDI '26 call for artifacts; the OSDI '27 call was not yet published on 2026-11-12). NSDI: optional (NSDI '27 call for artifacts: "optional, although we hope all papers will participate")
 - **Style**: Practical systems focus, emphasis on real-world impact
 
 ### SIGCOMM (ACM)
-- **Format**: ACM sigconf template (template not stated in the CFP text checked; use the one the submission site specifies)
+- **Format**: ACM `acmart` `sigconf` (the template linked from the SIGCOMM 2027 submission page uses `\documentclass[sigconf,anon,review]{acmart}`; two-column, 10 pt or larger, US Letter)
 - **Pages**: 12 pages (excluding references)
 - **Review**: Double-blind
 - **Artifact evaluation**: Voluntary, strongly encouraged (SIGCOMM 2026 and 2027 CFPs)
@@ -602,7 +602,7 @@ Design and Evaluation together should occupy approximately 50% of the paper.
 - **Pages**: at most 12 pages of technical content, references not included (SOSP 2025 and 2026 CFPs)
 - **Review**: Double-blind
 - **Artifact evaluation**: Optional
-- **Edition note**: the SOSP 2027 CFP was not yet published on 2026-11-12; these numbers are from the 2025 and 2026 CFPs
+- **Edition note**: the SOSP 2027 CFP was not yet published on 2026-11-12 (the SOSP 2027 HotCRP site exists but shows no dates; sosp.org lists SOSP 2027 for Nov 30 - Dec 3, 2027, Vancouver); these numbers are from the 2025 and 2026 CFPs
 - **Style**: Systems focus, emphasis on novel abstractions and long-term impact
 
 ### FAST (USENIX)
@@ -646,7 +646,7 @@ Only items confirmed in the saved CFP text on 2026-11-12. These change every cyc
 - **OSDI '27:** abstracts due Dec 1, 2026 and papers Dec 8, 2026. At most eight submissions per author (surplus submissions are desk-rejected). A paper whose text is wholly or largely AI-generated is treated as fraud; AI editing tools are acceptable; use of AI coding agents to build the system must be disclosed (e.g., in the Implementation section). Conditional acceptance replaces revise-and-resubmit. The OSDI '26 CFP removed the author-response period, and the OSDI '27 CFP describes no author-response period.
 - **NSDI '27:** at most eight submissions per author across both deadlines. Authors must attest in HotCRP that all text was primarily human written (AI for grammar and clarity of human-written text is encouraged). Papers that are not accepted may get a one-shot revision. Reviewers prescreen the Introduction, which should be at most 3 pages.
 - **SIGCOMM 2026:** an ethics statement or subsection is required in the main body of the paper (papers without it are desk-rejected). ORCID required at submission. The `.bbl` file must be uploaded on the submission form (references are checked for hallucination). Use of generative AI must be fully disclosed (e.g., in Acknowledgements). At most eight submissions per author.
-- **SIGCOMM 2027:** no rebuttals or one-shot revisions. Ethical issues and GenAI-policy compliance are stated on the submission form. ORCID required at submission; at most eight submissions per author.
+- **SIGCOMM 2027:** paper submission deadline Feb 2, 2027 (hard, no extensions); conference Aug 8-12, 2027, Bangkok; official publication date for accepted papers July 18, 2027. No rebuttals or one-shot revisions; collaborative reviewing, with authors receiving a single short consensus review. Ethical issues and GenAI-policy compliance are stated on the submission form. ORCID required at submission; at most eight submissions per author.
 - **MobiCom 2027:** reciprocal reviewing: the most senior author is designated as reviewing author and is expected to review up to three submissions. No embedded hyperlinks in the PDF. Authors and co-authors should obtain an ORCID ID.
 - **FAST '27:** the optional author response is capped at 1000 words (hard limit; exceeding it counts against the paper).
 

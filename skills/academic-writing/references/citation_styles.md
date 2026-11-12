@@ -27,12 +27,12 @@ Pick the style by venue, and always let the venue's LaTeX template/`.bst` do the
 | Venue | Citation Style | Template |
 |-------|---------------|----------|
 | OSDI, NSDI, FAST, ATC | USENIX (IEEE-like), numbered | USENIX LaTeX template |
-| SIGCOMM, MOBICOM, SOSP | ACM, numbered | ACM `acmart` template (MobiCom: `sigconf`; the SOSP 2026 CFP recommends `sigplan`; SIGCOMM: template not stated in the CFP text checked, use the one the submission site specifies) |
+| SIGCOMM, MOBICOM, SOSP | ACM, numbered | ACM `acmart` template (MobiCom: `sigconf`; the SOSP 2026 CFP recommends `sigplan`; SIGCOMM: `sigconf`, per the template linked from the SIGCOMM 2027 submission page) |
 | EuroSys | ACM, numbered | ACM sigconf template |
 | **AAAI** | **Author-year (natbib)** | AAAI Press (`article` + `aaai<NN>.sty`) |
 | **ICML** | **Author-year (natbib)** | ICML two-column (`icml<YYYY>.sty`) |
 | **ICLR** | **Author-year (natbib)** | ICLR single-column (`iclr<YYYY>` Master-Template) |
-| **NeurIPS** | **Author-year or numeric (author's choice, consistent; kit loads plain natbib)** | NeurIPS single-column edition kit (`neurips_2025.sty` in 2025) |
+| **NeurIPS** | **Author-year or numeric (author's choice, consistent; kit loads plain natbib)** | NeurIPS single-column edition kit (`neurips_2025.sty` in 2025, `neurips_2026.sty` in 2026) |
 
 **Default**: Use the LaTeX template provided by the venue. The template's bibliography style file (`.bst`) handles citation formatting automatically. For AAAI, the edition style package sets the matching `aaai<NN>.bst` — do not override it.
 

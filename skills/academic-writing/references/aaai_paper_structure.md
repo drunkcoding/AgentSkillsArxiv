@@ -48,7 +48,7 @@ AAAI (the AAAI Conference on Artificial Intelligence) is a top-tier archival ven
 
 **Typical length:** 7 pages of technical content (references are outside this limit — see Format and Length below).
 
-> **Standards drift every year. Always confirm the exact numbers against the current edition's official author kit and Call for Papers** (e.g. `aaai.org/conference/aaai/aaai-<NN>/submission-instructions/` and the matching `authorkit<NN>` page). The rules below are stable across AAAI-24 through AAAI-27 unless flagged as edition-specific; treat dated fees, deadlines, and reviewer counts as illustrative, not permanent.
+> **Standards drift every year. Always confirm the exact numbers against the current edition's official author kit and Call for Papers** (e.g. `aaai.org/conference/aaai/aaai-<NN>/submission-instructions/` and the matching `authorkit<NN>` page). The 7-page technical-content limit (references on extra pages) is the same in AAAI-24 through AAAI-27; AAAI-27 adds a 9-page total cap, puts ethical statements inside the 7 pages and moves the checklist to a separate upload (see the edition-specific bullets). The purchasable-page fee also changed ($275 per page at AAAI-24; $300 per page at AAAI-25, -26 and -27). Treat other fees, deadlines, and reviewer counts as illustrative, not permanent.
 
 ### AAAI-27 key facts (verified Oct 2026 against aaai.org; dates and author policies re-checked 2026-11-12)
 
@@ -72,7 +72,7 @@ AAAI enforces formatting far more strictly than many venues. Formatting violatio
 - **References do not count** toward the 7 pages — additional pages are allowed *solely* for references. AAAI-27 makes the cap explicit: the submission PDF may have **at most 9 pages total**, with pages 8-9 exclusively for references.
 - **Reproducibility checklist placement is edition-specific:** AAAI-25/26 appended it after the references inside the PDF (outside the page limit); **AAAI-27 uploads it separately in a designated submission-form field** — it does not appear in the PDF at all.
 - **Any main-paper appendix containing proofs, experiments, methods, or other technical material IS technical content** and must fit within the 7 pages. The exempt pages are for references, not general-purpose appendix material. Push overflow technical material into the *separately uploaded* technical appendix instead. AAAI-27 also states explicitly that **ethical statements count inside the 7 content pages**.
-- **Camera-ready:** 7 base technical pages plus **up to 2 purchasable additional technical pages** (fee per page, e.g. \$300/page at AAAI-25/26). Extra pages are not granted automatically.
+- **Camera-ready:** 7 base technical pages plus **up to 2 purchasable additional technical pages** (\$300 per page at AAAI-25, AAAI-26 and AAAI-27; \$275 at AAAI-24; AAAI-27 additionally allows up to 2 acknowledgement/reference pages beyond the 7). Extra pages are not granted automatically.
 
 ### Template
 
@@ -243,7 +243,7 @@ Answers use variants of **yes / partial / no / N/A**, with optional explanation 
 
 - **Mandatory abstract registration** roughly a week before the paper deadline. Placeholder titles/abstracts are deleted (blocking later full-paper submission), and substantial abstract changes before the paper deadline can trigger rejection.
 - **Two-phase review:** Phase-1 papers with sufficiently negative reviews can be **rejected without an author-feedback opportunity**. Surviving papers get additional reviewers and a **single author-feedback (rebuttal) window** covering all reviews.
-- **Rebuttal (AAAI-26 specifics):** one response, **max 2,500 characters**, markdown allowed, **no URLs, no code, no additional files, no new experimental results**, and no updating of supplementary material. **AAAI-27 had not published a rebuttal FAQ at the AAAI-26 URL** — its author feedback window ran October 24-31, 2026 and has closed; the AAAI-27 character cap and content rules are not stated here, so do not assume the AAAI-26 numbers (check the OpenReview form or the AAAI-27 instructions).
+- **Rebuttal (AAAI-26 specifics):** one response, **max 2,500 characters**, markdown allowed, **no URLs, no code, no additional files, no new experimental results**, and no updating of supplementary material. **AAAI-27 had not published a rebuttal FAQ at the AAAI-26 URL** — its author feedback window ran October 24-31, 2026 and has closed; the AAAI-27 character cap and content rules are not stated here, so do not assume the AAAI-26 numbers (check the OpenReview form or the AAAI-27 instructions). The AAAI-27 review-process page describes the single feedback phase as a chance to "address questions or factual mistakes in reviews (from both phases)".
 - Recent editions submit via **OpenReview** (AAAI-25/26/27; AAAI-24 used CMT).
 
 ## Supplementary Material and Appendix
