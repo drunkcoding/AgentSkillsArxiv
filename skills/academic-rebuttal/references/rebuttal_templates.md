@@ -164,18 +164,19 @@ Use when strict limits or expectation that AC scans quickly. The first 25% of th
 - ~400 chars on opening + revision commitments
 - **Zero budget for narrative or transitions**
 
-### 5,000 characters per review (ICML 2025 historical mechanic)
+### 5,000 characters per response (ICML 2025 and ICML 2026 rounds)
 - ~2,500 chars on primary concern (1–2 paragraphs with evidence)
 - ~1,500 chars on secondary concerns (1 paragraph each)
 - ~500 chars on minor clarifications
 - ~500 chars on revision commitments
-- Do **not** reuse this budget for ICML 2026 unless the live response form confirms the same cap
-- Answer decision-critical concerns in the initial response; use the limited follow-up for genuine questions, not evidence deliberately withheld
+- ICML 2026 states the same 5,000-character cap for each of its three rounds (rebuttal, reviewer follow-up, author follow-up), so this budget applies to the initial rebuttal; the author follow-up is a separate 5,000 characters. Confirm on the live form, and do not carry it to ICML 2027 until that CFP is published
+- Answer decision-critical concerns in the initial response; use the author follow-up for genuine questions, not evidence deliberately withheld
 
 ### ICLR 2026 public discussion
+- (ICLR 2027 differs in dates — discussion Nov 5–18, 2026 — and its response-length and revision rules were not verified; confirm on OpenReview before applying the points below)
 - Check the OpenReview comment box for its per-comment word limit; the Author Guide does not publish the number
 - Split responses across as many comments as needed, but respect reviewer attention
-- Revise the 10-page paper, title, abstract, or supplement only through Dec 3; communicate each change and expect `pdfdiff`
+- In ICLR 2026, revise the 10-page paper, title, abstract, or supplement only through Dec 3; communicate each change and expect `pdfdiff`
 - Keep each comment independently useful because the discussion and submitted versions remain publicly visible after decisions
 
 ### 10,000 characters per review (NeurIPS-like)
@@ -184,7 +185,7 @@ Use when strict limits or expectation that AC scans quickly. The first 25% of th
 - Still avoid rambling — long responses get skimmed
 - **Front-load**: put decision-critical corrections in first 3,000 chars
 
-### 500–1,000 words (systems venues)
+### Word-capped systems venues (caps: MobiCom 500, SOSP strongly encouraged under 500, FAST 1,000, OSDI '25 2,000; see `venue_policies.md`)
 - Use concern grouping aggressively
 - Prioritize shared concerns over isolated nitpicks
 - Put "decision pivot points" first: novelty, correctness, evaluation adequacy

@@ -1,6 +1,6 @@
 ---
 name: academic-rebuttal
-description: "Use when writing, reviewing, or improving a conference-paper rebuttal, author response, reviewer discussion reply, or response to reviews for systems venues on HotCRP or ML/AI venues on OpenReview."
+description: "Use when writing, reviewing, or improving a conference-paper rebuttal, author response, response to reviews, or reviewer discussion reply. Covers OpenReview venues (NeurIPS, ICML, ICLR, AAAI) and HotCRP/systems venues (OSDI, NSDI, SOSP, SIGCOMM, MobiCom, FAST). For conference papers only; grant resubmission responses belong to academic-grant-proposal."
 ---
 
 # Conference Paper Rebuttal Writing
@@ -16,6 +16,8 @@ Write rebuttals that **reject wrong reviewer comments with evidence** while main
 **REQUIRED SUB-SKILL (run before returning any draft to the user).** Load the `humanizer` skill (via the skill tool) and run the finished text through it as a final editing pass. It removes AI-writing tells (inflated significance, copula avoidance like "serves as", rule-of-three, overused AI vocabulary such as "delve"/"testament"/"landscape", filler phrases, sycophancy, and em/en-dash overuse) without inventing any fact, name, number, date, or citation. Preserve the format and conventions this skill requires (venue character limits, per-reviewer response structure), and if the user supplied a writing sample, pass it so humanizer matches their voice.
 
 **If the draft is written in Chinese, load the `humanizer-zh` skill instead of `humanizer`** (via the skill tool) — it applies the same no-fabrication discipline to Chinese prose, targeting 空话铺垫 (empty build-up), 模板化排比 (templated parallelism), over-used connectors (首先/其次/综上所述), and inflated 四字格, while preserving the same format and conventions required above.
+
+**Fallback:** if `humanizer` / `humanizer-zh` is unavailable in this environment, deliver the draft as written and tell the user the humanizer pass was skipped.
 
 ## Rebuttal Workflow
 
@@ -33,6 +35,7 @@ Write rebuttals that **reject wrong reviewer comments with evidence** while main
 
 3. Rank by **decision impact**: what would flip the AC's assessment from reject to accept?
 4. Check venue constraints before drafting. Load `references/venue_policies.md` for limits, format, and what is allowed/forbidden. For paper-format and venue-structure rules, use the sibling `academic-writing` skill rather than duplicating them here.
+   - **No network?** Use the stored values in `references/venue_policies.md`, state which cycle each was verified for (the file header gives the verification date), and tell the user to confirm the cap and rules on the live CFP / response form.
 
 ### Stage 2: Draft Response
 
@@ -256,13 +259,12 @@ For full templates with examples and budgeting strategy by cap size, load `refer
 8. Promise changes that fundamentally alter the paper's scope.
 9. Ignore negative reviews or cherry-pick which concerns to address.
 10. Treat an archival rebuttal as disposable; ICML 2026 publishes accepted-paper rebuttals and discussions.
+11. Put prompt-injection text in a response. ICML 2026 states "Prompt injection by authors is forbidden" and the NeurIPS 2026 handbook calls prompt injections "strictly prohibited"; never include text aimed at steering automated reviewers.
 
 ---
 
 ## References
 
-- `references/venue_policies.md`: Per-venue rebuttal constraints (limits, platform, format, what is allowed/forbidden) for 14 venues across OpenReview and HotCRP
-- `references/platform_mechanics.md`: OpenReview vs HotCRP platform mechanics (configuration, formatting, visibility models, author actions)
-- `references/rebuttal_templates.md`: 4 full response templates, budgeting strategy by cap size, end-to-end drafting workflow, and common failure modes
-
-Load these references as needed when working on specific aspects of rebuttal writing.
+- Read `references/venue_policies.md` before drafting, to get the venue's cap, platform, and what is allowed or forbidden (15 venues across OpenReview and HotCRP, per cycle year; some cycles have no response period at all).
+- Read `references/platform_mechanics.md` when the question is about OpenReview/HotCRP form behaviour, visibility, markdown support, or what authors can do on each platform.
+- Read `references/rebuttal_templates.md` when composing the response text: 4 full templates, budgeting by cap size, an end-to-end drafting workflow, and common failure modes.

@@ -23,7 +23,7 @@ The platform default form specifies:
 - `maxLength: 2500`
 - `markdown: true`
 
-**This is a template default — venues override it.** NeurIPS 2025 uses 10,000 chars, ICML 2025 used 5,000 chars, and AAAI-26 uses 2,500 chars. ICML has not published a 2026 response cap; check the live form instead of carrying the 2025 limit forward.
+**This is a template default — venues override it.** NeurIPS 2025 and 2026 use 10,000 chars, ICML 2025 used 5,000 chars, and AAAI-26 used 2,500 chars. ICML 2026 states 5,000 characters for each of its three discussion rounds (rebuttal, reviewer follow-up, author follow-up; the Author Instructions describe the same flow as "one additional round of communication" after the rebuttal). The ICML 2027 CFP was not yet published on 2026-11-12, so check the live form instead of carrying a cap forward.
 
 ### Formatting
 - CommonMark-based markdown
@@ -32,7 +32,7 @@ The platform default form specifies:
 - LaTeX math: venue-dependent (many ML venues enable it)
 - Markdown availability itself is venue-configurable
 
-### Visibility Model
+### Visibility Model (OpenReview)
 - **Batch reveal** (NeurIPS model): all rebuttals revealed to reviewers/ACs at end of rebuttal window, not immediately on submission
 - **Continuous** (ICLR model): comments visible as posted during discussion period
 - **Immediate** (some venues): response visible to reviewer upon posting
@@ -40,13 +40,13 @@ The platform default form specifies:
 
 Always check: does the reviewer see your response immediately, or only after the window closes? This affects strategy — batch reveal means you cannot iteratively respond.
 
-### Author Actions During Rebuttal
+### Author Actions During Rebuttal (OpenReview)
 - Submit text response (markdown)
 - Cannot upload files (most ML venues)
 - Cannot include links (NeurIPS) or non-anonymized URLs (ICML)
-- Cannot upload a revised paper (NeurIPS 2025; ICML 2025–2026) vs. can revise through the discussion deadline with `pdfdiff` (ICLR 2026)
+- Cannot upload a revised paper (NeurIPS 2025–2026; ICML 2025–2026) vs. can revise through the discussion deadline with `pdfdiff` (ICLR 2026)
 - For ICLR 2026, post unlimited comments within the platform's per-comment word limit; the Author Guide does not publish the numeric limit, so check the OpenReview comment box
-- For ICML 2026, respond per review and expect one additional communication round after batch reveal
+- For ICML 2026, respond per review (5,000 characters) and expect a reviewer follow-up and then one author follow-up (5,000 characters each) after batch reveal
 
 ### How ACs/SACs Use Responses
 - AC reads all reviews + all responses before writing meta-review
@@ -70,29 +70,29 @@ HotCRP treats author responses as comments:
 - LaTeX math support: available in HotCRP but venue-dependent
 - Rich formatting: HotCRP supports advanced formatting but most systems venues use plain text
 
-### Visibility Model
+### Visibility Model (HotCRP)
 - Typically reviewers see response before or during PC discussion
 - PC chair controls when responses become visible
 - Response is part of the discussion record visible to all PC members assigned to the paper
 
 ### One-Shot Revision (OSR) Model
-Some HotCRP venues (NSDI, SIGCOMM, MOBICOM) use OSR instead of or in addition to classic rebuttal:
+Some HotCRP venues use OSR instead of or in addition to classic rebuttal. As of the 2026-11 check: NSDI, MobiCom and FAST currently; SIGCOMM through 2026 but not 2027 (the SIGCOMM 2027 CFP has no rebuttals or one-shot revisions); OSDI replaced revise-and-resubmit with conditional accept. Mechanics:
 - Authors receive reviews
 - Authors submit a **revised paper** addressing specific concerns
 - PC evaluates revised version
 - This is distinct from a text rebuttal — it is a full paper revision cycle
 
-### Author Actions During Rebuttal
+### Author Actions During Rebuttal (HotCRP)
 - Submit text response within word limit
 - Cannot attach files (most systems venues)
 - Cannot include revised figures in text response (EuroSys explicitly strips these)
-- New experiments explicitly disallowed (OSDI) or conditionally allowed (ASPLOS)
+- New experiments explicitly disallowed (OSDI '25, SOSP, MobiCom) or conditionally allowed (ASPLOS 2025, FAST '27 when a reviewer requested them, SIGCOMM 2026)
 
 ### How PC Uses Responses
 - PC members read response before discussion
 - PC discussion references response when adjudicating
 - Short, direct responses are more likely to be fully read
-- SOSP explicitly notes reviewers are "not expected to read very long responses"
+- SOSP explicitly notes reviewers are "neither required nor expected to read excessively long responses"
 
 ---
 
@@ -104,7 +104,7 @@ Some HotCRP venues (NSDI, SIGCOMM, MOBICOM) use OSR instead of or in addition to
 | Typical limit unit | Characters | Words |
 | Visibility | Batch or continuous (venue-configured) | Typically visible before PC discussion |
 | Revised paper upload | Venue-dependent (ICLR yes, NeurIPS/ICML no) | Via OSR process at some venues |
-| Discussion model | Can be iterative (ICLR 2026) or batch response plus a limited follow-up (ICML 2026) | Typically single-shot response |
+| Discussion model | Can be iterative (ICLR 2026) or batch response plus a reviewer follow-up and one author follow-up (ICML 2026) | Typically single-shot response |
 | Math support | Venue-dependent | Available but venue-dependent |
 | Image/figure support | Not in markdown renderer | Not in text responses (EuroSys explicitly strips) |
 
@@ -114,11 +114,11 @@ Some HotCRP venues (NSDI, SIGCOMM, MOBICOM) use OSR instead of or in addition to
 - Check character limit carefully — "2500" vs "10000" is a 4x difference
 - Know whether you get one response or per-review responses
 - Know whether visibility is batch or immediate
-- Plan for follow-up rounds if available (ICML 2026 permits one additional round; ICLR 2026 remains open through Dec 3)
+- Plan for follow-up rounds if available (ICML 2026: reviewer follow-up, then one author follow-up, 5,000 characters each; ICLR 2026 remains open through Dec 3; confirm ICLR 2027 rules)
 - Check whether the response becomes archival. For ICML 2026 accepted papers, write every response as durable public scholarship: stay precise and professional, and do not make casual concessions or promises that the final paper cannot support
 
 **For HotCRP venues:**
-- Check word limit in CFP — varies from ~500 to 2000
+- Check word limit in CFP — varies from ~500 to 2000 (see `venue_policies.md`); some venues (OSDI '26/'27, SIGCOMM 2027) have no response period at all
 - Assume text-only unless explicitly told otherwise
 - Be concise — PC members reading 100+ papers will skim long responses
 - If OSR is available and your paper is borderline, understand the OSR process separately
