@@ -1,5 +1,18 @@
 # Common Paper Weaknesses in Systems Conference Submissions
 
+## Contents
+
+- [1. Severity Classification](#1-severity-classification)
+- [2. Motivation Weaknesses (W-M)](#2-motivation-weaknesses-w-m)
+- [3. Design Weaknesses (W-D)](#3-design-weaknesses-w-d)
+- [4. Evaluation Weaknesses (W-E)](#4-evaluation-weaknesses-w-e)
+- [5. Presentation Weaknesses (W-P)](#5-presentation-weaknesses-w-p)
+- [6. Scope Weaknesses (W-S)](#6-scope-weaknesses-w-s)
+- [7. Quick Reference: Weakness-to-Section Mapping](#7-quick-reference-weakness-to-section-mapping)
+- [8. Venue-Specific Severity Modifiers](#8-venue-specific-severity-modifiers)
+- [9. Weakness Interaction Patterns](#9-weakness-interaction-patterns)
+- [10. Constructive Feedback Patterns](#10-constructive-feedback-patterns)
+
 This reference catalogs recurring weaknesses found in systems conference paper submissions, organized by paper section. Each weakness includes an identifier, description, severity classification, and constructive phrasing templates for reviewer feedback.
 
 ---

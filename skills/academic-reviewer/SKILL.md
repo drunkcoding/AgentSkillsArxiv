@@ -7,6 +7,28 @@ description: "Use when reviewing, critiquing, or providing feedback on submissio
 
 Review systems and AI/ML papers against the target venue's actual form and norms. Route by venue before choosing fields or scores; never reuse a HotCRP scale for an OpenReview venue.
 
+## Before you start: reviewer LLM policy (read first)
+
+This skill drafts, scores and polishes reviews with an LLM. Some venues forbid exactly that for assigned reviewers of confidential submissions. Settle this before reading any paper.
+
+**Step 1 — establish the user's role.** Ask (or infer from the request) whether the user is:
+- the **assigned reviewer** of a confidential submission at a venue (HotCRP/OpenReview assignment), or
+- wanting a **mock/practice review** of their own draft or of a public paper (e.g., an arXiv or published paper). Mock reviews of the user's own draft or of public papers are unrestricted by reviewer policies; proceed with the workflow below.
+
+**Step 2 — if the user is the assigned reviewer, check the venue's current reviewer LLM policy BEFORE reading the submission.** Verified rules (confirm the current edition's reviewer instructions; they change every cycle):
+- **ICML 2026** — Policy A: "Use of LLMs for reviewing is strictly prohibited" (detailed text: "Use of LLMs in any stage of reviewing is strictly prohibited (except for inadvertent use in tools that are not traditionally LLM-based, like web search/retrieval and spelling/grammar checkers)"). Policy B (allowed to help understand the paper and related works and to polish reviews, with privacy-compliant LLMs) forbids asking an LLM to assess the paper's quality/significance, identify its strengths/weaknesses, suggest key points, suggest an outline or questions for authors, or write the full review. Each reviewer is told which policy to follow on all of their assigned papers (check the Reviewer Console).
+- **NeurIPS 2025** — "You cannot share the submission and the code given to you as a reviewer to anyone or any LLMs."
+- **NeurIPS 2026** — "Reviewers must not use LLMs except for papers where this is specifically allowed, and must only use the sanctioned LLM in such cases rather than other LLMs." (opt-in AI-assisted reviewing experiment). Also: "Do not share, discuss, or disclose any information related to submissions with anyone, including any unsanctioned LLMs."
+- **ICLR 2026** — LLM assistance is allowed, with mandatory disclosure in the review form; the reviewer remains responsible for every claim.
+- **AAAI, USENIX (OSDI/NSDI/FAST), ACM (SIGCOMM/MobiCom/SOSP) and others** — not verified here. The user must check the venue's reviewer instructions; do not assume LLM use is permitted.
+
+**Step 3 — act on the policy.**
+- **Prohibited** (or the user cannot show it is permitted): do **not** ingest the submission and do **not** draft or polish the review. Tell the user why, and offer only what the policy permits: explaining background concepts or related work without the submission, and guidance on the reviewing process, review form and tone from the reference files.
+- **Unknown**: ask the user to confirm that the venue's policy permits LLM processing of the submission and review before proceeding.
+- **Permitted** (e.g., ICLR with disclosure, ICML Policy B limits, NeurIPS 2026 sanctioned-LLM papers only): stay inside the stated limits, and remind the user to make any required disclosure.
+
+In all cases the humanizer pass and multi-review generation below are skipped when they would violate this policy.
+
 ## 1. Choose the Venue and Review Paradigm (start here)
 
 | Venue | Paradigm | Review platform/style | Primary reference |
@@ -14,11 +36,13 @@ Review systems and AI/ML papers against the target venue's actual form and norms
 | OSDI, NSDI, SIGCOMM, MOBICOM, SOSP, FAST | Systems | HotCRP-style | `references/review_form_templates.md` and `references/review_criteria.md` |
 | NeurIPS, ICML, ICLR, AAAI | AI/ML | OpenReview-style; edition-specific fields and scales | `references/ml_venue_review_forms.md` |
 
-Confirm the edition before drafting. Review forms, scales, visibility, rebuttal duties, and LLM-use rules can change annually. For venue format rules that affect what a submission was required to contain, use `academic-writing`. For the author-response tactics your questions will trigger, use `academic-rebuttal`.
+Confirm the edition before drafting. Review forms, scales, visibility, rebuttal duties, and LLM-use rules can change annually. Check the live review form and reviewer instructions; if you have no network access, use the stored forms in the reference files, state which cycle they describe, and tell the user to confirm on the live form. For venue format rules that affect what a submission was required to contain, use `academic-writing`. For the author-response tactics your questions will trigger, use `academic-rebuttal`.
 
 ## Final delivery: humanize the output
 
-**REQUIRED SUB-SKILL (run before returning any draft to the user).** Load the `humanizer` skill (via the skill tool) and run the finished text through it as a final editing pass. It removes AI-writing tells (inflated significance, copula avoidance like "serves as", rule-of-three, overused AI vocabulary such as "delve"/"testament"/"landscape", filler phrases, sycophancy, and em/en-dash overuse) without inventing any fact, name, number, date, or citation. Preserve the target venue's format and conventions (HotCRP or OpenReview fields, score labels, severity labels, numbered questions), and if the user supplied a writing sample, pass it so humanizer matches their voice.
+> **Policy gate:** skip this pass (and all drafting) when the user is an assigned reviewer at a venue whose policy prohibits LLM processing of the review or submission — see "Before you start: reviewer LLM policy".
+
+**REQUIRED SUB-SKILL (run before returning any draft to the user).** Load the `humanizer` skill (via the skill tool) and run the finished text through it as a final editing pass. It removes AI-writing tells (inflated significance, copula avoidance like "serves as", rule-of-three, overused AI vocabulary such as "delve"/"testament"/"landscape", filler phrases, sycophancy, and em/en-dash overuse) without inventing any fact, name, number, date, or citation. Preserve the target venue's format and conventions (HotCRP or OpenReview fields, score labels, severity labels, numbered questions), and if the user supplied a writing sample, pass it so humanizer matches their voice. If `humanizer` (or `humanizer-zh`) is unavailable, deliver the text as written and tell the user the humanizer pass was skipped.
 
 **If the draft is written in Chinese, load the `humanizer-zh` skill instead of `humanizer`** (via the skill tool) — it applies the same no-fabrication discipline to Chinese prose, targeting 空话铺垫 (empty build-up), 模板化排比 (templated parallelism), over-used connectors (首先/其次/综上所述), and inflated 四字格, while preserving the same format and conventions required above.
 
@@ -38,6 +62,8 @@ Systems reviews follow the HotCRP form structure used by OSDI, NSDI, SIGCOMM, MO
 | Detailed Comments | Yes | Technical feedback, elaboration, suggestions |
 | Questions for Authors | Recommended | 3-5 numbered questions that could change your assessment |
 | Minor Issues | Optional | Typos, formatting, editorial items |
+
+*Typical form; scales are set per HotCRP/OpenReview instance and are not published officially — use the scale on the live review form.*
 
 For detailed field-by-field guidance and complete example reviews, load `references/review_form_templates.md`.
 
@@ -69,19 +95,22 @@ Each venue has a distinct review culture. Adjust your emphasis accordingly.
 
 | Venue | Philosophy | Top Priorities | Acceptance Rate |
 |-------|-----------|---------------|----------------|
-| **OSDI** | "Exciting papers over boring papers" | Novelty, significance, broad systems impact | ~15-18% |
+| **OSDI** | "Exciting papers over boring papers" | Novelty, significance, broad systems impact | 20%+ goal (OSDI '26 CFP: "Aims for an acceptance rate of 20% or more"); OSDI '27 states no goal rate |
 | **NSDI** | Deployment value matters | Significance, realistic evaluation, practical novelty | ~18-20% |
 | **SIGCOMM** | "Lasting impact on the field" | Novelty, significance, rigorous networking analysis | ~15% |
 | **MOBICOM** | Works in the real physical world | Soundness, real-world evaluation, wireless rigor | ~18-20% |
-| **SOSP** | "Novel abstractions AND real systems" | Novelty, soundness, significance, artifact required | ~15% |
+| **SOSP** | "Novel abstractions AND real systems" | Novelty, soundness, significance; artifact evaluation optional | ~15% |
 | **FAST** | "Storage depth and practical impact" | Significance, evaluation quality, storage relevance | ~20% |
+
+*Acceptance rates other than OSDI are historical approximations that were not re-verified and vary by year. Venue facts last verified 2026-11-12 against the OSDI '26/'27, NSDI '27, SIGCOMM 2026/2027, MobiCom 2026/2027 and SOSP 2026 CFPs, the ICML 2026 LLM Policy, the NeurIPS 2025 LLM page, the NeurIPS 2026 Main Track Handbook and the AAAI-27 Main Technical Track Call. Forms and policies change every cycle — confirm on the live form and reviewer instructions.*
 
 **Key venue-specific notes:**
 - **OSDI**: Would you enthusiastically champion this paper? "Exciting and imperfect" can beat "boring and thorough."
 - **NSDI**: Could this system actually be deployed? Production experience and operational lessons get extra credit. One-shot revision (OSR) available for borderline papers.
 - **SIGCOMM**: Scores of 3+ generally indicate acceptability. Papers need a strong advocate. The networking contribution must be clear and substantial.
 - **MOBICOM**: Real-world wireless experiments strongly preferred over simulation. Multiple environments and conditions required. Signal-level analysis expected.
-- **SOSP**: Must present new abstractions or principles, not just "faster X." Artifact evaluation is mandatory. The system must be real and substantial.
+- **SOSP**: Must present new abstractions or principles, not just "faster X." Artifact evaluation is optional (SOSP 2026 CFP: "SOSP will continue the successful tradition of running an optional Artifact Evaluation process"), so do not penalize a paper merely for lacking an artifact. The system must be real and substantial.
+- **Other systems venues (ASPLOS, EuroSys, USENIX Security, ATC, etc.)**: the generic systems workflow in this skill applies, but form fields, scales and policies must come from that venue's live review form and reviewer instructions.
 - **FAST**: Deep storage/file systems expertise valued. Evaluation must use real storage workloads or production traces. Deployed-systems papers get credit for operational lessons. Short papers (6 pages) evaluated for completeness within their scope. Double-blind review. One-shot revision (OSR) available for borderline papers.
 
 For full venue-specific rubrics, load `references/review_criteria.md`.
@@ -121,6 +150,8 @@ For the complete weakness catalog with constructive phrasing templates, load `re
 
 ### 6. Scoring Guidelines
 
+*Typical form; scales are set per HotCRP/OpenReview instance and are not published officially — use the scale on the live review form.*
+
 **Overall Merit (1-5):**
 
 | Score | Label | Meaning | Action |
@@ -150,7 +181,7 @@ For full scoring rubrics and example reviews at each score level, load `referenc
 
 ### 7. One-Shot Revision (OSR) Reviews
 
-Available at NSDI, SIGCOMM, MOBICOM, and FAST. OSR means a conditional accept with specific required changes.
+Available currently at NSDI, MOBICOM, and FAST (per recent CFPs). SIGCOMM offered it through 2026, but the SIGCOMM 2027 CFP states "no rebuttals or one-shot revisions"; OSDI '26/'27 use conditional acceptance instead of revise-and-resubmit. OSR means a conditional accept with specific required changes.
 
 **When to recommend OSR:**
 - Core contribution is sound and significant
@@ -186,6 +217,8 @@ Avoid these six common reviewer behaviors:
 For detailed descriptions and examples, load `references/review_ethics_and_tone.md`.
 
 ### 9. Multi-Perspective Review Generation
+
+> **Policy gate:** do not generate these reviews when the user is an assigned reviewer at a venue whose policy prohibits LLM processing of the review or submission — see "Before you start: reviewer LLM policy". Mock reviews of the user's own or public papers are fine.
 
 When asked to review a paper from multiple perspectives (or to simulate a PC sub-committee), generate four independent reviews — one at each confidence level. This surfaces issues that any single reviewer would miss.
 

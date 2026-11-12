@@ -1,5 +1,14 @@
 # Confidence-Level Behavioral Profiles for Multi-Perspective Reviewing
 
+## Contents
+
+- [1. Overview](#1-overview)
+- [2. Per-Level Behavioral Profiles](#2-per-level-behavioral-profiles)
+- [3. Dimension Weight Shifts Across Confidence Levels](#3-dimension-weight-shifts-across-confidence-levels)
+- [4. Scoring Behavior by Confidence Level](#4-scoring-behavior-by-confidence-level)
+- [5. Worked Example: One Paper, Four Reviews](#5-worked-example-one-paper-four-reviews)
+- [6. Common Mistakes in Multi-Perspective Generation](#6-common-mistakes-in-multi-perspective-generation)
+
 This reference defines how reviewer behavior — dimension coverage, language patterns, scoring tendencies, and risk patterns — changes across the four confidence levels. Use these profiles to generate multiple independent reviews of the same paper, simulating a diverse PC sub-committee.
 
 ---

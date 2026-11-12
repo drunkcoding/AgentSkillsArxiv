@@ -22,12 +22,15 @@ Use this reference for NeurIPS, ICML, ICLR, and AAAI OpenReview-style reviews. E
 | Venue / edition | Publicly verified overall scale | Confidence | Dimension scores | Distinctive process |
 |-----------------|---------------------------------|------------|------------------|---------------------|
 | NeurIPS 2025 | 1-6 | 1-5 | Quality, Clarity, Significance, Originality: 1-4 | Acknowledge rebuttal; reviews/discussion for accepted papers become public anonymously |
+| NeurIPS 2026 | 1-6 (unchanged per the 2026 Main Track Handbook) | 1-5 | Quality, Clarity, Significance, Originality: 1-4 | Contribution types (General, Theory, Use-Inspired, Concept & Feasibility, Negative Results); LLM-use experiment (see 3.6) |
 | ICML 2026 | 1-6 | 1-5 | Soundness, Presentation, Significance, Originality: 1-4 | Mandatory author-response acknowledgement and final post-rebuttal justification |
 | ICLR 2026 | 0, 2, 4, 6, 8, 10 | 1-5 | Soundness, Presentation, Contribution: 1-4 | Public reviews; active public discussion; revisions allowed through Dec. 3 |
 | AAAI-26 | Public guide does not publish anchors; confirm the live OpenReview form | Confirm live form | Reproducibility is explicitly decision-relevant | Two phases; Phase-1 rejects have no rebuttal opportunity |
 | AAAI-27 | Reviewer pages unpublished as of Oct 2026; confirm the live OpenReview form | Confirm live form | Reproducibility decision-relevant; checklist is a separate upload; "release after acceptance" is not evidence | Two phases (Phase-1 rejects Sept 24, 2026); novelty check across overlapping-author submissions |
 
 Do not translate these scores to the systems 1-5 merit scale. Enter the venue's own fields and preserve its anchors.
+
+*Typical form; scales are set per HotCRP/OpenReview instance and are not published officially — use the scale on the live review form.* (Applies in particular to the ICLR 2026 row; ICLR sub-scores and confidence are not published on an official page.)
 
 ---
 
@@ -101,9 +104,17 @@ The official 2025 form is **not** a 1-10 overall scale. Earlier-edition memories
 
 Read all reviews and all author responses. Explicitly acknowledge that the response was read even when it does not change the score. Participate in reviewer-author and reviewer-AC discussion; update the review and explain any changed evaluation. Accepted-paper reviews, meta-reviews, author discussion, and reviewer responses become public anonymously; opted-in rejected papers can also become public.
 
-### 3.5 Reviewer LLM policy
+### 3.5 Reviewer LLM policy (NeurIPS 2025 rule)
 
 Never share a submission, submitted code, review material, ideas, or results with an LLM. An LLM may be used only on external/public material to understand concepts or to check grammar/phrasing without leaking confidential information. The reviewer remains responsible for accuracy and quality.
+
+### 3.6 NeurIPS 2026 (Main Track Handbook)
+
+**Edition source:** NeurIPS 2026 Main Track Handbook (neurips.cc/Conferences/2026/MainTrackHandbook).
+
+- **Scales:** Overall 1-6 (6 Strong Accept … 1 Strong Reject), Confidence 1-5, and Quality / Clarity / Significance / Originality rated 1-4 (excellent … poor) — unchanged from 2025 per the Handbook. Authors also declare a contribution type; the four criteria are interpreted per type. Still confirm on the live form.
+- **LLM rule (2026):** "Reviewers must not use LLMs except for papers where this is specifically allowed, and must only use the sanctioned LLM in such cases rather than other LLMs." The Handbook describes an experiment (details may change) in which each reviewer gets some papers with sanctioned LLM support provided via OpenReview and some where no LLM at all is allowed.
+- **Confidentiality:** "Do not share, discuss, or disclose any information related to submissions with anyone, including any unsanctioned LLMs."
 
 ---
 
@@ -194,6 +205,8 @@ The 2026 form contains Summary, Strengths, Weaknesses, Questions, Soundness, Pre
 
 **Confidence:** 1-5. Treat 5 as deep expertise plus careful checking and 1 as an educated guess. Confirm the current invitation before submission if OpenReview changes an option or label.
 
+*Typical form; scales are set per HotCRP/OpenReview instance and are not published officially — use the scale on the live review form.* (The {0,2,4,6,8,10} overall scale, 1-4 sub-scores and 1-5 confidence above are not published on an official ICLR page.)
+
 ### 5.3 Public discussion and revisions
 
 Official reviews are public. Engage actively from **November 11 through December 3, 2025**. Authors may post unlimited comments and revise title, abstract, paper, and supplement; `pdfdiff` exposes changes. Reviewers may ignore revisions that differ significantly from the original scope. Read revisions and other reviews, join a borderline-paper meeting if requested, then update the final recommendation and state what did or did not change it. All submissions are de-anonymized and released after decisions; post-deadline withdrawals are immediately public and de-anonymized.
@@ -214,6 +227,7 @@ General-purpose writing assistance is allowed, but the reviewer owns every claim
 - Reviewers evaluate reproducibility **only from materials included at submission** (main paper, Code and Data Supplement, Supplementary Document). "Will be released after acceptance/publication" must **not** be treated as evidence — assume such materials will not be made available.
 - The review process includes a **substantial novelty check across submissions with overlapping authors**; substantially similar or thin-sliced submissions may be summarily rejected.
 - Timeline: Phase-1 rejections Sept 24, 2026; author feedback Oct 24-31, 2026; final notification Nov 30, 2026.
+- The AAAI-27 Main Technical Track Call states: "Phase 1: Two reviews supplemented by one AI-generated, non-decisional review." (Phase 2 adds further reviews for papers not rejected in Phase 1.) Treat it like the AAAI-26 AI review: do not copy it, and form your own judgement.
 - AAAI-27 reviewer instruction pages were not yet published at the AAAI-26 URL pattern as of Oct 2026 — confirm rating/confidence anchors and any AI-review pilot details on the live OpenReview form.
 
 ### 6.1 Review structure and fields
@@ -330,6 +344,10 @@ After reading the response, maintain/raise/lower the recommendation from X to Y.
 ---
 
 ## 10. Official Sources
+
+### NeurIPS 2026
+
+- Main Track Handbook (review form, LLM rule, confidentiality): https://neurips.cc/Conferences/2026/MainTrackHandbook
 
 ### NeurIPS 2025
 

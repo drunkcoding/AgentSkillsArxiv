@@ -1,5 +1,11 @@
 # Review Criteria for Systems Conference Papers
 
+## Contents
+
+- [1. Seven Evaluation Dimensions](#1-seven-evaluation-dimensions)
+- [2. Venue-Specific Review Priorities](#2-venue-specific-review-priorities)
+- [3. Scoring Calibration](#3-scoring-calibration)
+
 This reference defines the seven evaluation dimensions, venue-specific review priorities, and scoring calibration used when reviewing papers for OSDI, NSDI, SIGCOMM, MOBICOM, SOSP, and FAST.
 
 ---
@@ -217,7 +223,7 @@ Different venues weight the evaluation dimensions differently, shaped by their c
 4. **Evaluation** (medium-high) — Must be convincing, but "exciting and imperfect" may beat "boring and thorough"
 5. **Presentation** (medium) — Should be clear, but a well-motivated rough paper may survive
 6. **Relevance** (medium) — Broad scope; most systems topics welcome
-7. **Reproducibility** (medium) — Artifact evaluation strongly encouraged
+7. **Reproducibility** (medium) — Artifact evaluation encouraged (optional; see the call for artifacts)
 
 **Key signals for OSDI reviewers:**
 - Would you enthusiastically advocate for this paper in the PC meeting?
@@ -292,7 +298,7 @@ Different venues weight the evaluation dimensions differently, shaped by their c
 7. **Reproducibility** (medium) — Valued but not always feasible for ISP/datacenter-scale work
 
 **SIGCOMM scoring convention:**
-- Scores of 3 or higher (on a 1-5 scale) generally indicate the paper is acceptable
+- Scores of 3 or higher (on a typical 1-5 scale; confirm on the live form) generally indicate the paper is acceptable
 - A paper needs strong advocate(s) to be accepted — lukewarm support is insufficient
 - The PC discussion is a critical stage; champion your paper or flag concerns clearly
 
@@ -373,7 +379,7 @@ Different venues weight the evaluation dimensions differently, shaped by their c
 4. **Evaluation** (high) — Must demonstrate the ideas work in a real, substantial system
 5. **Presentation** (high) — SOSP papers are expected to be well-crafted
 6. **Relevance** (high) — Must contribute to operating systems principles (broadly defined)
-7. **Reproducibility** (high) — Artifact evaluation is required
+7. **Reproducibility** (high) — Artifact evaluation is optional at SOSP (SOSP 2026 CFP), but reproducibility of the described system is still assessed
 
 **Key signals for SOSP reviewers:**
 - Does this paper introduce a new abstraction that others will build on?
@@ -382,7 +388,7 @@ Different venues weight the evaluation dimensions differently, shaped by their c
 - Does the paper advance our understanding of systems principles, not just systems performance?
 
 **SOSP-specific requirements:**
-- Artifact evaluation is mandatory — the system must work
+- Artifact evaluation is optional (SOSP 2026 CFP: "SOSP will continue the successful tradition of running an optional Artifact Evaluation process"); do not penalize a missing artifact by itself — the described system must still be real and credibly working
 - The paper must go beyond "we built a faster X" to "we discovered principle Y that enables faster X"
 - Implementation must be substantial enough to validate the design
 
@@ -394,7 +400,7 @@ Different venues weight the evaluation dimensions differently, shaped by their c
 | Technical Soundness ≤ 2 | Cap Overall Merit at 2. Rigorous and thorough technical work is required. |
 | Significance ≤ 2 | Cap Overall Merit at 2. Broad systems impact is essential. |
 | Evaluation = simulation-only | Cap Overall Merit at 2. A real, working system is required. |
-| Reproducibility ≤ 2 | Cap Overall Merit at 3. Artifact evaluation is mandatory. |
+| Reproducibility ≤ 2 | Cap Overall Merit at 3. Judge from the paper's own detail and any artifact provided; artifact evaluation is optional, so a missing artifact alone is not grounds for a low score. |
 | Presentation ≤ 2 | Cap Overall Merit at 3. SOSP papers should be well-crafted. |
 | Novelty = 5, all others ≥ 3 | Overall Merit can reach 5. A breakthrough abstraction defines the best SOSP papers. |
 | All dimensions = 3 | Cap Overall Merit at 2. SOSP's bar requires excellence, not adequacy. |
@@ -433,6 +439,8 @@ Different venues weight the evaluation dimensions differently, shaped by their c
 ## 3. Scoring Calibration
 
 ### Overall Merit Scale (1-5)
+
+*Typical form; scales are set per HotCRP/OpenReview instance and are not published officially — use the scale on the live review form.*
 
 Use this calibration to assign scores consistently. Remember that top systems venues accept ~15-20% of submissions.
 
@@ -510,6 +518,8 @@ A paper addresses a real problem (scheduling ML training jobs on heterogeneous c
 → **Score 2.** The design's central assumption is questionable and the evaluation is misleading because it excludes a significant cost. The problem is real and the approach has promise, but the paper needs to confront the checkpointing overhead honestly and include it in all measurements.
 
 ### Reviewer Confidence Scale (1-4)
+
+*Typical form; scales are set per HotCRP/OpenReview instance and are not published officially — use the scale on the live review form.*
 
 | Score | Label | What It Means |
 |-------|-------|---------------|
