@@ -1,6 +1,6 @@
 # Budget and Budget Justification
 
-Facts last verified 2026-11-12 against 2 CFR 200.1 (eCFR, current text effective Oct 1, 2024; compared with the pre-Oct-2024 text) and NIH notices NOT-OD-26-034 / NOT-OD-26-038 (salary limitation). Funder rules change frequently — confirm against the current solicitation/NOFO before relying on any limit or amount. (UK/EU rows were not re-audited in this pass.)
+Facts last verified 2026-11-12 against: 2 CFR 200.1 (eCFR, text effective Oct 1, 2024, compared with the earlier text); NIH notices NOT-OD-25-059, -25-068, -26-034, -26-038, -26-072 and -26-131 and the NIH budget and salary-cap pages (first-hand from NIH hosts); NSF PAPPG 24-1 with Supplement 1 (NSF 26-200), PAPPG chapter X and the NSF indirect-cost pages; the UKRI guidance on FEC grant terms and conditions. Funder rules change frequently — confirm against the current solicitation/NOFO before relying on any limit or amount. UK/EU rows other than the UKRI 80% rate were not re-audited in this pass.
 
 Budgets are read **carefully** — reviewers check that costs match the scientific work plan. A mismatched budget triggers reduced scores even when the science is strong.
 
@@ -26,7 +26,7 @@ Budgets are read **carefully** — reviewers check that costs match the scientif
 |---|---|
 | **Personnel (Salaries)** | PI, co-I, postdoc, student, technician, admin |
 | **Fringe Benefits** | Institutional rate × salary |
-| **Equipment** | US federal awards: per-unit acquisition cost at or above the lesser of the recipient's capitalization level or $10,000 (2 CFR 200.1, effective Oct 1, 2024; formerly $5,000), useful life >1 year; UK: >£10K (not re-audited); tangible, durable |
+| **Equipment** | US: per-unit acquisition cost at or above the lesser of the institution's capitalization level or a federal ceiling that differs by agency — see the Equipment section (2 CFR 200.1: $10,000; NSF proposal budgets: $5,000 per current PAPPG text; NIH: $10,000 only if your rate agreement cites it); useful life >1 year; UK: >£10K (not re-audited); tangible, durable |
 | **Travel** | Domestic/international conference, fieldwork, partner visits |
 | **Materials/Supplies** | Consumables, software licenses, small instruments |
 | **Compute / Cloud** | GPU/CPU compute purchases, cloud credits |
@@ -40,13 +40,13 @@ Budgets are read **carefully** — reviewers check that costs match the scientif
 
 | Funder | Budget Format | Typical narrative length | Indirect (F&A) handling |
 |---|---|---|---|
-| **NSF** | Detailed line-item via Research.gov | 5 pp narrative | Institutional negotiated rate; CISE typically allows up to ~58% MTDC |
-| **NIH (modular)** | Round to $25K modules up to $250K direct/yr | Brief "Personnel + Other" justification | Negotiated rate; capped at federal rate on subawards |
+| **NSF** | Detailed line-item via Research.gov | 5 pp narrative | Institution's federally negotiated rate on its MTDC base (PAPPG X.D); NSF program staff cannot negotiate indirect costs; NSF's 15% IDC cap (NSF 25-034) was vacated and is not in effect — NSF issues awards at negotiated rates |
+| **NIH (modular)** | Round to $25K modules up to $250K direct/yr | Brief "Personnel + Other" justification | Negotiated rate; consortium F&A is outside the $250K modular limit; only the first $25,000 of each subaward counts in the MTDC base (NOT-OD-26-072) |
 | **NIH (detailed)** | Required when direct >$250K/yr | Full line-item narrative | Negotiated rate |
 | **ERC** | EU lump-sum or actual costs (changing) | 1-2 pp resources section | EU flat 25% indirect on direct (excl. subcontracting) |
 | **Horizon** | Per-partner detailed | Per-partner cost breakdown table | Flat 25% indirect (most actions) |
 | **DARPA / DoD** | DCAA-compliant detailed | 5-10+ pp narrative | Negotiated rate; subaward fees layered |
-| **UKRI fEC** | TRAC/fEC institutional tool | 2 pp Justification of Resources | 80% fEC paid by UKRI; institution covers 20% |
+| **UKRI fEC** | TRAC/fEC institutional tool | 2 pp Justification of Resources | UKRI pays a fixed 80% of FEC unless the opportunity states otherwise (exceptions exist, e.g. externally contracted social surveys at 100%); institution covers the rest |
 
 ## Budget Justification Narrative Pattern
 
@@ -66,6 +66,8 @@ prior award actual].
 
 ### Example (postdoc personnel)
 
+*Illustrative figures — use your institution's rates.*
+
 > **Postdoctoral Researcher (Year 1-3, 100% effort).** We request salary support for one postdoctoral researcher at the institution's standard postdoc rate ($72,000/yr Year 1, escalating 3% annually). This person will lead Aim 2 (algorithm development and benchmarking) and contribute to Aim 3. Recruitment will target candidates with deep-learning systems backgrounds; PI's prior postdocs (5, all transitioned to faculty/industry roles) demonstrate successful mentoring. Fringe @ 27.4% institutional rate.
 
 ## Personnel
@@ -73,17 +75,18 @@ prior award actual].
 The largest line for most CS proposals. Address each role:
 
 ### PI Salary
-- US (NSF/NIH): typically 1-2 months/year summer salary or partial AY buyout. NIH limit: salary cap at Executive Level II, revised annually — $228,000, effective Jan 1, 2026 (NOT-OD-26-034 as corrected by NOT-OD-26-038); check the current notice.
+- NSF: at most two months of regular salary per senior/key person per year across all NSF awards (PAPPG II.D.2.f); summer or AY effort fits within that cap.
+- NIH: salary cap at Executive Level II, revised annually — $228,000, effective Jan 1, 2026 (NOT-OD-26-034 as corrected by NOT-OD-26-038). As of 2026-11-12 no FY2027 salary-limitation notice has been issued; NOT-OD-26-131 (continuing resolution through 2026-12-11) keeps the NOT-OD-26-034 limit. Check the current notice.
 - ERC/Horizon/UKRI: PI time charged at investigator rate (estimated effort, not invoiced).
 - DARPA/DoD: 1-2 months summer + AY buyout common; full effort allowed for sabbatical-funded years.
 
 ### Postdoctoral Researchers
-- Institution's standard postdoc rate; NIH NRSA scale is the federal floor.
+- Institution's standard postdoc rate; NIH NRSA stipend levels (NOT-OD-26-044) are a common reference point, not a requirement for postdocs on research grants.
 - Justify why the postdoc is needed (vs PhD student) — usually depth of methods expertise.
 - One postdoc per Aim is a common ratio; >2 postdocs per Aim raises questions.
 
 ### PhD Students
-- Stipend + tuition + fringe — institutional standard ranges from ~$35K (stipend) + $55K (tuition+fees) in US private universities.
+- Stipend + tuition + fringe — illustrative only (e.g., ~$35K stipend + $55K tuition and fees at a US private university); stipend and tuition vary by institution, so use your own tuition schedule.
 - Justify number of students (1 per Aim is typical; 2+ per Aim needs explanation).
 - UK: full studentship cost including stipend, fees, RTSG charged.
 - DARPA: students often charged at higher rate due to project pace.
@@ -97,7 +100,13 @@ Per person per year:
 
 ## Equipment
 
-Items at or above the lesser of the institution's capitalization threshold and the federal ceiling of $10,000 per unit (US; 2 CFR 200.1, effective Oct 1, 2024 — an institution may set a lower threshold, e.g. $5K; UK: £10K, not re-audited). One-time purchase; not consumables.
+Items at or above the institution's capitalization threshold (UK: £10K, not re-audited). One-time purchase; not consumables. US federal ceiling, by agency:
+
+- **2 CFR 200.1** (effective Oct 1, 2024): equipment is tangible property with a useful life of more than one year and a per-unit acquisition cost at or above the lesser of the recipient's capitalization level or **$10,000** (previously $5,000).
+- **NSF:** for proposal budgets (Line D), PAPPG 24-1 II.D.2.f(iii) still defines equipment as the lesser of the proposer's capitalization level or $5,000; Supplement 1 §13 changed only the figure in IX.E.2.g(i) (title-transfer items) to $10,000.
+- **NIH:** NOT-OD-25-059 recognizes the $10,000 threshold only for recipients whose current negotiated indirect cost rate agreement cites the updated amount; otherwise follow your institution's policy.
+
+In all cases an institution may set a lower capitalization level; use your institution's policy / rate agreement.
 
 ### Justification structure
 
@@ -142,7 +151,7 @@ Itemize. CS-specific examples:
 When work is done by another institution:
 
 - **Subaward agreement**: separate budget + justification from the partner
-- US: **up to the first $50,000 of each subaward** is included in your indirect-cost (MTDC) base (2 CFR 200.1, effective Oct 1, 2024; previously $25,000); the portion above $50,000 is excluded
+- US: the MTDC base includes only the first part of each subaward, and the amount is agency-specific. **2 CFR 200.1 and NSF:** up to the first $50,000 of each subaward (regardless of period of performance; previously $25,000), if your rate agreement reflects it. **NIH:** only the first $25,000 — NIH rescinded the flexibility to apply the updated 2 CFR 200.1 MTDC definition (NOT-OD-26-072, Apr 2026: "NIH will not apply updated thresholds outlined within 2 CFR Part 200, at this time"); consortium F&A is also outside the $250K modular limit
 - Horizon: each consortium partner has its own budget; "Linked Third Parties" concept exists for legal entities not yet partners but contributing
 - Justify: why this work is procured externally, not done in-house
 
@@ -150,10 +159,10 @@ When work is done by another institution:
 
 Institution's negotiated rate × Modified Total Direct Costs (MTDC) base.
 
-- **MTDC base** = direct costs minus equipment, tuition remission, the portion of each subaward above $50,000, participant support
-- Federal F&A rates (US): negotiated with cognizant agency (DHHS or ONR); typical R1 rate 55-70% MTDC
+- **MTDC base** = direct costs minus equipment, tuition remission, participant support, and the portion of each subaward above $50,000 (NSF / 2 CFR 200.1) or above $25,000 (NIH)
+- Federal F&A rates (US): negotiated with the cognizant agency (DHHS or ONR/DoD); use your institution's rate agreement and do not estimate. Neither NSF's 15% IDC cap (NSF 25-034) nor NIH's Feb 2025 15% cap (NOT-OD-25-068) is in effect: NSF issues awards at negotiated rates, and NIH's guidance was vacated by the court (First Circuit affirmed Jan 5, 2026)
 - ERC/Horizon: flat **25% indirect** (unit cost grants vary)
-- UKRI fEC: institutional indirect via TRAC; UKRI pays 80% of fEC
+- UKRI fEC: institutional indirect via TRAC; UKRI pays a fixed 80% of FEC unless the opportunity states otherwise
 
 Do not edit indirect rate; it is institutional. Sponsored Research Office computes.
 
@@ -198,9 +207,10 @@ US researchers can apply for **NAIRR** (National AI Research Resource pilot) all
 - [ ] Effort percentages do not exceed 100% for any person across all funded work
 - [ ] Every line item is referenced in the justification narrative
 - [ ] Every justification line is tied to a specific Aim/WP
-- [ ] Quotes attached for equipment >threshold
+- [ ] Quotes attached for equipment at or above your institution's / the agency's equipment threshold
 - [ ] Subaward budgets separate and certified by partner institution
 - [ ] Indirect rate = current institutional negotiated rate
+- [ ] Subaward MTDC cut-off matches the agency (NSF / 2 CFR 200.1: first $50,000 of each subaward; NIH: first $25,000)
 - [ ] Travel itemized by conference/destination
 - [ ] Compute fully detailed (GPU type, hours, source, rate basis)
 - [ ] Open-access / publication costs included

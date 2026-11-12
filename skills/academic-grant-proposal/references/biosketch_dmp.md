@@ -1,6 +1,6 @@
 # Biosketch / CV and Data Management Plan
 
-Facts last verified 2026-11-12 against NIH Guide notices NOT-OD-26-018 and NOT-OD-26-033 (US funders), PAPPG 24-1 with Supplements 1-2 (NSF), and DARPA/NIH pages as noted. Funder rules change frequently — confirm against the current solicitation/NOFO before relying on any limit or amount. (ERC, Horizon Europe and UKRI rows were not re-audited in this pass.)
+Facts last verified 2026-11-12 against: NIH Guide notices NOT-OD-26-018, -033, -079 and -046 and the NIH page-limits and DMS pages (first-hand from NIH hosts); PAPPG 24-1 with Supplements 1-2 and the Research.gov DMSP page (NSF); the ERC WP2026/WP2027, Horizon Europe Programme Guide V5.1 and Part B template V5.1, UKRI R4RI guidance and research data policy, and the Royal Society URF 2027 scheme notes. Funder rules change frequently — confirm against the current solicitation/NOFO before relying on any limit or amount.
 
 Two of the most common auxiliary documents required across funders. Format mistakes here are a frequent reason for desk-rejection.
 
@@ -26,12 +26,12 @@ Two of the most common auxiliary documents required across funders. Format mista
 | **NSF** | NSF Common Form biosketch | No page limit (PAPPG 24-1) | **SciENcv mandatory** |
 | **NIH** | Common Form Biographical Sketch + NIH Biographical Sketch Supplement (due dates on/after Jan 25, 2026) | No page limit for the combined PDF; character limits on Supplement fields (NOT-OD-26-018) | **SciENcv mandatory** (single certified PDF) |
 | **ERC** | Single "Curriculum Vitae (CV) and Track Record" section | up to 4 pp per Principal Investigator (WP2026/WP2027; see [erc.md](erc.md)) | ERC electronic proposal template |
-| **Horizon Europe** | Partner CV (per institution) | usually 4 pp | EU template |
+| **Horizon Europe** | Participant description in Part A of the portal form (no separate Part B section) | set by the Part A form | Funding & Tenders form |
 | **UKRI** | R4RI résumé (four modules + optional additional information) | Word limit set per opportunity (e.g., EPSRC New Investigator Award: 1,150 words for modules plus 500 for additions; see [ukri.md](ukri.md)) | Funding Service / council template |
 | **DARPA / DoD** | Free-form CV | typically 2-3 pp per personnel | Word/PDF |
-| **Royal Society** | Standard CV + Personal Statement | 2 pp CV + 1 pp statement | Word/PDF |
+| **Royal Society (URF)** | Applicant Career Summary page of the Flexi-Grant form: appointments, personal statement, publications | personal statement 500 words; publications 1,000 words (up to about 20 items) | Flexi-Grant web form |
 
-**Failing to use SciENcv for NSF/NIH = compliance failure** (NIH Common Forms: required for due dates on/after Jan 25, 2026 per NOT-OD-26-018; confirm current enforcement on grants.nih.gov). Generate via https://www.ncbi.nlm.nih.gov/sciencv/ and re-export each submission (new versions of templates roll out).
+**Failing to use SciENcv for NSF/NIH = compliance failure** (NIH Common Forms: required for due dates on/after Jan 25, 2026 per NOT-OD-26-018; after the leniency period ended, NOT-OD-26-079 turned system warnings into errors on May 8, 2026, so non-compliant submissions are stopped). Generate via https://www.ncbi.nlm.nih.gov/sciencv/ and re-export each submission (new versions of templates roll out).
 
 ## NSF Biosketch (SciENcv-required)
 
@@ -52,7 +52,7 @@ The biosketch itself has no Synergistic Activities section. PAPPG 24-1 II.D.2.h(
 
 ## NIH Biosketch and Other Support (Common Forms, SciENcv-required)
 
-**Policy:** NOT-OD-26-018 requires the **Biographical Sketch Common Form**, the **NIH Biographical Sketch Supplement** and the **Current and Pending (Other) Support Common Form** for application due dates, JIT, RPPR and prior-approval submissions on or after **Jan 25, 2026**, prepared in **SciENcv** (certified by the individual, not a delegate; ORCID iD linked to eRA Commons required). NOT-OD-26-033 extended a warning-only leniency period through May 2026, after which validations become errors on a date NIH announces; confirm current enforcement on grants.nih.gov. The Biographical Sketch Common Form and Supplement are completed in one SciENcv interface and produce a single PDF with **no page limit**.
+**Policy:** NOT-OD-26-018 requires the **Biographical Sketch Common Form**, the **NIH Biographical Sketch Supplement** and the **Current and Pending (Other) Support Common Form** for application due dates, JIT, RPPR and prior-approval submissions on or after **Jan 25, 2026**, prepared in **SciENcv** (certified by the individual, not a delegate; ORCID iD linked to eRA Commons required). NOT-OD-26-033 extended a warning-only leniency period; NOT-OD-26-079: "On May 8, 2026, system warnings will change to errors that will stop any submission not using compliant Common Forms." The Biographical Sketch Common Form and Supplement are completed in one SciENcv interface and produce a single PDF with **no page limit**.
 
 ### Biographical Sketch Common Form
 Sections named in the notice: **Professional Preparation**, **Appointments and Positions**, and **Products** (Products Most Closely Related to the Proposed Project: limit 5 citations; up to 5 other significant products). Section D (Scholastic Performance, fellowships) is no longer required or accepted.
@@ -81,7 +81,7 @@ For CS PIs, include: software/dataset releases with adoption metrics, GitHub URL
 
 ## Horizon Europe Partner CVs
 
-Each partner institution submits a "Partner CV" / "Description of Participating Organization" entry inside Section 4 of Part B. Typically 4 pages per partner. Address:
+Under the current RIA/IA template (V5.1) participant descriptions (organisation profile, key people, relevant projects) are entered in Part A of the portal form; Part B section 3.2 (indicatively 3 pages) argues the capacity of the consortium as a whole. Take limits from the Part A form. Cover for each partner:
 
 1. **Legal status** (university, RTO, SME, large enterprise)
 2. **Role in the project** — which WPs led/contributed
@@ -138,25 +138,28 @@ CS/ML-specific DMP elements:
 
 | Funder | Format | Length |
 |---|---|---|
-| **NSF DMSP** | PAPPG 24-1 lists: types of data/materials produced, data and metadata standards, access and sharing policies (privacy, confidentiality, IP), re-use/re-distribution, archiving; from Apr 27, 2026 created with a Research.gov tool (Supplement 2) | 2 pp max in PAPPG 24-1 (confirm in Research.gov tool) |
-| **NIH DMS Plan** | Mandatory since Jan 2023; structured 6-element template (confirm on grants.nih.gov) | 2 pp max (confirm on grants.nih.gov) |
-| **ERC** | Annexed Data Management Plan; FAIR-aligned | varies |
-| **Horizon Europe** | Mandatory FAIR DMP; updated at month 6, mid-term, end | initial 5-10 pp; iterative |
-| **UKRI** | Council-specific (DCC checklist common); EPSRC mandatory | 1-2 pp |
+| **NSF DMSP** | Research.gov DMSP web tool (Supplement 2, NSF 26-202; live since Apr 27, 2026) with 8 fields per data/research-product category: General Information; Access Policies and Limitations; Data Standards and Metadata; Provenance; Public Archiving; Timeline for Public Accessibility; Data Availability; Accountability | The PAPPG 24-1 two-page limit was struck by Supplement 2; the tool may not be used to circumvent the Project Description page limit |
+| **NIH DMS Plan** | Required for any NIH-funded research generating scientific data; for due dates on/after May 25, 2026 use the 2026 DMS Plan Format Page, 7 elements (NOT-OD-26-046; below) | Short form with word caps: 300 words (limitations), 100 words (data types/repositories table); Forms-I guide: "recommended not to exceed two pages" |
+| **ERC** | No DMP at proposal stage; a data management plan (FAIR principles) must be established within the first six months of the grant (WP2027 1.7.3) | n/a |
+| **Horizon Europe** | No DMP at proposal stage (open-science practices, including the research data management approach, are described in section 1.2 of Part B); the DMP itself is a deliverable due by month 6, updated during the project | no official page count |
+| **UKRI** | Outline of data management and sharing in the application where the opportunity asks (council policies until 1 Apr 2027, new UKRI research data policy after); full DMP within 6 months of award start; DCC checklist is a useful template | set per opportunity |
 | **DARPA / DoD** | Required only when explicitly called for in BAA | varies |
 
-### NIH DMS Plan: 6 mandatory elements (confirm on grants.nih.gov)
+### NIH DMS Plan: 2026 format page (seven elements)
 
-1. **Data Type** — types and amounts; tools, software, code generated
-2. **Related Tools, Software, Code** — versions; release plans
-3. **Standards** — common formats and metadata standards used
-4. **Data Preservation, Access, Timelines** — repository, access mechanism, timeline (data shared no later than time of associated publication or end of award)
-5. **Access, Distribution, Reuse Considerations** — restrictions, IRB, consent provisions
-6. **Oversight of Data Management and Sharing** — how DMS plan compliance is monitored
+NOT-OD-26-046 supersedes NOT-OD-21-014 ("Data Management and Sharing Plan Elements should include only the following"). Required for application due dates on or after May 25, 2026; use the DMS Plan Format Page from sharing.nih.gov:
+
+1. Will there be maximum appropriate sharing of scientific data underlying peer-reviewed publications and other findings? [YES/NO]
+2. Will the data underlying publications be shared by the time of publication or, for other findings, by the end of the period of performance? [YES/NO]
+3. Will shared data be available for at least as long as repository and/or journal policies require? [YES/NO]
+4. If "no" to 1-3, or sharing is limited in some other way: describe the limitations and the ethical, legal or technical factors, with specific reasons. [300 words maximum]
+5. If data from human research participants will be shared: will privacy, rights and confidentiality be protected as outlined in NOT-OD-22-213, including any access controls? [YES/NO/Not Applicable]
+6. A table of key expected scientific data types (species and modality if known) and the repository or example repository. [100 words maximum]
+7. For studies subject to the NIH Genomic Data Sharing Policy (large-scale human or non-human genomic data): will the data be shared in an NIH-designated repository on the GDS timelines, and can the Institutional Certification expectations be met? [YES/NO/Not Applicable]; if "no", address in element 4.
 
 ### Horizon Europe FAIR DMP
 
-Required FAIR principles addressed:
+Horizon Europe: no DMP is required at proposal stage; it is a deliverable by month 6, revised during the project. FAIR principles to address:
 - **Findable**: persistent IDs, rich metadata, indexed in searchable resource
 - **Accessible**: open by default; if restricted, justified
 - **Interoperable**: community-standard formats and ontologies
@@ -179,7 +182,7 @@ Required FAIR principles addressed:
 - **Reproducibility commitments**: artifact evaluation badges (USENIX, ACM AE), paperswithcode entries, Docker images
 - **Sensitive datasets** (clinical, demographic, web-scraped): address consent, re-identification risk, access tier
 - **Compute carbon accounting** (Horizon Europe encouraged): tonnes CO2-eq estimated, mitigation
-- **Foundation model release decisions**: weights vs. API only vs. red-team-gated — justify under "Access, Distribution, Reuse"
+- **Foundation model release decisions**: weights vs. API only vs. red-team-gated — justify in element 4 (limitations on sharing) of the NIH 2026 format page
 
 ## Pre-Submission Checklist
 
@@ -188,8 +191,8 @@ Required FAIR principles addressed:
 - [ ] **NSF/NIH biosketches and Current & Pending (Other) Support generated via SciENcv** (mandatory; NIH: Common Forms for due dates on/after Jan 25, 2026)
 - [ ] Personal Statement (NIH Biographical Sketch Supplement) tailored to this proposal
 - [ ] Contributions to Science (NIH) / Products (NSF) / separate Synergistic Activities document (NSF, ≤1 page, ≤5 examples) are quantified, not narrative-only
-- [ ] DMP within page limit
-- [ ] DMP addresses all funder-mandated elements (NIH 6 elements (confirm on grants.nih.gov), Horizon FAIR)
+- [ ] DMP within the funder's limits (NIH format-page word caps; NSF Research.gov tool; none required at proposal stage for ERC/Horizon)
+- [ ] DMP addresses all funder-mandated elements (NIH 2026 format page, all seven elements; NSF tool fields; Horizon FAIR when the month-6 DMP is due)
 - [ ] DMP names specific repositories, licenses, retention periods
 - [ ] DMP code/model release plan includes maintenance commitment
 - [ ] If sensitive data: ethical / IRB / GDPR considerations addressed

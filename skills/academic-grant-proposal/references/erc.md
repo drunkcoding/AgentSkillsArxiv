@@ -1,6 +1,6 @@
 # ERC Proposals
 
-> Facts last verified 2026-11-12 against the ERC Work Programmes 2025, 2026 and 2027 (the 2027 edition governs the calls with 2026-2027 deadlines). Funder rules change with every work programme — confirm against the current call documents before relying on any limit or amount.
+> Facts last verified 2026-11-12 against the ERC Work Programmes 2025, 2026 and 2027 (the 2027 edition governs the calls with 2026-2027 deadlines), the ERC Information for Applicants for the StG/CoG 2027 calls (v11.0, 22.07.2026) and the Advanced Grant 2026 call (v6.0, 20.05.2026), and ERC news releases (success rates, PE12 panel). Funder rules change with every work programme — confirm against the current call documents before relying on any limit or amount.
 
 European Research Council. Funds **frontier, ground-breaking research** chosen on scientific excellence — single criterion, single PI. Hosted at any EU/associated-country institution.
 
@@ -26,9 +26,11 @@ European Research Council. Funds **frontier, ground-breaking research** chosen o
 | **Consolidator Grant (CoG)** | WP2027: > 5 and ≤ 15 years before 1 Jan 2027. WP2026 and earlier: 7-12 years | up to €2M (+ up to €1M) | 5 years |
 | **Advanced Grant (AdG)** | No specific academic eligibility period ("open to all researchers"); the PI is expected to be an established research leader with a track record of significant research achievements | up to €2.5M (+ up to €1M) | 5 years |
 | **Synergy Grant (SyG)** | 2-4 PIs of any seniority, each with a track record matching their career stage | up to €10M (+ up to €4M) | 6 years |
-| **Proof of Concept (PoC)** | existing ERC grantees only | €150K | 18 months |
+| **Proof of Concept (PoC)** | ERC main-grant PIs whose grant is ongoing or ended on/after 1 Jan 2026 (max 3 PoC per StG/CoG/AdG/ERC Plus project) | €150K lump sum | 18 months |
 
 Additional funding is "intended to cover further eligible costs for any cost category when these are necessary to carry out the proposed work" and must be justified in the proposal (StG/CoG/AdG PIs relocating to the EU or an Associated Country from elsewhere can request up to €2M). The eligibility windows differ by work programme, so check which one governs your call; the 2027 windows were newly introduced in WP2027. The career-stage clock has documented allowances (e.g., maternity leave, long illness, other well-documented circumstances). Verify eligibility in the current ERC Work Programme.
+
+**Funding model (WP2027):** Starting, Consolidator and Synergy Grants are actual-cost grants (100% of direct costs plus a 25% flat rate for indirect costs); Advanced, ERC Plus and Proof of Concept Grants are single lump-sum grants, so the budget must be a realistic estimate of actual costs, and Advanced and ERC Plus proposals add an Equipment Depreciation Table.
 
 **ERC Plus Grant (WP2027):** open to all researchers; up to €7M, 48-84 months, no additional funding; only about 30 are awarded per year; requires a Statement of Vision (½-2 pages) explaining what the project achieves beyond a regular ERC grant.
 
@@ -48,7 +50,7 @@ References and the funding ID section do not count towards these page limits. "O
 
 Plus:
 - **CV and Track Record** (one section, up to 4 pp per PI): see [PI Track Record](#pi-track-record)
-- **Host Institution Support Letter** — a binding statement of support that "must be provided at the time of application" for all grant types; proposals without it "may be declared inadmissible" (template annexed to the Information for Applicants)
+- **Host Institution Support Letter** — a binding statement of support that "must be provided at the time of application" for all grant types; proposals without it "may be declared inadmissible" (the template letter is in the zip file of templates in the submission system; see Annex 4.2 of the Information for Applicants)
 - **Administrative forms** in EU Funding & Tenders portal
 
 ## Part I of the Scientific Proposal (5 pages)
@@ -118,14 +120,16 @@ Lead-author / corresponding-author publications are weighted heavily for StG/CoG
 
 ## Two-Step Evaluation
 
-| Step | Evaluators | Read | Typical pass rate |
+| Step | Evaluators | Read | Retained for next step |
 |---|---|---|---|
-| **Step 1** | Panel members (remote) | Part I + CV and Track Record | ~25-35% (not verified; confirm in the current Information for Applicants) |
-| **Step 2** | Panel + external reviewers + **interview** (StG/CoG/AdG) | Full Research Proposal (Part I + Part II + CV/Track Record + Resources) + reviews | ~30-40% of Step 2 (not verified; confirm in the current Information for Applicants) |
+| **Step 1** | Panel members (remote) | Part I + CV and Track Record | Up to 44 proposals per panel are retained for Step 2 (no pass rate is published; WP2027 §1.6.3) |
+| **Step 2** | Panel + external reviewers + **interview** (StG/CoG/AdG) | Full Research Proposal (Part I + Part II + CV/Track Record + Resources) + reviews | Outcome A (funded in rank order if budget allows) or B (not funded); no Step-2 rate is published |
 
 Synergy Grants have a third step: Step 1 and Step 2 as above, with interviews at Step 3 (WP2027 §1.6.3).
 
-**Scores** are letter grades, not numeric: at Step 1 *A invited*, *A not invited*, *B* or *C*; at the final step *A* (recommended for funding if funds allow) or *B* (not funded). Overall success rate ≈10-15% (not verified; confirm in the current Information for Applicants). The interview at Step 2 is **15-25 minutes** (StG: 10 min talk + 15 min Q&A) (not verified; confirm in the current Information for Applicants). Prepare a 5-slide deck on the Part II work packages, anticipated criticisms, and key results.
+**Scores** are letter grades, not numeric: at Step 1 *A invited*, *A not invited*, *B* or *C*; at the final step *A* (recommended for funding if funds allow) or *B* (not funded). Overall success rates are low and falling: 12.2% for StG 2025, 8.8% for StG 2026 (4,807 proposals) and 9.6% for AdG 2025; the StG 2027 call received 7,710 applications for an estimated 373 grants (ERC news releases: StG 2026 results, 3 Sep 2026; StG 2027 applications, 23 Oct 2026; StG 2025 and AdG 2025 results releases at erc.europa.eu).
+
+**Interview.** The Step-2 interview lasts approximately 30 minutes: the PI presents the project outline, then answers panel questions, including on the budget table and resources. Each panel decides the exact format (slides allowed, split of time) and tells applicants after Step 1. The PI is interviewed remotely (Information for Applicants StG/CoG 2027 v11.0; AdG 2026 v6.0). Do not fix a slide count in advance: prepare a short talk on the project outline (objectives, high-risk/high-gain rationale, key work packages, preliminary evidence) and rehearse answers on anticipated criticisms and the budget.
 
 ## Common Differences from US Proposals
 
@@ -152,7 +156,7 @@ Synergy Grants have a third step: Step 1 and Step 2 as above, with interviews at
 
 ## CS / Systems / ML Notes for ERC
 
-- ERC panels relevant to CS: **PE6** (Computer Science and Informatics) — most CS proposals; **PE7** (Systems and Communication Engineering) for hardware-adjacent; **LS** panels for computational biology; **SH** for human-AI / digital humanities
-- PE6 rewards **theoretical depth**; pure systems-engineering proposals fare better in PE7 or via larger collaborative calls
-- **Open-source release** is increasingly mentioned in ERC ethics/reproducibility discussions but is not formally graded
+- ERC panels relevant to CS: **PE6** (Computer Science and Informatics) — most CS proposals; **LS** panels for computational biology; **SH** for human-AI / digital humanities
+- PE6 is "theoretical and experimental computer science" and its keyword list includes architecture/HPC (PE6_1), operating and distributed systems and networks (PE6_2), security (PE6_6), ML (PE6_9) and foundation models (PE6_10), so systems proposals belong in PE6; choose **PE7** (Systems and Communication Engineering) only for electrical, communication or optical systems engineering. A separate PE12 "Fundamentals of AI" panel is planned from the 2028 calls (ERC, 29 Sep 2026). Pick the panel from the keyword list in the Information for Applicants (Annex 4.1).
+- **Open-source release** is not formally graded: the Horizon Europe Programme Guide states that its open-science section does not apply to the ERC, "which does not include open science in the evaluation". No data management plan is a proposal section; a data management plan following FAIR principles must be established within the first six months of the grant (WP2027 §1.7.3)
 - ERC interviews are **technical** — expect questions about ablations, baselines, scaling assumptions (practitioner experience, not an ERC rule)

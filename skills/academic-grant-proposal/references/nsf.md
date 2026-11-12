@@ -1,6 +1,6 @@
 # NSF Proposals
 
-Facts last verified 2026-11-12 against NSF 22-586 (CAREER), NSF 23-576 (CRII, archived), PAPPG 24-1 with Supplements 1 (NSF 26-200) and 2 (NSF 26-202), and the NSF Future CoRe page (NSF 25-543). Funder rules change frequently — confirm against the current solicitation/NOFO before relying on any limit or amount.
+Facts last verified 2026-11-12 (first-hand from nsf.gov, research.gov and grants.gov) against NSF 22-586 (CAREER), NSF 23-576 (CRII, archived), PAPPG 24-1 with Supplements 1 (NSF 26-200) and 2 (NSF 26-202), the NSF Future CoRe solicitation NSF 25-543 and its program page, and the NSF indirect-cost pages. Funder rules change frequently — confirm against the current solicitation/NOFO before relying on any limit or amount.
 
 US National Science Foundation. CS proposals are typically submitted to **CISE** (Computer & Information Science & Engineering) directorate divisions: CCF, CNS, IIS, OAC.
 
@@ -23,9 +23,7 @@ US National Science Foundation. CS proposals are typically submitted to **CISE**
 
 | Mechanism | Eligibility | Budget | Duration | Page Limit |
 |---|---|---|---|---|
-| **Standard / Small** (legacy CISE core tiers — see CISE note below) | Any PI | $600K | 3 years | 15 pp Project Description |
-| **Medium** (legacy CISE core tiers) | Any PI | $1.2M | 3-4 years | 15 pp |
-| **Large** | Any PI | varies | up to 5 yr | 15 pp |
+| **CISE Future CoRe** (NSF 25-543; AF, CIF, CSR, CER, CPS, FET, HCC, III, NeTS, RI, SHF) | Any PI at an eligible organization (IHEs, non-profit non-academic organizations, Tribal Nations) | Up to $1,000,000; typical $150K-$250K per year; discouraged above $300K in any single year | Up to 4 years (typical 3-4) | 15 pp Project Description (PAPPG default; the solicitation does not change it) |
 | **CAREER** (NSF 22-586) | Doctorate; ≥50% tenure-track (or equivalent) assistant professor; untenured; no prior CAREER award | Minimum $400K total for the 5 years (BIO, ENG, OPP: minimum $500K; CISE has no $500K minimum) | 5 years (fixed) | 15 pp |
 | **CRII** (NSF 23-576) — **archived**, see [CRII section](#crii-specific-requirements-archived--historical) | Historical: untenured, first 3 yr in primary academic position; non-R1 | Historical: up to $175K | Historical: 24 months | Historical: 10 pp |
 | **EAGER** | Any | up to $400K (raised from $300K by Supplement 1, awards on/after Dec 8, 2025) | 2 years | 8 pp |
@@ -33,34 +31,36 @@ US National Science Foundation. CS proposals are typically submitted to **CISE**
 
 Supplement 1 (NSF 26-200) also raised the Planning-proposal threshold from $100,000 to $200,000 per year (up to two years).
 
-**CISE-specific:** the CISE core programmes are now run through the **Future Computing Research (Future CoRe)** solicitation **NSF 25-543** (AF, CIF, CSR, CER, CPS, FET, HCC, III, NeTS, RI, SHF). The NSF program page lists target dates of **Feb 4, 2027** (first Thursday in February, annually) and **Sep 9, 2027** (second Thursday in September, annually): "While proposals are accepted anytime, proposers are highly encouraged to submit by the target dates to ensure consideration during the corresponding panel review cycle." Maximum $1,000,000 and up to 4 years; typical projects $150K-$250K per year for 3-4 years. An individual may not serve as PI, co-PI, or Senior/Key Personnel on more than **two** proposals submitted within any consecutive 12-month period across all Future CoRe programs (excess proposals are returned without review). Confirm details in the current solicitation (https://www.nsf.gov/funding/opportunities/future-core-computer-information-science-engineering-future-computing).
+*Superseded:* the earlier CISE core classes — Small (up to $600,000, up to 3 years) and Medium ($600,001-$1,200,000, up to 4 years) under archived solicitation NSF 24-589 — were replaced by the single Future CoRe project class above ("Replaced Medium and Small project classes with a single project class…", NSF 25-543 revision notes).
+
+**CISE-specific:** the CISE core programmes are run through the **Future Computing Research (Future CoRe)** solicitation **NSF 25-543**. The solicitation states "There are no deadlines for all proposals, but target dates have been added to enhance the timing of review"; the NSF program page lists target dates **Feb 4, 2027** (first Thursday in February, annually) and **Sep 9, 2027** (second Thursday in September, annually): "While proposals are accepted anytime, proposers are highly encouraged to submit by the target dates to ensure consideration during the corresponding panel review cycle." (The solicitation body still shows 2025/2026 dates; the program page has the 2027 dates.) Maximum $1,000,000 and up to 4 years. An individual may not serve as PI, co-PI, or Senior/Key Personnel on more than **two** proposals submitted within any consecutive 12-month period across all Future CoRe programs (excess proposals are returned without review). Read the solicitation for review timing (https://www.nsf.gov/funding/opportunities/future-core-computer-information-science-engineering-future-computing).
 
 ## Proposal Components (PAPPG)
 
 NSF Proposal & Award Policies & Procedures Guide (PAPPG) defines required sections. The current version is **NSF 24-1**, as modified by **Supplement 1 (NSF 26-200, awards on/after Dec 8, 2025)** and **Supplement 2 (NSF 26-202, awards on/after Jan 22, 2026)**; NSF has deferred release of a new PAPPG edition and issues policy changes as supplemental notices. **Read the current PAPPG and supplements before submitting.** Standard required documents:
 
 1. **Cover Sheet** (auto-generated by Research.gov)
-2. **Project Summary** — 1 page, three labeled sections
+2. **Project Summary** — 1 page: overview, intellectual merit statement, broader impacts statement
 3. **Project Description** — up to 15 pages
 4. **References Cited** — no page limit
 5. **Biographical Sketch** (per senior personnel) — SciENcv Common Form (PAPPG 24-1: no page or character limit except where noted)
 6. **Budget + Budget Justification** — itemized, 5-page narrative max
 7. **Current and Pending (Other) Support** (per senior personnel) — SciENcv format
 8. **Facilities, Equipment, and Other Resources** — no page limit, narrative
-9. **Data Management and Sharing Plan (DMSP)** — 2-page max in PAPPG 24-1; from Apr 27, 2026 created with a Research.gov tool (Supplement 2) — confirm the submission mechanism in Research.gov
+9. **Data Management and Sharing Plan (DMSP)** — completed in the Research.gov DMSP web tool (Supplement 2, NSF 26-202; tool live since Apr 27, 2026); PAPPG 24-1's 2-page PDF limit was removed by Supplement 2, but the DMSP may not be used to circumvent the 15-page Project Description limit
 10. **Mentoring Plan** — 1 page, required when the proposal requests funding for postdoctoral scholars **or graduate students**
 11. **Collaborators & Other Affiliations (COA)** — separate spreadsheet, conflict-of-interest disclosure
 12. **Synergistic Activities** (per senior/key person) — separate document, up to 1 page and up to 5 distinct examples (PAPPG 24-1 II.D.2.h(iv))
 
 ## Project Summary (1 page)
 
-Three explicitly labeled sections (proposal **returned without review** if missing):
+PAPPG 24-1 II.D.2.b: the Project Summary (≤1 page) "consists of an overview, a statement on the intellectual merit of the proposed activity, and a statement on the broader impacts of the proposed activity." A proposal that lacks a required section is returned without review (PAPPG IV.B), so label the three parts clearly:
 
 1. **Overview** — what is being proposed
 2. **Intellectual Merit** — how the work advances knowledge
 3. **Broader Impacts** — societal/educational/diversity outcomes
 
-Each section starts with a literal bold heading, e.g. `**Intellectual Merit:**`. No figures, no citations, no equations. Reviewers see this first; ACs see only this when triaging.
+e.g. start each part with a heading such as `**Intellectual Merit:**` (a convention, not a PAPPG requirement). No figures, no citations, no equations. Reviewers see this first; ACs see only this when triaging. Note that the Project *Description* must separately contain a section labeled "Broader Impacts", with that heading on its own line.
 
 ## Project Description (15 pages)
 
@@ -70,12 +70,12 @@ No mandated subsections in PAPPG, but reviewers expect:
 2. **Background and Related Work** (1-2 pp) — what is known, what is missing
 3. **Research Plan / Thrusts / Aims** (8-10 pp) — typically 3-4 thrusts, each with: hypothesis, technical approach, preliminary results, evaluation plan, milestones
 4. **Broader Impacts Plan** (1 pp) — distinct, not folded into thrusts
-5. **Results from Prior NSF Support** (mandatory if PI/co-PI received NSF funding in prior 5 years) — list grant number, title, period, amount, summary of outcomes (≤5 pp total)
+5. **Results from Prior NSF Support** (mandatory if a PI/co-PI has an award that ended in the past five years or any current funding, including no-cost extensions) — list grant number, title, period, amount, summary of outcomes (≤5 pp, counted inside the 15-page limit)
 6. **Education / Outreach Plan** (only CAREER, otherwise folded into Broader Impacts)
 7. **Timeline / Project Plan** (0.5 pp) — Gantt or year-by-year table
 8. **Management Plan** (only multi-PI, ~0.5 pp)
 
-CISE proposals: an **explicit "Broader Impacts" header** is expected as a top-level Project Description section, not just a paragraph.
+PAPPG 24-1 II.D.2.d requires an **explicit "Broader Impacts" heading on its own line** as a separate section of the Project Description, not just a paragraph.
 
 ## Intellectual Merit Criterion
 
@@ -124,13 +124,13 @@ The Faculty Early Career Development (CAREER) Program funds early-career faculty
 - Limits: one CAREER proposal per PI per annual competition, and a PI may not participate in more than three CAREER competitions (proposals withdrawn or returned without review do not count)
 - Deadline: fourth Wednesday in July, annually, 5:00 p.m. local time
 - Budget: minimum $400,000 total (including indirect costs) for the 5 years; BIO, ENG and OPP minimum $500,000. CISE awards are expected to support one month of PI salary per year, one graduate student per year and two trips per year (may vary). Talk to your Program Officer about budget level before preparing.
-- Verify exact rules in the current solicitation
+- Verify exact rules in the current solicitation; as of 2026-11-12 NSF 22-586 is still the live solicitation (next deadline July 28, 2027)
 
 CAREER reviewers explicitly evaluate the **integration** of research and education. A separate education paragraph reads as bolted-on; weave education through the Aims (e.g., "Aim 2 milestones become Lab 4 in [course]").
 
 ## CRII-Specific Requirements (archived / historical)
 
-**Status:** solicitation NSF 23-576 is marked "Archived funding opportunity" on nsf.gov; no successor solicitation was found on 2026-11-12. Treat this section as historical background and check the NSF CISE funding page for a current research-initiation opportunity before planning around it.
+**Status:** solicitation NSF 23-576 is marked "Archived funding opportunity" on nsf.gov; no successor was found on the CRII program page or on Grants.gov on 2026-11-12 (check CISE/Future CoRe and CAREER instead). Treat this section as historical background and check the NSF CISE funding page for a current research-initiation opportunity before planning around it.
 
 CISE Research Initiation Initiative (as described in NSF 23-576) — for early-career CISE faculty in their **first 3 years** of a primary academic position after the PhD (and not more than six years after the PhD):
 
@@ -152,7 +152,7 @@ PAPPG 24-1 II.D.2.h(iv): each senior/key person provides "a document of up to on
 **SciENcv-generated PDF** for each senior/key person (PAPPG 24-1 II.D.2.h(ii)); no page limit, though some fields have character limits. A separate entry is made for each proposal, active project and in-kind contribution. Failure to disclose foreign support is a major compliance issue.
 
 ### Data Management and Sharing Plan (DMSP)
-Mandatory; ≤2 pages in PAPPG 24-1. Supplement 2 (NSF 26-202) states that proposals must include a DMSP "created using the tool implemented on Research.gov"; the tool was scheduled for release on Apr 27, 2026 (earlier submissions used a PDF upload) — confirm page limit and fields in the Research.gov tool. PAPPG 24-1 elements: types of data, samples, software and other materials produced; standards for data and metadata format and content; policies for access and sharing (privacy, confidentiality, security, IP); policies for re-use, re-distribution and derivatives; plans for archiving and preservation. Per Supplement 1, recipients must share all data supporting NSF-funded publications at the time of publication, and exceptions must be justified in the DMSP. CS proposals: code release plan (license, repository) belongs here.
+Mandatory. Supplement 2 (NSF 26-202) revised PAPPG II.D.2.i(ii): proposals "must include a DMSP created using the tool implemented on Research.gov" (tool live since Apr 27, 2026; earlier submissions used a PDF upload). The "no more than two pages" sentence and the five-element list in PAPPG 24-1 were struck by the supplement; the Research.gov page notes the DMSP may not be used to circumvent the Project Description page limit. The web tool collects, per data or research-product category: General Information; Access Policies and Limitations; Data Standards and Metadata; Provenance; Public Archiving; Timeline for Public Accessibility; Data Availability; Accountability (if availability is less than two years after project completion, a justification is required). Recipients are required to share all data supporting NSF-funded publications at the time of publication; exceptions must be justified in the DMSP. CS proposals: code release plan (license, repository) belongs here. A valid DMSP may state that no detailed plan is needed, with a clear justification.
 
 ### Facilities, Equipment, and Other Resources
 No page limit. Lists computational resources, lab equipment, datasets, collaborator access — anything that supports feasibility. CS/ML: list specific GPU clusters (institutional + ACCESS allocations + NAIRR), storage, datasets you have access to.
@@ -162,7 +162,7 @@ No page limit. Lists computational resources, lab equipment, datasets, collabora
 
 ## Submission Logistics
 
-- **Portal:** Research.gov (Grants.gov is also accepted but Research.gov is preferred since 2023)
+- **Portal:** Research.gov or Grants.gov (NSF 25-543 accepts both; separately submitted collaborative proposals and the DMSP tool require Research.gov)
 - **Compliance check:** institutional Sponsored Programs Office must approve before submission — start coordination ≥2 weeks before deadline
 - **Common return-without-review (RWR) reasons:** missing Intellectual Merit / Broader Impacts headers in Summary, exceeding page limits, formatting violations (PAPPG 24-1 II.C.2: Arial (not Arial Narrow), Courier New or Palatino Linotype at ≥10 pt; Times New Roman or Computer Modern at ≥11 pt; margins <1"), missing required documents
 - **CISE Future CoRe:** target dates rather than hard deadlines (see CISE note above); check the current solicitation for review timing

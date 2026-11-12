@@ -160,9 +160,9 @@ For resubmissions, reviewers expect **substantive revision** plus an explicit re
 
 ## NIH A1 Resubmission
 
-NIH allows **one resubmission (A1)** within 37 months of original submission. Format:
+NIH allows **one resubmission (A1)** within 37 months of the original submission (after 37 months NIH views a submission as a new application). Format:
 
-- **Introduction page**: 1 page, prefixed to the Research Strategy
+- **Introduction attachment**: 1 page, uploaded as its own attachment in the PHS 398 Research Plan form
 - Address the **summary statement** comments — reviewers explicitly look for this
 - Highlight changes in the body using **bracketed markup** (e.g., bold or vertical line in margin) — current NIH practice does NOT require markup but reviewers appreciate it
 - Resubmissions that do not engage with prior reviews score poorly
@@ -198,7 +198,7 @@ ERC does not have a formal response document — submit a revised Part I + Part 
 
 ## Horizon Resubmission
 
-Horizon proposals receive an **Evaluation Summary Report (ESR)** with per-criterion scoring and comments. Resubmission to a later call:
+Horizon proposals receive an **Evaluation Summary Report (ESR)** with per-criterion scoring and comments. Resubmission to a later call: there is no general Horizon Europe bar, but Part A asks whether this or a very similar proposal was submitted in the past 2 years under any EU programme, and some actions set their own rules (e.g., MSCA Doctoral Networks: a score below 80% bars resubmission the following year). Check the topic and action rules.
 
 - Read the ESR systematically; address each weakness
 - A revised proposal may reference the ESR comments in a brief intro, but most response is via revised content
@@ -234,4 +234,4 @@ Horizon proposals receive an **Evaluation Summary Report (ESR)** with per-criter
 - [ ] Within length limits for the response document (NIH: 1 page Intro)
 - [ ] No new contradictions introduced between sections
 - [ ] Updated preliminary data, citations, team if relevant
-- [ ] Resubmission restrictions verified (ERC; check the call for Horizon and UKRI)
+- [ ] Resubmission restrictions verified (ERC table; UKRI accepts only invited resubmissions, except fellowships; check the call for Horizon)

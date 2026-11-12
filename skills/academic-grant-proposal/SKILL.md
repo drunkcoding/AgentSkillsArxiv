@@ -1,6 +1,6 @@
 ---
 name: academic-grant-proposal
-description: "Write, review, and revise academic GRANT proposals for major funders: NSF (CAREER, standard, CRII), NIH (R01, R21, K, F), ERC (Starting, Consolidator, Advanced, Synergy), EU Horizon Europe/EIC/MSCA, DARPA/DoD/DOE BAAs, and UKRI/EPSRC/Royal Society. Covers section drafting (Specific Aims, Project Description, Broader Impacts, Excellence/Impact/Implementation, Heilmeier Catechism), letters of intent, pre-proposals and white papers, mock-reviewer critique, budgets, biosketches, data management plans, and responses to funder reviews on grant resubmission. Focus: CS / systems / ML. Not for conference-paper rebuttals (use academic-rebuttal) or papers (academic-writing)."
+description: "Write, review, and revise academic GRANT proposals for major funders: NSF (CAREER, standard, CRII (archived)), NIH (R01, R21, K, F), ERC (Starting, Consolidator, Advanced, Synergy), EU Horizon Europe/EIC/MSCA, DARPA/DoD/DOE BAAs, and UKRI/EPSRC/Royal Society. Covers section drafting (Specific Aims, Project Description, Broader Impacts, Excellence/Impact/Implementation, Heilmeier Catechism), letters of intent, pre-proposals and white papers, mock-reviewer critique, budgets, biosketches, data management plans, and responses to funder reviews on grant resubmission. Focus: CS / systems / ML. Not for conference-paper rebuttals (use academic-rebuttal) or papers (academic-writing)."
 ---
 
 # Academic Grant Proposal Writing
@@ -23,18 +23,18 @@ Produce **fundable** grant proposals — proposals that pass each funder's speci
 
 Funder and mechanism determine structure, page limits, evaluation criteria, and tone. **Read the current solicitation/call before writing.** If you cannot fetch it (no network access), use the values stored in the reference files, state the date on which they were last verified (2026-11-12), and tell the user to confirm them against the current call. Different funders use different terms for similar concepts (NSF "Intellectual Merit" ≈ ERC "Ground-breaking nature" ≈ Horizon "Excellence").
 
-Facts in the reference files were last verified 2026-11-12 against official funder pages. Funder rules change with every work programme or solicitation: confirm against the current call documents before relying on any limit, date or amount.
+Facts in the reference files were last verified 2026-11-12 against official funder pages (second verification pass resolved earlier unverified items). Funder rules change with every work programme or solicitation: confirm against the current call documents before relying on any limit, date or amount.
 
 Route to the matching reference file:
 
 | Funder / task | Trigger keywords | Load |
 |---|---|---|
-| **NSF** | NSF, CAREER, CRII, CISE, "Intellectual Merit", "Broader Impacts" | [references/nsf.md](references/nsf.md) |
+| **NSF** | NSF, CAREER, CRII (archived), CISE, Future CoRe, "Intellectual Merit", "Broader Impacts" | [references/nsf.md](references/nsf.md) |
 | **NIH** | NIH, R01, R21, R03, K-award, F-award, "Specific Aims", SF424 | [references/nih.md](references/nih.md) |
 | **ERC** | ERC, Starting Grant, StG, Consolidator, CoG, Advanced, AdG, Synergy, "Part I / Part II" (older: "B1/B2"), "ground-breaking" | [references/erc.md](references/erc.md) |
 | **EU Horizon** | Horizon Europe, EIC, MSCA, "Excellence/Impact/Implementation", work package, deliverables | [references/horizon_europe.md](references/horizon_europe.md) |
 | **DARPA/DoD/DOE** | DARPA, BAA, ARO, ONR, AFOSR, DOE, ASCR, Heilmeier, white paper | [references/darpa_dod_doe.md](references/darpa_dod_doe.md) |
-| **UKRI/EPSRC/Royal Society** | UKRI, EPSRC, BBSRC, NERC, Royal Society, URF, Funding Service, R4RI, New Investigator Award. Legacy terms "Case for Support" and "Pathways to Impact" also route here and are mapped to their current Funding Service equivalents | [references/ukri.md](references/ukri.md) |
+| **UKRI/EPSRC/Royal Society** | UKRI, EPSRC, BBSRC, NERC, Royal Society, URF, Dorothy Hodgkin, Funding Service, R4RI, New Investigator Award, Early Independence Fellowship, Network grants. Legacy terms "Case for Support" and "Pathways to Impact" also route here and are mapped to their current Funding Service equivalents | [references/ukri.md](references/ukri.md) |
 | **Pre-proposal / LOI** | letter of intent, pre-proposal, concept paper, white paper (general; see also DARPA row) | [references/proposal_sections.md](references/proposal_sections.md#letters-of-intent-pre-proposals-and-concept-outlines) |
 | **Section drafting (any funder)** | Aims, significance, innovation, approach, impact, team, timeline, risks, management | [references/proposal_sections.md](references/proposal_sections.md) |
 | **Budget** | budget, budget justification, costing | [references/budget_justification.md](references/budget_justification.md) |
@@ -75,7 +75,7 @@ Before submission, run a mock-reviewer pass against the funder's published crite
 
 ### Stage 5: Resubmission / Response to Reviewers (if applicable)
 
-NIH permits an A1 resubmission, NSF treats a resubmission as a new proposal, and ERC and UKRI restrict resubmissions by earlier outcome or per opportunity. Responses and revisions must be evidence-based and concrete. See [references/review_critique.md](references/review_critique.md) §Response-to-Reviewers.
+NIH permits an A1 resubmission, NSF treats a resubmission as a new proposal, ERC restricts resubmissions by earlier outcome, and UKRI accepts only invited resubmissions (fellowships excepted). Responses and revisions must be evidence-based and concrete. See [references/review_critique.md](references/review_critique.md) §Response-to-Reviewers.
 
 ---
 

@@ -1,6 +1,6 @@
 # DARPA / DoD / DOE Proposals
 
-Facts last verified 2026-11-12 against darpa.mil (Heilmeier Catechism page; Offices page) and 2 CFR 200.1 (eCFR). Funder rules change frequently — confirm against the current solicitation/NOFO before relying on any limit or amount. Figures marked "(confirm in the current NOFO/BAA)" were not independently verified.
+Facts last verified 2026-11-12 against darpa.mil (Heilmeier Catechism page; Offices page), 2 CFR 200.1 (eCFR), the FY2027 ONR and AFOSR YIP NOFOs, the FY2027 MURI NOFO (Amendment 2), ARL BAA W911NF-23-S-0001 (Amendment 01), DARPA IPTO/DSO office-wide BAAs HR001126S0011/-S0015, DARPA YFA DARPARA2701, and ARPA-E UNLOCK DE-FOA-0003630 (first-hand from the official hosts and Grants.gov). Funder rules change frequently — confirm against the current solicitation/NOFO before relying on any limit or amount; mechanism amounts change annually, and BAA page limits quoted below are examples from those BAAs, not rules.
 
 US Department of Defense and Department of Energy research funding. Proposals are judged on **disruption potential and concrete deliverables**, not academic rigor for its own sake. Different cultural conventions from NSF/NIH.
 
@@ -24,7 +24,7 @@ US Department of Defense and Department of Energy research funding. Proposals ar
 
 | Agency | Office/Program | CS/ML focus |
 |---|---|---|
-| **DARPA** | Six technical offices listed on darpa.mil/about/offices (2026-11-12): Biological Technologies, Defense Sciences, Information Processing Techniques, Multi X, Strategic Technology, Tactical Technology (office list changes; confirm on darpa.mil) | High-risk transformative; AI/ML/cyber/HPC |
+| **DARPA** | Six technical offices listed on darpa.mil/about/offices (2026-11-12): Biological Technologies, Defense Sciences, Information Processing Techniques, Multi X, Strategic Technology, Tactical Technology (office list changes over time) | High-risk transformative; AI/ML/cyber/HPC |
 | **ARO** (Army Research Office) | Computing Sciences | Robotics, autonomy, ISR analytics |
 | **ONR** (Office of Naval Research) | Code 31/32 | Autonomy, AI for naval ops, HPC |
 | **AFOSR** (Air Force Office of Scientific Research) | RTA1/RTA2 | AI/ML, cyber, autonomy |
@@ -56,7 +56,10 @@ DARPA BAAs additionally contain a **technical area description** specifying the 
 
 Most DARPA / DoD BAAs use a two-step process:
 
-### Phase 1: White Paper / Concept Paper (5-15 pp; confirm in the current NOFO/BAA)
+### Phase 1: Abstract / White Paper / Concept Paper (length is BAA-specific)
+
+Examples, not rules: DARPA IPTO and DSO office-wide BAAs HR001126S0011/-S0015 — "Abstracts shall not exceed a maximum of 5 pages" (DARPA office-wide BAAs call this step an "abstract", and full proposals are accepted by invitation only); FY2027 MURI white paper — no more than four single-sided pages; ARPA-E UNLOCK concept paper — sections 1-4 not to exceed 4 pages.
+
 
 - Compact pitch of the technical approach
 - Heilmeier-style framing
@@ -64,9 +67,12 @@ Most DARPA / DoD BAAs use a two-step process:
 - Team and rough budget envelope
 - Agency reviews and **encourages or discourages** full proposal — non-binding but strong signal
 
-**Encourage rate is typically 20-40% (confirm in the current NOFO/BAA).** Discouraged proposals can still submit but rarely fund.
+The encourage/discourage rate is not published in the BAAs reviewed; where a BAA allows discouraged applicants to submit, treat the response as a strong signal.
 
-### Phase 2: Full Proposal (typically 30-60 pp Vol I + Vol II cost)
+### Phase 2: Full Proposal (Volume I page limits are BAA-specific) + Vol II cost
+
+Examples, not rules: 20 pages in the DARPA IPTO and DSO office-wide BAAs ("Proposals shall not exceed a maximum of 20 pages"); 25 pages for the FY2027 MURI technical proposal.
+
 
 - Full technical proposal (Volume I)
 - Full cost proposal (Volume II)
@@ -155,7 +161,7 @@ Cost proposals are **scrutinized**. DoD requires DCAA-compliant cost accounting.
 - **Personnel** — PI, co-I, postdoc, student labor; salary by year with 2-3% escalation; effort percent
 - **Fringe Benefits** — institutional rate, applied to salary
 - **Travel** — itemized: # trips × destination × cost
-- **Equipment** — items at or above the per-unit threshold (lesser of the institution's capitalization level or $10,000 under 2 CFR 200.1, effective Oct 1, 2024; formerly $5,000), with quotes; check the BAA for any different definition
+- **Equipment** — items at or above the per-unit threshold (2 CFR 200.1, effective Oct 1, 2024: the lesser of the institution's capitalization level or $10,000, formerly $5,000), with quotes; check the BAA and your rate agreement for the definition that applies
 - **Materials/Supplies** — itemized
 - **Consultants/Subcontracts** — separate cost narratives per subaward
 - **Indirect (F&A)** — institutional negotiated rate, applied to MTDC
@@ -167,30 +173,32 @@ DoD requires **detailed budget narrative** justifying each line. Compute / cloud
 
 Single-investigator-friendly mechanisms (lower budget than DARPA, longer term, more academic in tone):
 
-- **ARO Single Investigator** — typically $500K over 3 years, white-paper first (confirm in the current NOFO/BAA)
-- **ONR YIP** (Young Investigator Program) — early-career, ~$510K over 3 yr (confirm in the current NOFO/BAA)
-- **AFOSR YIP** — early-career, $450K over 3 yr
-- **MURI** (Multidisciplinary University Research Initiative) — $1.5M/yr × 3-5 yr × team of 3-7 PIs (confirm in the current NOFO/BAA)
+- **ARO Single Investigator** — a three-year budget sized for one PI plus one or two graduate students or a postdoc (including F&A); the BAA gives no fixed dollar figure — discuss budget with the ARO technical point of contact and send a whitepaper first (ARL BAA W911NF-23-S-0001)
+- **ARO Early Career Program (ECP)** — tenure-track for fewer than five years, US citizen/national/lawful permanent resident; awards "will not exceed $120,000 per year for 3 years" (ARL BAA Amendment 01). **STIR** awards: proposals of $60,000 or less (same BAA)
+- **ONR YIP** (Young Investigator Program) — first or second tenure-track (or equivalent) appointment, PhD on or after 1 Jan 2019 (FY2027); US citizen, national or permanent resident; typical award $750,000 over 36 months, up to $250,000 per 12-month interval; roughly 7% funded in FY2026 (23 awards from 330+ proposals); annual NOFO (FY2027 closed 2026-10-30)
+- **AFOSR YIP** — early-career, PhD on or after 1 April 2019 (FY2027 NOFO), US citizen/national/permanent resident, FFRDC and DoW laboratory staff not eligible; up to $150,000 per year for three years ($450,000 total); FY2027 proposals due 2026-12-11
+- **MURI** (Multidisciplinary University Research Initiative) — FY2027 NOFO: typical annual funding up to $1.5M per grant, for 5 years (3 base + 2 option), typically no more than six funded faculty (topic-specific limits)
+- **DARPA Young Faculty Award (YFA)** — DARPARA2701 (2027): 24-month base period up to $500,000 (≤$250,000 per 12 months), with a Director's Fellowship option and a US-citizen graduate-student option; maximum possible per award $1,225,000; cooperative agreement only
 
-**MURI is the largest DoD basic-research mechanism**: topics published annually (~24 topics; confirm in the current NOFO/BAA), team responds with white paper then full proposal. Highly competitive (~5%; confirm in the current NOFO/BAA). Strategic differentiators: multidisciplinarity (real, not bolted on), Heilmeier framing, transition plan to a Service.
+**MURI is the largest DoD basic-research mechanism**: topics are published annually (FY2027: 16 topics across AFOSR, ARO and ONR); teams submit an optional 4-page white paper (FY2027: due 2026-11-20), then invited full proposals (due 2027-04-09; 25-page technical proposal). Highly competitive. Strategic differentiators: multidisciplinarity (real, not bolted on), Heilmeier framing, transition plan to a Service.
 
 ## DOE-Specific (ASCR, BES, ARPA-E)
 
 DOE basic research differs from DoD:
 
 - **ASCR** funds AI for science, exascale, scientific machine learning, applied math. Calls come via FOAs at https://science.osti.gov/grants
-- DOE proposals typically **20-25 pages Project Narrative**, single FOA-defined structure
+- Project Narrative page limits and structure vary by FOA — read the FOA
 - **DOE National Lab partnerships** strengthen proposals — co-PI from a National Lab brings facility access (Argonne ALCF, Oak Ridge OLCF, NERSC) and DOE familiarity
-- **ARPA-E** uses DARPA-style Heilmeier/program-manager-driven model; ~$2-5M / 2-3 yr awards focused on energy applications (confirm in the current NOFO/BAA)
+- **ARPA-E** uses DARPA-style Heilmeier/program-manager-driven model; awards are FOA-specific (e.g. UNLOCK 2026: federal share $3-5M, about 3 years; SCALEUP Ready: $5-20M); applications go through DOE eXCHANGE, concept paper first, focused on energy applications
 
 DOE is **mission-driven**: align with one of DOE's strategic priorities (clean energy, scientific discovery, national security). Proposals that look like generic ML research without an energy/science mission are filtered.
 
 ## Submission Logistics
 
-- **DARPA / DoD portal:** SAM.gov + agency-specific systems (DARPA BAA Tool, ARO eBRAP)
-- **DOE portal:** PAMS (Portfolio Analysis and Management System) at https://pamspublic.science.energy.gov
+- **DARPA / DoD portals:** DARPA — BAA Tool (BAAT) for abstracts/proposals, with Grants.gov for grants and cooperative agreements; ARO/ONR/AFOSR — Grants.gov (agency white-paper sites for MURI); an active SAM.gov UEI is required
+- **DOE portals:** Office of Science — PAMS (Portfolio Analysis and Management System) at https://pamspublic.science.energy.gov; ARPA-E — DOE eXCHANGE (also posted on Grants.gov)
 - **SAM.gov registration** required for entity (institution) plus individual roles — allow ≥2 weeks if not registered
-- **CAGE Code, UEI** required for all institutions
+- **UEI** required (active SAM.gov registration); the FY2027 MURI NOFO also lists obtaining a CAGE code as a step
 - **Classification:** most CS/ML BAAs are **unclassified**. Some DARPA programs require Secret/Top Secret personnel clearance — check the BAA's facility/personnel security clauses
 - **Restrictions on foreign nationals:** some BAAs exclude or restrict participation by certain countries' nationals (especially China-related concerns under research-security policies). Verify in the specific BAA before listing students/postdocs
 - **Common rejection reasons:**
