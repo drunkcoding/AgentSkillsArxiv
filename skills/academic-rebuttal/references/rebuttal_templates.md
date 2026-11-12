@@ -169,12 +169,12 @@ Use when strict limits or expectation that AC scans quickly. The first 25% of th
 - ~1,500 chars on secondary concerns (1 paragraph each)
 - ~500 chars on minor clarifications
 - ~500 chars on revision commitments
-- ICML 2026 states the same 5,000-character cap for each of its three rounds (rebuttal, reviewer follow-up, author follow-up), so this budget applies to the initial rebuttal; the author follow-up is a separate 5,000 characters. Confirm on the live form, and do not carry it to ICML 2027 until that CFP is published
+- ICML 2026 states the same 5,000-character cap for each of its three rounds (rebuttal, reviewer follow-up, author follow-up), so this budget applies to the initial rebuttal; the author follow-up is a separate 5,000 characters. Confirm on the live form, and do not carry it to ICML 2027 until that CFP is published (only the ICML 2027 Dates page was live on 2026-11-12)
 - Answer decision-critical concerns in the initial response; use the author follow-up for genuine questions, not evidence deliberately withheld
 
 ### ICLR 2026 public discussion
-- (ICLR 2027 differs in dates — discussion Nov 5–18, 2026 — and its response-length and revision rules were not verified; confirm on OpenReview before applying the points below)
-- Check the OpenReview comment box for its per-comment word limit; the Author Guide does not publish the number
+- (ICLR 2027: discussion Nov 5–18, 2026; paper revisions allowed until Nov 18 with `pdfdiff`; 10 pages during discussion; the guide gives no per-comment number — treat 5,000 characters as the working limit and check the live box)
+- Check the OpenReview comment box for its per-comment limit; the Author Guide says "word limit" without a number, and 5,000 characters is the working limit seen on OpenReview's ICLR comment fields (the guide gives no number)
 - Split responses across as many comments as needed, but respect reviewer attention
 - In ICLR 2026, revise the 10-page paper, title, abstract, or supplement only through Dec 3; communicate each change and expect `pdfdiff`
 - Keep each comment independently useful because the discussion and submitted versions remain publicly visible after decisions
@@ -185,7 +185,7 @@ Use when strict limits or expectation that AC scans quickly. The first 25% of th
 - Still avoid rambling — long responses get skimmed
 - **Front-load**: put decision-critical corrections in first 3,000 chars
 
-### Word-capped systems venues (caps: MobiCom 500, SOSP strongly encouraged under 500, FAST 1,000, OSDI '25 2,000; see `venue_policies.md`)
+### Word-capped systems venues (caps by venue and cycle; see `venue_policies.md`: MobiCom 500, SOSP strongly encouraged under 500, EuroSys 2027 strongly encouraged 500 (2025/2026 strict 1,000), ASPLOS 2027 no hard cap but reviewers not expected to read past 800, FAST 1,000, OSDI '25 2,000)
 - Use concern grouping aggressively
 - Prioritize shared concerns over isolated nitpicks
 - Put "decision pivot points" first: novelty, correctness, evaluation adequacy
