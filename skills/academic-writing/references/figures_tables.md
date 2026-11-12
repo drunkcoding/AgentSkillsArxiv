@@ -1,5 +1,21 @@
 # Figures and Tables for Systems Conference Papers
 
+## Contents
+
+- [Overview](#overview)
+- [When to Use Tables vs. Figures](#when-to-use-tables-vs-figures)
+- [Core Design Principles](#core-design-principles)
+- [Figure Types for Systems Papers](#figure-types-for-systems-papers)
+- [Table Design Guidelines](#table-design-guidelines)
+- [Evaluation Metrics in Figures and Tables](#evaluation-metrics-in-figures-and-tables)
+- [Accessibility Considerations](#accessibility-considerations)
+- [Technical Requirements](#technical-requirements)
+- [Figure and Table Numbering](#figure-and-table-numbering)
+- [Captions](#captions)
+- [Tools for Creating Figures](#tools-for-creating-figures)
+- [Venue-Specific Figure Requirements](#venue-specific-figure-requirements)
+- [Pre-Submission Checklist](#pre-submission-checklist)
+
 ## Overview
 
 Figures and tables are essential components of systems papers, serving to display system architecture, performance results, and comparative evaluations. Effective visual displays enhance comprehension and provide evidence for the paper's claims. Systems papers typically contain 5-8 figures and 1-3 tables in a 12-page paper.
@@ -439,7 +455,7 @@ Always specify:
 - Single column: ~3.33 inches (8.5 cm) wide
 - Double column: ~7 inches (17.8 cm) wide
 
-**ACM sigconf template (SIGCOMM, MOBICOM, SOSP):**
+**ACM acmart templates (SIGCOMM, MOBICOM, SOSP):**
 - Single column: ~3.33 inches (8.5 cm) wide
 - Double column: ~7 inches (17.8 cm) wide
 
@@ -546,8 +562,8 @@ tail (>p95), where locality-aware scheduling eliminates cold starts.
 
 ### ACM (SIGCOMM, MOBICOM, SOSP)
 
-- ACM sigconf template
-- Figures count toward page limit (12-15 pages)
+- ACM `acmart` template (MobiCom: `sigconf,10pt`; the SOSP 2026 CFP recommends `sigplan,10pt`; check the SIGCOMM CFP/submission instructions)
+- Figures count toward the 12-page limit at all three venues (references extra; at SOSP the limit is 12 pages of technical content)
 - PDF preferred for figures
 - ACM requires figure permissions for adapted figures
 - Figures embedded in text
@@ -556,7 +572,7 @@ tail (>p95), where locality-aware scheduling eliminates cold starts.
 
 AAAI enforces figure/table production rules unusually strictly — violations can cause desk rejection. Confirm details against the current edition's author kit.
 
-- AAAI Press two-column template (`article` + `aaai<NN>.sty`); figures count toward the 7 technical pages.
+- AAAI Press two-column template (`article` + `aaai<NN>.sty`; `\usepackage[submission]{aaai2027}` for an anonymous AAAI-27 submission); figures count toward the 7 technical pages.
 - Accepted image formats for pdfLaTeX: **`.pdf`, `.png`, `.jpg` only** — no EPS, PostScript, or GIF; **no Type 3 fonts** (including inside graphics).
 - Raster images ≥ **300 dpi**; color figures in **CMYK** (not RGB).
 - **Body text must be black**; color is restricted to figures. Figures must maintain **WCAG contrast > 4.5:1** and remain intelligible in **grayscale** (archival version may print grayscale).

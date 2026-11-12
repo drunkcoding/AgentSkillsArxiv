@@ -1,5 +1,7 @@
 # ICML, ICLR, and NeurIPS Conference Paper Structure (ML Papers)
 
+> Facts last verified 2026-11-12 against the ICML 2026 author/reviewer instructions, the ICLR 2026 author guide and ICLR 2027 CFP, the NeurIPS 2025 FAQ/style kit and 2026 handbook, and the AAAI-27 submission instructions and author policies. Venue rules change every cycle — confirm against the live CFP before relying on any number.
+
 ## Table of Contents
 
 1. Overview and shared ML-paper paradigm
@@ -23,30 +25,30 @@ ICML (International Conference on Machine Learning), ICLR (International Confere
 
 The section-level structure conventions of ICML/ICLR/NeurIPS papers are essentially the same as AAAI's (Section 8 below). What differs — and what this file focuses on — are the **format hard rules, required statements, and review mechanics**, which are venue-specific and change yearly.
 
-> **Standards drift every year. Always confirm exact numbers against the current edition's official Call for Papers / Author Guide** (`icml.cc/Conferences/<YYYY>/CallForPapers`, `icml.cc/Conferences/<YYYY>/AuthorInstructions`, `iclr.cc/Conferences/<YYYY>/AuthorGuide`, `neurips.cc/Conferences/<YYYY>/CallForPapers`). Facts below are verified against **ICML 2026**, **ICLR 2026**, and **NeurIPS 2025/2026**; treat dated deadlines and reviewer counts as illustrative.
+> **Standards drift every year. Always confirm exact numbers against the current edition's official Call for Papers / Author Guide** (`icml.cc/Conferences/<YYYY>/CallForPapers`, `icml.cc/Conferences/<YYYY>/AuthorInstructions`, `iclr.cc/Conferences/<YYYY>/AuthorGuide`, `neurips.cc/Conferences/<YYYY>/CallForPapers`). Facts below are verified against **ICML 2026**, **ICLR 2026** (plus the **ICLR 2027** CFP dates), and **NeurIPS 2025/2026**; the ICML 2027 CFP was not yet published on 2026-11-12, so all ICML rules here are from the 2026 cycle. Treat dated deadlines and reviewer counts as illustrative.
 
 ## 2. Master Comparison (ICML vs ICLR vs NeurIPS vs AAAI)
 
-| | ICML (2026) | ICLR (2026) | NeurIPS (2025/2026) | AAAI (26) |
+| | ICML (2026) | ICLR (2026) | NeurIPS (2025/2026) | AAAI-27 (AAAI-26 in parentheses where different) |
 |---|---|---|---|---|
-| Main-text pages | **8** (+1 at camera-ready) | **9** at submission, **10** at rebuttal/camera-ready | **9** (+1 at camera-ready) | 7 (+2 purchasable) |
+| Main-text pages | **8** (+1 at camera-ready) | **9** at submission, **10** at rebuttal/camera-ready | **9** (+1 at camera-ready) | 7 content pages (+2 purchasable at camera-ready); submission PDF capped at 9 pages, pp. 8-9 references only |
 | References count? | No (unlimited) | No (unlimited) | No | No |
 | Appendix | Unlimited, same single file, doesn't count | Unlimited after references (same PDF or separate supplement), doesn't count | Optional and unlimited; doesn't count; reviewers may ignore it | Separate technical appendix upload; in-paper appendix counts |
-| Columns | Two-column | **Single-column** | Two-column | Two-column |
-| Style file | `icml<YYYY>.zip` (`icml2026.sty`) | `iclr<YYYY>.zip` from `github.com/ICLR/Master-Template` | Edition kit (`neurips_2025.sty` in 2025) | `aaai<NN>.sty` |
-| Citations | Author-year (natbib) | Author-year (natbib) | Numeric via the bundled natbib/template settings | Author-year (natbib) |
+| Columns | Two-column | **Single-column** | **Single-column** | Two-column |
+| Style file | `icml<YYYY>.zip` (`icml2026.sty`) | `iclr<YYYY>.zip` from `github.com/ICLR/Master-Template` | Edition kit (`neurips_2025.sty` in 2025) | `aaai2027.sty` (`aaai2026.sty`) |
+| Citations | Author-year (natbib) | Author-year (natbib) | Author-year or numeric, author's choice, kept consistent (kit loads plain natbib) | Author-year (natbib) |
 | Platform | OpenReview | OpenReview | OpenReview | OpenReview |
 | Reviews public? | Published for accepted papers (with rebuttal + discussion; new 2026 policy); rejected papers opt-in | **Fully public** for all submissions; de-anonymized after decisions | Private during review; accepted and opted-in rejected records become public after notification (2025) | Not public |
-| Rebuttal | Per-review responses; three 5,000-char rounds (rebuttal, reviewer follow-up, author follow-up; 2026) | **Open discussion thread**, Nov-Dec window, unlimited comments (per-comment word limit), **paper revisions allowed** | Per-review responses, **10,000 chars each** (2025), then rolling discussion; no revised PDF/supplement | Single 2,500-char response, no new results |
-| Required extra sections | **Impact Statement** (mandatory, doesn't count) | Ethics Statement + Reproducibility Statement (recommended, don't count); **LLM-usage section mandatory if significant LLM role** | **Paper Checklist mandatory**, last in PDF, doesn't count | Reproducibility checklist (mandatory, in PDF) |
-| Reciprocal reviewing | Yes — per-submission + per-author (4+ subs) | Yes — authors on 3+ papers review ≥6 papers | Authors may be asked to review; reviewer-authors face access restrictions/sanctions for non-compliance; no numeric quota stated in the 2025 CFP | No equivalent |
+| Rebuttal | Per-review responses; three 5,000-char rounds (rebuttal, reviewer follow-up, author follow-up; 2026) | **Open discussion thread** (ICLR 2026: Nov 11 - Dec 3, 2025), unlimited comments (per-comment word limit), **paper revisions allowed** | Per-review responses, **10,000 chars each** (2025), then rolling discussion; may include new results (submission stays the basis for the decision); no revised PDF/supplement | Single author-feedback window (Oct 24-31, 2026, closed); AAAI-27 cap not stated in the sources checked (AAAI-26: 2,500 chars, no new results) |
+| Required extra sections | **Impact Statement** (mandatory, doesn't count) | Ethics Statement + Reproducibility Statement (recommended, don't count); **LLM-usage section mandatory if significant LLM role** | **Paper Checklist mandatory**, last in PDF, doesn't count | Reproducibility checklist (mandatory; separate upload at AAAI-27, in the PDF at AAAI-26) |
+| Reciprocal reviewing | Yes — per-submission + per-author (4+ subs) | Yes — authors on 3+ papers review ≥6 papers | Authors may be asked to review; reviewer-authors face access restrictions/sanctions for non-compliance; no numeric quota stated in the 2025 CFP | AAAI-27: all authors expected to join the reviewer pool unless prevented by extenuating circumstances (no quota stated) |
 | Withdrawal | Standard | **Withdrawn-after-deadline papers stay public and are de-anonymized** | Standard | Standard |
 
 ## 3. ICML: Format and Length Hard Rules
 
-Verified against ICML 2026 CFP. Non-conforming papers are **rejected without review**.
+Verified against the ICML 2026 author instructions. The ICML 2027 CFP was not yet published on 2026-11-12, so treat every ICML rule here as 2026-cycle. Non-conforming papers are **rejected without review**.
 
-- **8 pages for the main paper.** Unlimited additional pages for **references, the impact statement, and appendices**. Everything goes in a **single file** — there is no separate supplementary-material deadline.
+- **8 pages for the main paper.** Unlimited additional pages for **references, the impact statement, and appendices**. Main paper, references, impact statement and appendices go in a **single PDF**. Optional Supplementary Material (code/data, referenced anonymous papers) may be uploaded at submission; there is **no separate deadline** for it (same as the paper deadline) and none at camera-ready.
 - **Camera-ready: one extra page** for the main paper (8 → 9).
 - **Two-column ICML template**: use the edition style files (`icml2026.zip` → `icml2026.sty`) and check the official example paper. LaTeX skeleton:
 
@@ -87,6 +89,7 @@ Verified against the ICLR 2026 Author Guide. Violations → **desk rejection**.
 - **Single-column ICLR template**: LaTeX style files from `https://github.com/ICLR/Master-Template` (`iclr2026.zip`). Uses natbib author-year citations.
 - **Abstract deadline ~5 days before the paper deadline**; abstracts must be genuine (used for reviewer bidding); placeholders are deleted. **No authors can be added after the abstract deadline**; order may change up to the paper deadline; no author changes at all after the paper deadline.
 - **Withdrawal warning:** after the submission deadline, withdrawn papers remain **publicly hosted on OpenReview and are immediately de-anonymized**. ICLR submissions cannot be deleted. Do not submit half-finished work to ICLR.
+- **ICLR 2027 (CFP checked 2026-11-12):** abstract Sep 18, 2026 and paper Sep 25, 2026 (AoE); reviews released and author-reviewer discussion Nov 5-18, 2026; reviewer-AC discussion Nov 19 - Dec 16, 2026; final decisions Dec 16, 2026. The 2027 CFP announces new policies on co-authorship, reciprocal reviewing and AI use. The ICLR 2027 author guide was not available when this was verified, so the 9/10-page limits, the template and the "3+ papers → review ≥6" rule on this page are confirmed for **ICLR 2026 only**.
 
 ## 6. ICLR: Recommended Statements and Policies
 
@@ -103,7 +106,7 @@ Facts in this section are verified against the **NeurIPS 2025 CFP and Author FAQ
 
 - Use **9 content pages at submission** and at most **10 content pages at camera-ready**. Count all main-text figures and tables. Do not count references, optional technical appendices, or the mandatory checklist.
 - Submit one PDF in this order: paper content → references → optional technical appendices → **NeurIPS Paper Checklist**. Reviewers may ignore appendices and supplementary material; keep the main text self-contained.
-- Use the edition's official **two-column LaTeX kit** (`neurips_2025.sty` in the 2025 kit; use the 2026 formatting package for NeurIPS 2026). Do not change margins or font sizes. Style or page-limit violations may be rejected without review.
+- Use the edition's official **single-column LaTeX kit** (`neurips_2025.sty` in the 2025 kit; use the 2026 formatting package for NeurIPS 2026). Do not change margins or font sizes. Style or page-limit violations may be rejected without review.
 - Register a substantive abstract before the full paper. The gap was **4 days in 2025** (May 11 → May 15) and **2 days in 2026** (May 4 → May 6). Freeze the author list at the abstract deadline; only reordering is allowed afterward.
 
 ### Paper Checklist (mandatory)
@@ -163,7 +166,7 @@ All three venues use **double-blind** review on OpenReview; keep profiles curren
 ### ICLR
 
 - **Reviews are public** (anonymous) from the moment they are released.
-- **Public discussion period (~3 weeks, Nov-Dec):** authors post responses as comments — unlimited comments, per-comment word limit, multiple replies per reviewer allowed. Anyone logged in may comment publicly (non-author/reviewer comments are non-anonymous).
+- **Public discussion period (~3 weeks at ICLR 2026: Nov 11 - Dec 3, 2025; ICLR 2027 schedules author-reviewer discussion Nov 5-18, 2026):** authors post responses as comments — unlimited comments, per-comment word limit, multiple replies per reviewer allowed. Anyone logged in may comment publicly (non-author/reviewer comments are non-anonymous).
 - **Authors may revise the paper (and title/abstract/supplement) during the discussion period**; a pdfdiff is applied against the original, and reviewers/ACs may ignore changes that substantially diverge from the submitted paper. Clearly communicate what changed.
 - After public discussion: private reviewer/AC discussion → decisions. **All submissions (accepted, rejected, withdrawn) are de-anonymized and released with their reviews after notification.** Rejected papers are considered non-archival and may be resubmitted elsewhere, but the ICLR record persists.
 - Treat the ICLR rebuttal as an **evolving conversation, not a terminal message** — see `academic-rebuttal` skill for rebuttal strategy.
@@ -179,6 +182,7 @@ All three venues use **double-blind** review on OpenReview; keep profiles curren
 - **ICML (2026):** (a) *per-submission*: every submission must designate ≥1 qualified author as a reciprocal reviewer; one person can be the designated reviewer for **at most 2 submissions**; (b) *per-author*: every author with **4+ submissions** must review (threshold can drop to 3 in a reviewer shortage). Failing either requirement — or delivering late/insufficient reviews — can desk-reject **your own submissions**.
 - **ICLR (2026):** authors on **3+ papers** must review **at least 6 papers**; every submission needs ≥1 registered reviewer-author (qualified = prior ICLR/NeurIPS/ICML or equivalent publication; teams with no qualified author are exempt). Non-compliance → desk rejection.
 - **NeurIPS (verified 2025; sanctions also documented in the 2026 handbook):** authors may be recruited as reviewers, but the 2025 CFP states no fixed per-submission or per-author numeric quota. Reviewer-authors who neglect assigned reviews can lose access to reviews of their own papers; gross or persistent failures can put their submissions at desk-rejection risk. Confirm the current Main Track Handbook.
+- **AAAI-27:** the submission instructions say all authors of AAAI-27 submissions will be expected to join the conference's reviewer pool unless prevented by extenuating circumstances; no numeric quota is stated.
 - Exemptions and sanctions vary by venue. Budget reviewing time into the submission plan — this is a real acceptance risk, not paperwork.
 
 ## 11. Dual Submission, arXiv, and LLM Policies
@@ -199,7 +203,7 @@ ICML and ICLR use **author-year citations via natbib**, set by the venue style f
 
 - Use `\citet` when the authors are the sentence's subject; `\citep` otherwise. Never write "(see \citet{...})".
 - Use the `.bst` shipped in the venue style zip; do not substitute another bibliography style.
-- **NeurIPS uses the numeric citation mode supplied by its official LaTeX kit.** Keep the bundled natbib and bibliography configuration; do not override it with an author-year or custom `.bst` setup. Confirm against the current style package.
+- **NeurIPS:** the official kit loads plain `natbib` and states that citations may be author/year or numeric as long as you maintain internal consistency, and that any reference style is acceptable if used consistently. Pick one mode and keep it; confirm against the current style package.
 - Cite every baseline compared against; heavy recent-work coverage is expected; self-citations in third person.
 - See `citation_styles.md` for the full author-year vs numbered comparison.
 
@@ -225,7 +229,7 @@ Use these primary sources and replace the edition year when preparing a future s
 
 - **NeurIPS 2025 CFP** — page limits, template, OpenReview/privacy, double-blind review, checklist requirement, abstract gap, appendices/supplement, preprints, dual submission, author-response/publication mechanics, and D&B routing: https://neurips.cc/Conferences/2025/CallForPapers
 - **NeurIPS 2025 Author FAQ** — 10,000-character per-review rebuttal, markdown/no files, no PDF or supplement revision, links/new-results constraints, and author-list/checklist clarifications: https://neurips.cc/Conferences/2025/PaperInformation/NeurIPS-FAQ
-- **NeurIPS 2025 official style archive** — `neurips_2025.sty`, two-column layout, and bundled citation/bibliography configuration: https://media.neurips.cc/Conferences/NeurIPS2025/Styles.zip
+- **NeurIPS 2025 official style archive** — `neurips_2025.sty`, single-column layout, and the bundled natbib setup: https://media.neurips.cc/Conferences/NeurIPS2025/Styles.zip
 - **NeurIPS Paper Checklist Guidelines** — placement, page-limit exclusion, mandatory/desk-reject status, visibility, answer mechanics, and checklist topics: https://neurips.cc/public/guides/PaperChecklist
 - **NeurIPS 2025 LLM Policy** — methodological disclosure threshold, editing exception, author responsibility, and no LLM authorship: https://neurips.cc/Conferences/2025/LLM
 - **NeurIPS 2025 Datasets & Benchmarks CFP** — separate portal, review mode, and dataset/code requirements: https://neurips.cc/Conferences/2025/CallForDatasetsBenchmarks

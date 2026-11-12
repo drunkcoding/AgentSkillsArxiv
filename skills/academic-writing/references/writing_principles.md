@@ -1,5 +1,22 @@
 # Writing Principles for Conference Papers
 
+## Contents
+
+- [Overview](#overview)
+- [The Three Pillars of Scientific Writing](#the-three-pillars-of-scientific-writing)
+- [Additional Key Principles](#additional-key-principles)
+- [Verb Tense in Systems Papers](#verb-tense-in-systems-papers)
+- [Common Writing Pitfalls](#common-writing-pitfalls)
+- [Specific Sentence-Level Issues](#specific-sentence-level-issues)
+- [Word Choice](#word-choice)
+- [Numbers and Units](#numbers-and-units)
+- [Paragraph Structure](#paragraph-structure)
+- [Revision Checklist](#revision-checklist)
+- [Tools for Improving Writing](#tools-for-improving-writing)
+- [Additional Resources](#additional-resources)
+- [Systems Conference Writing Style](#systems-conference-writing-style)
+- [Final Thoughts](#final-thoughts)
+
 ## Overview
 
 Effective paper writing requires mastering fundamental principles that ensure clarity, precision, and impact. Both **systems** conference papers (OSDI/NSDI/SIGCOMM/MOBICOM/SOSP/FAST) and **AAAI / AI-ML** papers prioritize accuracy, conciseness, directness, and quantitative rigor — these principles are shared across both paradigms. This guide covers the core principles that distinguish well-written papers from poorly written ones and provides practical strategies for improvement.
@@ -785,7 +802,7 @@ We make the following contributions:
 | **Evaluation** | End-to-end + microbenchmarks | Standard benchmarks + ablation |
 | **Related Work** | After evaluation | Varies (intro or end) |
 | **Contribution style** | "We build X that achieves Y" | "We propose X with guarantee Y" |
-| **Page length** | 12-15 pages | 8-9 pages |
+| **Page length** | 12 pages of main text, references extra | 8-9 pages |
 | **Implementation** | Detailed (LOC, frameworks) | Brief or absent |
 | **Reproducibility** | Artifact evaluation | Code release |
 

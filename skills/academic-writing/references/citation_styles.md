@@ -1,11 +1,24 @@
 # Citation Styles for Conference Papers
 
+## Contents
+
+- [Overview](#overview)
+- [Choosing the Right Style](#choosing-the-right-style)
+- [IEEE Style](#ieee-style)
+- [ACM Style](#acm-style)
+- [AAAI Author-Year Style (natbib)](#aaai-author-year-style-natbib)
+- [Systems-Specific Citation Conventions](#systems-specific-citation-conventions)
+- [Special Publication Types](#special-publication-types)
+- [BibTeX Management](#bibtex-management)
+- [DOI (Digital Object Identifier)](#doi-digital-object-identifier)
+- [Pre-Submission Citation Checklist](#pre-submission-citation-checklist)
+
 ## Overview
 
 Two citation paradigms appear across the venues this skill covers:
 
 - **Numbered** (systems venues): IEEE (USENIX venues — OSDI, NSDI, FAST) and ACM (SIGCOMM, MOBICOM, SOSP) both use numbered references in square brackets `[1]`.
-- **AI/ML template-defined** (AAAI / ICML / ICLR / NeurIPS): AAAI uses `natbib` author-year citations `(Smith 2025)`, NOT numbered brackets. ICML and ICLR also use `natbib` author-year, rendered with a comma: `(Smith, 2025)` / `\citet` → `Smith (2025)`. NeurIPS uses the numeric mode bundled with its official natbib/template configuration. Never override a venue's supplied bibliography setup. See `ml_venues_paper_structure.md` for ICML/ICLR/NeurIPS rules.
+- **AI/ML template-defined** (AAAI / ICML / ICLR / NeurIPS): AAAI uses `natbib` author-year citations `(Smith 2025)`, NOT numbered brackets. ICML and ICLR also use `natbib` author-year, rendered with a comma: `(Smith, 2025)` / `\citet` → `Smith (2025)`. NeurIPS loads plain `natbib` and accepts author/year or numeric citations as long as they are used consistently. Never override a venue's supplied bibliography setup. See `ml_venues_paper_structure.md` for ICML/ICLR/NeurIPS rules.
 
 Pick the style by venue, and always let the venue's LaTeX template/`.bst` do the formatting.
 
@@ -14,12 +27,12 @@ Pick the style by venue, and always let the venue's LaTeX template/`.bst` do the
 | Venue | Citation Style | Template |
 |-------|---------------|----------|
 | OSDI, NSDI, FAST, ATC | USENIX (IEEE-like), numbered | USENIX LaTeX template |
-| SIGCOMM, MOBICOM, SOSP | ACM, numbered | ACM sigconf template |
+| SIGCOMM, MOBICOM, SOSP | ACM, numbered | ACM `acmart` template (MobiCom: `sigconf`; the SOSP 2026 CFP recommends `sigplan`; SIGCOMM: template not stated in the CFP text checked, use the one the submission site specifies) |
 | EuroSys | ACM, numbered | ACM sigconf template |
 | **AAAI** | **Author-year (natbib)** | AAAI Press (`article` + `aaai<NN>.sty`) |
 | **ICML** | **Author-year (natbib)** | ICML two-column (`icml<YYYY>.sty`) |
 | **ICLR** | **Author-year (natbib)** | ICLR single-column (`iclr<YYYY>` Master-Template) |
-| **NeurIPS** | **Numeric (bundled natbib/template settings)** | NeurIPS two-column edition kit (`neurips_2025.sty` in 2025) |
+| **NeurIPS** | **Author-year or numeric (author's choice, consistent; kit loads plain natbib)** | NeurIPS single-column edition kit (`neurips_2025.sty` in 2025) |
 
 **Default**: Use the LaTeX template provided by the venue. The template's bibliography style file (`.bst`) handles citation formatting automatically. For AAAI, the edition style package sets the matching `aaai<NN>.bst` — do not override it.
 
@@ -99,7 +112,7 @@ Poor:  "The system described in [5] uses a centralized scheduler..."
 
 ### Overview
 - Used by ACM conferences (SIGCOMM, MOBICOM, SOSP, EuroSys)
-- The ACM sigconf template uses `acmart.cls` with `\bibliographystyle{ACM-Reference-Format}`
+- The ACM templates (`sigconf`, or `sigplan` for SOSP) use `acmart.cls` with `\bibliographystyle{ACM-Reference-Format}`
 - Numbered citations in square brackets
 - References listed alphabetically by first author surname (NOT by order of appearance)
 
@@ -402,7 +415,7 @@ https://doi.org/10.1145/3600006.3613165
 - [ ] Page numbers included for published papers
 - [ ] ArXiv preprints formatted correctly
 
-**Double-blind venues (SIGCOMM, MOBICOM, SOSP, and all AAAI/ICML/ICLR/NeurIPS main-track submissions):**
+**Double-blind venues (OSDI, NSDI, SIGCOMM, MOBICOM, SOSP, FAST, and all AAAI/ICML/ICLR/NeurIPS main-track submissions):**
 - [ ] Own work cited in third person
 - [ ] No self-identifying citation patterns
 - [ ] Anonymous repository URLs (or omitted)

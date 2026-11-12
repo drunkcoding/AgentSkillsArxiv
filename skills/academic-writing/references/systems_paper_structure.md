@@ -1,5 +1,27 @@
 # Systems Conference Paper Structure
 
+> Facts last verified 2026-11-12 against the OSDI '25-'27, NSDI '25-'27, SIGCOMM 2025-2027, MobiCom 2026-2027, SOSP 2025-2026 and FAST '27 calls for papers. Venue rules change every cycle — confirm against the live CFP before relying on any number.
+
+## Contents
+
+- [Overview](#overview)
+- [Title](#title)
+- [Abstract](#abstract)
+- [Introduction](#introduction)
+- [Background / Motivation](#background--motivation)
+- [Design](#design)
+- [Implementation](#implementation)
+- [Evaluation](#evaluation)
+- [Related Work](#related-work)
+- [Conclusion](#conclusion)
+- [Artifact Evaluation](#artifact-evaluation)
+- [Section Length Proportions](#section-length-proportions)
+- [Venue-Specific Variations](#venue-specific-variations)
+  - [Current-cycle requirements (verified 2026-11-12)](#current-cycle-requirements-verified-2026-11-12)
+- [Double-Blind Review Considerations](#double-blind-review-considerations)
+- [Verb Tense Guide for Systems Papers](#verb-tense-guide-for-systems-papers)
+- [Writing the Paper: Recommended Order](#writing-the-paper-recommended-order)
+
 ## Overview
 
 Systems conference papers follow a structure fundamentally different from journal papers. Instead of IMRAD (Introduction, Methods, Results, Discussion), systems papers use a problem-solution-evaluation structure that reflects how systems research is conducted: identify a real problem, design and build a system to solve it, and evaluate the system empirically.
@@ -15,7 +37,7 @@ Systems conference papers follow a structure fundamentally different from journa
 
 **Target venues:** OSDI, NSDI, SIGCOMM, MOBICOM, SOSP, FAST, ATC, EuroSys
 
-**Typical length:** 12-14 pages (excluding references and appendices)
+**Typical length:** 12 pages of main text at all six venues in the table in `SKILL.md` (OSDI, NSDI, SIGCOMM, MOBICOM, SOSP, FAST long papers), with references extra. Page-counting details differ per venue (see Venue-Specific Variations). For ATC, EuroSys and other venues not covered here, take every hard number from that venue's own CFP.
 
 ## Title
 
@@ -100,7 +122,7 @@ key insight is that [insight]. Our evaluation on [workloads] shows that
 ## Introduction
 
 ### Length
-1.5-2 pages (approximately 12-15% of the paper)
+1.5-2 pages (approximately 12 to 15% of the paper)
 
 ### Problem-Solution Structure
 
@@ -512,7 +534,7 @@ at [URL].
 ## Artifact Evaluation
 
 ### Overview
-Systems conferences (OSDI, SOSP, SIGCOMM, NSDI, FAST) increasingly require or strongly encourage artifact evaluation. Preparing a good artifact significantly strengthens the paper.
+Artifact evaluation is run by a separate committee after acceptance. Per the current CFPs: SIGCOMM and MobiCom call participation voluntary but strongly encouraged, NSDI optional but encouraged, SOSP optional; for OSDI see its call for artifacts; for FAST '27, participation is optional and all accepted papers are encouraged to participate (FAST '27 call for artifacts, checked 2026-11-12). Preparing a good artifact significantly strengthens the paper.
 
 ### What to Prepare
 - **Source code**: Complete, buildable, with README
@@ -536,11 +558,11 @@ Systems conferences (OSDI, SOSP, SIGCOMM, NSDI, FAST) increasingly require or st
 
 ## Section Length Proportions
 
-For a 12-14 page systems conference paper:
+For a 12-page systems conference paper (main text, references extra):
 
 | Section | Pages | Percentage |
 |---------|-------|------------|
-| Introduction | 1.5-2 | 12-15% |
+| Introduction | 1.5-2 | 12 to 15% |
 | Background/Motivation | 1-2 | 8-15% |
 | Design | 2-3 | 20-25% |
 | Implementation | 0.5-1 | 5-8% |
@@ -554,39 +576,42 @@ Design and Evaluation together should occupy approximately 50% of the paper.
 
 ### OSDI / NSDI (USENIX)
 - **Format**: USENIX LaTeX template
-- **Pages**: 12 pages (excluding references)
-- **Review**: Single-blind (typically)
-- **Artifact evaluation**: Strongly encouraged
+- **Pages**: 12 pages including figures and tables (references extra; OSDI '27 allows 14 pages plus references for accepted papers)
+- **Review**: Double-blind (OSDI '25-'27 and NSDI '25-'27 CFPs)
+- **Artifact evaluation**: OSDI: see the call for artifacts. NSDI: optional but encouraged
 - **Style**: Practical systems focus, emphasis on real-world impact
 
 ### SIGCOMM (ACM)
-- **Format**: ACM sigconf template
+- **Format**: ACM sigconf template (template not stated in the CFP text checked; use the one the submission site specifies)
 - **Pages**: 12 pages (excluding references)
 - **Review**: Double-blind
-- **Artifact evaluation**: Encouraged
+- **Artifact evaluation**: Voluntary, strongly encouraged (SIGCOMM 2026 and 2027 CFPs)
 - **Style**: Networking focus, may include formal models or protocol descriptions
 - **Note**: Double-blind requires anonymizing system names and URLs in submission
 
 ### MOBICOM (ACM)
-- **Format**: ACM sigconf template
-- **Pages**: 15 pages (excluding references)
-- **Review**: Double-blind
+- **Format**: ACM template, `\documentclass[sigconf,10pt]{acmart}`
+- **Pages**: 12 pages **including** figures, tables and any other material; references unlimited after that; appendices placed after the references do not count (MobiCom 2026 and 2027 CFPs). Papers with more than 12 pages of non-bibliographic content are not reviewed.
+- **Review**: Double-blind; the PDF must not contain embedded hyperlinks
+- **Artifact evaluation**: Voluntary, strongly encouraged
 - **Style**: Mobile/wireless focus, often includes hardware prototypes
 - **Note**: May require video demonstrations for hardware systems
 
 ### SOSP (ACM)
-- **Format**: ACM sigconf template
-- **Pages**: 15 pages (excluding references)
+- **Format**: ACM template; the SOSP 2026 CFP recommends `\documentclass[sigplan,10pt]{acmart}` (not sigconf)
+- **Pages**: at most 12 pages of technical content, references not included (SOSP 2025 and 2026 CFPs)
 - **Review**: Double-blind
+- **Artifact evaluation**: Optional
+- **Edition note**: the SOSP 2027 CFP was not yet published on 2026-11-12; these numbers are from the 2025 and 2026 CFPs
 - **Style**: Systems focus, emphasis on novel abstractions and long-term impact
 
 ### FAST (USENIX)
 - **Format**: USENIX LaTeX template
 - **Pages**: 12 pages for long papers / 6 pages for short papers (excluding references)
 - **Review**: Double-blind
-- **Artifact evaluation**: Encouraged (code, traces, tools)
+- **Artifact evaluation**: Optional; all accepted papers are encouraged to participate (FAST '27 call for artifacts); the CFP also values traces, original data, source code and tools
 - **Style**: Storage/file systems focus, emphasis on practical impact and deployment experience
-- **Note**: FAST uses the USENIX template but requires double-blind review (unlike OSDI/NSDI)
+- **Note**: FAST uses the USENIX template with double-blind review
 
 **Short Papers (6 pages):**
 - Must present completed research with a complete problem statement and evaluation
@@ -614,9 +639,20 @@ Design and Evaluation together should occupy approximately 50% of the paper.
 - Emerging technologies: memory hierarchy, novel storage media (DNA, glass)
 - Deployment experience: workload characterization, production validation
 
+### Current-cycle requirements (verified 2026-11-12)
+
+Only items confirmed in the saved CFP text on 2026-11-12. These change every cycle; check the live CFP.
+
+- **OSDI '27:** abstracts due Dec 1, 2026 and papers Dec 8, 2026. At most eight submissions per author (surplus submissions are desk-rejected). A paper whose text is wholly or largely AI-generated is treated as fraud; AI editing tools are acceptable; use of AI coding agents to build the system must be disclosed (e.g., in the Implementation section). Conditional acceptance replaces revise-and-resubmit. The OSDI '26 CFP removed the author-response period, and the OSDI '27 CFP describes no author-response period.
+- **NSDI '27:** at most eight submissions per author across both deadlines. Authors must attest in HotCRP that all text was primarily human written (AI for grammar and clarity of human-written text is encouraged). Papers that are not accepted may get a one-shot revision. Reviewers prescreen the Introduction, which should be at most 3 pages.
+- **SIGCOMM 2026:** an ethics statement or subsection is required in the main body of the paper (papers without it are desk-rejected). ORCID required at submission. The `.bbl` file must be uploaded on the submission form (references are checked for hallucination). Use of generative AI must be fully disclosed (e.g., in Acknowledgements). At most eight submissions per author.
+- **SIGCOMM 2027:** no rebuttals or one-shot revisions. Ethical issues and GenAI-policy compliance are stated on the submission form. ORCID required at submission; at most eight submissions per author.
+- **MobiCom 2027:** reciprocal reviewing: the most senior author is designated as reviewing author and is expected to review up to three submissions. No embedded hyperlinks in the PDF. Authors and co-authors should obtain an ORCID ID.
+- **FAST '27:** the optional author response is capped at 1000 words (hard limit; exceeding it counts against the paper).
+
 ## Double-Blind Review Considerations
 
-For venues requiring double-blind review (SIGCOMM, MOBICOM, SOSP, FAST):
+For all six systems venues in `SKILL.md` (OSDI, NSDI, SIGCOMM, MOBICOM, SOSP, FAST), review is double-blind:
 
 - Replace system name with a placeholder in submission (e.g., "OurSystem")
 - Remove repository URLs (add "available upon acceptance")
